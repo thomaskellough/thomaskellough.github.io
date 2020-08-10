@@ -1,0 +1,97 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"/><meta name="og:site_name" content="The Swift Protocol"/><link rel="canonical" href="www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-01"/><meta name="twitter:url" content="www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-01"/><meta name="og:url" content="www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-01"/><title>Use AVFoundation to create a scanner to scan your drivers license - Part 1 | The Swift Protocol</title><meta name="twitter:title" content="Use AVFoundation to create a scanner to scan your drivers license - Part 1 | The Swift Protocol"/><meta name="og:title" content="Use AVFoundation to create a scanner to scan your drivers license - Part 1 | The Swift Protocol"/><meta name="description" content="Phones have come a long way from just making calls and text messaging. You're now able to use your phone to scan barcodes, such as a drivers license, that collects data and displays in just seconds."/><meta name="twitter:description" content="Phones have come a long way from just making calls and text messaging. You're now able to use your phone to scan barcodes, such as a drivers license, that collects data and displays in just seconds."/><meta name="og:description" content="Phones have come a long way from just making calls and text messaging. You're now able to use your phone to scan barcodes, such as a drivers license, that collects data and displays in just seconds."/><meta name="twitter:card" content="summary"/><link rel="stylesheet" href="/styles.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to The Swift Protocol"/></head><body><header><div class="nav-logo"><a href="/"><img src="/Images/blog-logo.png"/></a><nav class="nav-bar"><p>Swift Skill Building With Thomas Kellough</p><ul><li><h3><a href="/home">Home</a></h3></li><li><h3><a href="/posts">Posts</a></h3></li><li><h3><a href="/tags">Tags</a></h3></li></ul></nav></div></header><div class="wrapper"><article><h1>Use AVFoundation to create a scanner to scan your drivers license - Part 1</h1><div class="post-tags" markdown="1">
+        <a class="post-category post-category-feature" href="/tags/feature">Feature</a>
+        <a class="post-category post-category-avfoundation" href="/tags/avfoundation">AVFoundation</a>
+        <a class="post-category post-category-navigation" href="/tags/navigation">Navigation</a>
+</div><table class="posts-table">
+    <tr>
+        <th class="th-single-right"><a href="/posts/03-scan-a-barcode-part-02" style="text-decoration: none">Capturing data &rarr;</a></th>
+    </tr>
+</table><h3>Introduction</h3><p>If you're making an app you may need to use the phones camera to scan some sort of barcode. This tutorial will show you how to set up a project to scan your driver's license and display the information on a screen. Let's start by creating a new Xcode project and choosing a Single View App template, Swift for your langauge, and Storyboard for your user interface. The first thing you should do is go into your project settings and lock your orientation to "Portrait" and uncheck "Upside Down", "Landscape Left", and "Landscape Right". Go ahead and also check "Requires full screen". Then head to storyboard and add a Text View to the view controller and set some constraints. You also want to give your Text View a background color so we can clearly see it. This is where all the information from your drivers license will go. Here's a screenshot of how I set mine up.</p><img class="post-image" src="/Images/Posts/03/03-01.png" alt="Storyboard initial setup" /><p>Let's create an outlet for this textview inside <code>ViewController.swift</code> so we can do something with it later. Using the assistant editor <code>ctrl + drag</code> from the Text View you created to the top of your view controller class and name it <code>textLabel</code>. You can access the assistant editor by pressing <code>ctrl + option + cmd + enter</code>. After adding our outlet, click your view controller, go up into <code>Editor &gt; Embed In &gt; Navigation Controller</code>. When you are finished with that add a second view controller and give it a <code>Storyboard ID</code> of <code>scannerViewController</code>. We will need to come back in here in just a moment, but let's go ahead and jump into some code. Head over to <code>ViewController.swift</code> and let's add the following things.</p><ol><li>A bar button item to allow us to open the camera to start a scan</li></ol><ol start="2"><li>A function to update our label once we have a successful scan</li></ol><ol start="3"><li>A way to navigate to our new view controller when we press the button</li></ol><p>For the first part add the following insde of <code>viewDidLoad()</code> of <code>ViewController.swift</code></p><pre><code><span class="keyword">let</span> scanBarButtonItem = <span class="type">UIBarButtonItem</span>(barButtonSystemItem: .<span class="dotAccess">camera</span>, target: <span class="keyword">self</span>, action: <span class="keyword">#selector</span>(scanBarcode))
+navigationItem.<span class="property">rightBarButtonItem</span> = scanBarButtonItem
+</code></pre><p>The second part is partially done by adding the below function, but we will fill it in later. I just want to leave a reminder to come back.</p><pre><code><span class="keyword">func</span> updateLabel() {
+    <span class="comment">// this will be where we update our label</span>
+}
+</code></pre><p>For the last part (and a way to remove the error we now have) add the following funciton.</p><pre><code><span class="keyword">@objc func</span> scanBarcode() {
+    <span class="keyword">if let</span> vc = storyboard?.<span class="call">instantiateViewController</span>(withIdentifier: <span class="string">"scannerViewController"</span>) <span class="keyword">as</span>? <span class="type">ScannerViewController</span> {
+        navigationController?.<span class="call">pushViewController</span>(vc, animated: <span class="keyword">true</span>)
+    }
+}
+</code></pre><p>However, this causes another error because we don't actually have a <code>ScannerViewController</code> yet. So create new swift file, make it a template of <code>Cocoa Touch Class</code> with a subclass of <code>UIViewController</code> and give it the name <code>ScannerViewController</code>. Then you can head back over to <code>main.storyboard</code> and set the custom class to the new <code>ScannerViewController</code> that you just created. When you're finished, your <code>ViewController.swift</code> should look like this.</p><pre><code><span class="keyword">import</span> UIKit
+
+<span class="keyword">class</span> ViewController: <span class="type">UIViewController</span> {
+
+    <span class="keyword">@IBOutlet weak var</span> textLabel: <span class="type">UITextView</span>!
+    
+    <span class="keyword">override func</span> viewDidLoad() {
+        <span class="keyword">super</span>.<span class="call">viewDidLoad</span>()
+        
+        <span class="keyword">let</span> scanBarButtonItem = <span class="type">UIBarButtonItem</span>(barButtonSystemItem: .<span class="dotAccess">camera</span>, target: <span class="keyword">self</span>, action: <span class="keyword">#selector</span>(scanBarcode))
+        navigationItem.<span class="property">rightBarButtonItem</span> = scanBarButtonItem
+    }
+    
+    <span class="keyword">@objc func</span> scanBarcode() {
+        <span class="keyword">if let</span> vc = storyboard?.<span class="call">instantiateViewController</span>(withIdentifier: <span class="string">"scannerViewController"</span>) <span class="keyword">as</span>? <span class="type">ScannerViewController</span> {
+            navigationController?.<span class="call">pushViewController</span>(vc, animated: <span class="keyword">true</span>)
+        }
+    }
+
+
+    <span class="keyword">func</span> updateLabel() {
+        <span class="comment">// this will be where we update our label</span>
+    }
+    
+}
+</code></pre><h3>Setting up an AVCaptureSession</h3><p>Apple already has a great framework for us to use to achieve scanning using our phones. We are going to use <code>AVCaptureSession</code> to help us coordinate the flow of data from a visual input to some sort of output. Let's start by adding the following in our <code>ScannerViewController</code></p><pre><code><span class="keyword">import</span> AVFoundation
+<span class="keyword">import</span> UIKit
+
+<span class="keyword">class</span> ScannerViewController: <span class="type">UIViewController</span> {
+
+    <span class="keyword">var</span> avCaptureSession: <span class="type">AVCaptureSession</span>!
+    
+    <span class="keyword">override func</span> viewDidLoad() {
+        <span class="keyword">super</span>.<span class="call">viewDidLoad</span>()
+
+        <span class="comment">// Do any additional setup after loading the view.</span>
+    }
+    
+}
+</code></pre><p>Then let's create a function to set up our capture session. Add this function next.</p><pre><code><span class="keyword">func</span> setUpScanner() {
+    avCaptureSession = <span class="type">AVCaptureSession</span>()
+    <span class="keyword">guard let</span> videoCaptureDevice = <span class="type">AVCaptureDevice</span>.<span class="call">default</span>(for: .<span class="dotAccess">video</span>) <span class="keyword">else</span> { <span class="keyword">return</span> }
+    
+    <span class="keyword">do</span> {
+        <span class="keyword">let</span> videoInput = <span class="keyword">try</span> <span class="type">AVCaptureDeviceInput</span>(device: videoCaptureDevice)
+        <span class="keyword">if</span> avCaptureSession.<span class="call">canAddInput</span>(videoInput) {
+            avCaptureSession.<span class="call">addInput</span>(videoInput)
+        } <span class="keyword">else</span> {
+            <span class="comment">// Add error message here</span>
+            <span class="keyword">return</span>
+        }
+    } <span class="keyword">catch</span> {
+        <span class="comment">// Add error message here</span>
+        <span class="keyword">return</span>
+    }
+    
+    avCaptureSession.<span class="call">startRunning</span>()
+}
+</code></pre><p>Now what this does is create an <code>AVCaptureSession()</code> and a capture device. If for some reason there is no camera then the function will perform an early exit to prevent your code from crashing. Since it's possible there won't be any kind of video input we need to wrap this up in a <code>do catch</code> statement. If everything is successfull, we will add a video input and start running our session. Finally, call your function inside viewDidLoad by adding</p><pre><code><span class="call">setUpScanner</span>()
+</code></pre><p>However, if you run your app now you'll get this error. <code>This app has crashed because it attempted to access privacy-sensitive data without a usage description.  The app's Info.plist must contain an NSCameraUsageDescription key with a string value explaining to the user how the app uses this data.</code> Apple cares about privacy and does not want you accessing video or audio input from a user without their permission. To fix this navigate over to <code>info.plist</code> and add this key and string value.</p><pre><code><span class="type">Privacy</span> - <span class="type">Camera Usage Description</span>: <span class="type">We</span> need access to your camera <span class="keyword">in</span> order to scan barcodes.
+</code></pre><p>We also want to stop our capture session when the view leaves. To do that, we will edit our <code>viewWillDisappear</code> function.</p><pre><code><span class="keyword">override func</span> viewWillDisappear(<span class="keyword">_</span> animated: <span class="type">Bool</span>) {
+    <span class="keyword">super</span>.<span class="call">viewWillAppear</span>(animated)
+    
+    <span class="keyword">if</span> avCaptureSession?.<span class="property">isRunning</span> == <span class="keyword">true</span> {
+        avCaptureSession.<span class="call">stopRunning</span>()
+    }
+}
+</code></pre><p>You should now be able to run your app and get the prompt asking for access to the camera. However, you won't see anything yet...</p><h3>Adding a preview layer</h3><p>The reason you can't see anything is because we actually haven't created a layer to preview what the camera sees. This isn't complicated to do, but does require us to use another class called <code>AVCaptureVideoPreviewLayer</code>.</p><p>At the top of your class add this variable</p><pre><code><span class="keyword">var</span> avPreviewLayer: <span class="type">AVCaptureVideoPreviewLayer</span>!
+</code></pre><p>Then let's create a function to create an instance of our preview layer. We want to call our function at the bottom of <code>setupScanner()</code>.</p><pre><code><span class="keyword">func</span> addPreviewLayer() {
+    avPreviewLayer = <span class="type">AVCaptureVideoPreviewLayer</span>(session: avCaptureSession)
+    avPreviewLayer.<span class="property">frame</span> = view.<span class="property">layer</span>.<span class="property">bounds</span>
+    avPreviewLayer.<span class="property">videoGravity</span> = .<span class="dotAccess">resizeAspectFill</span>
+    view.<span class="property">layer</span>.<span class="call">addSublayer</span>(avPreviewLayer)
+}
+</code></pre><p>This creates a layer for our avCaptureSession, sets the frame to the entire size of our view it's in, gives it an aspect fill ratio so it looks nice, then finally adds this preview layer we just created to our main view. Now you can run your code and see through your camera!</p><table class="posts-table">
+    <tr>
+        <th class="th-single-right"><a href="/posts/03-scan-a-barcode-part-02" style="text-decoration: none">Capturing data &rarr;</a></th>
+    </tr>
+</table></article></div><div class="footer-social"><div>© 2020 The Swift Protocol</div><div>Generated using <a href="https://github.com/johnsundell/publish">Publish</a>. Written in Swift</div><div><a href="https://www.linkedin.com/in/thomas-kellough/">LinkedIn</a> | <a href="https://github.com/thomaskellough">Github</a> | <a href="mailto:theswiftprotocol@gmail.com">Email</a></div></div></body></html>

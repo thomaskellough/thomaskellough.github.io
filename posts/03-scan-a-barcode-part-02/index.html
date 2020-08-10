@@ -1,0 +1,62 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"/><meta name="og:site_name" content="The Swift Protocol"/><link rel="canonical" href="www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-02"/><meta name="twitter:url" content="www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-02"/><meta name="og:url" content="www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-02"/><title>Use AVFoundation to create a scanner to scan your drivers license - Part 2 | The Swift Protocol</title><meta name="twitter:title" content="Use AVFoundation to create a scanner to scan your drivers license - Part 2 | The Swift Protocol"/><meta name="og:title" content="Use AVFoundation to create a scanner to scan your drivers license - Part 2 | The Swift Protocol"/><meta name="description" content="Part two of scanning a barcode. This section focuses on capturing the data and displaying it to the user."/><meta name="twitter:description" content="Part two of scanning a barcode. This section focuses on capturing the data and displaying it to the user."/><meta name="og:description" content="Part two of scanning a barcode. This section focuses on capturing the data and displaying it to the user."/><meta name="twitter:card" content="summary"/><link rel="stylesheet" href="/styles.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to The Swift Protocol"/></head><body><header><div class="nav-logo"><a href="/"><img src="/Images/blog-logo.png"/></a><nav class="nav-bar"><p>Swift Skill Building With Thomas Kellough</p><ul><li><h3><a href="/home">Home</a></h3></li><li><h3><a href="/posts">Posts</a></h3></li><li><h3><a href="/tags">Tags</a></h3></li></ul></nav></div></header><div class="wrapper"><article><h1>Use AVFoundation to create a scanner to scan your drivers license - Part 2</h1><div class="post-tags" markdown="1">
+        <a class="post-category post-category-avfoundation" href="/tags/avfoundation">AVFoundation</a>
+        <a class="post-category post-category-metadata" href="/tags/metadata">Metadata</a>
+        <a class="post-category post-category-delegates" href="/tags/delegates">Delegates</a>
+</div><table class="posts-table">
+    <tr>
+        <th class="th-left"><a href="/posts/03-scan-a-barcode-part-01" style="text-decoration: none">&larr; Introduction and setting up</a></th>
+        <th class="th-middle"></th>
+        <th class="th-right"><a href="/posts/03-scan-a-barcode-part-03" style="text-decoration: none">Adding a torch and scan bounds &rarr;</a></th>
+    </tr>
+</table><h3>Capturing Data</h3><p>So far we have our camera up and running, but it doesn't actually do anything for us. We want to set it up to read a barcode and give us back that information. We will do this by using <code>AVCaptureMetaDataOutput</code>. We will break this up into two separate functions, one to read the data, and the other to return the data. Let's start by reading the data. We need to do the following</p><ol><li>Create an instance of <code>AVCaptureMetadataOutput()</code></li></ol><ol start="2"><li>If our capture session can add output, do so, otherwise present an error message</li></ol><ol start="3"><li>Provide the scan metadata object types</li></ol><p>Add the following function and call it at the bottom of <code>setupScanner()</code></p><pre><code><span class="keyword">func</span> addMetaData() {
+    <span class="keyword">let</span> metadataOutput = <span class="type">AVCaptureMetadataOutput</span>()
+    
+    <span class="keyword">if</span> avCaptureSession.<span class="call">canAddOutput</span>(metadataOutput) {
+        avCaptureSession.<span class="call">addOutput</span>(metadataOutput)
+        
+        metadataOutput.<span class="call">setMetadataObjectsDelegate</span>(<span class="keyword">self</span>, queue: <span class="type">DispatchQueue</span>.<span class="property">main</span>)
+        metadataOutput.<span class="property">metadataObjectTypes</span> = [.<span class="dotAccess">pdf417</span>]
+    } <span class="keyword">else</span> {
+        <span class="comment">// Add error message here</span>
+        <span class="keyword">return</span>
+    }
+}
+</code></pre><p>You'll also need to have <code>ScannerViewController</code> conform to our metadataoutput by adding <code>AVCaptureMetadataOutputObjectsDelegate</code>. You'll notice that we passed in <code>.pdf417</code> as our object type because that's what many identification cards are. However, there are a ton more you can add here, including QR codes! I'll let you play with that on your own.</p><p>Reading the data is one thing, but we need to actually output the data so we can see it. This uses the <code>metadataOutput</code> function in AVFoundation, so you don't need to create it yourself. We will fill it in on our own, however. What this will do is collect our objects we see, take the first object and see if we can get a readable object out of it. If it can, we turn that into a string, play a vibration to notify us, then we will call one more function that we will create to update our label. Go ahead and add the following code, including the stub for the second function.</p><pre><code><span class="keyword">func</span> metadataOutput(<span class="keyword">_</span> output: <span class="type">AVCaptureMetadataOutput</span>, didOutput metadataObjects: [<span class="type">AVMetadataObject</span>], from connection: <span class="type">AVCaptureConnection</span>) {
+    avCaptureSession.<span class="call">stopRunning</span>()
+    
+    <span class="keyword">if let</span> metadataObject = metadataObjects.<span class="property">first</span> {
+        <span class="keyword">guard let</span> readableObject = metadataObject <span class="keyword">as</span>? <span class="type">AVMetadataMachineReadableCodeObject</span> <span class="keyword">else</span> { <span class="keyword">return</span> }
+        <span class="keyword">guard let</span> stringObject = readableObject.<span class="property">stringValue</span> <span class="keyword">else</span> { <span class="keyword">return</span> }
+        <span class="type">AudioServicesPlayAlertSound</span>(<span class="type">SystemSoundID</span>(kSystemSoundID_Vibrate))
+        
+        <span class="call">readMetaData</span>(data: stringObject)
+    }
+    
+    navigationController?.<span class="call">popViewController</span>(animated: <span class="keyword">true</span>)
+}
+
+<span class="keyword">func</span> readMetaData(data: <span class="type">String</span>) {
+
+}
+</code></pre><p>You should be able to scan your own drivers license now! Make sure you have good lighting and a decent barcode that isn't torn up or it may not work.</p><h3>Adding the data to our label</h3><p>Even though the code works, we don't actually see any results. We want to pass the data from one view controller to another so the method that we will be using here is delegates. We have two functions that we are going to link to each other. We need to set up a delegate first. So at the top of <code>ScannerViewController</code> add the following property</p><pre><code><span class="keyword">weak var</span> delegate: <span class="type">ViewController</span>!
+</code></pre><p>This will give us a reference for our main view controller allowing us to use its functions. Then inside of <code>readMetaData()</code> we are going to call <code>updateLabel()</code> from <code>ViewController</code>. Edit <code>readMetaData()</code> to look like this.</p><pre><code><span class="keyword">func</span> readMetaData(data: <span class="type">String</span>) {
+    delegate.<span class="call">updateLabel</span>(text: data)
+}
+</code></pre><p>This also means we need to make a couple of updates in <code>ViewController</code>. We need to edit our <code>updateLabel()</code> function to accept a parameter and tell <code>ScannerViewController</code> who the delegate is during navigation. Match your functions to these below to achieve that.</p><pre><code><span class="keyword">@objc func</span> scanBarcode() {
+    <span class="keyword">if let</span> vc = storyboard?.<span class="call">instantiateViewController</span>(withIdentifier: <span class="string">"scannerViewController"</span>) <span class="keyword">as</span>? <span class="type">ScannerViewController</span> {
+        vc.<span class="property">delegate</span> = <span class="keyword">self</span>
+        navigationController?.<span class="call">pushViewController</span>(vc, animated: <span class="keyword">true</span>)
+    }
+}
+
+
+<span class="keyword">func</span> updateLabel(text: <span class="type">String</span>) {
+    textLabel.<span class="property">text</span> = text
+}
+</code></pre><p>Congratulations! Run your code, scan your license and look at all the data it returns! You will, however, notice that it's not very pretty. You can use some regex to parse that out, but we can cover that in another tutorial.</p><table class="posts-table">
+    <tr>
+        <th class="th-left"><a href="/posts/03-scan-a-barcode-part-01" style="text-decoration: none">&larr; Introduction and setting up</a></th>
+        <th class="th-middle"></th>
+        <th class="th-right"><a href="/posts/03-scan-a-barcode-part-03" style="text-decoration: none">Adding a torch and scan bounds &rarr;</a></th>
+    </tr>
+</table></article></div><div class="footer-social"><div>© 2020 The Swift Protocol</div><div>Generated using <a href="https://github.com/johnsundell/publish">Publish</a>. Written in Swift</div><div><a href="https://www.linkedin.com/in/thomas-kellough/">LinkedIn</a> | <a href="https://github.com/thomaskellough">Github</a> | <a href="mailto:theswiftprotocol@gmail.com">Email</a></div></div></body></html>
