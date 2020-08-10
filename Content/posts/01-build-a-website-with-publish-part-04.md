@@ -186,7 +186,13 @@ var language: Language { .english }
 var imagePath: Path? { nil }
 ```
 
-Then push the following changes to your repository and deploy using terminal.
+The first you want to do is create a new branch. When using Publish, you will always have at least two active branches that are in use. The `master` branch will contain all the generated code *after deployment* so you don't want to edit that directly. Instead, you'll make all your changes on a separate branch, then when you deploy your Swift code is not affected. To create a new branch open up terminal and navigate to your repository (after cloning, of course) then type
+
+```
+git checkout -b "new-branch-name"
+```
+
+Note, you can name the branch whatever you want. Then push the following changes to your repository and deploy using terminal. 
 
 ```
 $ git add .
@@ -195,7 +201,7 @@ $ git push
 $ publish deploy
 ```
 
-At this point, you'll see your terminal doing some work until you end up with a success message. Now navigate over `your-user-name.github.io` and you should see your live website! Here is the link to mine from this tutorial. [https://swiftblogexample.github.io](https://swiftblogexample.github.io). [Here](https://github.com/thomaskellough/BlogExample) is also a link to this repo so you can see everything in place.
+At this point, you'll see your terminal doing some work until you end up with a success message. You'll also see your master branch have a bunch of generated content. Now navigate over `your-user-name.github.io` and you should see your live website! Here is the link to mine from this tutorial. [https://swiftblogexample.github.io](https://swiftblogexample.github.io). [Here](https://github.com/thomaskellough/BlogExample) is also a link to this repo so you can see everything in place.
 
 I hope you've enjoyed this tutorial and I'd love to see what you come up with! You can find my contact information at the bottom.
 
