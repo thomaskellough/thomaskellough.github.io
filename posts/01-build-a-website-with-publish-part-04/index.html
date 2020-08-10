@@ -111,11 +111,12 @@ $ <span class="keyword">open</span> package.<span class="property">swift</span>
 <span class="keyword">var</span> description = <span class="string">"A description of BlogExample"</span>
 <span class="keyword">var</span> language: <span class="type">Language</span> { .<span class="dotAccess">english</span> }
 <span class="keyword">var</span> imagePath: <span class="type">Path</span>? { <span class="keyword">nil</span> }
-</code></pre><p>Then push the following changes to your repository and deploy using terminal.</p><pre><code>$ git add .
+</code></pre><p>The first you want to do is create a new branch. When using Publish, you will always have at least two active branches that are in use. The <code>master</code> branch will contain all the generated code <em>after deployment</em> so you don't want to edit that directly. Instead, you'll make all your changes on a separate branch, then when you deploy your Swift code is not affected. To create a new branch open up terminal and navigate to your repository (after cloning, of course) then type</p><pre><code>git checkout -b <span class="string">"new-branch-name"</span>
+</code></pre><p>Note, you can name the branch whatever you want. Then push the following changes to your repository and deploy using terminal.</p><pre><code>$ git add .
 $ git commit -m <span class="string">"commit for deployment"</span>
 $ git push
 $ publish deploy
-</code></pre><p>At this point, you'll see your terminal doing some work until you end up with a success message. Now navigate over <code>your-user-name.github.io</code> and you should see your live website! Here is the link to mine from this tutorial. <a href="https://swiftblogexample.github.io">https://swiftblogexample.github.io</a>. <a href="https://github.com/thomaskellough/BlogExample">Here</a> is also a link to this repo so you can see everything in place.</p><p>I hope you've enjoyed this tutorial and I'd love to see what you come up with! You can find my contact information at the bottom.</p><table class="posts-table">
+</code></pre><p>At this point, you'll see your terminal doing some work until you end up with a success message. You'll also see your master branch have a bunch of generated content. Now navigate over <code>your-user-name.github.io</code> and you should see your live website! Here is the link to mine from this tutorial. <a href="https://swiftblogexample.github.io">https://swiftblogexample.github.io</a>. <a href="https://github.com/thomaskellough/BlogExample">Here</a> is also a link to this repo so you can see everything in place.</p><p>I hope you've enjoyed this tutorial and I'd love to see what you come up with! You can find my contact information at the bottom.</p><table class="posts-table">
     <tr>
         <th class="th-singl-left"><a href="/posts/01-build-a-website-with-publish-part-03" style="text-decoration: none">&larr; Pages, tags, and metadata</a></th>
     </tr>
