@@ -1,0 +1,289 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"/><meta name="og:site_name" content="The Swift Protocol"/><link rel="canonical" href="www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-02"/><meta name="twitter:url" content="www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-02"/><meta name="og:url" content="www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-02"/><title>Build your very own website using Swift - Part 2 | The Swift Protocol</title><meta name="twitter:title" content="Build your very own website using Swift - Part 2 | The Swift Protocol"/><meta name="og:title" content="Build your very own website using Swift - Part 2 | The Swift Protocol"/><meta name="description" content="Part two of building your own website using Swift. This section focuses on creating custom nodes."/><meta name="twitter:description" content="Part two of building your own website using Swift. This section focuses on creating custom nodes."/><meta name="og:description" content="Part two of building your own website using Swift. This section focuses on creating custom nodes."/><meta name="twitter:card" content="summary"/><link rel="stylesheet" href="/styles.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to The Swift Protocol"/></head><body><header><div class="nav-logo"><a href="/"><img src="/Images/blog-logo.png"/></a><nav class="nav-bar"><p>Swift Skill Building With Thomas Kellough</p><ul><li><h3><a href="/home">Home</a></h3></li><li><h3><a href="/posts">Posts</a></h3></li><li><h3><a href="/tags">Tags</a></h3></li></ul></nav></div></header><div class="wrapper"><article><h1>Build your very own website using Swift - Part 2</h1><div class="post-tags" markdown="1">
+        <a class="post-category post-category-publish" href="/tags/publish">Publish</a>
+        <a class="post-category post-category-website" href="/tags/website">Website</a>
+        <a class="post-category post-category-extensions" href="/tags/extensions">Extensions</a>
+        <a class="post-category post-category-html" href="/tags/html">Html</a>
+        <a class="post-category post-category-css" href="/tags/css">CSS</a>
+</div><table class="posts-table">
+    <tr>
+        <th class="th-left"><a href="/posts/01-build-a-website-with-publish-part-01" style="text-decoration: none">&larr; Introduction and setting up</a></th>
+        <th class="th-middle"></th>
+        <th class="th-right"><a href="/posts/01-build-a-website-with-publish-part-03" style="text-decoration: none">Pages, tags, and metadata &rarr;</a></th>
+    </tr>
+</table><h3>Creating your first blog page</h3><p>This is a tutorial on how to make a blog, right? So let's create our first page that will list all of the blogs you plan to create. Remember, the goal of this tutorial is also to show you a way to keep your code organized. So what I'd recommend doing is creating a new directory under your <code>Sources/BlogExample</code> folder called <code>HtmlPages</code>. This is a good place to store the code for each section of your site such as home page, about me page, posts, contact information, or whatever you want really! After creating the directory create a new Swift file named <code>Factory+Posts.Swift</code> and write the following code.</p><pre><code><span class="keyword">import</span> Publish
+<span class="keyword">import</span> Plot
+
+<span class="keyword">extension</span> <span class="type">MyHTMLFactory</span> {
+    <span class="keyword">func</span> makePostsHTML(for section: <span class="type">Section</span>&lt;<span class="type">Site</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+         <span class="type">HTML</span>(
+            .<span class="call">head</span>(for: context.<span class="property">index</span>, on: context.<span class="property">site</span>),
+            .<span class="call">body</span>(
+                .<span class="call">text</span>(<span class="string">"Hello, posts!"</span>)
+            )
+        )
+    }
+}
+</code></pre><p>Let's talk about what this does. This creates an extension for your custom HTMLFactory that allows you to create as many pages as you want and use in your website. You use an extension because we are adding it in a different Swift file for organization purposes. Technically, you could just add this function inside <code>MyHTMLFactory.swift</code> but it can be difficult to organize and find things later. Even though you don't need to write pure HTML, you do need to understand how it works. Publish actually takes your Swift code and then converts it to HTML. In every webpage you have your main HTML, a header that contains all the metadata your webpage holds, and then a body which contains all of your content.</p><p>Press <code>cmd + R</code> to run your code then navigate over to <code>http://localhost:8000/posts/</code> to see your changes! You should now see "Hello, posts!" since that's what you typed for the body.</p><p>Let me guess, you saw "Hello, section" instead? Let's go over this. Navigate back over to to <code>MyHTMLFactory.swift</code> and take a look at the following function.</p><pre><code><span class="keyword">func</span> makeSectionHTML(for section: <span class="type">Section</span>&lt;<span class="type">Site</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+    <span class="type">HTML</span>(.<span class="call">text</span>(<span class="string">"Hello, section"</span>))
+}
+</code></pre><p>This is the function that is actually being called when you go to <code>http://localhost:8000/posts/</code>. So instead of returning that HTML, let's return the one you just created. Change the function to look like this.</p><pre><code><span class="keyword">func</span> makeSectionHTML(for section: <span class="type">Section</span>&lt;<span class="type">Site</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+    <span class="keyword">try</span> <span class="call">makePostsHTML</span>(for: section, context: context)
+}
+</code></pre><p>Note that you need to mark it with a <code>try</code> because it can throw. Re-run your app, refresh your page and you should see this. If your page doesn't refresh try refreshing the cache using <code>cmd + option + e</code> if using safari, then reloading. This is a good command to remember when you're editing CSS.</p><img class="post-image" src="/Images/Posts/01/01-05.png" alt="Hello, posts! page" width="800"/><p>We are getting somewhere! But I said the plan was to make a list of your posts. So head back over to <code>Factory+Posts.swift</code> and let's edit up the body of our function. Here's what we are going to do.</p><ol><li>Create an unordered list for each blog post</li></ol><ol start="2"><li>Loop over each blog post and create a list item for each one</li></ol><ol start="3"><li>Create a heading for our blog post and a link that allows us to click it and read the entire blog</li></ol><ol start="4"><li>Create a p tag (paragraph tag) that lists a description of what the post is about</li></ol><p>This can get confusing, so I'll leave some comments to help explain for each step. Please, please watch your parentheses here. I highy suggest typing everything yourself and allowing Swift to autocomplete.</p><pre><code>...
+.<span class="call">body</span>(
+    <span class="comment">// Create an unordered list</span>
+    .<span class="call">ul</span>(
+        <span class="comment">// Loop over each blog post that we have in our code</span>
+        .<span class="call">forEach</span>(
+            section.<span class="property">items</span>
+        ) { item <span class="keyword">in</span>
+            <span class="comment">// Creates a list item for each post</span>
+            .<span class="dotAccess">li</span> (
+                <span class="comment">// Creates an article node to display our information</span>
+                .<span class="call">article</span>(
+                    <span class="comment">// Creates a heading with our post title</span>
+                    .<span class="call">h1</span>(
+                        <span class="comment">// Creates an anchor tag so we can create the link to our post</span>
+                        .<span class="call">a</span>(
+                            <span class="comment">// Creates the link to our post so we can click it and read everything</span>
+                            .<span class="call">href</span>(item.<span class="property">path</span>),
+                            .<span class="call">text</span>(item.<span class="property">title</span>)
+                        )
+                    ),
+                    <span class="comment">// Creates a description  of what our post is about</span>
+                    .<span class="call">p</span>(.<span class="call">text</span>(item.<span class="property">description</span>))
+                )
+            )
+        }
+    )
+)
+...
+</code></pre><p>Wow, that's a lot. But re-run your app and you should see this! You can even click the link and see a new page!</p><img class="post-image" src="/Images/Posts/01/01-06.png" alt="Xcode running publish" width="800"/><p>Now I know what you're thinking. You never wrote that blog post and where did it come from? Navigate over to your Project Navigator and look under <code>Content/posts/first-post.md</code>. Open that up and take a look. Here's what you should see.</p><pre><code>---
+date: <span class="number">2020</span>-<span class="number">07</span>-<span class="number">30 21</span>:<span class="number">47</span>
+description: <span class="type">A</span> description of my first post.
+tags: first, article
+---
+# <span class="type">My</span> first post
+
+<span class="type">My</span> first post's text.
+</code></pre><p>This is a markdown file and this is how you will write all of your blog posts. I won't be doing a markdown tutorial here, but it's easy enough to Google when you want to figure out what to do. The important thing here is how the beginning is organized. You'll notice that you used <code>item.title</code> and <code>item.description</code> in the above function. The description is on the third line of your markdown file while the title is on the sixth line. We will discuss this in detail later. For now, create a new file in the same <code>posts</code> directory and give it some dummy content, or copy mine. Make sure it's the same formatting and don't forget to remove the swift extension.</p><pre><code>---
+date: <span class="number">2020</span>-<span class="number">07</span>-<span class="number">30 21</span>:<span class="number">47</span>
+description: <span class="type">A</span> description of my second post.
+tags: second, article
+---
+# <span class="type">My</span> second post
+
+<span class="type">My</span> second post's text.
+</code></pre><p>Re-run your code, refresh your browser and you should now see TWO posts. The cool thing about Publish is once you get your site up and running, you only need to edit your markdown files to add new posts! However, let's make it look a bit better because right now it's not fun to read. This is done with one single line of code since there is a lot of CSS that was already created. Above your <code>.forEach</code> loop add a class. Feel free to dig through your CSS code to see what each class does! Your change should look like this.</p><pre><code>...
+.<span class="call">ul</span>(
+    <span class="comment">// Loop over each blog post that we have in our code</span>
+    .<span class="call">class</span>(<span class="string">"item-list"</span>),
+    .<span class="call">forEach</span>(
+        section.<span class="property">items</span>
+    ) { item <span class="keyword">in</span>
+...
+</code></pre><p>This should now format your posts to look a bit better. Now we need to add a header and a footer, but as you can see, this is going to get very messy and unorganized with all the parentheses inside your html body. So how can we fix this? Well the way Publish works is by creating nodes for all the HTML elements. We aren't going to dig deep into nodes with Swift, but I want you to understand that each time you create a body, or h1 tag, or p tag, or article, button, or anything else with HTML a node is created. They are highly reusable and easy to break apart and combine together. So what we want to do is create a specific node that is <em>only</em> for the post content.</p><p>Similar to how we create a new directory for HtmlPages, let's create another new directory called <code>Nodes</code> under <code>Sources/BlogExample</code> then create a new swift file called <code>Node+PostsContent</code> inside the new directory. I want you to add the following code.</p><pre><code><span class="keyword">import</span> Publish
+<span class="keyword">import</span> Plot
+
+<span class="keyword">extension</span> <span class="type">Node</span> <span class="keyword">where</span> <span class="type">Context</span> == <span class="type">HTML</span>.<span class="type">BodyContext</span> {
+    <span class="keyword">static func</span> postContent&lt;T: <span class="type">Website</span>&gt;(for items: [<span class="type">Item</span>&lt;<span class="type">T</span>&gt;], on site: <span class="type">T</span>) -&gt; <span class="type">Node</span> {
+    
+    }
+}
+</code></pre><p>Let's discuss this. Here you create an extension on Node for HTML content inside of your body. The function is set up as a generic (that's what the T is all about) which allows us to pass in data type we want. The function also returns a Node. This is the important part. You can put as much code in here which returns one node, which we can then use in our html pages. Why would we do this? It helps keep everything organized and separated. It's using functional programming for better architecture. So the next part is going back to your <code>Factory+Posts.swift</code> file and removing everything from the body and placing it inside this new function. Then you can call your <code>.postContent</code> function inside <code>Factory+Posts.swift</code> and pass in both your items and site. To get <code>[Item&lt;T&gt;]</code> you just call <code>section.items</code> and to get <code>site</code> you just call <code>context.site</code>. Notice that we also made this function static. This allows us to use it anywhere.</p><p>There is one more thing I want to add while we are back in postContent. Let's add a way to sort our posts by date and also list the date published on each post. We will do this by:</p><ol><li>Creating a date formatter from Swift's foundation library</li></ol><ol start="2"><li>Call Swift's built-in sorted method to create a new list sorted by date</li></ol><ol start="3"><li>Loop over the newly created list in our forEach loop instead of the one passed in</li></ol><ol start="4"><li>Add a paragraph tag displaying the formatted date on each post</li></ol><p>When you're finished, your two new extensions should look like this. We did have to change <code>section.items</code> to <code>items</code> in line 20 of <code>postContent</code>. This is because our function now uses a parameter of items instead of section so we can just call items directly.</p><pre><code><span class="keyword">extension</span> <span class="type">MyHTMLFactory</span> {
+    <span class="keyword">func</span> makePostsHTML(for section: <span class="type">Section</span>&lt;<span class="type">Site</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+         <span class="type">HTML</span>(
+            .<span class="call">head</span>(for: context.<span class="property">index</span>, on: context.<span class="property">site</span>),
+            .<span class="call">body</span>(
+                .<span class="call">postContent</span>(for: section.<span class="property">items</span>, on: context.<span class="property">site</span>)
+            )
+        )
+    }
+}
+
+...
+<span class="keyword">import</span> Foundation
+
+<span class="keyword">extension</span> <span class="type">Node</span> <span class="keyword">where</span> <span class="type">Context</span> == <span class="type">HTML</span>.<span class="type">BodyContext</span> {
+    <span class="keyword">static func</span> postContent&lt;T: <span class="type">Website</span>&gt;(for items: [<span class="type">Item</span>&lt;<span class="type">T</span>&gt;], on site: <span class="type">T</span>) -&gt; <span class="type">Node</span> {
+    
+        <span class="keyword">let</span> formatter = <span class="type">DateFormatter</span>()
+        formatter.<span class="property">dateStyle</span> = .<span class="dotAccess">long</span>
+        
+        <span class="keyword">let</span> sortedItems = items.<span class="call">sorted</span> {
+            $0.<span class="property">date</span> &lt; $1.<span class="property">date</span>
+        }
+        
+        <span class="keyword">return</span>
+            <span class="comment">// Create an unordered list</span>
+            .<span class="call">ul</span>(
+                <span class="comment">// Loop over each blog post that we have in our code</span>
+                .<span class="call">class</span>(<span class="string">"item-list"</span>),
+                .<span class="call">forEach</span>(
+                    sortedItems
+                ) { item <span class="keyword">in</span>
+                    <span class="comment">// Creates a list item for each post</span>
+                    .<span class="dotAccess">li</span> (
+                        <span class="comment">// Creates an article node to display our information</span>
+                        .<span class="call">article</span>(
+                            <span class="comment">// Creates a heading with our post title</span>
+                            
+                            .<span class="call">h1</span>(
+                                <span class="comment">// Creates an anchor tag so we can create the link to our post</span>
+                                .<span class="call">a</span>(
+                                    <span class="comment">// Creates the link to our post so we can click it and read everything</span>
+                                    .<span class="call">href</span>(item.<span class="property">path</span>),
+                                    .<span class="call">text</span>(item.<span class="property">title</span>)
+                                )
+                            ),
+                            <span class="comment">// Creates a description  of what our post is about</span>
+                            .<span class="call">p</span>(.<span class="call">text</span>(item.<span class="property">description</span>)),
+                            .<span class="call">p</span>(.<span class="call">text</span>(<span class="string">"Published:</span> \(formatter.<span class="call">string</span>(from: item.<span class="property">lastModified</span>))<span class="string">"</span>))
+                        )
+                    )
+                }
+        )
+    }
+}
+</code></pre><p>Run your code and it should look the same! The rest of this tutorial should go by rather quickly. We have most of the difficult part out of the way. You know how to install and launch your website, create new html pages, and create new nodes. Let's start adding a few things to make it look better and then discuss how to add new pages and tags.</p><h3>Adding a wrapper node</h3><p>Publish comes with a CSS wrapper class that we can help make our content look better. Let's first create this node so we can use it anywhere in our website. Go ahead and create a new swift file called <code>Node+Wrapper.swift</code> and add the following code.</p><pre><code><span class="keyword">import</span> Publish
+<span class="keyword">import</span> Plot
+
+
+<span class="keyword">extension</span> <span class="type">Node</span> <span class="keyword">where</span> <span class="type">Context</span> == <span class="type">HTML</span>.<span class="type">BodyContext</span> {
+    <span class="keyword">static func</span> wrapper(<span class="keyword">_</span> nodes: <span class="type">Node</span>...) -&gt; <span class="type">Node</span> {
+        .<span class="call">div</span>(.<span class="call">class</span>(<span class="string">"wrapper"</span>), .<span class="dotAccess">group</span>(nodes))
+    }
+}
+</code></pre><p>Then wrap everything inside your post content inside the .wrapper(). Your return statement should look like this.</p><pre><code><span class="keyword">return</span>
+    .<span class="call">wrapper</span>(
+        <span class="comment">// Create an unordered list</span>
+        .<span class="call">ul</span>(
+            <span class="comment">// Loop over each blog post that we have in our code</span>
+            .<span class="call">class</span>(<span class="string">"item-list"</span>),
+            .<span class="call">forEach</span>(
+                sortedItems
+            ) { item <span class="keyword">in</span>
+                <span class="comment">// Creates a list item for each post</span>
+                .<span class="dotAccess">li</span> (
+                    <span class="comment">// Creates an article node to display our information</span>
+                    .<span class="call">article</span>(
+                        <span class="comment">// Creates a heading with our post title</span>
+                        
+                        .<span class="call">h1</span>(
+                            <span class="comment">// Creates an anchor tag so we can create the link to our post</span>
+                            .<span class="call">a</span>(
+                                <span class="comment">// Creates the link to our post so we can click it and read everything</span>
+                                .<span class="call">href</span>(item.<span class="property">path</span>),
+                                .<span class="call">text</span>(item.<span class="property">title</span>)
+                            )
+                        ),
+                        <span class="comment">// Creates a description  of what our post is about</span>
+                        .<span class="call">p</span>(.<span class="call">text</span>(item.<span class="property">description</span>)),
+                        .<span class="call">p</span>(.<span class="call">text</span>(<span class="string">"Published:</span> \(formatter.<span class="call">string</span>(from: item.<span class="property">lastModified</span>))<span class="string">"</span>))
+                    )
+                )
+            }
+        )
+)
+</code></pre><p>You should be able to run your code now and see your posts look a bit nicer. Here's an example of what you should see.</p><img class="post-image" src="/Images/Posts/01/01-07.png" alt="Wrapper example on posts" width="800"/><h3>Adding a header</h3><p>Now let's add a header that we can display on every webpage. We will do this by creating a colored banner with a simple title along with some navigation buttons. This next node extension will accomplish the following tasks.</p><ol><li>It will create a list of navigation items for the different pages of your website</li></ol><ol start="2"><li>It will return a header node wrapped around a wrapper node</li></ol><ol start="3"><li>Inside the wrapper node you'll create a header for your title</li></ol><ol start="4"><li>Below the title you'll create a .nav node that contains an unordered list of your navigation items</li></ol><ol start="5"><li>Each navigation item will link you to that specific web page. For example, if you click "Home" you will be redirected to <code>http://localhost:8000/home</code></li></ol><p>Start by creating a new file called <code>Node+Header.swift</code> and add the following code. I've also added comments to help explain what each piece is.</p><pre><code><span class="keyword">import</span> Publish
+<span class="keyword">import</span> Plot
+
+<span class="keyword">extension</span> <span class="type">Node</span> <span class="keyword">where</span> <span class="type">Context</span> == <span class="type">HTML</span>.<span class="type">BodyContext</span> {
+    
+    <span class="keyword">static func</span> myHeader&lt;T: <span class="type">Website</span>&gt;(for context: <span class="type">PublishingContext</span>&lt;<span class="type">T</span>&gt;) -&gt; <span class="type">Node</span> {
+        <span class="comment">// Create a list of navigation items</span>
+        <span class="keyword">let</span> navItems = [<span class="string">"Home"</span>, <span class="string">"Posts"</span>, <span class="string">"About"</span>]
+        
+        <span class="keyword">return</span> .<span class="call">header</span>(
+            <span class="comment">// Begin the wrapper class</span>
+            .<span class="call">wrapper</span>(
+                <span class="comment">// Create your main title</span>
+                .<span class="call">h1</span>(<span class="string">"My Swift Blog"</span>),
+                <span class="comment">// Create the nav node</span>
+                .<span class="call">nav</span>(
+                    <span class="comment">// Create and undordered list and loop through your navItems yuou created above</span>
+                    .<span class="call">ul</span>(
+                        .<span class="call">forEach</span>(
+                            navItems
+                        ) { item <span class="keyword">in</span>
+                            .<span class="call">li</span>(
+                                <span class="comment">// Create an anchor tag to make linkes</span>
+                                .<span class="call">a</span>(
+                                    <span class="comment">// Redirect the user to a new webpage on your site when they click each item</span>
+                                    .<span class="call">href</span>(<span class="string">"/</span>\(item.<span class="call">lowercased</span>())<span class="string">"</span>),
+                                    .<span class="call">text</span>(item)
+                                )
+                            )
+                        }
+                    )
+                )
+            )
+        )
+    }
+}
+</code></pre><p>You have now created the node, but you naven't actually used it on one of your pages yet. Go back to <code>Factory+Posts.swift</code> and add in your .myHeader function. It should now look like this. You can already see how separating nodes will help keep your html pages oraganized.</p><pre><code><span class="keyword">extension</span> <span class="type">MyHTMLFactory</span> {
+    <span class="keyword">func</span> makePostsHTML(for section: <span class="type">Section</span>&lt;<span class="type">Site</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+         <span class="type">HTML</span>(
+            .<span class="call">head</span>(for: context.<span class="property">index</span>, on: context.<span class="property">site</span>),
+            .<span class="call">body</span>(
+                .<span class="call">myHeader</span>(for: context),
+                .<span class="call">postContent</span>(for: section.<span class="property">items</span>, on: context.<span class="property">site</span>)
+            )
+        )
+    }
+}
+</code></pre><p>You can run this now and see it in action, but before you do, I suggest we add our own custom color to the banner up top. We will do this by also creating a gradient background instead of just a solid color. There is already a header class in our CSS file, so jump in there and look for</p><pre><code><span class="call">header</span> {
+    background-color: #eee;
+}
+</code></pre><p>Change it to look like this</p><pre><code><span class="call">header</span> {
+    background: linear-<span class="call">gradient</span>(90deg, <span class="call">rgba</span>(<span class="number">2</span>,<span class="number">0</span>,<span class="number">36</span>,<span class="number">1</span>) <span class="number">2</span>%, <span class="call">rgba</span>(<span class="number">9</span>,<span class="number">9</span>,<span class="number">121</span>,<span class="number">1</span>) <span class="number">29</span>%, <span class="call">rgba</span>(<span class="number">0</span>,<span class="number">212</span>,<span class="number">255</span>,<span class="number">1</span>) <span class="number">100</span>%);
+}
+</code></pre><p>Feel free to play with it as you see fit. But if you did the above you should have something that looks like this now.</p><img class="post-image" src="/Images/Posts/01/01-08.png" alt="Header example" width="800"/><h3>Add a footer</h3><p>Go ahead and create a new node called <code>Node+Footer.swift</code> and let's do the following.</p><ol><li>Create a variable that automatically gets the current year</li></ol><ol start="2"><li>Create a container that contains the copyright symbol with the year and the name of your site</li></ol><ol start="3"><li>Create a link to John Sundell's Publish repo to show people how you generated this website</li></ol><p>Note that we will need to add the Foundation library in order to get our current calendar date. Add in the following code.</p><pre><code><span class="keyword">import</span> Foundation
+<span class="keyword">import</span> Publish
+<span class="keyword">import</span> Plot
+
+<span class="keyword">extension</span> <span class="type">Node</span> <span class="keyword">where</span> <span class="type">Context</span> == <span class="type">HTML</span>.<span class="type">BodyContext</span> {
+    <span class="keyword">static func</span> myFooter&lt;T: <span class="type">Website</span>&gt;(for site: <span class="type">T</span>) -&gt; <span class="type">Node</span> {
+        <span class="comment">// Creates a variable to get the current year of today</span>
+        <span class="keyword">let</span> currentYear = <span class="type">Calendar</span>.<span class="property">current</span>.<span class="call">component</span>(.<span class="dotAccess">year</span>, from: <span class="type">Date</span>())
+        
+        <span class="keyword">return</span>
+            <span class="comment">// Creates a container</span>
+            .<span class="call">div</span>(
+                <span class="comment">// Provides a CSS class to this container</span>
+                .<span class="call">class</span>(<span class="string">"footer"</span>),
+                <span class="comment">// Creates another container for copyright information</span>
+                .<span class="call">div</span>(
+                    .<span class="call">text</span>(<span class="string">"©</span> \(currentYear) \(site.<span class="property">name</span>)<span class="string">"</span>)
+                ),
+                <span class="comment">// Creates another container for link to John Sundell's publish repo</span>
+                .<span class="call">div</span>(
+                    .<span class="call">text</span>(<span class="string">"Generated using "</span>),
+                    .<span class="call">a</span>(
+                        .<span class="call">text</span>(<span class="string">"Publish"</span>),
+                        .<span class="call">href</span>(<span class="string">"https://github.com/johnsundell/publish"</span>)
+                    ),
+                    .<span class="call">text</span>(<span class="string">". Written in Swift"</span>)
+                )
+        )
+    }
+}
+</code></pre><p>Add your footer inside <code>Factory+Posts.swift</code>, but note that the parameter is different for the footer than it is the header. The parameter used for the header is a <code>context</code> while the footer's parameter is <code>Website</code>. Feel free to change these as you see fit, but if you wrote it the same way I did, your <code>Factory+Posts</code> will now look like this.</p><pre><code><span class="keyword">extension</span> <span class="type">MyHTMLFactory</span> {
+    <span class="keyword">func</span> makePostsHTML(for section: <span class="type">Section</span>&lt;<span class="type">Site</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+         <span class="type">HTML</span>(
+            .<span class="call">head</span>(for: context.<span class="property">index</span>, on: context.<span class="property">site</span>),
+            .<span class="call">body</span>(
+                .<span class="call">myHeader</span>(for: context),
+                .<span class="call">postContent</span>(for: section.<span class="property">items</span>, on: context.<span class="property">site</span>),
+                .<span class="call">myFooter</span>(for: context.<span class="property">site</span>)
+            )
+        )
+    }
+}
+</code></pre><table class="posts-table">
+    <tr>
+        <th class="th-left"><a href="/posts/01-build-a-website-with-publish-part-01" style="text-decoration: none">&larr; Introduction and setting up</a></th>
+        <th class="th-middle"></th>
+        <th class="th-right"><a href="/posts/01-build-a-website-with-publish-part-03" style="text-decoration: none">Pages, tags, and metadata &rarr;</a></th>
+    </tr>
+</table></article></div><div class="footer-social"><div>© 2020 The Swift Protocol</div><div>Generated using <a href="https://github.com/johnsundell/publish">Publish</a>. Written in Swift</div><div><a href="https://www.linkedin.com/in/thomas-kellough/">LinkedIn</a> | <a href="https://github.com/thomaskellough">Github</a> | <a href="mailto:theswiftprotocol@gmail.com">Email</a></div></div></body></html>

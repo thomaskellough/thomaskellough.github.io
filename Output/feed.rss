@@ -1,0 +1,1559 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content"><channel><title>The Swift Protocol</title><description>Swift Skill Building With Thomas Kellough</description><link>www.thomaskellough/thomaskellough.github.io</link><language>en</language><lastBuildDate>Mon, 10 Aug 2020 16:46:44 -0500</lastBuildDate><pubDate>Mon, 10 Aug 2020 16:46:44 -0500</pubDate><ttl>250</ttl><atom:link href="www.thomaskellough/thomaskellough.github.io/feed.rss" rel="self" type="application/rss+xml"/><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-03</guid><title>Use AVFoundation to create a scanner to scan your drivers license - Part 3</title><description>The final part of how to scan a barcode. We add some extra features in this section such as a torch and scan bounds.</description><link>www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-03</link><pubDate>Sat, 8 Aug 2020 22:12:00 -0500</pubDate><content:encoded><![CDATA[<h1>Use AVFoundation to create a scanner to scan your drivers license - Part 3</h1><div class="post-tags" markdown="1">
+        <a class="post-category post-category-avfoundation" href="www.thomaskellough/thomaskellough.github.io/tags/avfoundation">AVFoundation</a>
+        <a class="post-category post-category-torch" href="www.thomaskellough/thomaskellough.github.io/tags/torch">Torch</a>
+        <a class="post-category post-category-bezierpath" href="www.thomaskellough/thomaskellough.github.io/tags/bezierpath">BezierPath</a>
+</div><table class="posts-table">
+    <tr>
+        <th class="th-single-left"><a href="www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-02" style="text-decoration: none">&larr; Capturing data</a></th>
+    </tr>
+</table><h3>Adding a torch</h3><p>Sometimes scanning a license is difficult when there is no light. Well, your phone comes with a light! Apple actually has something called <a href="https://developer.apple.com/documentation/avfoundation/avcapturedevice/1386035-torchmode">torch mode</a> that allows us to easily toggle our light on and off. Let's start by adding a bar button item that we can use to toggle the light. Add this in <code>viewDidLoad</code> of <code>ScannerViewController</code>.</p><pre><code><span class="keyword">let</span> torchButton = <span class="type">UIBarButtonItem</span>(title: <span class="string">"Torch"</span>, style: .<span class="dotAccess">plain</span>, target: <span class="keyword">self</span>, action: <span class="keyword">#selector</span>(toggleTorch))
+navigationItem.<span class="property">rightBarButtonItem</span> = torchButton
+</code></pre><p>Right now we will get an error, because we have no <code>toggleTorch</code> function. Let's go ahead and add that now. Remember, we need <code>@objc</code> because we are using a selector here. This function will do the following</p><ol><li>Check if the device is capable of video, if not it will perform an early exit</li></ol><ol start="2"><li>Check if the device has a light, if not it will perform an early exit</li></ol><ol start="3"><li>Lock the device for configuration so no other apps can control the light while we are trying to use it here</li></ol><ol start="4"><li>If the light is on turn it off and if it's off turn it on</li></ol><ol start="5"><li>Print an error if something went wrong</li></ol><pre><code><span class="keyword">@objc func</span> toggleTorch() {
+    <span class="keyword">guard let</span> device = <span class="type">AVCaptureDevice</span>.<span class="call">default</span>(for: .<span class="dotAccess">video</span>) <span class="keyword">else</span> { <span class="keyword">return</span> }
+    <span class="keyword">guard</span> device.<span class="property">hasTorch</span> <span class="keyword">else</span> { <span class="keyword">return</span> }
+    
+    <span class="keyword">do</span> {
+        <span class="keyword">try</span> device.<span class="call">lockForConfiguration</span>()
+        
+        <span class="keyword">if</span> device.<span class="property">torchMode</span> == .<span class="dotAccess">on</span> {
+            device.<span class="property">torchMode</span> = .<span class="dotAccess">off</span>
+        } <span class="keyword">else</span> {
+            device.<span class="property">torchMode</span> = .<span class="dotAccess">on</span>
+        }
+        
+    } <span class="keyword">catch</span> {
+        <span class="call">print</span>(<span class="string">"There was an error trying to use the torch"</span>)
+    }
+}
+</code></pre><p>You should be able to run your app now and see a "Torch" button that you can tap to turn your light on and off. Have fun scanning in the dark!</p><h3>Adding scan bounds</h3><p>There's one more thing I want to show you. You'll notice that when you turn on the scanner you have no idea where to place your barcode. Honestly, if you get it close to the middle you shouldn't have an issue, but we can make it a bit more user friendly if we add some scan bounds to help the user guide the barcode. Let's create a new function to do that for us now. We will do this by using <code>UIBezierPath</code> to draw a rectangle, color it accordingly, and add it to our preview layer. Once again, don't forget to call your function in <code>setUpScanner</code>.</p><pre><code><span class="keyword">func</span> showScanBounds() {
+    <span class="keyword">let</span> rectangle = <span class="type">UIBezierPath</span>(rect: <span class="type">CGRect</span>(x: <span class="number">8</span>, y: (view.<span class="property">bounds</span>.<span class="property">size</span>.<span class="property">height</span> / <span class="number">2</span>) + <span class="number">30</span>, width: view.<span class="property">bounds</span>.<span class="property">size</span>.<span class="property">width</span> - <span class="number">16</span>, height: <span class="number">60</span>))
+    <span class="keyword">let</span> boundLayer = <span class="type">CAShapeLayer</span>.<span class="keyword">init</span>()
+    boundLayer.<span class="property">path</span> = rectangle.<span class="property">cgPath</span>
+    boundLayer.<span class="property">fillColor</span> = <span class="type">UIColor</span>(red: <span class="number">0</span>, green: <span class="number">1</span>, blue: <span class="number">0</span>, alpha: <span class="number">0.1</span>).<span class="property">cgColor</span>
+    boundLayer.<span class="property">strokeColor</span> = <span class="type">UIColor</span>.<span class="property">green</span>.<span class="property">cgColor</span>
+    avPreviewLayer.<span class="call">addSublayer</span>(boundLayer)
+}
+</code></pre><p>Start up your scanner and you should see something like this!</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/03/03-02.png" alt="Scanner with bounds" /><p>I hope this tutorial helped and if you'd like you can see the full source code for this project <a href="https://github.com/thomaskellough/iOS-Tutorials-UIKit-Swift/tree/master/How-To-Scan-A-Barcode">here</a>.</p><table class="posts-table">
+    <tr>
+        <th class="th-single-left"><a href="www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-02" style="text-decoration: none">&larr; Capturing data</a></th>
+    </tr>
+</table>]]></content:encoded></item><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-02</guid><title>Use AVFoundation to create a scanner to scan your drivers license - Part 2</title><description>Part two of scanning a barcode. This section focuses on capturing the data and displaying it to the user.</description><link>www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-02</link><pubDate>Tue, 4 Aug 2020 22:12:00 -0500</pubDate><content:encoded><![CDATA[<h1>Use AVFoundation to create a scanner to scan your drivers license - Part 2</h1><div class="post-tags" markdown="1">
+        <a class="post-category post-category-avfoundation" href="www.thomaskellough/thomaskellough.github.io/tags/avfoundation">AVFoundation</a>
+        <a class="post-category post-category-metadata" href="www.thomaskellough/thomaskellough.github.io/tags/metadata">Metadata</a>
+        <a class="post-category post-category-delegates" href="www.thomaskellough/thomaskellough.github.io/tags/delegates">Delegates</a>
+</div><table class="posts-table">
+    <tr>
+        <th class="th-left"><a href="www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-01" style="text-decoration: none">&larr; Introduction and setting up</a></th>
+        <th class="th-middle"></th>
+        <th class="th-right"><a href="www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-03" style="text-decoration: none">Adding a torch and scan bounds &rarr;</a></th>
+    </tr>
+</table><h3>Capturing Data</h3><p>So far we have our camera up and running, but it doesn't actually do anything for us. We want to set it up to read a barcode and give us back that information. We will do this by using <code>AVCaptureMetaDataOutput</code>. We will break this up into two separate functions, one to read the data, and the other to return the data. Let's start by reading the data. We need to do the following</p><ol><li>Create an instance of <code>AVCaptureMetadataOutput()</code></li></ol><ol start="2"><li>If our capture session can add output, do so, otherwise present an error message</li></ol><ol start="3"><li>Provide the scan metadata object types</li></ol><p>Add the following function and call it at the bottom of <code>setupScanner()</code></p><pre><code><span class="keyword">func</span> addMetaData() {
+    <span class="keyword">let</span> metadataOutput = <span class="type">AVCaptureMetadataOutput</span>()
+    
+    <span class="keyword">if</span> avCaptureSession.<span class="call">canAddOutput</span>(metadataOutput) {
+        avCaptureSession.<span class="call">addOutput</span>(metadataOutput)
+        
+        metadataOutput.<span class="call">setMetadataObjectsDelegate</span>(<span class="keyword">self</span>, queue: <span class="type">DispatchQueue</span>.<span class="property">main</span>)
+        metadataOutput.<span class="property">metadataObjectTypes</span> = [.<span class="dotAccess">pdf417</span>]
+    } <span class="keyword">else</span> {
+        <span class="comment">// Add error message here</span>
+        <span class="keyword">return</span>
+    }
+}
+</code></pre><p>You'll also need to have <code>ScannerViewController</code> conform to our metadataoutput by adding <code>AVCaptureMetadataOutputObjectsDelegate</code>. You'll notice that we passed in <code>.pdf417</code> as our object type because that's what many identification cards are. However, there are a ton more you can add here, including QR codes! I'll let you play with that on your own.</p><p>Reading the data is one thing, but we need to actually output the data so we can see it. This uses the <code>metadataOutput</code> function in AVFoundation, so you don't need to create it yourself. We will fill it in on our own, however. What this will do is collect our objects we see, take the first object and see if we can get a readable object out of it. If it can, we turn that into a string, play a vibration to notify us, then we will call one more function that we will create to update our label. Go ahead and add the following code, including the stub for the second function.</p><pre><code><span class="keyword">func</span> metadataOutput(<span class="keyword">_</span> output: <span class="type">AVCaptureMetadataOutput</span>, didOutput metadataObjects: [<span class="type">AVMetadataObject</span>], from connection: <span class="type">AVCaptureConnection</span>) {
+    avCaptureSession.<span class="call">stopRunning</span>()
+    
+    <span class="keyword">if let</span> metadataObject = metadataObjects.<span class="property">first</span> {
+        <span class="keyword">guard let</span> readableObject = metadataObject <span class="keyword">as</span>? <span class="type">AVMetadataMachineReadableCodeObject</span> <span class="keyword">else</span> { <span class="keyword">return</span> }
+        <span class="keyword">guard let</span> stringObject = readableObject.<span class="property">stringValue</span> <span class="keyword">else</span> { <span class="keyword">return</span> }
+        <span class="type">AudioServicesPlayAlertSound</span>(<span class="type">SystemSoundID</span>(kSystemSoundID_Vibrate))
+        
+        <span class="call">readMetaData</span>(data: stringObject)
+    }
+    
+    navigationController?.<span class="call">popViewController</span>(animated: <span class="keyword">true</span>)
+}
+
+<span class="keyword">func</span> readMetaData(data: <span class="type">String</span>) {
+
+}
+</code></pre><p>You should be able to scan your own drivers license now! Make sure you have good lighting and a decent barcode that isn't torn up or it may not work.</p><h3>Adding the data to our label</h3><p>Even though the code works, we don't actually see any results. We want to pass the data from one view controller to another so the method that we will be using here is delegates. We have two functions that we are going to link to each other. We need to set up a delegate first. So at the top of <code>ScannerViewController</code> add the following property</p><pre><code><span class="keyword">weak var</span> delegate: <span class="type">ViewController</span>!
+</code></pre><p>This will give us a reference for our main view controller allowing us to use its functions. Then inside of <code>readMetaData()</code> we are going to call <code>updateLabel()</code> from <code>ViewController</code>. Edit <code>readMetaData()</code> to look like this.</p><pre><code><span class="keyword">func</span> readMetaData(data: <span class="type">String</span>) {
+    delegate.<span class="call">updateLabel</span>(text: data)
+}
+</code></pre><p>This also means we need to make a couple of updates in <code>ViewController</code>. We need to edit our <code>updateLabel()</code> function to accept a parameter and tell <code>ScannerViewController</code> who the delegate is during navigation. Match your functions to these below to achieve that.</p><pre><code><span class="keyword">@objc func</span> scanBarcode() {
+    <span class="keyword">if let</span> vc = storyboard?.<span class="call">instantiateViewController</span>(withIdentifier: <span class="string">"scannerViewController"</span>) <span class="keyword">as</span>? <span class="type">ScannerViewController</span> {
+        vc.<span class="property">delegate</span> = <span class="keyword">self</span>
+        navigationController?.<span class="call">pushViewController</span>(vc, animated: <span class="keyword">true</span>)
+    }
+}
+
+
+<span class="keyword">func</span> updateLabel(text: <span class="type">String</span>) {
+    textLabel.<span class="property">text</span> = text
+}
+</code></pre><p>Congratulations! Run your code, scan your license and look at all the data it returns! You will, however, notice that it's not very pretty. You can use some regex to parse that out, but we can cover that in another tutorial.</p><table class="posts-table">
+    <tr>
+        <th class="th-left"><a href="www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-01" style="text-decoration: none">&larr; Introduction and setting up</a></th>
+        <th class="th-middle"></th>
+        <th class="th-right"><a href="www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-03" style="text-decoration: none">Adding a torch and scan bounds &rarr;</a></th>
+    </tr>
+</table>]]></content:encoded></item><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-01</guid><title>Use AVFoundation to create a scanner to scan your drivers license - Part 1</title><description>Phones have come a long way from just making calls and text messaging. You're now able to use your phone to scan barcodes, such as a drivers license, that collects data and displays in just seconds.</description><link>www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-01</link><pubDate>Sat, 1 Aug 2020 22:12:00 -0500</pubDate><content:encoded><![CDATA[<h1>Use AVFoundation to create a scanner to scan your drivers license - Part 1</h1><div class="post-tags" markdown="1">
+        <a class="post-category post-category-feature" href="www.thomaskellough/thomaskellough.github.io/tags/feature">Feature</a>
+        <a class="post-category post-category-avfoundation" href="www.thomaskellough/thomaskellough.github.io/tags/avfoundation">AVFoundation</a>
+        <a class="post-category post-category-navigation" href="www.thomaskellough/thomaskellough.github.io/tags/navigation">Navigation</a>
+</div><table class="posts-table">
+    <tr>
+        <th class="th-single-right"><a href="www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-02" style="text-decoration: none">Capturing data &rarr;</a></th>
+    </tr>
+</table><h3>Introduction</h3><p>If you're making an app you may need to use the phones camera to scan some sort of barcode. This tutorial will show you how to set up a project to scan your driver's license and display the information on a screen. Let's start by creating a new Xcode project and choosing a Single View App template, Swift for your langauge, and Storyboard for your user interface. The first thing you should do is go into your project settings and lock your orientation to "Portrait" and uncheck "Upside Down", "Landscape Left", and "Landscape Right". Go ahead and also check "Requires full screen". Then head to storyboard and add a Text View to the view controller and set some constraints. You also want to give your Text View a background color so we can clearly see it. This is where all the information from your drivers license will go. Here's a screenshot of how I set mine up.</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/03/03-01.png" alt="Storyboard initial setup" /><p>Let's create an outlet for this textview inside <code>ViewController.swift</code> so we can do something with it later. Using the assistant editor <code>ctrl + drag</code> from the Text View you created to the top of your view controller class and name it <code>textLabel</code>. You can access the assistant editor by pressing <code>ctrl + option + cmd + enter</code>. After adding our outlet, click your view controller, go up into <code>Editor &gt; Embed In &gt; Navigation Controller</code>. When you are finished with that add a second view controller and give it a <code>Storyboard ID</code> of <code>scannerViewController</code>. We will need to come back in here in just a moment, but let's go ahead and jump into some code. Head over to <code>ViewController.swift</code> and let's add the following things.</p><ol><li>A bar button item to allow us to open the camera to start a scan</li></ol><ol start="2"><li>A function to update our label once we have a successful scan</li></ol><ol start="3"><li>A way to navigate to our new view controller when we press the button</li></ol><p>For the first part add the following insde of <code>viewDidLoad()</code> of <code>ViewController.swift</code></p><pre><code><span class="keyword">let</span> scanBarButtonItem = <span class="type">UIBarButtonItem</span>(barButtonSystemItem: .<span class="dotAccess">camera</span>, target: <span class="keyword">self</span>, action: <span class="keyword">#selector</span>(scanBarcode))
+navigationItem.<span class="property">rightBarButtonItem</span> = scanBarButtonItem
+</code></pre><p>The second part is partially done by adding the below function, but we will fill it in later. I just want to leave a reminder to come back.</p><pre><code><span class="keyword">func</span> updateLabel() {
+    <span class="comment">// this will be where we update our label</span>
+}
+</code></pre><p>For the last part (and a way to remove the error we now have) add the following funciton.</p><pre><code><span class="keyword">@objc func</span> scanBarcode() {
+    <span class="keyword">if let</span> vc = storyboard?.<span class="call">instantiateViewController</span>(withIdentifier: <span class="string">"scannerViewController"</span>) <span class="keyword">as</span>? <span class="type">ScannerViewController</span> {
+        navigationController?.<span class="call">pushViewController</span>(vc, animated: <span class="keyword">true</span>)
+    }
+}
+</code></pre><p>However, this causes another error because we don't actually have a <code>ScannerViewController</code> yet. So create new swift file, make it a template of <code>Cocoa Touch Class</code> with a subclass of <code>UIViewController</code> and give it the name <code>ScannerViewController</code>. Then you can head back over to <code>main.storyboard</code> and set the custom class to the new <code>ScannerViewController</code> that you just created. When you're finished, your <code>ViewController.swift</code> should look like this.</p><pre><code><span class="keyword">import</span> UIKit
+
+<span class="keyword">class</span> ViewController: <span class="type">UIViewController</span> {
+
+    <span class="keyword">@IBOutlet weak var</span> textLabel: <span class="type">UITextView</span>!
+    
+    <span class="keyword">override func</span> viewDidLoad() {
+        <span class="keyword">super</span>.<span class="call">viewDidLoad</span>()
+        
+        <span class="keyword">let</span> scanBarButtonItem = <span class="type">UIBarButtonItem</span>(barButtonSystemItem: .<span class="dotAccess">camera</span>, target: <span class="keyword">self</span>, action: <span class="keyword">#selector</span>(scanBarcode))
+        navigationItem.<span class="property">rightBarButtonItem</span> = scanBarButtonItem
+    }
+    
+    <span class="keyword">@objc func</span> scanBarcode() {
+        <span class="keyword">if let</span> vc = storyboard?.<span class="call">instantiateViewController</span>(withIdentifier: <span class="string">"scannerViewController"</span>) <span class="keyword">as</span>? <span class="type">ScannerViewController</span> {
+            navigationController?.<span class="call">pushViewController</span>(vc, animated: <span class="keyword">true</span>)
+        }
+    }
+
+
+    <span class="keyword">func</span> updateLabel() {
+        <span class="comment">// this will be where we update our label</span>
+    }
+    
+}
+</code></pre><h3>Setting up an AVCaptureSession</h3><p>Apple already has a great framework for us to use to achieve scanning using our phones. We are going to use <code>AVCaptureSession</code> to help us coordinate the flow of data from a visual input to some sort of output. Let's start by adding the following in our <code>ScannerViewController</code></p><pre><code><span class="keyword">import</span> AVFoundation
+<span class="keyword">import</span> UIKit
+
+<span class="keyword">class</span> ScannerViewController: <span class="type">UIViewController</span> {
+
+    <span class="keyword">var</span> avCaptureSession: <span class="type">AVCaptureSession</span>!
+    
+    <span class="keyword">override func</span> viewDidLoad() {
+        <span class="keyword">super</span>.<span class="call">viewDidLoad</span>()
+
+        <span class="comment">// Do any additional setup after loading the view.</span>
+    }
+    
+}
+</code></pre><p>Then let's create a function to set up our capture session. Add this function next.</p><pre><code><span class="keyword">func</span> setUpScanner() {
+    avCaptureSession = <span class="type">AVCaptureSession</span>()
+    <span class="keyword">guard let</span> videoCaptureDevice = <span class="type">AVCaptureDevice</span>.<span class="call">default</span>(for: .<span class="dotAccess">video</span>) <span class="keyword">else</span> { <span class="keyword">return</span> }
+    
+    <span class="keyword">do</span> {
+        <span class="keyword">let</span> videoInput = <span class="keyword">try</span> <span class="type">AVCaptureDeviceInput</span>(device: videoCaptureDevice)
+        <span class="keyword">if</span> avCaptureSession.<span class="call">canAddInput</span>(videoInput) {
+            avCaptureSession.<span class="call">addInput</span>(videoInput)
+        } <span class="keyword">else</span> {
+            <span class="comment">// Add error message here</span>
+            <span class="keyword">return</span>
+        }
+    } <span class="keyword">catch</span> {
+        <span class="comment">// Add error message here</span>
+        <span class="keyword">return</span>
+    }
+    
+    avCaptureSession.<span class="call">startRunning</span>()
+}
+</code></pre><p>Now what this does is create an <code>AVCaptureSession()</code> and a capture device. If for some reason there is no camera then the function will perform an early exit to prevent your code from crashing. Since it's possible there won't be any kind of video input we need to wrap this up in a <code>do catch</code> statement. If everything is successfull, we will add a video input and start running our session. Finally, call your function inside viewDidLoad by adding</p><pre><code><span class="call">setUpScanner</span>()
+</code></pre><p>However, if you run your app now you'll get this error. <code>This app has crashed because it attempted to access privacy-sensitive data without a usage description.  The app's Info.plist must contain an NSCameraUsageDescription key with a string value explaining to the user how the app uses this data.</code> Apple cares about privacy and does not want you accessing video or audio input from a user without their permission. To fix this navigate over to <code>info.plist</code> and add this key and string value.</p><pre><code><span class="type">Privacy</span> - <span class="type">Camera Usage Description</span>: <span class="type">We</span> need access to your camera <span class="keyword">in</span> order to scan barcodes.
+</code></pre><p>We also want to stop our capture session when the view leaves. To do that, we will edit our <code>viewWillDisappear</code> function.</p><pre><code><span class="keyword">override func</span> viewWillDisappear(<span class="keyword">_</span> animated: <span class="type">Bool</span>) {
+    <span class="keyword">super</span>.<span class="call">viewWillAppear</span>(animated)
+    
+    <span class="keyword">if</span> avCaptureSession?.<span class="property">isRunning</span> == <span class="keyword">true</span> {
+        avCaptureSession.<span class="call">stopRunning</span>()
+    }
+}
+</code></pre><p>You should now be able to run your app and get the prompt asking for access to the camera. However, you won't see anything yet...</p><h3>Adding a preview layer</h3><p>The reason you can't see anything is because we actually haven't created a layer to preview what the camera sees. This isn't complicated to do, but does require us to use another class called <code>AVCaptureVideoPreviewLayer</code>.</p><p>At the top of your class add this variable</p><pre><code><span class="keyword">var</span> avPreviewLayer: <span class="type">AVCaptureVideoPreviewLayer</span>!
+</code></pre><p>Then let's create a function to create an instance of our preview layer. We want to call our function at the bottom of <code>setupScanner()</code>.</p><pre><code><span class="keyword">func</span> addPreviewLayer() {
+    avPreviewLayer = <span class="type">AVCaptureVideoPreviewLayer</span>(session: avCaptureSession)
+    avPreviewLayer.<span class="property">frame</span> = view.<span class="property">layer</span>.<span class="property">bounds</span>
+    avPreviewLayer.<span class="property">videoGravity</span> = .<span class="dotAccess">resizeAspectFill</span>
+    view.<span class="property">layer</span>.<span class="call">addSublayer</span>(avPreviewLayer)
+}
+</code></pre><p>This creates a layer for our avCaptureSession, sets the frame to the entire size of our view it's in, gives it an aspect fill ratio so it looks nice, then finally adds this preview layer we just created to our main view. Now you can run your code and see through your camera!</p><table class="posts-table">
+    <tr>
+        <th class="th-single-right"><a href="www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-02" style="text-decoration: none">Capturing data &rarr;</a></th>
+    </tr>
+</table>]]></content:encoded></item><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/02-biometrics-uikit-part-03</guid><title>Use Face ID and Touch ID to lock your app from prying eyes - Part 3</title><description>The final part of adding biometric authentication to your app. In this section you will learn to add a login button to call for authentication whenever you want.</description><link>www.thomaskellough/thomaskellough.github.io/posts/02-biometrics-uikit-part-03</link><pubDate>Thu, 30 Jul 2020 22:12:00 -0500</pubDate><content:encoded><![CDATA[<h1>Use Face ID and Touch ID to lock your app from prying eyes - Part 3</h1><div class="post-tags" markdown="1">
+        <a class="post-category post-category-faceid" href="www.thomaskellough/thomaskellough.github.io/tags/faceid">FaceID</a>
+        <a class="post-category post-category-touchid" href="www.thomaskellough/thomaskellough.github.io/tags/touchid">TouchID</a>
+        <a class="post-category post-category-obj-c" href="www.thomaskellough/thomaskellough.github.io/tags/objc-c">Obj-c</a>
+        <a class="post-category post-category-closures" href="www.thomaskellough/thomaskellough.github.io/tags/closures">Closures</a>
+</div><table class="posts-table">
+    <tr>
+        <th class="th-singl-left"><a href="www.thomaskellough/thomaskellough.github.io/posts/02-biometrics-uikit-part-02" style="text-decoration: none">&larr; Handling Results</a></th>
+    </tr>
+</table><h3>Adding a login button</h3><p>At this point in time you have a fully working code that allows a user to either login successully or fail to login and receive an error message. However, after the error message shows there is no way to try authentication again without restarting the app. Let's go ahead and fix this by adding a button that only shows after a failed login attempt. Go ahead and add the the following line to your Biometrics class so we can declare a UIButton that may or may not exist at some point in time.</p><pre><code><span class="keyword">var</span> loginButton: <span class="type">UIButton</span>?
+</code></pre><p>Once again, you can create this button however you want, even in Storyboard, but I want to do this all in code so it's easy to transport to other apps of yours. We will do the following things:</p><ol><li>Create a UIButton from a variable above with a custom type</li></ol><ol start="2"><li>Make the button look a bit prettier by adding colors, borders, some edge insets, and a preferred font</li></ol><ol start="3"><li>Add our loginbutton to our lock screen view (this will be passed in as a parameter)</li></ol><ol start="4"><li>Create some constraints to keep the button towards the bottom of the screen fitting most of the width</li></ol><ol start="5"><li>Add a click function to the button that calls authenticateUser() so we can try authentication again</li></ol><p>Feel free to edit this button as you see fit, but here's mine</p><pre><code><span class="comment">// MARK: Configure loginbutton</span>
+<span class="keyword">extension</span> <span class="type">Biometrics</span> {
+    
+    <span class="keyword">func</span> configureLoginButton(to view: <span class="type">UIView</span>) {
+        loginButton = <span class="type">UIButton</span>(type: .<span class="dotAccess">custom</span>)
+        <span class="call">assert</span>(loginButton != <span class="keyword">nil</span>, <span class="string">"There was a problem creating the login button"</span>)
+        
+        loginButton?.<span class="property">backgroundColor</span> = <span class="type">UIColor</span>.<span class="property">systemGreen</span>
+        loginButton?.<span class="property">layer</span>.<span class="property">cornerRadius</span> = <span class="number">8</span>
+        loginButton?.<span class="property">titleEdgeInsets</span> = <span class="type">UIEdgeInsets</span>(top: <span class="number">5</span>, left: <span class="number">10</span>, bottom: <span class="number">5</span>, right: <span class="number">10</span>)
+        loginButton?.<span class="property">titleLabel</span>?.<span class="property">font</span> = .<span class="call">preferredFont</span>(forTextStyle: .<span class="dotAccess">title1</span>)
+        loginButton?.<span class="property">translatesAutoresizingMaskIntoConstraints</span> = <span class="keyword">false</span>
+        loginButton?.<span class="call">setTitle</span>(<span class="string">"Login"</span>, for: .<span class="dotAccess">normal</span>)
+        loginButton?.<span class="call">setTitleColor</span>(.<span class="dotAccess">white</span>, for: .<span class="dotAccess">normal</span>)
+        
+        view.<span class="call">addSubview</span>(loginButton!)
+        
+        loginButton?.<span class="property">leadingAnchor</span>.<span class="call">constraint</span>(equalTo: view.<span class="property">leadingAnchor</span>, constant: <span class="number">40</span>).<span class="property">isActive</span> = <span class="keyword">true</span>
+        loginButton?.<span class="property">trailingAnchor</span>.<span class="call">constraint</span>(equalTo: view.<span class="property">trailingAnchor</span>, constant: -<span class="number">40</span>).<span class="property">isActive</span> = <span class="keyword">true</span>
+        loginButton?.<span class="property">bottomAnchor</span>.<span class="call">constraint</span>(equalTo: view.<span class="property">bottomAnchor</span>, constant: -<span class="number">40</span>).<span class="property">isActive</span> = <span class="keyword">true</span>
+        loginButton?.<span class="property">centerXAnchor</span>.<span class="call">constraint</span>(equalTo: view.<span class="property">centerXAnchor</span>).<span class="property">isActive</span> = <span class="keyword">true</span>
+        
+        loginButton?.<span class="call">addTarget</span>(<span class="keyword">self</span>, action: <span class="keyword">#selector</span>(authenticateUser), for: .<span class="dotAccess">touchUpInside</span>)
+    }
+    
+}
+</code></pre><p>And then we need to call this function at the very bottom of <code>showLockedScreen()</code> like this</p><pre><code><span class="call">configureLoginButton</span>(to: lockScreenView!)
+</code></pre><p>Now that code will actually fail to compile right now with this error <code>Argument of '#selector' refers to instance method 'authenticateUser()' that is not exposed to Objective-C</code>. Anytime you add a selector in Swift (which here is using addTarget to the loginButton) we need to make sure we tell Swift that we are callling code from Objective-C. Fortunately, it's a very easy fix. Just add <code>@objc</code> before declaring the authenticateUser function so it looks like this</p><pre><code><span class="keyword">@objc func</span> authenticateUser()
+</code></pre><p>Now what I want to do is hide the button until it's needed. It's easy to show the button, but hiding it is a bit of a different story. To show the button, simply write this method at the very top of authenticateUser.</p><pre><code>loginButton?.<span class="property">isHidden</span> = <span class="keyword">true</span>
+</code></pre><p>Yes, we need to use the question mark because this button may or may not be nil at any point in our code. Now onto the more difficult part. We only want to hide the button if the user fails authentication which means we need to do something after clicking "OK" from that alert. This means we need to write a closure. If you don't know already, closures are self-contained blocks of functionality that can be used throughout your code and passed around as parameters if needed. Let's start with creating a parameter inside of <code>showAlert()</code> for an optional closure. We will make it optional because we have two different functions that call <code>showAlert()</code>, but we only want one to pass in a closure. The closure we write will take in a UIAlertAction as a parameter and return nothing. The syntax for that looks like <code>(UIAlertAction) -&gt; Void)</code>. However, we do need to wrap it with another set of parentheses and a <code>?</code> since we are making it optional. Edit <code>showAlert</code> to look like this. Note that we added this parameter inside of <code>ac.addAction</code> but kept the completion nil in the third line of the function.</p><pre><code><span class="keyword">func</span> showAlert(title: <span class="type">String</span>, message: <span class="type">String</span>, completion: ((<span class="type">UIAlertAction</span>) -&gt; <span class="type">Void</span>)?) {
+    <span class="keyword">let</span> ac = <span class="type">UIAlertController</span>(title: title, message: message, preferredStyle: .<span class="dotAccess">alert</span>)
+    ac.<span class="call">addAction</span>(<span class="type">UIAlertAction</span>(title: <span class="string">"OK"</span>, style: .<span class="dotAccess">default</span>, handler: completion))
+    <span class="type">UIApplication</span>.<span class="call">topViewController</span>()?.<span class="call">present</span>(ac, animated: <span class="keyword">true</span>, completion: <span class="keyword">nil</span>)
+}
+</code></pre><p>We now need to edit our two functions that call showAlert(). <code>showAlertForBiometryUnavailable()</code> can just pass in <code>nil</code> as it's completion. But we will use closure syntax for <code>showAlertForFailedVerification()</code> The closure looks like</p><pre><code>{ action <span class="keyword">in
+    self</span>.<span class="property">loginButton</span>?.<span class="property">isHidden</span> = <span class="keyword">false</span>
+}
+</code></pre><p>I know it's a bit strange, but it is very nice being able to do this in Swift. Wrapping these three functions up together should look like this when you are finished.</p><pre><code><span class="keyword">func</span> showAlertForBiometryUnavailable() {
+    <span class="keyword">let</span> title = <span class="string">"Biometry unavailable"</span>
+    <span class="keyword">let</span> message = <span class="string">"Your device is not configure for biometric authentication"</span>
+    <span class="call">showAlert</span>(title: title, message: message, completion: <span class="keyword">nil</span>)
+    
+}
+
+<span class="keyword">func</span> showAlertForFailedVerification() {
+    <span class="keyword">let</span> title = <span class="string">"Authentication failed"</span>
+    <span class="keyword">let</span> message = <span class="string">"Verification failed. Please try again"</span>
+    <span class="call">showAlert</span>(title: title, message: message, completion: { action <span class="keyword">in
+        self</span>.<span class="property">loginButton</span>?.<span class="property">isHidden</span> = <span class="keyword">false</span>
+    })
+}
+
+<span class="keyword">func</span> showAlert(title: <span class="type">String</span>, message: <span class="type">String</span>, completion: ((<span class="type">UIAlertAction</span>) -&gt; <span class="type">Void</span>)?) {
+    <span class="keyword">let</span> ac = <span class="type">UIAlertController</span>(title: title, message: message, preferredStyle: .<span class="dotAccess">alert</span>)
+    ac.<span class="call">addAction</span>(<span class="type">UIAlertAction</span>(title: <span class="string">"OK"</span>, style: .<span class="dotAccess">default</span>, handler: completion))
+    <span class="type">UIApplication</span>.<span class="call">topViewController</span>()?.<span class="call">present</span>(ac, animated: <span class="keyword">true</span>, completion: <span class="keyword">nil</span>)
+}
+</code></pre><p>Go ahead and run your code now. Fail authentication enough times until you get the alert then watch the login button pop up. As soon as you tap the login button it disappears and prompts the biometric screening again!</p><p>I hope you enjoyed this tutorial and you're now able to easily implement biometrics inside your own apps. In case you were wondering, the four lines of code to make it all work are these</p><pre><code><span class="keyword">var</span> biometrics: <span class="type">Biometrics</span>?
+biometrics = <span class="type">Biometrics</span>()
+biometrics?.<span class="call">showLockedScreen</span>(backgroundColor: .<span class="dotAccess">systemYellow</span>, logo: <span class="type">UIImage</span>(named: <span class="string">"logo"</span>), width: <span class="number">0.7</span>, toView: <span class="keyword">self</span>.<span class="property">view</span>)
+biometrics?.<span class="call">authenticateUser</span>()
+</code></pre><p>Of course, you'll need to add the Biometrics class in, but that's as easy as dragging and dropping! You can see the full source code for this project <a href="https://github.com/thomaskellough/iOS-Tutorials-UIKit-Swift/tree/master/How-To-Setup-Biometrics/How-To-Setup-Biometrics">here</a></p><table class="posts-table">
+    <tr>
+        <th class="th-singl-left"><a href="www.thomaskellough/thomaskellough.github.io/posts/02-biometrics-uikit-part-02" style="text-decoration: none">&larr; Handling Results</a></th>
+    </tr>
+</table>]]></content:encoded></item><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/02-biometrics-uikit-part-02</guid><title>Use Face ID and Touch ID to lock your app from prying eyes - Part 2</title><description>Part two of adding biometric authentication to your app. This part focuses on handling success and failure for authentication.</description><link>www.thomaskellough/thomaskellough.github.io/posts/02-biometrics-uikit-part-02</link><pubDate>Wed, 29 Jul 2020 22:12:00 -0500</pubDate><content:encoded><![CDATA[<h1>Use Face ID and Touch ID to lock your app from prying eyes - Part 2</h1><div class="post-tags" markdown="1">
+        <a class="post-category post-category-faceid" href="www.thomaskellough/thomaskellough.github.io/tags/faceid">FaceID</a>
+        <a class="post-category post-category-touchid" href="www.thomaskellough/thomaskellough.github.io/tags/touchid">TouchID</a>
+        <a class="post-category post-category-extensions" href="www.thomaskellough/thomaskellough.github.io/tags/extensions">Extensions</a>
+        <a class="post-category post-category-alerts" href="www.thomaskellough/thomaskellough.github.io/tags/alerts">Alerts</a>
+        <a class="post-category post-category-autolayout" href="www.thomaskellough/thomaskellough.github.io/tags/autolayout">Autolayout</a>
+</div><table class="posts-table">
+    <tr>
+        <th class="th-left"><a href="www.thomaskellough/thomaskellough.github.io/posts/02-biometrics-uikit-part-01" style="text-decoration: none">&larr; Introduction and setting up</a></th>
+        <th class="th-middle"></th>
+        <th class="th-right"><a href="www.thomaskellough/thomaskellough.github.io/posts/02-biometrics-uikit-part-03" style="text-decoration: none">Adding a login button &rarr;</a></th>
+    </tr>
+</table><h3>Handling Failure</h3><p>Now at this point and time we can ask for identification, but nothing actually happens yet no matter if the user passes or fails their test. Let's fix that now. Let's start by handling the failure. We need to create two error messages, one for handling the case if there is no biometry available to users and the other for if they fail their biometry test. Now if you tried to add an alert right now you wouldn't be able to since it is a subclass of UIViewController. So you need to add an import statement for UIKit while also making our Biometrics class a subclass of UIViewController. Are there other ways around this? Absolutely, but remember, I'm trying to show you how to create something that is easily reusable. You can adjust it as needed in your own project. Add your import statement and edit your class like below.</p><pre><code>...
+<span class="keyword">import</span> UIKit
+
+<span class="comment">// MARK: Class initialization</span>
+<span class="keyword">class</span> Biometrics: <span class="type">UIViewController</span> {
+...
+</code></pre><p>Now back to it. Since we are going to have more than one message, let's go ahead and create a basic alert function as well as two functions that call our basic alert function with specific parameters. You can add this inside your Biometrics class or create an extension below it. I will do the latter here.</p><pre><code><span class="comment">// MARK: Biometric UIAlerts</span>
+<span class="keyword">extension</span> <span class="type">Biometrics</span> {
+    
+    <span class="keyword">func</span> showAlertForBiometryUnavailable() {
+        <span class="keyword">let</span> title = <span class="string">"Biometry unavailable"</span>
+        <span class="keyword">let</span> message = <span class="string">"Your device is not configure for biometric authentication"</span>
+        <span class="call">showAlert</span>(title: title, message: message)
+        
+    }
+    
+    <span class="keyword">func</span> showAlertForFailedVerification() {
+        <span class="keyword">let</span> title = <span class="string">"Authentication failed"</span>
+        <span class="keyword">let</span> message = <span class="string">"Verification failed. Please try again"</span>
+        <span class="call">showAlert</span>(title: title, message: message)
+    }
+    
+    <span class="keyword">func</span> showAlert(title: <span class="type">String</span>, message: <span class="type">String</span>) {
+        <span class="keyword">let</span> ac = <span class="type">UIAlertController</span>(title: title, message: message, preferredStyle: .<span class="dotAccess">alert</span>)
+        ac.<span class="call">addAction</span>(<span class="type">UIAlertAction</span>(title: <span class="string">"OK"</span>, style: .<span class="dotAccess">default</span>, handler: <span class="keyword">nil</span>))
+        <span class="call">present</span>(ac, animated: <span class="keyword">true</span>)
+    }
+    
+}
+</code></pre><p>Then we need to call our functions inside authenticateUser(). Note that we need to call <code>self?</code> for showAlertForFailedVerification because we are using <code>[weak self]</code> inside of our closure. Edit authenticateUser() to look like this</p><pre><code><span class="keyword">func</span> authenticateUser() {
+    
+    <span class="keyword">if</span> context.<span class="call">canEvaluatePolicy</span>(.<span class="dotAccess">deviceOwnerAuthenticationWithBiometrics</span>, error: <span class="keyword">nil</span>) {
+        
+        <span class="keyword">let</span> reason = <span class="string">"Please login using TouchID in order to have access to this app"</span>
+        
+        context.<span class="call">evaluatePolicy</span>(.<span class="dotAccess">deviceOwnerAuthenticationWithBiometrics</span>, localizedReason: reason) {
+            [<span class="keyword">weak self</span>] success, error <span class="keyword">in</span>
+            
+            <span class="type">DispatchQueue</span>.<span class="property">main</span>.<span class="call">async</span> {
+                <span class="keyword">if</span> success {
+                    <span class="comment">// User passed</span>
+                } <span class="keyword">else</span> {
+                    <span class="keyword">self</span>?.<span class="call">showAlertForFailedVerification</span>()
+                }
+            }
+        }
+    } <span class="keyword">else</span> {
+        <span class="call">showAlertForBiometryUnavailable</span>()
+    }
+}
+</code></pre><p>Now go ahead and run your code and fail the biometry portion! You'll notice that you don't actually get the error message. What gives?</p><p>I admit, this part is a bit annoying, but it also teaches you a way to handle this. The UIAlert wants to be displayed from the top level view controller, however, we are currently looking at our main view controller and calling a function from our biometrics (now view controller). What we can do is create an extension that finds the top view controller for us and then displays the alert over it. That means we also need to edit the line that actually presents our view controller for us. Add this extension below, and edit <code>present(ac, animated: true)</code> as well.</p><pre><code><span class="comment">// MARK: UIApplication Extensions</span>
+<span class="keyword">extension</span> <span class="type">UIApplication</span> {
+    <span class="keyword">class func</span> topViewController(controller: <span class="type">UIViewController</span>? = <span class="type">UIApplication</span>.<span class="property">shared</span>.<span class="property">windows</span>.<span class="property">first</span>?.<span class="property">rootViewController</span>) -&gt; <span class="type">UIViewController</span>? {
+        <span class="keyword">if let</span> navigationController = controller <span class="keyword">as</span>? <span class="type">UINavigationController</span> {
+            <span class="keyword">return</span> <span class="call">topViewController</span>(controller: navigationController.<span class="property">visibleViewController</span>)
+        }
+        <span class="keyword">if let</span> tabController = controller <span class="keyword">as</span>? <span class="type">UITabBarController</span> {
+            <span class="keyword">if let</span> selected = tabController.<span class="property">selectedViewController</span> {
+                <span class="keyword">return</span> <span class="call">topViewController</span>(controller: selected)
+            }
+        }
+        <span class="keyword">if let</span> presented = controller?.<span class="property">presentedViewController</span> {
+            <span class="keyword">return</span> <span class="call">topViewController</span>(controller: presented)
+        }
+        <span class="keyword">return</span> controller
+    }
+}
+</code></pre><pre><code><span class="keyword">func</span> showAlert(title: <span class="type">String</span>, message: <span class="type">String</span>) {
+    <span class="keyword">let</span> ac = <span class="type">UIAlertController</span>(title: title, message: message, preferredStyle: .<span class="dotAccess">alert</span>)
+    ac.<span class="call">addAction</span>(<span class="type">UIAlertAction</span>(title: <span class="string">"OK"</span>, style: .<span class="dotAccess">default</span>, handler: <span class="keyword">nil</span>))
+    <span class="type">UIApplication</span>.<span class="call">topViewController</span>()?.<span class="call">present</span>(ac, animated: <span class="keyword">true</span>, completion: <span class="keyword">nil</span>)
+}
+</code></pre><p>Now you should be able to run your app, fail authentication, and see your error pop up!</p><h3>Handling Success</h3><p>Now it's time to actually make this app need a reason to use biometrics. Remember how we edited our main view controller to have one color then our launch screen to have a different color along with a logo? Did you notice that when you launch your app you show your launch screen for a short amount of time and then it still changes to the next view controller? What I want to do is show you how to hide your main view controller until the user passses authentication. Now we can't actually extend the length of time that the launch screen shows, but we can create an initial screen to look exactly like our launch screen. That was the reason I had you use those specific constraints when creating it in the first place.</p><p>The first step is creating a function that makes a new view that looks exactly like our launch screen in code. You can always create the same screen in storyboard, but doing it this way allows you to reuse this code easily in other apps. Here are the steps.</p><ol><li>Create an optional UIView property so we can show it and dismiss it as we please</li></ol><ol start="2"><li>Create the function with parameters for background color, an image, width, and fourth parameter of a uiview that we will pass in from our main view controller</li></ol><ol start="3"><li>Inside the function created in step 2 we will initialize the lockscreen, create an image view, add constraints, and display it on our main screen behind our biometric authentication</li></ol><p>Add this property now inside your Biometrics class</p><pre><code><span class="keyword">var</span> lockScreenView: <span class="type">UIView</span>?
+</code></pre><p>Then create the following function for steps 2 and 3</p><pre><code><span class="comment">// MARK: Configure Lockscreen</span>
+<span class="keyword">extension</span> <span class="type">Biometrics</span> {
+    
+    <span class="keyword">func</span> showLockedScreen(backgroundColor: <span class="type">UIColor</span>, logo: <span class="type">UIImage</span>?, width: <span class="type">CGFloat</span>, toView view: <span class="type">UIView</span>) {
+        lockScreenView = <span class="type">UIView</span>()
+        <span class="call">assert</span>(lockScreenView != <span class="keyword">nil</span>, <span class="string">"There was a problem creating the lock screen view"</span>)
+        lockScreenView!.translatesAutoresizingMaskIntoConstraints = <span class="keyword">false</span>
+        lockScreenView!.backgroundColor = backgroundColor
+        
+        <span class="keyword">let</span> imageView = <span class="type">UIImageView</span>()
+        imageView.<span class="property">translatesAutoresizingMaskIntoConstraints</span> = <span class="keyword">false</span>
+        assert(logo != <span class="keyword">nil</span>, <span class="string">"Could not find image!"</span>)
+        imageView.<span class="property">image</span> = logo!
+        imageView.<span class="property">contentMode</span> = .<span class="dotAccess">scaleAspectFit</span>
+        
+        lockScreenView!.<span class="call">addSubview</span>(imageView)
+        imageView.<span class="property">widthAnchor</span>.<span class="call">constraint</span>(equalTo: lockScreenView!.widthAnchor, multiplier: width).<span class="property">isActive</span> = <span class="keyword">true</span>
+        imageView.<span class="property">centerXAnchor</span>.<span class="call">constraint</span>(equalTo: lockScreenView!.centerXAnchor).<span class="property">isActive</span> = <span class="keyword">true</span>
+        imageView.<span class="property">centerYAnchor</span>.<span class="call">constraint</span>(equalTo: lockScreenView!.centerYAnchor).<span class="property">isActive</span> = <span class="keyword">true</span>
+        
+        view.<span class="call">addSubview</span>(lockScreenView!)
+        lockScreenView?.<span class="property">leadingAnchor</span>.<span class="call">constraint</span>(equalTo: view.<span class="property">leadingAnchor</span>).<span class="property">isActive</span> = <span class="keyword">true</span>
+        lockScreenView?.<span class="property">trailingAnchor</span>.<span class="call">constraint</span>(equalTo: view.<span class="property">trailingAnchor</span>).<span class="property">isActive</span> = <span class="keyword">true</span>
+        lockScreenView?.<span class="property">topAnchor</span>.<span class="call">constraint</span>(equalTo: view.<span class="property">topAnchor</span>).<span class="property">isActive</span> = <span class="keyword">true</span>
+        lockScreenView?.<span class="property">bottomAnchor</span>.<span class="call">constraint</span>(equalTo: view.<span class="property">bottomAnchor</span>).<span class="property">isActive</span> = <span class="keyword">true</span>
+    }
+}
+</code></pre><p>There's a bit going on here so I want to explain what is happening. The <code>assert()</code> function is optional. It just causes your app to fail if there is no logo found. This ensures you type it in correctly. The <code>lockScreenView!.translatesAutoresizingMaskIntoConstraints = false</code> allows us to edit our constraints by code. Then we create a new image using code and attach our logo as its image that will be passed in as a parameter when we call the function. We then add the lockscreen view to our subview and <em>then</em> we set the contsraints. The order here matters. Note that we also pass in a width parameter. Remember in the beginning when we set the width of our logo to 70% of its parent view? When we call showLockedScreen() we can add in 0.7 to set our second logo to the same size so it doesn't look like the screen changes from the launch screen to our locked screen. This isn't perfect, but it's decent enough for now. You may want to adjust this part yourself for your own project. Then, we add our lockScreenView to another view, which will also be passed in as a parameter when calling the function. We will pass in the view of mainViewController since that is the intial view controller shown after the launch screen. Finally, we need to call this function. Let's go ahead and add our fourth line of code to <code>ViewController.swift</code>, by calling the function and passing the correct parameters.</p><pre><code><span class="keyword">class</span> ViewController: <span class="type">UIViewController</span> {
+    
+    <span class="keyword">var</span> biometrics: <span class="type">Biometrics</span>?
+    
+    <span class="keyword">override func</span> viewDidLoad() {
+        <span class="keyword">super</span>.<span class="call">viewDidLoad</span>()
+        
+        biometrics = <span class="type">Biometrics</span>()
+        biometrics?.<span class="call">showLockedScreen</span>(backgroundColor: .<span class="dotAccess">systemYellow</span>, logo: <span class="type">UIImage</span>(named: <span class="string">"logo"</span>), width: <span class="number">0.7</span>, toView: <span class="keyword">self</span>.<span class="property">view</span>)
+        biometrics?.<span class="call">authenticateUser</span>()
+    }
+    
+}
+</code></pre><p>Finally, we need to dismiss our lockScreenView if our authentication passes. We will do this by removing the lock screen from it's superview. Edit your code to look like this</p><pre><code>...
+<span class="type">DispatchQueue</span>.<span class="property">main</span>.<span class="call">async</span> {
+    <span class="keyword">if</span> success {
+        <span class="keyword">self</span>?.<span class="property">lockScreenView</span>?.<span class="call">removeFromSuperview</span>()
+    } <span class="keyword">else</span> {
+        <span class="keyword">self</span>?.<span class="call">showAlertForFailedVerification</span>()
+    }
+}
+...
+</code></pre><p>Run your code and you should be able to pass authentication and see your view controller!</p><table class="posts-table">
+    <tr>
+        <th class="th-left"><a href="www.thomaskellough/thomaskellough.github.io/posts/02-biometrics-uikit-part-01" style="text-decoration: none">&larr; Introduction and setting up</a></th>
+        <th class="th-middle"></th>
+        <th class="th-right"><a href="www.thomaskellough/thomaskellough.github.io/posts/02-biometrics-uikit-part-03" style="text-decoration: none">Adding a login button &rarr;</a></th>
+    </tr>
+</table>]]></content:encoded></item><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/02-biometrics-uikit-part-01</guid><title>Use Face ID and Touch ID to lock your app from prying eyes - Part 1</title><description>Privacy is one of the most important things when it comes to your personal device. Apple has created ways to allow developers to add privacy without much work on our end! You can add fully functioning Face ID or Touch ID inside your app with only four lines of code!</description><link>www.thomaskellough/thomaskellough.github.io/posts/02-biometrics-uikit-part-01</link><pubDate>Tue, 28 Jul 2020 22:12:00 -0500</pubDate><content:encoded><![CDATA[<h1>Use Face ID and Touch ID to lock your app from prying eyes - Part 1</h1><div class="post-tags" markdown="1">
+        <a class="post-category post-category-feature" href="www.thomaskellough/thomaskellough.github.io/tags/feature">Feature</a>
+        <a class="post-category post-category-faceid" href="www.thomaskellough/thomaskellough.github.io/tags/faceid">FaceID</a>
+        <a class="post-category post-category-touchid" href="www.thomaskellough/thomaskellough.github.io/tags/touchid">TouchID</a>
+</div><table class="posts-table">
+    <tr>
+        <th class="th-single-right"><a href="www.thomaskellough/thomaskellough.github.io/posts/02-biometrics-uikit-part-02" style="text-decoration: none">Handling Results &rarr;</a></th>
+    </tr>
+</table><h3>Introduction</h3><p>Okay, let's be clear here. When I say four lines of code, there is a caveat. You need to add the functionality first! But seriously, after this tutorial, you can reuse the code here and write four more lines of code for each app afterwards to add Face ID and Touch ID to all of your apps! If you are needing this in a rush, download the biometrics swift file <a href="https://github.com/thomaskellough/iOS-Tutorials-UIKit-Swift/blob/master/How-To-Setup-Biometrics/How-To-Setup-Biometrics/Biometrics.swift">here</a> and just drag and drop it in your app!</p><p>Let's start by creating a new Xcode project and choosing a Single View App template, Swift for your langauge, and Storyboard for your user interface. Head into Storyboard and give your view a background color. This is just so it's easier to see. If you forgot how to do that here is an image with some arrows of where you need to go. If you want, feel free to also add a text box that can hide a secret message. I think it makes it more fun.</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/02/02-01.png" alt="Storyboard background color change"/><p>After that I want us to add a launch screen. In your project navigator select <code>LaunchScreen.storyboard</code>. It looks very similar to <code>Main.storyboard</code>. I want you to add a background color here as well, but I want you to choose a different color for the launch screen and add a logo in the middle of it. In order to add a logo you'll need to drag an image view inside of your launch screen view and set some constraints. The constraints that I want you to set are</p><ol><li>Image view to safe area - center x</li></ol><ol start="2"><li>Image view to safe area - center y</li></ol><ol start="3"><li>Image view to safe area - Equal widths, then go into the attributes inspector and set the multiplier by 0.7</li></ol><ol start="4"><li>Image view to itself - aspect ratio and set the ratio to 1:1</li></ol><ol start="5"><li>Finally, add any kind of launch screen image you'd like. I'll be using a Swift logo.</li></ol><p>Here are a few screenshots to help you out. To set the aspect ratio of the image view <code>ctrl + drag</code> from the image view to itself then select <code>Aspect Ratio</code>.</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/02/02-02.png" alt="Showing horizontal and vertical constraints"/><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/02/02-03.png" alt="Setting width"/><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/02/02-04.png" alt="Setting aspect ratio"/><h3>Adding Biometrics class</h3><p>You should be able to run your app now and see your launch screen start up then quickly change to your main view controller. Let's go ahead and get started with the fun part. In order for us to use only four lines of code in the future, we need to create a custom class that contains nearly all of the requirements of adding biometric authentication. In all honestly, I'd probably separate the file into multiple parts in a real project, but for now this will do the trick. It also makes it easier to reuse in other projects this way.</p><p>Go ahead and create a new swift file called <code>Biometrics.swift</code> and add the following code</p><pre><code><span class="keyword">import</span> Foundation
+<span class="keyword">import</span> LocalAuthentication
+
+<span class="comment">// MARK: Class initialization</span>
+<span class="keyword">class</span> Biometrics {
+    
+}
+</code></pre><p>This intial setup imports the LocalAuthentication module that allows us to access all of the biometric functions that Apple has created for us. I want to break down each piece so you understand what's actually happening. The first step is adding our function that we can call to authenticate our user and allow them access to our app. This function will do a few different things.</p><ol><li>Create an LAContext() object which handles userinteraction and talks to the hardware element that manages the data collected from the biometrics of the device. LAContext() actually does all the heavy lifting for us by giving us a callback of an authentication check either passing or failing as well as an explanation of failing if there is one.</li></ol><ol start="2"><li>Ask the LAContext() created in step one to check whether the phone has either FaceID or TouchID and also provide the user a reason for asking them to reveal themselves.</li></ol><ol start="3"><li>If the device is capable of either Face ID or Touch ID then proceed with the check.</li></ol><ol start="4"><li>Return either a success or failure that you can do with as you please.</li></ol><p>Add this inside function your Biometrics class.</p><pre><code><span class="keyword">let</span> context = <span class="type">LAContext</span>()
+
+<span class="keyword">func</span> authenticateUser() {
+    
+    <span class="keyword">if</span> context.<span class="call">canEvaluatePolicy</span>(.<span class="dotAccess">deviceOwnerAuthenticationWithBiometrics</span>, error: <span class="keyword">nil</span>) {
+        
+        <span class="keyword">let</span> reason = <span class="string">"Please login using Touch ID in order to have access to this app"</span>
+        
+        context.<span class="call">evaluatePolicy</span>(.<span class="dotAccess">deviceOwnerAuthenticationWithBiometrics</span>, localizedReason: reason) {
+            [<span class="keyword">weak self</span>] success, error <span class="keyword">in</span>
+            
+            <span class="type">DispatchQueue</span>.<span class="property">main</span>.<span class="call">async</span> {
+                <span class="keyword">if</span> success {
+                    <span class="comment">// User passed</span>
+                } <span class="keyword">else</span> {
+                    <span class="comment">// User did not pass</span>
+                }
+            }
+        }
+    } <span class="keyword">else</span> {
+        <span class="comment">// Biometrics are unavailable</span>
+    }
+}
+</code></pre><p>Then inside <code>ViewController.swift</code> let's call this function to see it in action.</p><pre><code><span class="keyword">class</span> ViewController: <span class="type">UIViewController</span> {
+    
+    <span class="keyword">var</span> biometrics: <span class="type">Biometrics</span>?
+    
+    <span class="keyword">override func</span> viewDidLoad() {
+        <span class="keyword">super</span>.<span class="call">viewDidLoad</span>()
+        
+        biometrics = <span class="type">Biometrics</span>()
+        biometrics?.<span class="call">authenticateUser</span>()
+    }
+    
+}
+</code></pre><p>Now depending on what kind of device you run this on you may or may not get an error. If you run it on an iPhone that has Touch ID you won't have an issue, however, if you run it on an iPhone with Face ID you will get this error</p><p><code>This app has crashed because it attempted to access privacy-sensitive data without a usage description.  The app's Info.plist must contain an NSFaceIDUsageDescription key with a string value explaining to the user how the app uses this data.</code> You'll notice that for the reason I wrote <code>let reason = "Please login using Touch ID in order to have access to this app"</code> and I didn't say anything about Face ID. As the error message says, we need to edit the <code>Info.plist</code> in the app to ask for permission to access this data, whereas, Touch ID is handled using code. Head over to <code>Info.plist</code> and add a new key called <code>Privacy - Face ID Usage Description</code> with a string value of <code>Please login using Face ID in order to have access to this app</code>. Note, you can edit this string value to whatever you want, just make sure it makes sense or Apple will reject it.</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/02/02-05.png" alt="Editing info.plist"/><p>You should now see both kinds of devices ask for authentication with Face ID or Touch ID. Wow, that was fast and easy!</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/02/02-06.png" alt="Editing info.plist"/><table class="posts-table">
+    <tr>
+        <th class="th-single-right"><a href="www.thomaskellough/thomaskellough.github.io/posts/02-biometrics-uikit-part-02" style="text-decoration: none">Handling Results &rarr;</a></th>
+    </tr>
+</table>]]></content:encoded></item><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-04</guid><title>Build your very own website using Swift - Part 4</title><description>The final part of building your own website using Swift. In here you will learn how to use the SplashPublishPlugin and deploy your website.</description><link>www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-04</link><pubDate>Mon, 27 Jul 2020 22:03:00 -0500</pubDate><content:encoded><![CDATA[<h1>Build your very own website using Swift - Part 4</h1><div class="post-tags" markdown="1">
+        <a class="post-category post-category-publish" href="www.thomaskellough/thomaskellough.github.io/tags/publish">Publish</a>
+        <a class="post-category post-category-website" href="www.thomaskellough/thomaskellough.github.io/tags/website">Website</a>
+        <a class="post-category post-category-verylongtagfortesting" href="www.thomaskellough/thomaskellough.github.io/tags/website">Website</a>
+</div><table class="posts-table">
+    <tr>
+        <th class="th-singl-left"><a href="www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-03" style="text-decoration: none">&larr; Pages, tags, and metadata</a></th>
+    </tr>
+</table><h3>Using SplashPublishPlugin</h3><p>Okay, let's be honest here. You are using Swift to make a website. If you've made it this far you are probably serious about starting some sort of blog. It's possible you're making a blog for recipes or traveling, but it's highly likely you're making one for programming. With programming, you probably plan to add some code. Go to your markdown file add add in the following code, but remove the space in between both sets of triple backticks.</p><pre><code>`` `
+<span class="keyword">func</span> codeExample() -&gt; <span class="type">String</span> {
+    <span class="keyword">return</span> <span class="string">"Hello world!"</span>
+}
+`` `
+</code></pre><p>Yes, those backtick marks are necessary! That's how markdown knows you are adding code. View the post and you should see something like this.</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/01/01-13.png" alt="Xcode running publish" width="800"/><p>There is no syntax highlighting! John Sundell has actually created a specific plugin that Publish can use to automatically apply this for us. Check out the <a href="https://github.com/JohnSundell/SplashPublishPlugin">SplashPublishPlugin</a>. Let's go ahead and use this now, because you'll find that it's actually very easy to do!</p><p>The first thing we need to do is add the plugin as a dependency inside <code>Package.swift</code>. If you look at the file now you'll see this.</p><pre><code><span class="keyword">import</span> PackageDescription
+
+<span class="keyword">let</span> package = <span class="type">Package</span>(
+    name: <span class="string">"BlogExample"</span>,
+    products: [
+        .<span class="call">executable</span>(
+            name: <span class="string">"BlogExample"</span>,
+            targets: [<span class="string">"BlogExample"</span>]
+        )
+    ],
+    dependencies: [
+        .<span class="call">package</span>(name: <span class="string">"Publish"</span>, url: <span class="string">"https://github.com/johnsundell/publish.git"</span>, from: <span class="string">"0.6.0"</span>)
+    ],
+    targets: [
+        .<span class="call">target</span>(
+            name: <span class="string">"BlogExample"</span>,
+            dependencies: [<span class="string">"Publish"</span>]
+        )
+    ]
+)
+</code></pre><p>Edit it to look like this. We are just adding a new package and target dependency name.</p><pre><code><span class="keyword">import</span> PackageDescription
+
+<span class="keyword">let</span> package = <span class="type">Package</span>(
+    name: <span class="string">"BlogExample"</span>,
+    products: [
+        .<span class="call">executable</span>(
+            name: <span class="string">"BlogExample"</span>,
+            targets: [<span class="string">"BlogExample"</span>]
+        )
+    ],
+    dependencies: [
+        .<span class="call">package</span>(name: <span class="string">"Publish"</span>, url: <span class="string">"https://github.com/johnsundell/publish.git"</span>, from: <span class="string">"0.6.0"</span>),
+        .<span class="call">package</span>(name: <span class="string">"SplashPublishPlugin"</span>, url: <span class="string">"https://github.com/johnsundell/splashpublishplugin"</span>, from: <span class="string">"0.1.0"</span>)
+    ],
+    targets: [
+        .<span class="call">target</span>(
+            name: <span class="string">"BlogExample"</span>,
+            dependencies: [
+                <span class="string">"Publish"</span>,
+                <span class="string">"SplashPublishPlugin"</span>
+            ]
+        )
+    ]
+)
+</code></pre><p>Sometimes I get some errors when doing this, if that happens close out Xcode and reopen it and it should fix itself and automatically install the new plugin. Then in your CSS file add the following</p><pre><code>pre <span class="call">code</span> {
+    font-family: monospace;
+    display: block;
+    padding: <span class="number">0</span> 20px;
+    color: #a9bcbc;
+    line-height: <span class="number">1</span>.4em;
+    font-size: <span class="number">1</span>.2em;
+    overflow-x: auto;
+    white-space: pre;
+    border-radius: 10px;
+    padding: 20px;
+    -webkit-overflow-scrolling: touch;
+}
+pre code .<span class="call">keyword</span> {
+    color: #e73289;
+}
+pre code .<span class="call">type</span> {
+    color: #8281ca;
+}
+pre code .<span class="call">call</span> {
+    color: #348fe5;
+}
+pre code .<span class="call">property</span> {
+    color: #21ab9d;
+}
+pre code .<span class="call">number</span> {
+    color: #db6f57;
+}
+pre code .<span class="call">string</span> {
+    color: #fa641e;
+}
+pre code .<span class="call">comment</span> {
+    color: #6b8a94;
+}
+pre code .<span class="call">dotAccess</span> {
+    color: #92b300;
+}
+pre code .<span class="call">preprocessing</span> {
+    color: #b68a00;
+}
+</code></pre><p>We are almost done! We need to tell our program to actually use this plugin. Head over to <code>main.swift</code> and add the following import statement at the top of the file.</p><pre><code><span class="keyword">import</span> SplashPublishPlugin
+</code></pre><p>Then at the bottom, edit the following function to include the plugin.</p><pre><code><span class="keyword">try</span> <span class="type">BlogExample</span>().<span class="call">publish</span>(withTheme: .<span class="dotAccess">myTheme</span>, plugins: [.<span class="call">splash</span>(withClassPrefix: <span class="string">""</span>)])
+</code></pre><p>Congratulations! Run your website and you should see this</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/01/01-14.png" alt="Xcode running publish" width="800"/><h3>Deploying your website online</h3><p>Finally! You've made your website and you're ready to show the world. Github actually offers a way to host your website using <a href="https://pages.github.com/">GitHub Pages</a>. In order use this we need to do a few things.</p><p>First, initialize a new GitHub repository named <code>&lt;your-username&gt;.github.io</code>. For example, if your user name is <code>Swiftblogexample</code> your new repository will be named <code>Swiftblogexample.github.io</code>. Once you initialize it navigate to your terminal and clone your repo. To clone your repo type in the following command, replacing <code>Swiftblogexample</code> with your own. Then change into that directory and copy all your files from your website into it. Then open <code>package.swft</code> and let's make just a few more edits!</p><pre><code>$ git clone https://github.<span class="property">com</span>/<span class="type">Swiftblogexample</span>/<span class="type">Swiftblogexample</span>.<span class="property">github</span>.<span class="property">io</span>.<span class="property">git</span>
+$ cd <span class="type">Swiftblogexample</span>.<span class="property">github</span>.<span class="property">io</span>
+$ <span class="keyword">open</span> package.<span class="property">swift</span>
+</code></pre><p>In <code>main.swift</code> add the deployment method for github, once again, replacing the url with your own.</p><pre><code><span class="keyword">try</span> <span class="type">BlogExample</span>().<span class="call">publish</span>(
+    withTheme: .<span class="dotAccess">myTheme</span>,
+    deployedUsing: .<span class="call">gitHub</span>(<span class="string">"Swiftblogexample/Swiftblogexample.github.io"</span>, useSSH: <span class="keyword">false</span>),
+    plugins: [.<span class="call">splash</span>(withClassPrefix: <span class="string">""</span>)]
+)
+</code></pre><p>Finally, while still in <code>main.swift</code> edit the url, name, description, and anything else you need to for your website.</p><pre><code><span class="comment">// Update these properties to configure your website:</span>
+<span class="keyword">var</span> url = <span class="type">URL</span>(string: <span class="string">"www.swiftblogexample/swiftblogexample.github.io"</span>)!
+<span class="keyword">var</span> name = <span class="string">"BlogExample"</span>
+<span class="keyword">var</span> description = <span class="string">"A description of BlogExample"</span>
+<span class="keyword">var</span> language: <span class="type">Language</span> { .<span class="dotAccess">english</span> }
+<span class="keyword">var</span> imagePath: <span class="type">Path</span>? { <span class="keyword">nil</span> }
+</code></pre><p>Then push the following changes to your repository and deploy using terminal.</p><pre><code>$ git add .
+$ git commit -m <span class="string">"commit for deployment"</span>
+$ git push
+$ publish deploy
+</code></pre><p>At this point, you'll see your terminal doing some work until you end up with a success message. Now navigate over <code>your-user-name.github.io</code> and you should see your live website! Here is the link to mine from this tutorial. <a href="https://swiftblogexample.github.io">https://swiftblogexample.github.io</a>. <a href="https://github.com/thomaskellough/BlogExample">Here</a> is also a link to this repo so you can see everything in place.</p><p>I hope you've enjoyed this tutorial and I'd love to see what you come up with! You can find my contact information at the bottom.</p><table class="posts-table">
+    <tr>
+        <th class="th-singl-left"><a href="www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-03" style="text-decoration: none">&larr; Pages, tags, and metadata</a></th>
+    </tr>
+</table>]]></content:encoded></item><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-03</guid><title>Build your very own website using Swift - Part 3</title><description>Part three of building your own website using Swift. This section focuses on adding new pages to your website, tags, and metadata.</description><link>www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-03</link><pubDate>Fri, 24 Jul 2020 22:02:00 -0500</pubDate><content:encoded><![CDATA[<h1>Build your very own website using Swift - Part 3</h1><div class="post-tags" markdown="1">
+        <a class="post-category post-category-publish" href="www.thomaskellough/thomaskellough.github.io/tags/publish">Publish</a>
+        <a class="post-category post-category-website" href="www.thomaskellough/thomaskellough.github.io/tags/website">Website</a>
+        <a class="post-category post-category-enums" href="www.thomaskellough/thomaskellough.github.io/tags/enums">Enums</a>
+</div><table class="posts-table">
+    <tr>
+        <th class="th-left"><a href="www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-02" style="text-decoration: none">&larr; Creating your own nodes</a></th>
+        <th class="th-middle"></th>
+        <th class="th-right"><a href="www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-04" style="text-decoration: none">SplashPlugin and deployment &rarr;</a></th>
+    </tr>
+</table><h3>Adding new pages</h3><p>If you haven't noticed already, you created a nav bar with links to other pages, but they don't work yet! And how does your website already have a working link for <code>http://localhost:8000/posts/</code>? We never actually specifically defined this anywhere during this tutorial. The reason for that is simple, it was already done for you. In fact, you have probably already seen it if you looked at your <code>main.swift</code> file. Go there and check out this code.</p><pre><code><span class="keyword">enum</span> SectionID: <span class="type">String</span>, <span class="type">WebsiteSectionID</span> {
+    <span class="comment">// Add the sections that you want your website to contain here:</span>
+    <span class="keyword">case</span> posts
+}
+</code></pre><p>Each enum case holds a different section of your website, or the following url from your main webpage. In our nav bar, we created three buttons, home, posts, and about. Let's add two more cases so it matches those.</p><pre><code><span class="keyword">enum</span> SectionID: <span class="type">String</span>, <span class="type">WebsiteSectionID</span> {
+    <span class="comment">// Add the sections that you want your website to contain here:</span>
+    <span class="keyword">case</span> home
+    <span class="keyword">case</span> posts
+    <span class="keyword">case</span> about
+}
+</code></pre><p>This tells Publish that our website has a section with these titles, however, at this point Publish still doesn't know what to display for each section. Navigate back over to <code>MyHTMLFactory.swift</code> and look for the following code.</p><pre><code><span class="keyword">func</span> makeSectionHTML(for section: <span class="type">Section</span>&lt;<span class="type">Site</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+    <span class="keyword">try</span> <span class="call">makePostsHTML</span>(for: section, context: context)
+}
+</code></pre><p>This is part of the HTMLFactory protocol that we <strong>need</strong> to have. Notice that it returns an HTML struct, just like your <code>Factory+Posts.swift</code> does. In fact, if you wanted, you could create an extension for makeSectionHTML and put it with your HtmlPages folder, but I'll leave that part up to you. What I want to do now is show you how to use tell Publish which HTML page to render based off which enum case you added in SectionID. All it takes is a simple switch statement telling it to render a different page. Edit your makeSectionHTML to look like this.</p><pre><code><span class="keyword">func</span> makeSectionHTML(for section: <span class="type">Section</span>&lt;<span class="type">Site</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+    <span class="keyword">switch</span> section.<span class="property">id</span>.<span class="property">rawValue</span> {
+    <span class="keyword">case</span> <span class="string">"posts"</span>:
+        <span class="keyword">return try</span> <span class="call">makePostsHTML</span>(for: section, context: context)
+    <span class="keyword">case</span> <span class="string">"home"</span>:
+    <span class="keyword">return</span> <span class="type">HTML</span>(.<span class="call">text</span>(<span class="string">"Hello home!"</span>))
+    <span class="keyword">case</span> <span class="string">"about"</span>:
+        <span class="keyword">return</span> <span class="type">HTML</span>(.<span class="call">text</span>(<span class="string">"Hello about!"</span>))
+    <span class="keyword">default</span>:
+        <span class="keyword">return try</span> <span class="call">makePostsHTML</span>(for: section, context: context)
+    }
+}
+</code></pre><p>If we want to get what we typed inside of our SectionIDs, we can just call <code>section.id.rawValue</code> to get the string of each case. Then depending on what it says you return a different HTML. Note that we had to add in the <code>return</code> keyword this time. This is because as of Swift 5.1 you're allowed to omit the <code>return</code> keyword if you have a single expression. However, with the switch statement, we have multiple expressions. For the default, I left it as returning the posts content page, but feel free to edit that as you see fit.</p><p>You should now be able to click on the navigation items and see your new content, however, it's not that exciting because we haven't actually rendered anything other than a simple two lines of text. Let's go ahead and create a simple home page now. It won't be exciting, but I at least want to show you how to add images to your website.</p><h3>Creating a home page</h3><p>Create a new file called <code>Factory+Home.swift</code>, and add in the following code. This is nothing new, it's just rendering a new html and adding your header and footer.</p><pre><code><span class="keyword">import</span> Publish
+<span class="keyword">import</span> Plot
+
+<span class="keyword">extension</span> <span class="type">MyHTMLFactory</span> {
+    <span class="keyword">func</span> makeHomeHTML&lt;T: <span class="type">Website</span>&gt;(for index: <span class="type">Index</span>, section: <span class="type">Section</span>&lt;<span class="type">T</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">T</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+        <span class="type">HTML</span>(
+            .<span class="call">head</span>(for: index, on: context.<span class="property">site</span>),
+            .<span class="call">body</span>(
+                .<span class="call">myHeader</span>(for: context),
+                .<span class="call">myFooter</span>(for: context.<span class="property">site</span>)
+            )
+        )
+    }
+}
+</code></pre><p>Then navigate back to makeSectionHTML and edit your case for "home" to look like this</p><pre><code><span class="keyword">case</span> <span class="string">"home"</span>:
+    <span class="keyword">return try</span> <span class="call">makeHomeHTML</span>(for: context.<span class="property">index</span>, section: section, context: context)
+</code></pre><p>You should now be able to reload and see your home page with your header and footer showing. But let's add an image at the top. Pick any image you want but I'll be using the following.</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/01/01-09.png" alt="Swift logo" width="800"/><p>The first step is adding our image to our project. Inside your project navigator, under the Resources folder create a new folder called Images and drag and drop an image of your choosing in there. Here's what it should look like when you are finished</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/01/01-10.png" alt="Xcode running publish" width="800"/><p>In order to add images in Publish we use a .img class="post-image" node which takes a .src(Path) as a parameter. So we need to create a variable that gets the path to your image, then pass that inside our .img class="post-image" node. Let's also give the .img class="post-image" a class so we can edit it if we need to. Back in <code>Factory+Home.swift</code> edit your function to look like this. Note that we also had to add in the <code>return</code> keyword now since we don't have a single expression anymore.</p><pre><code><span class="keyword">extension</span> <span class="type">MyHTMLFactory</span> {
+    <span class="keyword">func</span> makeHomeHTML&lt;T: <span class="type">Website</span>&gt;(for index: <span class="type">Index</span>, section: <span class="type">Section</span>&lt;<span class="type">T</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">T</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+        <span class="keyword">var</span> homeImage: <span class="type">Path</span> { <span class="string">"Images/swift-logo.png"</span> }
+        
+        <span class="keyword">return</span>
+            <span class="type">HTML</span>(
+                .<span class="call">head</span>(for: index, on: context.<span class="property">site</span>),
+                .<span class="call">body</span>(
+                    .<span class="call">myHeader</span>(for: context),
+                    .<span class="call">class</span>(<span class="string">"logo-image"</span>),
+                    .<span class="dotAccess">img</span> <span class="keyword">class</span>=<span class="string">"post-image"</span>(.<span class="call">src</span>(homeImage)),
+                    .<span class="call">myFooter</span>(for: context.<span class="property">site</span>)
+                )
+        )
+    }
+}
+</code></pre><p>For me, I wanted to make my image a bit smaller so I added this to my CSS file.</p><pre><code>.<span class="property">logo</span>-image img <span class="keyword">class</span>=<span class="string">"post-image"</span> {
+    width: <span class="number">30</span>%;
+    margin: 20px;
+}
+</code></pre><p>Here's what your website should look like now.</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/01/01-11.png" alt="Home page with logo" width="800"/><p>Great job! You now have a home page! I'll let you go ahead and make your own about me page using the same technique. Remember, you need to create a new <code>Factory+About.swift</code> file and add in your returning HTML. Then you need to go back to <code>MyHTMLFactory.swift</code> and edit your makeSectionHTML function to handle the case of "about".</p><h3>Organizing sections easier</h3><p>This is a small piece, but what I want to show you is a neat little Swift trick. In programming, you really don't want to repeat yourself. However, you'll see that when you create your sections, you also have to create your list of nav items inside your header. Let's fix that. Go to your SectionID enum and make it conform to CaseIterable. It should look like this.</p><pre><code><span class="keyword">enum</span> SectionID: <span class="type">String</span>, <span class="type">WebsiteSectionID</span>, <span class="type">CaseIterable</span> {
+    <span class="comment">// Add the sections that you want your website to contain here:</span>
+    <span class="keyword">case</span> home
+    <span class="keyword">case</span> posts
+    <span class="keyword">case</span> about
+}
+</code></pre><p>Then, go back to your <code>Node+Header.swift</code> and let's edit a few things.</p><ol><li>We will first delete our list that we created.</li></ol><ol start="2"><li>Then we will loop over our enum cases by using <code>BlogExample.SectionID.allCases</code>.</li></ol><ol start="3"><li>Then for our text, we will get the raw value of each enum case and call the capitalized method on it so each word has a capital first letter.</li></ol><p>Here's what it should look like when you finish. Now you can add new sections without having to edit your header file!</p><pre><code><span class="keyword">static func</span> myHeader&lt;T: <span class="type">Website</span>&gt;(for context: <span class="type">PublishingContext</span>&lt;<span class="type">T</span>&gt;) -&gt; <span class="type">Node</span> {
+    <span class="comment">// Create a list of navigation items</span>
+    
+    <span class="keyword">return</span> .<span class="call">header</span>(
+        <span class="comment">// Begin the wrapper class</span>
+        .<span class="call">wrapper</span>(
+            <span class="comment">// Create your main title</span>
+            .<span class="call">h1</span>(<span class="string">"My Swift Blog"</span>),
+            <span class="comment">// Create the nav node</span>
+            .<span class="call">nav</span>(
+                <span class="comment">// Create and undordered list and loop through your navItems yuou created above</span>
+                .<span class="call">ul</span>(
+                    .<span class="call">forEach</span>(
+                        <span class="type">BlogExample</span>.<span class="type">SectionID</span>.<span class="property">allCases</span>
+                    ) { item <span class="keyword">in</span>
+                        .<span class="call">li</span>(
+                            <span class="comment">// Create an anchor tag to make linkes</span>
+                            .<span class="call">a</span>(
+                                <span class="comment">// Redirect the user to a new webpage on your site when they click each item</span>
+                                .<span class="call">href</span>(<span class="string">"/</span>\(item.<span class="property">rawValue</span>.<span class="call">lowercased</span>())<span class="string">"</span>),
+                                .<span class="call">text</span>(item.<span class="property">rawValue</span>.<span class="property">capitalized</span>)
+                            )
+                        )
+                    }
+                )
+            )
+        )
+    )
+}
+</code></pre><h3>Tags</h3><p>We are almost done here, but there's a couple of things left to show you. The next thing on my list is showing you how to add tags to your post. Navigate to one of your markdown files and look towards the top you'll see something like this.</p><pre><code>---
+date: <span class="number">2020</span>-<span class="number">07</span>-<span class="number">30 21</span>:<span class="number">47</span>
+description: <span class="type">A</span> description of my first post.
+tags: first, article
+---
+</code></pre><p>You can add as many tags as you want, so have fun with it. Let's create a new file called <code>Node+Tags.swift</code>. We are going to do a few things here.</p><ol><li>Create a function that returns a list of tags</li></ol><ol start="2"><li>The function accepts two parameters, one is a list of tags while the other is which website you're editing</li></ol><ol start="3"><li>We will loop over each tag and provide two CSS classes. One class for it being a tag, and another class for it being a <em>specific</em> tag so we can edit them differently, such as background color</li></ol><ol start="4"><li>Create a link that when you click on the tag, only posts that have that tag will show up</li></ol><p>Add the following code to <code>Node+Tags.swift</code>.</p><pre><code><span class="keyword">import</span> Publish
+<span class="keyword">import</span> Plot
+
+<span class="keyword">extension</span> <span class="type">Node</span> <span class="keyword">where</span> <span class="type">Context</span> == <span class="type">HTML</span>.<span class="type">BodyContext</span> {
+    
+    <span class="keyword">static func</span> tagList&lt;T: <span class="type">Website</span>&gt;(for tags: [<span class="type">Tag</span>], on site: <span class="type">T</span>) -&gt; <span class="type">Node</span> {
+        <span class="keyword">return</span>
+            .<span class="call">div</span>(
+                .<span class="call">forEach</span>(tags) { tag <span class="keyword">in</span>
+                    .<span class="call">a</span>(
+                        .<span class="call">class</span>(<span class="string">"post-category post-category-</span>\(tag.<span class="property">string</span>.<span class="call">lowercased</span>())<span class="string">"</span>),
+                        .<span class="call">href</span>(site.<span class="call">path</span>(for: tag)),
+                        .<span class="call">text</span>(tag.<span class="property">string</span>)
+                    )
+                })
+    }
+}
+</code></pre><p>Then in <code>Node+PostsContent.swift</code> we need to actually call this function. Edit your file to include your new function. For your parameter, you can get every tag on each item by calling <code>item.tags</code>.</p><pre><code>...
+<span class="comment">// Creates a description  of what our post is about</span>
+.<span class="call">tagList</span>(for: item.<span class="property">tags</span>, on: site),
+.<span class="call">p</span>(.<span class="call">text</span>(item.<span class="property">description</span>)),
+...
+</code></pre><p>Now before you run it, let's add those CSS classes so they look a bit interesting. Go to your CSS file and add the following code.</p><pre><code>.<span class="property">post</span>-<span class="call">category</span> {
+    margin: 1px;
+    padding: <span class="number">0</span>.3em 1em;
+    color: #fff;
+    background: #999;
+    font-size: <span class="number">60</span>%;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.<span class="property">post</span>-category-<span class="call">first</span> {
+    background-color: green;
+}
+
+.<span class="property">post</span>-category-<span class="call">second</span> {
+    background-color: purple;
+}
+
+.<span class="property">post</span>-category-<span class="call">article</span> {
+    background-color: darkred;
+}
+</code></pre><p>Run your program, refresh the cache if necessary (cmd + option + e for Safari), and you should see something like this.</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/01/01-12.png" alt="Posts with tags" width="800"/><h3>Adding a tag details page</h3><p>Now you'll notice that if you click on the tags it takes you to a new page, but hasn't filtered your posts. But you will notice that it says "Hello, tag details". Let's go back to <code>MyHTMLFactory.swift</code> and look for this function.</p><pre><code><span class="keyword">func</span> makeTagDetailsHTML(for page: <span class="type">TagDetailsPage</span>, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span>? {
+    <span class="type">HTML</span>(.<span class="call">text</span>(<span class="string">"Hello, tag details"</span>))
+}
+</code></pre><p>Now this next part is your call. Either create a new <code>Factory+TagDetails.swift</code> file and move this function in there, or edit it directly in MyHTMLFactory.swift. Either is fine. Whichever you choose, we need to edit this function to show us our tags. We will do the following things.</p><ol><li>Create a returning HTML() that returns a head like every other HTML() file we have</li></ol><ol start="2"><li>Add the header and footer that you created earlier to the body</li></ol><ol start="3"><li>Add a .postContent node, but with a specific parameter that automatically filters out our tags for us. Note that you do NOT need to add new case statements in your SectionID enum since it will automatically be generated for you with each tag!</li></ol><p>Edit your function to look like this.</p><pre><code><span class="keyword">func</span> makeTagDetailsHTML(for page: <span class="type">TagDetailsPage</span>, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span>? {
+    <span class="type">HTML</span>(
+        .<span class="call">head</span>(for: context.<span class="property">index</span>, on: context.<span class="property">site</span>),
+        .<span class="call">body</span>(
+            .<span class="call">myHeader</span>(for: context),
+            .<span class="call">h1</span>(
+                .<span class="call">text</span>(<span class="string">"All posts with the tag</span> \(page.<span class="property">tag</span>.<span class="property">string</span>)<span class="string">"</span>)
+            ),
+            .<span class="call">postContent</span>(for: context.<span class="call">items</span>(taggedWith: page.<span class="property">tag</span>), on: context.<span class="property">site</span>),
+            .<span class="call">myFooter</span>(for: context.<span class="property">site</span>)
+        )
+    )
+}
+</code></pre><p>Run your code, refresh your website, click on the actual tag itself and you should see your posts automatically filter. Woo-hoo!</p><h3>Adding post content</h3><p>I know it seems weird that we can't actually view our posts yet. I'm sure you've clicked on it only to see "Hello item". At this point I suggest you try to figure out how to fix that on your own. You may be able to do it ;).</p><p>Still here? I'll show you how this works. You'll notice in <code>MyHTMLFactory.swift</code> we have the following function.</p><pre><code><span class="keyword">func</span> makeItemHTML(for item: <span class="type">Item</span>&lt;<span class="type">Site</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+    <span class="type">HTML</span>(.<span class="call">text</span>(<span class="string">"Hello, item"</span>))
+}
+</code></pre><p>All we need to do is return the description of our item in order to see the post. Remember how there are markdown files? The great thing about that is if you format it in the markdown file, you don't need to format it here! Edit your makeItemHTML to look like this.</p><pre><code><span class="keyword">func</span> makeItemHTML(for item: <span class="type">Item</span>&lt;<span class="type">Site</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+    <span class="type">HTML</span>(
+        .<span class="call">head</span>(for: item, on: context.<span class="property">site</span>),
+        .<span class="call">body</span>(
+            .<span class="call">myHeader</span>(for: context),
+            .<span class="call">wrapper</span>(
+                .<span class="call">article</span>(
+                    .<span class="call">contentBody</span>(item.<span class="property">body</span>)
+                )
+            ),
+            .<span class="call">myFooter</span>(for: context.<span class="property">site</span>)
+        )
+    )
+}
+</code></pre><p>You should now be able to click and view your posts! And honestly, we are nearly done! There are a couple of things left we need to do before we actually publish our website. The next item we want to look at is adding metadata.</p><h3>Adding metadata</h3><p>Publish comes with a lot of things to help you organize your website and filter posts, but what if we wanted more? We can actually achieve this using metadata. Head over to <code>main.swift</code> and look for the following function.</p><pre><code><span class="keyword">struct</span> ItemMetadata: <span class="type">WebsiteItemMetadata</span> {
+    <span class="comment">// Add any site-specific metadata that you want to use here.</span>
+}
+</code></pre><p>Let's say you have multiple different authors working on posts for your blog. Add the following variable.</p><pre><code><span class="keyword">struct</span> ItemMetadata: <span class="type">WebsiteItemMetadata</span> {
+    <span class="comment">// Add any site-specific metadata that you want to use here.</span>
+    <span class="keyword">var</span> author: <span class="type">String</span>?
+}
+</code></pre><p>Let's add some authors to our blog posts. Edit your markdown files to look like this, but give each post a different author.</p><p><strong>Note, my posts include Harry Potter spoilers!</strong></p><pre><code>---
+date: <span class="number">2020</span>-<span class="number">08</span>-<span class="number">02 10</span>:<span class="number">57</span>
+description: <span class="type">Dumbledore</span> speaking about <span class="type">Cedric</span>'s death.
+tags: first, article
+author: <span class="type">Albus Dumbledore</span>
+---
+# <span class="type">Dumbledore</span> - <span class="type">Speech</span> about <span class="type">Cedric Diggory
+
+The Ministry</span> of <span class="type">Magic</span> does not wish me to tell you this. <span class="type">It</span> <span class="keyword">is</span> possible that <span class="keyword">some</span> of your parents will be horrified that <span class="type">I</span> have done so – either because they will not believe that <span class="type">Lord Voldemort</span> has returned, or because they think <span class="type">I</span> should not tell you so, young <span class="keyword">as</span> you are. <span class="type">It</span> <span class="keyword">is</span> my belief, however, that the truth <span class="keyword">is</span> generally preferable to lies, and that any attempt to pretend that <span class="type">Cedric</span> died <span class="keyword">as</span> the result of an accident, or <span class="keyword">some</span> sort of blunder of his own, is an insult to his memory.
+</code></pre><pre><code>---
+date: <span class="number">2020</span>-<span class="number">07</span>-<span class="number">30 21</span>:<span class="number">47</span>
+description: <span class="type">Hermione</span> speaking to <span class="type">Harry</span> about <span class="type">Cho</span>'s feelings.
+tags: second, article
+author: <span class="type">Hermione Granger</span>
+---
+# <span class="type">Hermione Granger</span> - <span class="type">To Harry</span> about <span class="type">Cho Chang
+
+Well</span>, obviously, she\'s feeling very sad, because of <span class="type">Cedric</span> dying. <span class="type">Then I</span> expect she's feeling confused because she liked <span class="type">Cedric</span> and now she likes <span class="type">Harry</span>, and she can't work out who she likes best. <span class="type">Then</span> she'll be feeling guilty, thinking it's an insult to <span class="type">Cedric</span>'s memory to be kissing <span class="type">Harry</span> at all, and she'll be worrying about what everyone <span class="keyword">else</span> might say about her <span class="keyword">if</span> she starts going out with <span class="type">Harry</span>. <span class="type">And</span> she probably can't work out what her feelings towards <span class="type">Harry</span> are anyway, because he was the one who was with <span class="type">Cedric</span> when <span class="type">Cedric</span> died, so that's all very mixed up and painful. <span class="type">Oh</span>, and she's afraid she's going to be thrown off the <span class="type">Ravenclaw Quidditch</span> team because she's flying so badly.
+
+</code></pre><p>Then create a new swift file called <code>Node+Author.swift</code> and add in the following code.</p><pre><code><span class="keyword">import</span> Publish
+<span class="keyword">import</span> Plot
+
+<span class="keyword">extension</span> <span class="type">Node</span> <span class="keyword">where</span> <span class="type">Context</span> == <span class="type">HTML</span>.<span class="type">BodyContext</span> {
+    
+    <span class="keyword">static func</span> postsBy(author: <span class="type">String</span>, section: <span class="type">Section</span>&lt;<span class="type">BlogExample</span>&gt;, on site: <span class="type">BlogExample</span>) -&gt; <span class="type">Node</span> {
+        
+        <span class="keyword">let</span> items = section.<span class="property">items</span>.<span class="call">filter</span> {
+            $0.<span class="property">metadata</span>.<span class="property">author</span> == author
+        }
+        
+        <span class="keyword">return</span>
+            .<span class="call">wrapper</span>(
+                .<span class="call">div</span>(
+                    .<span class="call">h1</span>(<span class="string">"Posts by</span> \(author)<span class="string">"</span>),
+                    .<span class="call">postContent</span>(for: items, on: site)
+                )
+        )
+    }
+    
+}
+</code></pre><p>This will take in a specific string, filter out all items from a section by matching up the metadata to the string passed in, then return a wrapper that contains the new filtered list while also creating a heading separating the posts. Head back over to <code>Factory.Posts.swift</code> and change your function to look like this.</p><pre><code><span class="keyword">extension</span> <span class="type">MyHTMLFactory</span> {
+    <span class="keyword">func</span> makePostsHTML(for section: <span class="type">Section</span>&lt;<span class="type">Site</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+         <span class="type">HTML</span>(
+            .<span class="call">head</span>(for: context.<span class="property">index</span>, on: context.<span class="property">site</span>),
+            .<span class="call">body</span>(
+                .<span class="call">myHeader</span>(for: context),
+                .<span class="call">postsBy</span>(author: <span class="string">"Albus Dumbledore"</span>, section: section, on: context.<span class="property">site</span>),
+                .<span class="call">postsBy</span>(author: <span class="string">"Hermione Granger"</span>, section: section, on: context.<span class="property">site</span>),
+                .<span class="call">myFooter</span>(for: context.<span class="property">site</span>)
+            )
+        )
+    }
+}
+</code></pre><p>You'll see that we no longer call postsContent, because our new postsBy method automatically calls that for us. There is one other issue here. Trying to access this metadata gives us trouble when using generics. Maybe John Sundell knows a better way to handle this, but I've found that removing the generic portion and actually using our website inside MyHTMLFactory can solve this issue. Go back to <code>MyHTMLFactory.swift</code> and change every instance of <code>Site</code> to <code>BlogExample</code> and remove the <code>&lt;T: Website&gt;</code>. It should look like this when you are finished.</p><pre><code><span class="keyword">struct</span> MyHTMLFactory: <span class="type">HTMLFactory</span> {
+    <span class="keyword">func</span> makeIndexHTML(for index: <span class="type">Index</span>, context: <span class="type">PublishingContext</span>&lt;<span class="type">BlogExample</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+        <span class="type">HTML</span>(.<span class="call">text</span>(<span class="string">"Hello, index"</span>))
+    }
+
+    <span class="keyword">func</span> makeSectionHTML(for section: <span class="type">Section</span>&lt;<span class="type">BlogExample</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">BlogExample</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+        <span class="keyword">switch</span> section.<span class="property">id</span>.<span class="property">rawValue</span> {
+        <span class="keyword">case</span> <span class="string">"posts"</span>:
+            <span class="keyword">return try</span> <span class="call">makePostsHTML</span>(for: section, context: context)
+        <span class="keyword">case</span> <span class="string">"home"</span>:
+            <span class="keyword">return try</span> <span class="call">makeHomeHTML</span>(for: context.<span class="property">index</span>, section: section, context: context)
+        <span class="keyword">case</span> <span class="string">"about"</span>:
+            <span class="keyword">return</span> <span class="type">HTML</span>(.<span class="call">text</span>(<span class="string">"Hello about!"</span>))
+        <span class="keyword">default</span>:
+            <span class="keyword">return try</span> <span class="call">makePostsHTML</span>(for: section, context: context)
+        }
+    }
+
+    <span class="keyword">func</span> makeItemHTML(for item: <span class="type">Item</span>&lt;<span class="type">BlogExample</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">BlogExample</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+        <span class="type">HTML</span>(
+            .<span class="call">head</span>(for: item, on: context.<span class="property">site</span>),
+            .<span class="call">body</span>(
+                .<span class="call">myHeader</span>(for: context),
+                .<span class="call">wrapper</span>(
+                    .<span class="call">article</span>(
+                        .<span class="call">contentBody</span>(item.<span class="property">body</span>)
+                    )
+                ),
+                .<span class="call">myFooter</span>(for: context.<span class="property">site</span>)
+            )
+        )
+    }
+
+    <span class="keyword">func</span> makePageHTML(for page: <span class="type">Page</span>, context: <span class="type">PublishingContext</span>&lt;<span class="type">BlogExample</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+        <span class="type">HTML</span>(.<span class="call">text</span>(<span class="string">"Hello, page"</span>))
+    }
+
+    <span class="keyword">func</span> makeTagListHTML(for page: <span class="type">TagListPage</span>, context: <span class="type">PublishingContext</span>&lt;<span class="type">BlogExample</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span>? {
+        <span class="type">HTML</span>(.<span class="call">text</span>(<span class="string">"Hello, tag list"</span>))
+    }
+
+    <span class="keyword">func</span> makeTagDetailsHTML(for page: <span class="type">TagDetailsPage</span>, context: <span class="type">PublishingContext</span>&lt;<span class="type">BlogExample</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span>? {
+        <span class="type">HTML</span>(
+            .<span class="call">head</span>(for: context.<span class="property">index</span>, on: context.<span class="property">site</span>),
+            .<span class="call">body</span>(
+                .<span class="call">myHeader</span>(for: context),
+                .<span class="call">h1</span>(
+                    .<span class="call">text</span>(<span class="string">"All posts with the tag</span> \(page.<span class="property">tag</span>.<span class="property">string</span>)<span class="string">"</span>)
+                ),
+                .<span class="call">postContent</span>(for: context.<span class="call">items</span>(taggedWith: page.<span class="property">tag</span>), on: context.<span class="property">site</span>),
+                .<span class="call">myFooter</span>(for: context.<span class="property">site</span>)
+            )
+        )
+    }
+}
+
+</code></pre><p>Now refresh your webpage and you'll see that your posts are separated by author.</p><h3>Redirecting the index</h3><p>A website's index page is the initial page that automatically loads when you first go to a website. What we are going to do here is redirect our index page to go to our home page. This way whenever you go to www.yourblog.com it automatically takes you to your home page. To achieve this we need to do a few things.</p><ol><li>Create a constant for all sections of the current context</li></ol><ol start="2"><li>Get the first section from the constant created in step 1 where the enum case equals "home"</li></ol><ol start="3"><li>Call your makeHomeHTML function and pass in the proper parameters</li></ol><p>Go back to <code>MyHTMLFactory.swift</code> and edit your makdeIndexHTML to look like this</p><pre><code><span class="keyword">func</span> makeIndexHTML(for index: <span class="type">Index</span>, context: <span class="type">PublishingContext</span>&lt;<span class="type">BlogExample</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+    <span class="keyword">let</span> sections = context.<span class="property">sections</span>
+    <span class="keyword">let</span> section = sections.<span class="call">first</span>(where: { $0.<span class="property">id</span>.<span class="property">rawValue</span> == <span class="string">"home"</span> })!
+    
+    <span class="keyword">return try</span> <span class="call">makeHomeHTML</span>(for: index, section: section, context: context)
+}
+</code></pre><table class="posts-table">
+    <tr>
+        <th class="th-left"><a href="www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-02" style="text-decoration: none">&larr; Creating your own nodes</a></th>
+        <th class="th-middle"></th>
+        <th class="th-right"><a href="www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-04" style="text-decoration: none">SplashPlugin and deployment &rarr;</a></th>
+    </tr>
+</table>]]></content:encoded></item><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-02</guid><title>Build your very own website using Swift - Part 2</title><description>Part two of building your own website using Swift. This section focuses on creating custom nodes.</description><link>www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-02</link><pubDate>Tue, 21 Jul 2020 22:01:00 -0500</pubDate><content:encoded><![CDATA[<h1>Build your very own website using Swift - Part 2</h1><div class="post-tags" markdown="1">
+        <a class="post-category post-category-publish" href="www.thomaskellough/thomaskellough.github.io/tags/publish">Publish</a>
+        <a class="post-category post-category-website" href="www.thomaskellough/thomaskellough.github.io/tags/website">Website</a>
+        <a class="post-category post-category-extensions" href="www.thomaskellough/thomaskellough.github.io/tags/extensions">Extensions</a>
+        <a class="post-category post-category-html" href="www.thomaskellough/thomaskellough.github.io/tags/html">Html</a>
+        <a class="post-category post-category-css" href="www.thomaskellough/thomaskellough.github.io/tags/css">CSS</a>
+</div><table class="posts-table">
+    <tr>
+        <th class="th-left"><a href="www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-01" style="text-decoration: none">&larr; Introduction and setting up</a></th>
+        <th class="th-middle"></th>
+        <th class="th-right"><a href="www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-03" style="text-decoration: none">Pages, tags, and metadata &rarr;</a></th>
+    </tr>
+</table><h3>Creating your first blog page</h3><p>This is a tutorial on how to make a blog, right? So let's create our first page that will list all of the blogs you plan to create. Remember, the goal of this tutorial is also to show you a way to keep your code organized. So what I'd recommend doing is creating a new directory under your <code>Sources/BlogExample</code> folder called <code>HtmlPages</code>. This is a good place to store the code for each section of your site such as home page, about me page, posts, contact information, or whatever you want really! After creating the directory create a new Swift file named <code>Factory+Posts.Swift</code> and write the following code.</p><pre><code><span class="keyword">import</span> Publish
+<span class="keyword">import</span> Plot
+
+<span class="keyword">extension</span> <span class="type">MyHTMLFactory</span> {
+    <span class="keyword">func</span> makePostsHTML(for section: <span class="type">Section</span>&lt;<span class="type">Site</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+         <span class="type">HTML</span>(
+            .<span class="call">head</span>(for: context.<span class="property">index</span>, on: context.<span class="property">site</span>),
+            .<span class="call">body</span>(
+                .<span class="call">text</span>(<span class="string">"Hello, posts!"</span>)
+            )
+        )
+    }
+}
+</code></pre><p>Let's talk about what this does. This creates an extension for your custom HTMLFactory that allows you to create as many pages as you want and use in your website. You use an extension because we are adding it in a different Swift file for organization purposes. Technically, you could just add this function inside <code>MyHTMLFactory.swift</code> but it can be difficult to organize and find things later. Even though you don't need to write pure HTML, you do need to understand how it works. Publish actually takes your Swift code and then converts it to HTML. In every webpage you have your main HTML, a header that contains all the metadata your webpage holds, and then a body which contains all of your content.</p><p>Press <code>cmd + R</code> to run your code then navigate over to <code>http://localhost:8000/posts/</code> to see your changes! You should now see "Hello, posts!" since that's what you typed for the body.</p><p>Let me guess, you saw "Hello, section" instead? Let's go over this. Navigate back over to to <code>MyHTMLFactory.swift</code> and take a look at the following function.</p><pre><code><span class="keyword">func</span> makeSectionHTML(for section: <span class="type">Section</span>&lt;<span class="type">Site</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+    <span class="type">HTML</span>(.<span class="call">text</span>(<span class="string">"Hello, section"</span>))
+}
+</code></pre><p>This is the function that is actually being called when you go to <code>http://localhost:8000/posts/</code>. So instead of returning that HTML, let's return the one you just created. Change the function to look like this.</p><pre><code><span class="keyword">func</span> makeSectionHTML(for section: <span class="type">Section</span>&lt;<span class="type">Site</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+    <span class="keyword">try</span> <span class="call">makePostsHTML</span>(for: section, context: context)
+}
+</code></pre><p>Note that you need to mark it with a <code>try</code> because it can throw. Re-run your app, refresh your page and you should see this. If your page doesn't refresh try refreshing the cache using <code>cmd + option + e</code> if using safari, then reloading. This is a good command to remember when you're editing CSS.</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/01/01-05.png" alt="Hello, posts! page" width="800"/><p>We are getting somewhere! But I said the plan was to make a list of your posts. So head back over to <code>Factory+Posts.swift</code> and let's edit up the body of our function. Here's what we are going to do.</p><ol><li>Create an unordered list for each blog post</li></ol><ol start="2"><li>Loop over each blog post and create a list item for each one</li></ol><ol start="3"><li>Create a heading for our blog post and a link that allows us to click it and read the entire blog</li></ol><ol start="4"><li>Create a p tag (paragraph tag) that lists a description of what the post is about</li></ol><p>This can get confusing, so I'll leave some comments to help explain for each step. Please, please watch your parentheses here. I highy suggest typing everything yourself and allowing Swift to autocomplete.</p><pre><code>...
+.<span class="call">body</span>(
+    <span class="comment">// Create an unordered list</span>
+    .<span class="call">ul</span>(
+        <span class="comment">// Loop over each blog post that we have in our code</span>
+        .<span class="call">forEach</span>(
+            section.<span class="property">items</span>
+        ) { item <span class="keyword">in</span>
+            <span class="comment">// Creates a list item for each post</span>
+            .<span class="dotAccess">li</span> (
+                <span class="comment">// Creates an article node to display our information</span>
+                .<span class="call">article</span>(
+                    <span class="comment">// Creates a heading with our post title</span>
+                    .<span class="call">h1</span>(
+                        <span class="comment">// Creates an anchor tag so we can create the link to our post</span>
+                        .<span class="call">a</span>(
+                            <span class="comment">// Creates the link to our post so we can click it and read everything</span>
+                            .<span class="call">href</span>(item.<span class="property">path</span>),
+                            .<span class="call">text</span>(item.<span class="property">title</span>)
+                        )
+                    ),
+                    <span class="comment">// Creates a description  of what our post is about</span>
+                    .<span class="call">p</span>(.<span class="call">text</span>(item.<span class="property">description</span>))
+                )
+            )
+        }
+    )
+)
+...
+</code></pre><p>Wow, that's a lot. But re-run your app and you should see this! You can even click the link and see a new page!</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/01/01-06.png" alt="Xcode running publish" width="800"/><p>Now I know what you're thinking. You never wrote that blog post and where did it come from? Navigate over to your Project Navigator and look under <code>Content/posts/first-post.md</code>. Open that up and take a look. Here's what you should see.</p><pre><code>---
+date: <span class="number">2020</span>-<span class="number">07</span>-<span class="number">30 21</span>:<span class="number">47</span>
+description: <span class="type">A</span> description of my first post.
+tags: first, article
+---
+# <span class="type">My</span> first post
+
+<span class="type">My</span> first post's text.
+</code></pre><p>This is a markdown file and this is how you will write all of your blog posts. I won't be doing a markdown tutorial here, but it's easy enough to Google when you want to figure out what to do. The important thing here is how the beginning is organized. You'll notice that you used <code>item.title</code> and <code>item.description</code> in the above function. The description is on the third line of your markdown file while the title is on the sixth line. We will discuss this in detail later. For now, create a new file in the same <code>posts</code> directory and give it some dummy content, or copy mine. Make sure it's the same formatting and don't forget to remove the swift extension.</p><pre><code>---
+date: <span class="number">2020</span>-<span class="number">07</span>-<span class="number">30 21</span>:<span class="number">47</span>
+description: <span class="type">A</span> description of my second post.
+tags: second, article
+---
+# <span class="type">My</span> second post
+
+<span class="type">My</span> second post's text.
+</code></pre><p>Re-run your code, refresh your browser and you should now see TWO posts. The cool thing about Publish is once you get your site up and running, you only need to edit your markdown files to add new posts! However, let's make it look a bit better because right now it's not fun to read. This is done with one single line of code since there is a lot of CSS that was already created. Above your <code>.forEach</code> loop add a class. Feel free to dig through your CSS code to see what each class does! Your change should look like this.</p><pre><code>...
+.<span class="call">ul</span>(
+    <span class="comment">// Loop over each blog post that we have in our code</span>
+    .<span class="call">class</span>(<span class="string">"item-list"</span>),
+    .<span class="call">forEach</span>(
+        section.<span class="property">items</span>
+    ) { item <span class="keyword">in</span>
+...
+</code></pre><p>This should now format your posts to look a bit better. Now we need to add a header and a footer, but as you can see, this is going to get very messy and unorganized with all the parentheses inside your html body. So how can we fix this? Well the way Publish works is by creating nodes for all the HTML elements. We aren't going to dig deep into nodes with Swift, but I want you to understand that each time you create a body, or h1 tag, or p tag, or article, button, or anything else with HTML a node is created. They are highly reusable and easy to break apart and combine together. So what we want to do is create a specific node that is <em>only</em> for the post content.</p><p>Similar to how we create a new directory for HtmlPages, let's create another new directory called <code>Nodes</code> under <code>Sources/BlogExample</code> then create a new swift file called <code>Node+PostsContent</code> inside the new directory. I want you to add the following code.</p><pre><code><span class="keyword">import</span> Publish
+<span class="keyword">import</span> Plot
+
+<span class="keyword">extension</span> <span class="type">Node</span> <span class="keyword">where</span> <span class="type">Context</span> == <span class="type">HTML</span>.<span class="type">BodyContext</span> {
+    <span class="keyword">static func</span> postContent&lt;T: <span class="type">Website</span>&gt;(for items: [<span class="type">Item</span>&lt;<span class="type">T</span>&gt;], on site: <span class="type">T</span>) -&gt; <span class="type">Node</span> {
+    
+    }
+}
+</code></pre><p>Let's discuss this. Here you create an extension on Node for HTML content inside of your body. The function is set up as a generic (that's what the T is all about) which allows us to pass in data type we want. The function also returns a Node. This is the important part. You can put as much code in here which returns one node, which we can then use in our html pages. Why would we do this? It helps keep everything organized and separated. It's using functional programming for better architecture. So the next part is going back to your <code>Factory+Posts.swift</code> file and removing everything from the body and placing it inside this new function. Then you can call your <code>.postContent</code> function inside <code>Factory+Posts.swift</code> and pass in both your items and site. To get <code>[Item&lt;T&gt;]</code> you just call <code>section.items</code> and to get <code>site</code> you just call <code>context.site</code>. Notice that we also made this function static. This allows us to use it anywhere.</p><p>There is one more thing I want to add while we are back in postContent. Let's add a way to sort our posts by date and also list the date published on each post. We will do this by:</p><ol><li>Creating a date formatter from Swift's foundation library</li></ol><ol start="2"><li>Call Swift's built-in sorted method to create a new list sorted by date</li></ol><ol start="3"><li>Loop over the newly created list in our forEach loop instead of the one passed in</li></ol><ol start="4"><li>Add a paragraph tag displaying the formatted date on each post</li></ol><p>When you're finished, your two new extensions should look like this. We did have to change <code>section.items</code> to <code>items</code> in line 20 of <code>postContent</code>. This is because our function now uses a parameter of items instead of section so we can just call items directly.</p><pre><code><span class="keyword">extension</span> <span class="type">MyHTMLFactory</span> {
+    <span class="keyword">func</span> makePostsHTML(for section: <span class="type">Section</span>&lt;<span class="type">Site</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+         <span class="type">HTML</span>(
+            .<span class="call">head</span>(for: context.<span class="property">index</span>, on: context.<span class="property">site</span>),
+            .<span class="call">body</span>(
+                .<span class="call">postContent</span>(for: section.<span class="property">items</span>, on: context.<span class="property">site</span>)
+            )
+        )
+    }
+}
+
+...
+<span class="keyword">import</span> Foundation
+
+<span class="keyword">extension</span> <span class="type">Node</span> <span class="keyword">where</span> <span class="type">Context</span> == <span class="type">HTML</span>.<span class="type">BodyContext</span> {
+    <span class="keyword">static func</span> postContent&lt;T: <span class="type">Website</span>&gt;(for items: [<span class="type">Item</span>&lt;<span class="type">T</span>&gt;], on site: <span class="type">T</span>) -&gt; <span class="type">Node</span> {
+    
+        <span class="keyword">let</span> formatter = <span class="type">DateFormatter</span>()
+        formatter.<span class="property">dateStyle</span> = .<span class="dotAccess">long</span>
+        
+        <span class="keyword">let</span> sortedItems = items.<span class="call">sorted</span> {
+            $0.<span class="property">date</span> &lt; $1.<span class="property">date</span>
+        }
+        
+        <span class="keyword">return</span>
+            <span class="comment">// Create an unordered list</span>
+            .<span class="call">ul</span>(
+                <span class="comment">// Loop over each blog post that we have in our code</span>
+                .<span class="call">class</span>(<span class="string">"item-list"</span>),
+                .<span class="call">forEach</span>(
+                    sortedItems
+                ) { item <span class="keyword">in</span>
+                    <span class="comment">// Creates a list item for each post</span>
+                    .<span class="dotAccess">li</span> (
+                        <span class="comment">// Creates an article node to display our information</span>
+                        .<span class="call">article</span>(
+                            <span class="comment">// Creates a heading with our post title</span>
+                            
+                            .<span class="call">h1</span>(
+                                <span class="comment">// Creates an anchor tag so we can create the link to our post</span>
+                                .<span class="call">a</span>(
+                                    <span class="comment">// Creates the link to our post so we can click it and read everything</span>
+                                    .<span class="call">href</span>(item.<span class="property">path</span>),
+                                    .<span class="call">text</span>(item.<span class="property">title</span>)
+                                )
+                            ),
+                            <span class="comment">// Creates a description  of what our post is about</span>
+                            .<span class="call">p</span>(.<span class="call">text</span>(item.<span class="property">description</span>)),
+                            .<span class="call">p</span>(.<span class="call">text</span>(<span class="string">"Published:</span> \(formatter.<span class="call">string</span>(from: item.<span class="property">lastModified</span>))<span class="string">"</span>))
+                        )
+                    )
+                }
+        )
+    }
+}
+</code></pre><p>Run your code and it should look the same! The rest of this tutorial should go by rather quickly. We have most of the difficult part out of the way. You know how to install and launch your website, create new html pages, and create new nodes. Let's start adding a few things to make it look better and then discuss how to add new pages and tags.</p><h3>Adding a wrapper node</h3><p>Publish comes with a CSS wrapper class that we can help make our content look better. Let's first create this node so we can use it anywhere in our website. Go ahead and create a new swift file called <code>Node+Wrapper.swift</code> and add the following code.</p><pre><code><span class="keyword">import</span> Publish
+<span class="keyword">import</span> Plot
+
+
+<span class="keyword">extension</span> <span class="type">Node</span> <span class="keyword">where</span> <span class="type">Context</span> == <span class="type">HTML</span>.<span class="type">BodyContext</span> {
+    <span class="keyword">static func</span> wrapper(<span class="keyword">_</span> nodes: <span class="type">Node</span>...) -&gt; <span class="type">Node</span> {
+        .<span class="call">div</span>(.<span class="call">class</span>(<span class="string">"wrapper"</span>), .<span class="dotAccess">group</span>(nodes))
+    }
+}
+</code></pre><p>Then wrap everything inside your post content inside the .wrapper(). Your return statement should look like this.</p><pre><code><span class="keyword">return</span>
+    .<span class="call">wrapper</span>(
+        <span class="comment">// Create an unordered list</span>
+        .<span class="call">ul</span>(
+            <span class="comment">// Loop over each blog post that we have in our code</span>
+            .<span class="call">class</span>(<span class="string">"item-list"</span>),
+            .<span class="call">forEach</span>(
+                sortedItems
+            ) { item <span class="keyword">in</span>
+                <span class="comment">// Creates a list item for each post</span>
+                .<span class="dotAccess">li</span> (
+                    <span class="comment">// Creates an article node to display our information</span>
+                    .<span class="call">article</span>(
+                        <span class="comment">// Creates a heading with our post title</span>
+                        
+                        .<span class="call">h1</span>(
+                            <span class="comment">// Creates an anchor tag so we can create the link to our post</span>
+                            .<span class="call">a</span>(
+                                <span class="comment">// Creates the link to our post so we can click it and read everything</span>
+                                .<span class="call">href</span>(item.<span class="property">path</span>),
+                                .<span class="call">text</span>(item.<span class="property">title</span>)
+                            )
+                        ),
+                        <span class="comment">// Creates a description  of what our post is about</span>
+                        .<span class="call">p</span>(.<span class="call">text</span>(item.<span class="property">description</span>)),
+                        .<span class="call">p</span>(.<span class="call">text</span>(<span class="string">"Published:</span> \(formatter.<span class="call">string</span>(from: item.<span class="property">lastModified</span>))<span class="string">"</span>))
+                    )
+                )
+            }
+        )
+)
+</code></pre><p>You should be able to run your code now and see your posts look a bit nicer. Here's an example of what you should see.</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/01/01-07.png" alt="Wrapper example on posts" width="800"/><h3>Adding a header</h3><p>Now let's add a header that we can display on every webpage. We will do this by creating a colored banner with a simple title along with some navigation buttons. This next node extension will accomplish the following tasks.</p><ol><li>It will create a list of navigation items for the different pages of your website</li></ol><ol start="2"><li>It will return a header node wrapped around a wrapper node</li></ol><ol start="3"><li>Inside the wrapper node you'll create a header for your title</li></ol><ol start="4"><li>Below the title you'll create a .nav node that contains an unordered list of your navigation items</li></ol><ol start="5"><li>Each navigation item will link you to that specific web page. For example, if you click "Home" you will be redirected to <code>http://localhost:8000/home</code></li></ol><p>Start by creating a new file called <code>Node+Header.swift</code> and add the following code. I've also added comments to help explain what each piece is.</p><pre><code><span class="keyword">import</span> Publish
+<span class="keyword">import</span> Plot
+
+<span class="keyword">extension</span> <span class="type">Node</span> <span class="keyword">where</span> <span class="type">Context</span> == <span class="type">HTML</span>.<span class="type">BodyContext</span> {
+    
+    <span class="keyword">static func</span> myHeader&lt;T: <span class="type">Website</span>&gt;(for context: <span class="type">PublishingContext</span>&lt;<span class="type">T</span>&gt;) -&gt; <span class="type">Node</span> {
+        <span class="comment">// Create a list of navigation items</span>
+        <span class="keyword">let</span> navItems = [<span class="string">"Home"</span>, <span class="string">"Posts"</span>, <span class="string">"About"</span>]
+        
+        <span class="keyword">return</span> .<span class="call">header</span>(
+            <span class="comment">// Begin the wrapper class</span>
+            .<span class="call">wrapper</span>(
+                <span class="comment">// Create your main title</span>
+                .<span class="call">h1</span>(<span class="string">"My Swift Blog"</span>),
+                <span class="comment">// Create the nav node</span>
+                .<span class="call">nav</span>(
+                    <span class="comment">// Create and undordered list and loop through your navItems yuou created above</span>
+                    .<span class="call">ul</span>(
+                        .<span class="call">forEach</span>(
+                            navItems
+                        ) { item <span class="keyword">in</span>
+                            .<span class="call">li</span>(
+                                <span class="comment">// Create an anchor tag to make linkes</span>
+                                .<span class="call">a</span>(
+                                    <span class="comment">// Redirect the user to a new webpage on your site when they click each item</span>
+                                    .<span class="call">href</span>(<span class="string">"/</span>\(item.<span class="call">lowercased</span>())<span class="string">"</span>),
+                                    .<span class="call">text</span>(item)
+                                )
+                            )
+                        }
+                    )
+                )
+            )
+        )
+    }
+}
+</code></pre><p>You have now created the node, but you naven't actually used it on one of your pages yet. Go back to <code>Factory+Posts.swift</code> and add in your .myHeader function. It should now look like this. You can already see how separating nodes will help keep your html pages oraganized.</p><pre><code><span class="keyword">extension</span> <span class="type">MyHTMLFactory</span> {
+    <span class="keyword">func</span> makePostsHTML(for section: <span class="type">Section</span>&lt;<span class="type">Site</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+         <span class="type">HTML</span>(
+            .<span class="call">head</span>(for: context.<span class="property">index</span>, on: context.<span class="property">site</span>),
+            .<span class="call">body</span>(
+                .<span class="call">myHeader</span>(for: context),
+                .<span class="call">postContent</span>(for: section.<span class="property">items</span>, on: context.<span class="property">site</span>)
+            )
+        )
+    }
+}
+</code></pre><p>You can run this now and see it in action, but before you do, I suggest we add our own custom color to the banner up top. We will do this by also creating a gradient background instead of just a solid color. There is already a header class in our CSS file, so jump in there and look for</p><pre><code><span class="call">header</span> {
+    background-color: #eee;
+}
+</code></pre><p>Change it to look like this</p><pre><code><span class="call">header</span> {
+    background: linear-<span class="call">gradient</span>(90deg, <span class="call">rgba</span>(<span class="number">2</span>,<span class="number">0</span>,<span class="number">36</span>,<span class="number">1</span>) <span class="number">2</span>%, <span class="call">rgba</span>(<span class="number">9</span>,<span class="number">9</span>,<span class="number">121</span>,<span class="number">1</span>) <span class="number">29</span>%, <span class="call">rgba</span>(<span class="number">0</span>,<span class="number">212</span>,<span class="number">255</span>,<span class="number">1</span>) <span class="number">100</span>%);
+}
+</code></pre><p>Feel free to play with it as you see fit. But if you did the above you should have something that looks like this now.</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/01/01-08.png" alt="Header example" width="800"/><h3>Add a footer</h3><p>Go ahead and create a new node called <code>Node+Footer.swift</code> and let's do the following.</p><ol><li>Create a variable that automatically gets the current year</li></ol><ol start="2"><li>Create a container that contains the copyright symbol with the year and the name of your site</li></ol><ol start="3"><li>Create a link to John Sundell's Publish repo to show people how you generated this website</li></ol><p>Note that we will need to add the Foundation library in order to get our current calendar date. Add in the following code.</p><pre><code><span class="keyword">import</span> Foundation
+<span class="keyword">import</span> Publish
+<span class="keyword">import</span> Plot
+
+<span class="keyword">extension</span> <span class="type">Node</span> <span class="keyword">where</span> <span class="type">Context</span> == <span class="type">HTML</span>.<span class="type">BodyContext</span> {
+    <span class="keyword">static func</span> myFooter&lt;T: <span class="type">Website</span>&gt;(for site: <span class="type">T</span>) -&gt; <span class="type">Node</span> {
+        <span class="comment">// Creates a variable to get the current year of today</span>
+        <span class="keyword">let</span> currentYear = <span class="type">Calendar</span>.<span class="property">current</span>.<span class="call">component</span>(.<span class="dotAccess">year</span>, from: <span class="type">Date</span>())
+        
+        <span class="keyword">return</span>
+            <span class="comment">// Creates a container</span>
+            .<span class="call">div</span>(
+                <span class="comment">// Provides a CSS class to this container</span>
+                .<span class="call">class</span>(<span class="string">"footer"</span>),
+                <span class="comment">// Creates another container for copyright information</span>
+                .<span class="call">div</span>(
+                    .<span class="call">text</span>(<span class="string">"©</span> \(currentYear) \(site.<span class="property">name</span>)<span class="string">"</span>)
+                ),
+                <span class="comment">// Creates another container for link to John Sundell's publish repo</span>
+                .<span class="call">div</span>(
+                    .<span class="call">text</span>(<span class="string">"Generated using "</span>),
+                    .<span class="call">a</span>(
+                        .<span class="call">text</span>(<span class="string">"Publish"</span>),
+                        .<span class="call">href</span>(<span class="string">"https://github.com/johnsundell/publish"</span>)
+                    ),
+                    .<span class="call">text</span>(<span class="string">". Written in Swift"</span>)
+                )
+        )
+    }
+}
+</code></pre><p>Add your footer inside <code>Factory+Posts.swift</code>, but note that the parameter is different for the footer than it is the header. The parameter used for the header is a <code>context</code> while the footer's parameter is <code>Website</code>. Feel free to change these as you see fit, but if you wrote it the same way I did, your <code>Factory+Posts</code> will now look like this.</p><pre><code><span class="keyword">extension</span> <span class="type">MyHTMLFactory</span> {
+    <span class="keyword">func</span> makePostsHTML(for section: <span class="type">Section</span>&lt;<span class="type">Site</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+         <span class="type">HTML</span>(
+            .<span class="call">head</span>(for: context.<span class="property">index</span>, on: context.<span class="property">site</span>),
+            .<span class="call">body</span>(
+                .<span class="call">myHeader</span>(for: context),
+                .<span class="call">postContent</span>(for: section.<span class="property">items</span>, on: context.<span class="property">site</span>),
+                .<span class="call">myFooter</span>(for: context.<span class="property">site</span>)
+            )
+        )
+    }
+}
+</code></pre><table class="posts-table">
+    <tr>
+        <th class="th-left"><a href="www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-01" style="text-decoration: none">&larr; Introduction and setting up</a></th>
+        <th class="th-middle"></th>
+        <th class="th-right"><a href="www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-03" style="text-decoration: none">Pages, tags, and metadata &rarr;</a></th>
+    </tr>
+</table>]]></content:encoded></item><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/home/intro</guid><title>Swift Skill Building</title><description>Swift Skill Building</description><link>www.thomaskellough/thomaskellough.github.io/home/intro</link><pubDate>Sat, 18 Jul 2020 22:12:00 -0500</pubDate><content:encoded><![CDATA[<h1>Swift Skill Building</h1><p>Swift is definitely one of my favorite programming languages. These tutorials will show you how to do certain things using Swift.</p>]]></content:encoded></item><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-01</guid><title>Build your very own website using Swift - Part 1</title><description>Build your very own static website using, you guessed it, Swift! Publish is an open-source static site generator build for Swift Developers.</description><link>www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-01</link><pubDate>Sat, 18 Jul 2020 22:00:00 -0500</pubDate><content:encoded><![CDATA[<h1>Build your very own website using Swift - Part 1</h1><div class="post-tags" markdown="1">
+        <a class="post-category post-category-feature" href="www.thomaskellough/thomaskellough.github.io/tags/feature">Feature</a>
+        <a class="post-category post-category-publish" href="www.thomaskellough/thomaskellough.github.io/tags/publish">Publish</a>
+        <a class="post-category post-category-website" href="www.thomaskellough/thomaskellough.github.io/tags/website">Website</a>
+        <a class="post-category post-category-protocols" href="www.thomaskellough/thomaskellough.github.io/tags/protocols">Protocols</a>
+</div><table class="posts-table">
+    <tr>
+        <th class="th-single-right"><a href="www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-02" style="text-decoration: none">Creating your own nodes &rarr;</a></th>
+    </tr>
+</table><h3>Prerequisites</h3><p>Requirements:</p><ul><li>Swift 5.2 (or later)</li></ul><ul><li>macOS Catalina 10.15 (or later)</li></ul><ul><li>Some experience in Swift</li></ul><ul><li>Not necessary, but background experience in HTML/CSS and web design will help</li></ul><h2>Introduction</h2><p>When programmers hear the word "Swift" they instantly think of iOS apps and Apple. This is because Swift was developed by Apple for iOS, iPadOS, macOS, watchOS, and tvOS. It was designed to take over Objective-C and so far has been doing an excellent job with it.</p><p>However, programming languages are constantly changing and improving and Swift is no exception. <a href="https://www.swiftbysundell.com/">John Sundell</a> is very popular in the Swift community and last year he released his <a href="https://github.com/JohnSundell/Publish">Publish</a> project that allows you to make static websites using Swift code. In fact, this website that you're reading this tutorial on was built using Publish!</p><p>All the hard work is done for us, however, the documentation is still being worked on. <a href="https://www.youtube.com/watch?v=JqdS-oi96Gk">Kilo Loco</a> has a great video to help you get started, but I wanted to create a more in depth guide to help you create your very own website from start to finish. At the end of this tutorial, you will have created <a href="https://swiftblogexample.github.io">this</a> website as well as have a decent idea of how to organize your code.</p><p>Now this tutorial doesn't go into a whole lot of detail with CSS and HTML because well frankly, it's not my strong point. However, I will show you enough to get you started. Note that even though Publish is written in Swift, we don't do a <em>whole lot</em> of normal Swift code that you normally see and there may be some advanced topics that we will quickly go over without digging in too deep.</p><p>With that being said, let's get started. I highly suggest taking a moment to look over the <a href="https://github.com/JohnSundell/Publish">publish repo</a> and getting a bit familiar with what we are dealing with. When you are ready, go ahead and clone the repo. To do that, open terminal, navigate to a directory of your choosing and type in <code></code><code>git clone https://github.com/JohnSundell/Publish.git</code><code></code> When finished, navigate to the newly created 'Publish' directory that you just cloned then run the terminal command <code></code><code>make</code><code></code>. This tutorial is split into four different sections, so feel free to take breaks as needed.</p><p><em>Tip: to change directories using terminal commands just type <code></code><code>cd /directory/of/your/choosing/</code><code></code> </em></p><p>The <code></code><code>make</code><code></code> command runs the make file that's included in the Publish repo. If you get a <strong>permission denied</strong> when trying to run this, use the sudo command <code></code><code>sudo make</code><code></code> and use admin privldeges (assuming you have them). At this point, I'd recommend creating a separate directory to store your own own website. After navigating to your new directory inside your terminal, run the command <code></code><code>publish new</code><code></code>. This generates a handful of files that is now your new website.</p><h2>Launching your website</h2><p>Great! You now have your very first website using Publish! Let's take a look at it, shall we? The first step is to open your website by running <code></code><code>open package.swift</code><code></code>. Give Xcode some time to install all the dependencies needed. When it's finished, make sure your scheme is selected for your Mac, hit run, and ensure you have a success message. Here's what you should be seeing.</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/01/01-01.png" alt="Xcode running publish" width="800"/><p>Let's launch your website! Now for those of you new to making websites, you don't just build it live on the web. First, you edit it and launch it locally on your computer where only you can see it. How do we do that? Go back to your terminal and run the command <code></code><code>publish run</code><code></code>. You'll see your terminal do a bunch of things, but the end is what we want. You should see a "Successfully published (your website)" and then a line under it stating "Starting web server at http://localhoste:8000". You can type this inside of a web browser of your choosing or just <code>cmd + click</code> it directly from the terminal. Viola! You have your first website that should look something like this.</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/01/01-02.png" alt="Initial website launch" width="800"/><p><em>Note: depending on the settings of your mac you may have a white background. Publish already adapts to light/dark theme based on the settings of your mac.</em></p><h2>Personalizing your website</h2><p>Now I promise we will get to adding content, but bear with me. I want to show you everything I can from start to finish so you understand most of the components in this package. The first step is personalizing this website to your liking.</p><h3>Creating your own CSS file</h3><p>Even though there are a lot of CSS styles built in, you're going to want to have full control over your CSS in your own website. Let's start by creating our own CSS file. Look over in your Project Navigator (that's the sidebar to the left that shows you all of your folders and files) and create a new folder in your <code>Resources</code> folder named <code>MyTheme</code>. Inside <code>MyTheme</code>, create a new file. You can either right click it and select <code>New File</code> or <code>cmd + n</code> after highlighting the folder. Name this file <code>styles.css</code> (yes, that means removing the Swift extension!). Now you can write all your CSS from Scratch, OR you can take what's already done for us and add then edit it as needed. To do the latter look in your project navigator under "Swift Package Dependencies" and navigate to "Publish&gt;Resources&gt;FoundationTheme&gt;styles.css" and copy all of the CSS from there into the new CSS file you created. Here is an image to show you where you should be at right now.</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/01/01-03.png" alt="Xcode showing style.css file" width="800"/><h3>Creating your own theme</h3><p>I'm about to show you how to create your own theme, but let's first take a look at the default theme that comes with Publish called <code>Foundation</code>. In your Swift Package Dependencies section of your project navigator, navigate to "Publish &gt; Sources &gt; Publish &gt; API &gt; Theme+Foundation.swift". You should see a file that looks like this.</p><pre><code><span class="comment">/**
+*  Publish
+*  Copyright (c) John Sundell 2019
+*  MIT license, see LICENSE file for details
+*/</span>
+
+<span class="keyword">import</span> Plot
+
+<span class="keyword">public extension</span> <span class="type">Theme</span> {
+    <span class="comment">/// The default "Foundation" theme that Publish ships with, a very
+    /// basic theme mostly implemented for demonstration purposes.</span>
+    <span class="keyword">static var</span> foundation: <span class="type">Self</span> {
+        <span class="type">Theme</span>(
+            htmlFactory: <span class="type">FoundationHTMLFactory</span>(),
+            resourcePaths: [<span class="string">"Resources/FoundationTheme/styles.css"</span>]
+        )
+    }
+}
+
+<span class="keyword">private struct</span> FoundationHTMLFactory&lt;Site: <span class="type">Website</span>&gt;: <span class="type">HTMLFactory</span> {
+    <span class="keyword">func</span> makeIndexHTML(for index: <span class="type">Index</span>,
+                       context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+        <span class="type">HTML</span>(
+            .<span class="call">lang</span>(context.<span class="property">site</span>.<span class="property">language</span>),
+            .<span class="call">head</span>(for: index, on: context.<span class="property">site</span>),
+            .<span class="call">body</span>(
+                .<span class="call">header</span>(for: context, selectedSection: <span class="keyword">nil</span>),
+                .<span class="call">wrapper</span>(
+                    .<span class="call">h1</span>(.<span class="call">text</span>(index.<span class="property">title</span>)),
+                    .<span class="call">p</span>(
+                        .<span class="call">class</span>(<span class="string">"description"</span>),
+                        .<span class="call">text</span>(context.<span class="property">site</span>.<span class="property">description</span>)
+                    ),
+                    .<span class="call">h2</span>(<span class="string">"Latest content"</span>),
+                    .<span class="call">itemList</span>(
+                        for: context.<span class="call">allItems</span>(
+                            sortedBy: \.<span class="property">date</span>,
+                            order: .<span class="dotAccess">descending</span>
+                        ),
+                        on: context.<span class="property">site</span>
+                    )
+                ),
+                .<span class="call">footer</span>(for: context.<span class="property">site</span>)
+            )
+        )
+    }
+
+    <span class="keyword">func</span> makeSectionHTML(for section: <span class="type">Section</span>&lt;<span class="type">Site</span>&gt;,
+                         context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+        <span class="type">HTML</span>(
+            .<span class="call">lang</span>(context.<span class="property">site</span>.<span class="property">language</span>),
+            .<span class="call">head</span>(for: section, on: context.<span class="property">site</span>),
+            .<span class="call">body</span>(
+                .<span class="call">header</span>(for: context, selectedSection: section.<span class="property">id</span>),
+                .<span class="call">wrapper</span>(
+                    .<span class="call">h1</span>(.<span class="call">text</span>(section.<span class="property">title</span>)),
+                    .<span class="call">itemList</span>(for: section.<span class="property">items</span>, on: context.<span class="property">site</span>)
+                ),
+                .<span class="call">footer</span>(for: context.<span class="property">site</span>)
+            )
+        )
+    }
+
+    <span class="keyword">func</span> makeItemHTML(for item: <span class="type">Item</span>&lt;<span class="type">Site</span>&gt;,
+                      context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+        <span class="type">HTML</span>(
+            .<span class="call">lang</span>(context.<span class="property">site</span>.<span class="property">language</span>),
+            .<span class="call">head</span>(for: item, on: context.<span class="property">site</span>),
+            .<span class="call">body</span>(
+                .<span class="call">class</span>(<span class="string">"item-page"</span>),
+                .<span class="call">header</span>(for: context, selectedSection: item.<span class="property">sectionID</span>),
+                .<span class="call">wrapper</span>(
+                    .<span class="call">article</span>(
+                        .<span class="call">div</span>(
+                            .<span class="call">class</span>(<span class="string">"content"</span>),
+                            .<span class="call">contentBody</span>(item.<span class="property">body</span>)
+                        ),
+                        .<span class="call">span</span>(<span class="string">"Tagged with: "</span>),
+                        .<span class="call">tagList</span>(for: item, on: context.<span class="property">site</span>)
+                    )
+                ),
+                .<span class="call">footer</span>(for: context.<span class="property">site</span>)
+            )
+        )
+    }
+
+    <span class="keyword">func</span> makePageHTML(for page: <span class="type">Page</span>,
+                      context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+        <span class="type">HTML</span>(
+            .<span class="call">lang</span>(context.<span class="property">site</span>.<span class="property">language</span>),
+            .<span class="call">head</span>(for: page, on: context.<span class="property">site</span>),
+            .<span class="call">body</span>(
+                .<span class="call">header</span>(for: context, selectedSection: <span class="keyword">nil</span>),
+                .<span class="call">wrapper</span>(.<span class="call">contentBody</span>(page.<span class="property">body</span>)),
+                .<span class="call">footer</span>(for: context.<span class="property">site</span>)
+            )
+        )
+    }
+
+    <span class="keyword">func</span> makeTagListHTML(for page: <span class="type">TagListPage</span>,
+                         context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span>? {
+        <span class="type">HTML</span>(
+            .<span class="call">lang</span>(context.<span class="property">site</span>.<span class="property">language</span>),
+            .<span class="call">head</span>(for: page, on: context.<span class="property">site</span>),
+            .<span class="call">body</span>(
+                .<span class="call">header</span>(for: context, selectedSection: <span class="keyword">nil</span>),
+                .<span class="call">wrapper</span>(
+                    .<span class="call">h1</span>(<span class="string">"Browse all tags"</span>),
+                    .<span class="call">ul</span>(
+                        .<span class="call">class</span>(<span class="string">"all-tags"</span>),
+                        .<span class="call">forEach</span>(page.<span class="property">tags</span>.<span class="call">sorted</span>()) { tag <span class="keyword">in</span>
+                            .<span class="call">li</span>(
+                                .<span class="call">class</span>(<span class="string">"tag"</span>),
+                                .<span class="call">a</span>(
+                                    .<span class="call">href</span>(context.<span class="property">site</span>.<span class="call">path</span>(for: tag)),
+                                    .<span class="call">text</span>(tag.<span class="property">string</span>)
+                                )
+                            )
+                        }
+                    )
+                ),
+                .<span class="call">footer</span>(for: context.<span class="property">site</span>)
+            )
+        )
+    }
+
+    <span class="keyword">func</span> makeTagDetailsHTML(for page: <span class="type">TagDetailsPage</span>,
+                            context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span>? {
+        <span class="type">HTML</span>(
+            .<span class="call">lang</span>(context.<span class="property">site</span>.<span class="property">language</span>),
+            .<span class="call">head</span>(for: page, on: context.<span class="property">site</span>),
+            .<span class="call">body</span>(
+                .<span class="call">header</span>(for: context, selectedSection: <span class="keyword">nil</span>),
+                .<span class="call">wrapper</span>(
+                    .<span class="call">h1</span>(
+                        <span class="string">"Tagged with "</span>,
+                        .<span class="call">span</span>(.<span class="call">class</span>(<span class="string">"tag"</span>), .<span class="dotAccess">text</span>(page.<span class="property">tag</span>.<span class="property">string</span>))
+                    ),
+                    .<span class="call">a</span>(
+                        .<span class="call">class</span>(<span class="string">"browse-all"</span>),
+                        .<span class="call">text</span>(<span class="string">"Browse all tags"</span>),
+                        .<span class="call">href</span>(context.<span class="property">site</span>.<span class="property">tagListPath</span>)
+                    ),
+                    .<span class="call">itemList</span>(
+                        for: context.<span class="call">items</span>(
+                            taggedWith: page.<span class="property">tag</span>,
+                            sortedBy: \.<span class="property">date</span>,
+                            order: .<span class="dotAccess">descending</span>
+                        ),
+                        on: context.<span class="property">site</span>
+                    )
+                ),
+                .<span class="call">footer</span>(for: context.<span class="property">site</span>)
+            )
+        )
+    }
+}
+
+<span class="keyword">private extension</span> <span class="type">Node</span> <span class="keyword">where</span> <span class="type">Context</span> == <span class="type">HTML</span>.<span class="type">BodyContext</span> {
+    <span class="keyword">static func</span> wrapper(<span class="keyword">_</span> nodes: <span class="type">Node</span>...) -&gt; <span class="type">Node</span> {
+        .<span class="call">div</span>(.<span class="call">class</span>(<span class="string">"wrapper"</span>), .<span class="dotAccess">group</span>(nodes))
+    }
+
+    <span class="keyword">static func</span> header&lt;T: <span class="type">Website</span>&gt;(
+        for context: <span class="type">PublishingContext</span>&lt;<span class="type">T</span>&gt;,
+        selectedSection: <span class="type">T</span>.<span class="type">SectionID</span>?
+    ) -&gt; <span class="type">Node</span> {
+        <span class="keyword">let</span> sectionIDs = <span class="type">T</span>.<span class="type">SectionID</span>.<span class="property">allCases</span>
+
+        <span class="keyword">return</span> .<span class="call">header</span>(
+            .<span class="call">wrapper</span>(
+                .<span class="call">a</span>(.<span class="call">class</span>(<span class="string">"site-name"</span>), .<span class="dotAccess">href</span>(<span class="string">"/"</span>), .<span class="dotAccess">text</span>(context.<span class="property">site</span>.<span class="property">name</span>)),
+                .<span class="call">if</span>(sectionIDs.<span class="property">count</span> &gt; <span class="number">1</span>,
+                    .<span class="call">nav</span>(
+                        .<span class="call">ul</span>(.<span class="call">forEach</span>(sectionIDs) { section <span class="keyword">in</span>
+                            .<span class="call">li</span>(.<span class="call">a</span>(
+                                .<span class="call">class</span>(section == selectedSection ? <span class="string">"selected"</span> : <span class="string">""</span>),
+                                .<span class="call">href</span>(context.<span class="property">sections</span>[section].path),
+                                .<span class="call">text</span>(context.<span class="property">sections</span>[section].title)
+                            ))
+                        })
+                    )
+                )
+            )
+        )
+    }
+
+    <span class="keyword">static func</span> itemList&lt;T: <span class="type">Website</span>&gt;(for items: [<span class="type">Item</span>&lt;<span class="type">T</span>&gt;], on site: <span class="type">T</span>) -&gt; <span class="type">Node</span> {
+        <span class="keyword">return</span> .<span class="call">ul</span>(
+            .<span class="call">class</span>(<span class="string">"item-list"</span>),
+            .<span class="call">forEach</span>(items) { item <span class="keyword">in</span>
+                .<span class="call">li</span>(.<span class="call">article</span>(
+                    .<span class="call">h1</span>(.<span class="call">a</span>(
+                        .<span class="call">href</span>(item.<span class="property">path</span>),
+                        .<span class="call">text</span>(item.<span class="property">title</span>)
+                    )),
+                    .<span class="call">tagList</span>(for: item, on: site),
+                    .<span class="call">p</span>(.<span class="call">text</span>(item.<span class="property">description</span>))
+                ))
+            }
+        )
+    }
+
+    <span class="keyword">static func</span> tagList&lt;T: <span class="type">Website</span>&gt;(for item: <span class="type">Item</span>&lt;<span class="type">T</span>&gt;, on site: <span class="type">T</span>) -&gt; <span class="type">Node</span> {
+        <span class="keyword">return</span> .<span class="call">ul</span>(.<span class="call">class</span>(<span class="string">"tag-list"</span>), .<span class="dotAccess">forEach</span>(item.<span class="property">tags</span>) { tag <span class="keyword">in</span>
+            .<span class="call">li</span>(.<span class="call">a</span>(
+                .<span class="call">href</span>(site.<span class="call">path</span>(for: tag)),
+                .<span class="call">text</span>(tag.<span class="property">string</span>)
+            ))
+        })
+    }
+
+    <span class="keyword">static func</span> footer&lt;T: <span class="type">Website</span>&gt;(for site: <span class="type">T</span>) -&gt; <span class="type">Node</span> {
+        <span class="keyword">return</span> .<span class="call">footer</span>(
+            .<span class="call">p</span>(
+                .<span class="call">text</span>(<span class="string">"Generated using "</span>),
+                .<span class="call">a</span>(
+                    .<span class="call">text</span>(<span class="string">"Publish"</span>),
+                    .<span class="call">href</span>(<span class="string">"https://github.com/johnsundell/publish"</span>)
+                )
+            ),
+            .<span class="call">p</span>(.<span class="call">a</span>(
+                .<span class="call">text</span>(<span class="string">"RSS feed"</span>),
+                .<span class="call">href</span>(<span class="string">"/feed.rss"</span>)
+            ))
+        )
+    }
+}
+
+</code></pre><p>We are going to break this apart with our own custom theme to make it easier to understand and more organized. The first piece I want you to look at is the public extension on Theme.</p><pre><code><span class="keyword">public extension</span> <span class="type">Theme</span> {
+    <span class="comment">/// The default "Foundation" theme that Publish ships with, a very
+    /// basic theme mostly implemented for demonstration purposes.</span>
+    <span class="keyword">static var</span> foundation: <span class="type">Self</span> {
+        <span class="type">Theme</span>(
+            htmlFactory: <span class="type">FoundationHTMLFactory</span>(),
+            resourcePaths: [<span class="string">"Resources/FoundationTheme/styles.css"</span>]
+        )
+    }
+}
+</code></pre><p>This creates a theme with a couple of arguments. The first being the <code>HTMLFactory()</code> and the second being a path to your CSS. Let's begin by creating our own theme that we can customize easily. Head to your project navigator and create a new Swift file called <code>MyHTMLFactory.swift</code> inside of <code>Sources &gt; BlogExample (or whatever your blog is named!)</code>. Now what we want to do is take all of these functions and separate them into their own files. I'll give you the bones of it here, but feel free to take them from <code>Theme+Foundation</code> and edit them as you see fit.</p><p>Inside <code>MyHTMLFactory.swift</code> add the following. (Note that I changed the struct name!)</p><pre><code><span class="keyword">import</span> Publish
+<span class="keyword">import</span> Plot
+
+<span class="keyword">struct</span> MyHTMLFactory&lt;Site: <span class="type">Website</span>&gt;: <span class="type">HTMLFactory</span> {
+
+}
+</code></pre><p>When you press <code></code><code>cmd + b</code><code></code> to build your app you should see an error. <code></code><code>Type 'MyHTMLFactory&lt;Site&gt;' does not conform to protocol 'HTMLFactor'</code><code></code>What's this? Well, MyHTMLFactory is actually a protocol that needs specific functions. If you're unfamiliar with protocols, they define a blueprint or methods and properties that you can allow other classes and structs to adopt. Here is what the protocol of MyHTMLFactory looks like.</p><pre><code><span class="keyword">import</span> Plot
+
+<span class="comment">/// Protocol used to implement a website theme's underlying factory,
+/// that creates HTML for a site's various locations using the Plot DSL.</span>
+<span class="keyword">public protocol</span> HTMLFactory {
+    <span class="comment">/// The website that the factory is for. Generic constraints may be
+    /// applied to this type to require that a website fulfills certain
+    /// requirements in order to use this factory.</span>
+    <span class="keyword">associatedtype</span> Site: <span class="type">Website</span>
+
+    <span class="comment">/// Create the HTML to use for the website's main index page.
+    /// - parameter index: The index page to generate HTML for.
+    /// - parameter context: The current publishing context.</span>
+    <span class="keyword">func</span> makeIndexHTML(for index: <span class="type">Index</span>,
+                       context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span>
+
+    <span class="comment">/// Create the HTML to use for the index page of a section.
+    /// - parameter section: The section to generate HTML for.
+    /// - parameter context: The current publishing context.</span>
+    <span class="keyword">func</span> makeSectionHTML(for section: <span class="type">Section</span>&lt;<span class="type">Site</span>&gt;,
+                         context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span>
+
+    <span class="comment">/// Create the HTML to use for an item.
+    /// - parameter item: The item to generate HTML for.
+    /// - parameter context: The current publishing context.</span>
+    <span class="keyword">func</span> makeItemHTML(for item: <span class="type">Item</span>&lt;<span class="type">Site</span>&gt;,
+                      context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span>
+
+    <span class="comment">/// Create the HTML to use for a page.
+    /// - parameter page: The page to generate HTML for.
+    /// - parameter context: The current publishing context.</span>
+    <span class="keyword">func</span> makePageHTML(for page: <span class="type">Page</span>,
+                      context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span>
+
+    <span class="comment">/// Create the HTML to use for the website's list of tags, if supported.
+    /// Return `nil` if the theme that this factory is for doesn't support tags.
+    /// - parameter page: The tag list page to generate HTML for.
+    /// - parameter context: The current publishing context.</span>
+    <span class="keyword">func</span> makeTagListHTML(for page: <span class="type">TagListPage</span>,
+                         context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span>?
+
+    <span class="comment">/// Create the HTML to use for a tag details page, used to represent a single
+    /// tag. Return `nil` if the theme that this factory is for doesn't support tags.
+    /// - parameter page: The tag details page to generate HTML for.
+    /// - parameter context: The current publishing context.</span>
+    <span class="keyword">func</span> makeTagDetailsHTML(for page: <span class="type">TagDetailsPage</span>,
+                            context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span>?
+}
+</code></pre><p>So we need to add these stubs. The great thing about Xcode, is it can automatically do it for us. Remember that error that popped up? Go ahead and click the red circle on the left side of the error and click "Fix".</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/01/01-04.png" alt="Xcode running publish" width="800"/><p>This should add the following protocol stubs, but with no return values. Go ahead and fill the stubs with a simple return HTML to get started. Here's an example.</p><pre><code><span class="keyword">struct</span> MyHTMLFactory&lt;Site: <span class="type">Website</span>&gt;: <span class="type">HTMLFactory</span> {
+    <span class="keyword">func</span> makeIndexHTML(for index: <span class="type">Index</span>, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+        <span class="type">HTML</span>(.<span class="call">text</span>(<span class="string">"Hello, index"</span>))
+    }
+
+    <span class="keyword">func</span> makeSectionHTML(for section: <span class="type">Section</span>&lt;<span class="type">Site</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+        <span class="type">HTML</span>(.<span class="call">text</span>(<span class="string">"Hello, section"</span>))
+    }
+
+    <span class="keyword">func</span> makeItemHTML(for item: <span class="type">Item</span>&lt;<span class="type">Site</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+        <span class="type">HTML</span>(.<span class="call">text</span>(<span class="string">"Hello, item"</span>))
+    }
+
+    <span class="keyword">func</span> makePageHTML(for page: <span class="type">Page</span>, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+        <span class="type">HTML</span>(.<span class="call">text</span>(<span class="string">"Hello, page"</span>))
+    }
+
+    <span class="keyword">func</span> makeTagListHTML(for page: <span class="type">TagListPage</span>, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span>? {
+        <span class="type">HTML</span>(.<span class="call">text</span>(<span class="string">"Hello, tag list"</span>))
+    }
+
+    <span class="keyword">func</span> makeTagDetailsHTML(for page: <span class="type">TagDetailsPage</span>, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span>? {
+        <span class="type">HTML</span>(.<span class="call">text</span>(<span class="string">"Hello, tag details"</span>))
+    }
+}
+</code></pre><p>Let's now navigate to our <code>main.swift</code> file (should be in Sources/BlogExample) and change it up a bit. The first change I want you to do is to add this extension. You may have to change <code>BlogExample</code> to whatever your blog is named. In fact, expect to do that from now on because I won't be reminding you again. We are also adding the CSS file that we created earlier to our resourcePaths.</p><pre><code><span class="keyword">extension</span> <span class="type">Theme</span> <span class="keyword">where</span> <span class="type">Site</span> == <span class="type">BlogExample</span> {
+    <span class="keyword">static var</span> myTheme: <span class="type">Theme</span> {
+        <span class="type">Theme</span>(htmlFactory: <span class="type">MyHTMLFactory</span>(), resourcePaths: [<span class="string">"Resources/MyTheme/styles.css"</span>])
+    }
+}
+</code></pre><p>The next change is editing the last line to use your theme. It should look like this.</p><pre><code><span class="keyword">try</span> <span class="type">BlogExample</span>().<span class="call">publish</span>(withTheme: .<span class="dotAccess">myTheme</span>)
+</code></pre><p>Note that if you can't automatically see <code>.myTheme</code> after adding the extension then buidling your website can allow it to autopopulate. Your final <code>main.swift</code> file should look like this. Feel free to run your website, but all you will see is "Hello, Index".</p><pre><code><span class="keyword">import</span> Foundation
+<span class="keyword">import</span> Publish
+<span class="keyword">import</span> Plot
+
+<span class="comment">// This type acts as the configuration for your website.</span>
+<span class="keyword">struct</span> BlogExample: <span class="type">Website</span> {
+    <span class="keyword">enum</span> SectionID: <span class="type">String</span>, <span class="type">WebsiteSectionID</span> {
+        <span class="comment">// Add the sections that you want your website to contain here:</span>
+        <span class="keyword">case</span> posts
+    }
+
+    <span class="keyword">struct</span> ItemMetadata: <span class="type">WebsiteItemMetadata</span> {
+        <span class="comment">// Add any site-specific metadata that you want to use here.</span>
+    }
+
+    <span class="comment">// Update these properties to configure your website:</span>
+    <span class="keyword">var</span> url = <span class="type">URL</span>(string: <span class="string">"https://your-website-url.com"</span>)!
+    <span class="keyword">var</span> name = <span class="string">"BlogExample"</span>
+    <span class="keyword">var</span> description = <span class="string">"A description of BlogExample"</span>
+    <span class="keyword">var</span> language: <span class="type">Language</span> { .<span class="dotAccess">english</span> }
+    <span class="keyword">var</span> imagePath: <span class="type">Path</span>? { <span class="keyword">nil</span> }
+}
+
+<span class="keyword">extension</span> <span class="type">Theme</span> <span class="keyword">where</span> <span class="type">Site</span> == <span class="type">BlogExample</span> {
+    <span class="keyword">static var</span> myTheme: <span class="type">Theme</span> {
+        <span class="type">Theme</span>(htmlFactory: <span class="type">MyHTMLFactory</span>(), resourcePaths: [<span class="string">"Resources/MyTheme/styles.css"</span>])
+    }
+}
+
+<span class="comment">// This will generate your website using the built-in Foundation theme:</span>
+<span class="keyword">try</span> <span class="type">BlogExample</span>().<span class="call">publish</span>(withTheme: .<span class="dotAccess">myTheme</span>)
+
+</code></pre><table class="posts-table">
+    <tr>
+        <th class="th-single-right"><a href="www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-02" style="text-decoration: none">Creating your own nodes &rarr;</a></th>
+    </tr>
+</table>]]></content:encoded></item></channel></rss>

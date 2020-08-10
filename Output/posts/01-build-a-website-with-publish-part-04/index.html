@@ -1,0 +1,122 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"/><meta name="og:site_name" content="The Swift Protocol"/><link rel="canonical" href="www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-04"/><meta name="twitter:url" content="www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-04"/><meta name="og:url" content="www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-04"/><title>Build your very own website using Swift - Part 4 | The Swift Protocol</title><meta name="twitter:title" content="Build your very own website using Swift - Part 4 | The Swift Protocol"/><meta name="og:title" content="Build your very own website using Swift - Part 4 | The Swift Protocol"/><meta name="description" content="The final part of building your own website using Swift. In here you will learn how to use the SplashPublishPlugin and deploy your website."/><meta name="twitter:description" content="The final part of building your own website using Swift. In here you will learn how to use the SplashPublishPlugin and deploy your website."/><meta name="og:description" content="The final part of building your own website using Swift. In here you will learn how to use the SplashPublishPlugin and deploy your website."/><meta name="twitter:card" content="summary"/><link rel="stylesheet" href="/styles.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to The Swift Protocol"/></head><body><header><div class="nav-logo"><a href="/"><img src="/Images/blog-logo.png"/></a><nav class="nav-bar"><p>Swift Skill Building With Thomas Kellough</p><ul><li><h3><a href="/home">Home</a></h3></li><li><h3><a href="/posts">Posts</a></h3></li><li><h3><a href="/tags">Tags</a></h3></li></ul></nav></div></header><div class="wrapper"><article><h1>Build your very own website using Swift - Part 4</h1><div class="post-tags" markdown="1">
+        <a class="post-category post-category-publish" href="/tags/publish">Publish</a>
+        <a class="post-category post-category-website" href="/tags/website">Website</a>
+        <a class="post-category post-category-verylongtagfortesting" href="/tags/website">Website</a>
+</div><table class="posts-table">
+    <tr>
+        <th class="th-singl-left"><a href="/posts/01-build-a-website-with-publish-part-03" style="text-decoration: none">&larr; Pages, tags, and metadata</a></th>
+    </tr>
+</table><h3>Using SplashPublishPlugin</h3><p>Okay, let's be honest here. You are using Swift to make a website. If you've made it this far you are probably serious about starting some sort of blog. It's possible you're making a blog for recipes or traveling, but it's highly likely you're making one for programming. With programming, you probably plan to add some code. Go to your markdown file add add in the following code, but remove the space in between both sets of triple backticks.</p><pre><code>`` `
+<span class="keyword">func</span> codeExample() -&gt; <span class="type">String</span> {
+    <span class="keyword">return</span> <span class="string">"Hello world!"</span>
+}
+`` `
+</code></pre><p>Yes, those backtick marks are necessary! That's how markdown knows you are adding code. View the post and you should see something like this.</p><img class="post-image" src="/Images/Posts/01/01-13.png" alt="Xcode running publish" width="800"/><p>There is no syntax highlighting! John Sundell has actually created a specific plugin that Publish can use to automatically apply this for us. Check out the <a href="https://github.com/JohnSundell/SplashPublishPlugin">SplashPublishPlugin</a>. Let's go ahead and use this now, because you'll find that it's actually very easy to do!</p><p>The first thing we need to do is add the plugin as a dependency inside <code>Package.swift</code>. If you look at the file now you'll see this.</p><pre><code><span class="keyword">import</span> PackageDescription
+
+<span class="keyword">let</span> package = <span class="type">Package</span>(
+    name: <span class="string">"BlogExample"</span>,
+    products: [
+        .<span class="call">executable</span>(
+            name: <span class="string">"BlogExample"</span>,
+            targets: [<span class="string">"BlogExample"</span>]
+        )
+    ],
+    dependencies: [
+        .<span class="call">package</span>(name: <span class="string">"Publish"</span>, url: <span class="string">"https://github.com/johnsundell/publish.git"</span>, from: <span class="string">"0.6.0"</span>)
+    ],
+    targets: [
+        .<span class="call">target</span>(
+            name: <span class="string">"BlogExample"</span>,
+            dependencies: [<span class="string">"Publish"</span>]
+        )
+    ]
+)
+</code></pre><p>Edit it to look like this. We are just adding a new package and target dependency name.</p><pre><code><span class="keyword">import</span> PackageDescription
+
+<span class="keyword">let</span> package = <span class="type">Package</span>(
+    name: <span class="string">"BlogExample"</span>,
+    products: [
+        .<span class="call">executable</span>(
+            name: <span class="string">"BlogExample"</span>,
+            targets: [<span class="string">"BlogExample"</span>]
+        )
+    ],
+    dependencies: [
+        .<span class="call">package</span>(name: <span class="string">"Publish"</span>, url: <span class="string">"https://github.com/johnsundell/publish.git"</span>, from: <span class="string">"0.6.0"</span>),
+        .<span class="call">package</span>(name: <span class="string">"SplashPublishPlugin"</span>, url: <span class="string">"https://github.com/johnsundell/splashpublishplugin"</span>, from: <span class="string">"0.1.0"</span>)
+    ],
+    targets: [
+        .<span class="call">target</span>(
+            name: <span class="string">"BlogExample"</span>,
+            dependencies: [
+                <span class="string">"Publish"</span>,
+                <span class="string">"SplashPublishPlugin"</span>
+            ]
+        )
+    ]
+)
+</code></pre><p>Sometimes I get some errors when doing this, if that happens close out Xcode and reopen it and it should fix itself and automatically install the new plugin. Then in your CSS file add the following</p><pre><code>pre <span class="call">code</span> {
+    font-family: monospace;
+    display: block;
+    padding: <span class="number">0</span> 20px;
+    color: #a9bcbc;
+    line-height: <span class="number">1</span>.4em;
+    font-size: <span class="number">1</span>.2em;
+    overflow-x: auto;
+    white-space: pre;
+    border-radius: 10px;
+    padding: 20px;
+    -webkit-overflow-scrolling: touch;
+}
+pre code .<span class="call">keyword</span> {
+    color: #e73289;
+}
+pre code .<span class="call">type</span> {
+    color: #8281ca;
+}
+pre code .<span class="call">call</span> {
+    color: #348fe5;
+}
+pre code .<span class="call">property</span> {
+    color: #21ab9d;
+}
+pre code .<span class="call">number</span> {
+    color: #db6f57;
+}
+pre code .<span class="call">string</span> {
+    color: #fa641e;
+}
+pre code .<span class="call">comment</span> {
+    color: #6b8a94;
+}
+pre code .<span class="call">dotAccess</span> {
+    color: #92b300;
+}
+pre code .<span class="call">preprocessing</span> {
+    color: #b68a00;
+}
+</code></pre><p>We are almost done! We need to tell our program to actually use this plugin. Head over to <code>main.swift</code> and add the following import statement at the top of the file.</p><pre><code><span class="keyword">import</span> SplashPublishPlugin
+</code></pre><p>Then at the bottom, edit the following function to include the plugin.</p><pre><code><span class="keyword">try</span> <span class="type">BlogExample</span>().<span class="call">publish</span>(withTheme: .<span class="dotAccess">myTheme</span>, plugins: [.<span class="call">splash</span>(withClassPrefix: <span class="string">""</span>)])
+</code></pre><p>Congratulations! Run your website and you should see this</p><img class="post-image" src="/Images/Posts/01/01-14.png" alt="Xcode running publish" width="800"/><h3>Deploying your website online</h3><p>Finally! You've made your website and you're ready to show the world. Github actually offers a way to host your website using <a href="https://pages.github.com/">GitHub Pages</a>. In order use this we need to do a few things.</p><p>First, initialize a new GitHub repository named <code>&lt;your-username&gt;.github.io</code>. For example, if your user name is <code>Swiftblogexample</code> your new repository will be named <code>Swiftblogexample.github.io</code>. Once you initialize it navigate to your terminal and clone your repo. To clone your repo type in the following command, replacing <code>Swiftblogexample</code> with your own. Then change into that directory and copy all your files from your website into it. Then open <code>package.swft</code> and let's make just a few more edits!</p><pre><code>$ git clone https://github.<span class="property">com</span>/<span class="type">Swiftblogexample</span>/<span class="type">Swiftblogexample</span>.<span class="property">github</span>.<span class="property">io</span>.<span class="property">git</span>
+$ cd <span class="type">Swiftblogexample</span>.<span class="property">github</span>.<span class="property">io</span>
+$ <span class="keyword">open</span> package.<span class="property">swift</span>
+</code></pre><p>In <code>main.swift</code> add the deployment method for github, once again, replacing the url with your own.</p><pre><code><span class="keyword">try</span> <span class="type">BlogExample</span>().<span class="call">publish</span>(
+    withTheme: .<span class="dotAccess">myTheme</span>,
+    deployedUsing: .<span class="call">gitHub</span>(<span class="string">"Swiftblogexample/Swiftblogexample.github.io"</span>, useSSH: <span class="keyword">false</span>),
+    plugins: [.<span class="call">splash</span>(withClassPrefix: <span class="string">""</span>)]
+)
+</code></pre><p>Finally, while still in <code>main.swift</code> edit the url, name, description, and anything else you need to for your website.</p><pre><code><span class="comment">// Update these properties to configure your website:</span>
+<span class="keyword">var</span> url = <span class="type">URL</span>(string: <span class="string">"www.swiftblogexample/swiftblogexample.github.io"</span>)!
+<span class="keyword">var</span> name = <span class="string">"BlogExample"</span>
+<span class="keyword">var</span> description = <span class="string">"A description of BlogExample"</span>
+<span class="keyword">var</span> language: <span class="type">Language</span> { .<span class="dotAccess">english</span> }
+<span class="keyword">var</span> imagePath: <span class="type">Path</span>? { <span class="keyword">nil</span> }
+</code></pre><p>Then push the following changes to your repository and deploy using terminal.</p><pre><code>$ git add .
+$ git commit -m <span class="string">"commit for deployment"</span>
+$ git push
+$ publish deploy
+</code></pre><p>At this point, you'll see your terminal doing some work until you end up with a success message. Now navigate over <code>your-user-name.github.io</code> and you should see your live website! Here is the link to mine from this tutorial. <a href="https://swiftblogexample.github.io">https://swiftblogexample.github.io</a>. <a href="https://github.com/thomaskellough/BlogExample">Here</a> is also a link to this repo so you can see everything in place.</p><p>I hope you've enjoyed this tutorial and I'd love to see what you come up with! You can find my contact information at the bottom.</p><table class="posts-table">
+    <tr>
+        <th class="th-singl-left"><a href="/posts/01-build-a-website-with-publish-part-03" style="text-decoration: none">&larr; Pages, tags, and metadata</a></th>
+    </tr>
+</table></article></div><div class="footer-social"><div>© 2020 The Swift Protocol</div><div>Generated using <a href="https://github.com/johnsundell/publish">Publish</a>. Written in Swift</div><div><a href="https://www.linkedin.com/in/thomas-kellough/">LinkedIn</a> | <a href="https://github.com/thomaskellough">Github</a> | <a href="mailto:theswiftprotocol@gmail.com">Email</a></div></div></body></html>

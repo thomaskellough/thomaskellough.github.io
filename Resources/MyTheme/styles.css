@@ -1,0 +1,471 @@
+//
+//  styles.css
+//
+//
+//  Created by Thomas Kellough on 7/18/20.
+//
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #fff;
+    color: #000;
+    font-family: Helvetica, Arial;
+    text-align: center;
+}
+
+@font-face {
+    font-family: 'antic_slabregular';
+    src: url('../fonts/anticslab-regular-webfont.woff2') format('woff2'),
+         url('../fonts/anticslab-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'merriweatherblack';
+    src: url('../fonts/merriweather-black-webfont.woff2') format('woff2'),
+         url('../fonts/merriweather-black-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'merriweatherblack_italic';
+    src: url('../fonts/merriweather-blackitalic-webfont.woff2') format('woff2'),
+         url('../fonts/merriweather-blackitalic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'merriweatherbold';
+    src: url('../fonts/merriweather-bold-webfont.woff2') format('woff2'),
+         url('../fonts/merriweather-bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'merriweatherbold_italic';
+    src: url('../fonts/merriweather-bolditalic-webfont.woff2') format('woff2'),
+         url('../fonts/merriweather-bolditalic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'merriweatheritalic';
+    src: url('../fonts/merriweather-italic-webfont.woff2') format('woff2'),
+         url('../fonts/merriweather-italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'merriweatherlight';
+    src: url('../fonts/merriweather-light-webfont.woff2') format('woff2'),
+         url('../fonts/merriweather-light-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'merriweatherlight_italic';
+    src: url('../fonts/merriweather-lightitalic-webfont.woff2') format('woff2'),
+         url('../fonts/merriweather-lightitalic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'merriweatherregular';
+    src: url('../fonts/merriweather-regular-webfont.woff2') format('woff2'),
+         url('../fonts/merriweather-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+.wrapper {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 40px;
+    text-align: left;
+}
+
+header {
+    background-image: radial-gradient(#954B85, #402038);
+}
+
+header .wrapper {
+    padding-top: 30px;
+    text-align: center;
+}
+
+header a {
+    text-decoration: none;
+}
+
+header .site-name {
+    font-size: 1.5em;
+    color: #000;
+    font-weight: bold;
+}
+
+nav {
+    margin-top: 20px;
+}
+
+nav li {
+    display: inline-block;
+    margin: 0 7px;
+    line-height: 1.5em;
+}
+
+nav li a.selected {
+    text-decoration: underline;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+h2 {
+    margin: 20px 0;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+a {
+    color: inherit;
+}
+
+.description {
+    margin-bottom: 40px;
+}
+
+.item-list > li {
+    display: block;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #eee;
+    margin-bottom: 20px;
+}
+
+.item-list h1 {
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
+.item-list p {
+    margin-bottom: 0;
+}
+
+.grid {
+    display: inline-grid;
+    grid-template-columns: auto auto auto;
+    grid-column-gap: 6px;
+}
+
+.nav-logo {
+    display: inline-block;
+    margin-top: 1%;
+}
+
+.nav-logo img {
+    width: 30%;
+}
+
+.nav-bar {
+    background-color: clear;
+    display: flow-root;
+    margin: auto;
+    font-family: "merriweatherlight", Arial, sans-serif;
+    color: #ddd;
+}
+
+.nav-bar > ul {
+    background-color: clear;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-bar li {
+    text-align: center;
+}
+.nav-item {
+    display: contents;
+    margin: auto;
+    color: #2a9d8f;
+}
+
+.tag-list {
+    margin-bottom: 15px;
+}
+
+.tag-list li,
+.tag {
+    display: inline-block;
+    background-color: #000;
+    color: #ddd;
+    padding: 4px 6px;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.tag-list a,
+.tag a {
+    text-decoration: none;
+}
+
+.item-page .tag-list {
+    display: inline-block;
+}
+
+.content {
+    margin-bottom: 40px;
+}
+
+.browse-all {
+    display: block;
+    margin-bottom: 30px;
+}
+
+.all-tags li {
+    font-size: 1.4em;
+    margin-right: 10px;
+    padding: 6px 10px;
+}
+
+.md-row {
+    display: grid;
+}
+
+.post-tags {
+    border-radius: 15px;
+    display: flex;
+    justify-content: space;
+    overflow-wrap: break-word;
+    text-align: left;
+    flex-wrap: wrap;
+}
+
+.post-tags-shaded {
+    height: 100%;
+    background-color: #eee;
+    padding: 10px;
+}
+
+.title {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+}
+
+.title-icon {
+    .margin-bottom: 0;
+}
+
+.title img {
+    width: 100%px;
+    height: 40px;
+    padding-right: 10px;
+}
+
+.title-explore img {
+    content: url("/Images/Icons/tag.svg");
+}
+
+.title-featured img {
+    content: url("/Images/Icons/star.svg");
+}
+
+.post-category {
+    margin: 1px;
+    padding: 0.3em 1em;
+    color: #fff;
+    background: #999;
+    font-size: 60%;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.post-lg {
+    font-size: 100%;
+    margin: 3px;
+}
+
+.post-category-alerts, .post-category-autolayout, .post-category-avfoundation, .post-category-bezierpath {
+    background: #D37536;
+}
+
+.post-category-closures, .post-category-css, .post-category-delegates, .post-category-extensions, .post-category-enums {
+    background: #B02E0C;
+}
+
+.post-category-faceid, .post-category-metadata, .post-category-navigation, .post-category-html, .post-category-obj-c {
+    background: #1C6E8C;
+}
+
+.post-category-protocols, .post-category-publish, .post-category-torch, .post-category-touchid, .post-category-website {
+    background: #0C6E61;
+}
+
+.post-category-feature {
+    background: #954B85;
+}
+
+.footer {
+    color: #8a8a8a;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.footer-social a {
+    text-decoration: none;
+    padding-bottom: 30px;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.posts-table {
+    width: 100%;
+    color: #954B85;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.th-single-right {
+    width: 100%;
+    text-align: right;
+}
+
+.th-single-left {
+    width: 100%;
+    text-align: left;
+}
+
+.th-right {
+    width: 49%;
+    text-align: right;
+}
+
+.th-left {
+    width: 49%;
+    text-align: left;
+}
+
+.th-middle {
+    width: 2%;
+}
+
+
+.posts-table a {
+    width: 100%;
+}
+
+pre code {
+    font-family: monospace;
+    display: block;
+    padding: 0 20px;
+    color: #a9bcbc;
+    line-height: 1.4em;
+    font-size: 1.2em;
+    overflow-x: auto;
+    white-space: pre;
+    background-color: black;
+    border-radius: 10px;
+    padding: 20px;
+    -webkit-overflow-scrolling: touch;
+}
+pre code .keyword {
+    color: #e73289;
+}
+pre code .type {
+    color: #8281ca;
+}
+pre code .call {
+    color: #348fe5;
+}
+pre code .property {
+    color: #21ab9d;
+}
+pre code .number {
+    color: #db6f57;
+}
+pre code .string {
+    color: #fa641e;
+}
+pre code .comment {
+    color: #6b8a94;
+}
+pre code .dotAccess {
+    color: #92b300;
+}
+pre code .preprocessing {
+    color: #b68a00;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #222;
+    }
+    
+    pre code {
+        background-color: #333;
+    }
+    
+    code {
+        background-color: #333;
+        border-radius: 5px;
+    }
+
+    body,
+    header .site-name {
+        color: #ddd;
+    }
+
+    .item-list > li, .post-tags-shaded {
+        background-color: #333;
+    }
+    
+    .title-explore img {
+        content: url("/Images/Icons/tag-white.png");
+    }
+    
+    .title-featured img {
+        content: url("/Images/Icons/star-white.png");
+    }
+}
+
+@media(max-width: 600px) {
+    .wrapper {
+        padding: 40px 20px;
+    }
+    
+    .nav-logo img {
+        width: 275px;
+    }
+    
+    .grid {
+        grid-template-columns: auto;
+    }
+    
+}
+
+.post-image {
+    width: 100%;
+}

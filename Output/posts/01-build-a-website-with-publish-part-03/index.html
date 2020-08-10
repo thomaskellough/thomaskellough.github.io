@@ -1,0 +1,316 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"/><meta name="og:site_name" content="The Swift Protocol"/><link rel="canonical" href="www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-03"/><meta name="twitter:url" content="www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-03"/><meta name="og:url" content="www.thomaskellough/thomaskellough.github.io/posts/01-build-a-website-with-publish-part-03"/><title>Build your very own website using Swift - Part 3 | The Swift Protocol</title><meta name="twitter:title" content="Build your very own website using Swift - Part 3 | The Swift Protocol"/><meta name="og:title" content="Build your very own website using Swift - Part 3 | The Swift Protocol"/><meta name="description" content="Part three of building your own website using Swift. This section focuses on adding new pages to your website, tags, and metadata."/><meta name="twitter:description" content="Part three of building your own website using Swift. This section focuses on adding new pages to your website, tags, and metadata."/><meta name="og:description" content="Part three of building your own website using Swift. This section focuses on adding new pages to your website, tags, and metadata."/><meta name="twitter:card" content="summary"/><link rel="stylesheet" href="/styles.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to The Swift Protocol"/></head><body><header><div class="nav-logo"><a href="/"><img src="/Images/blog-logo.png"/></a><nav class="nav-bar"><p>Swift Skill Building With Thomas Kellough</p><ul><li><h3><a href="/home">Home</a></h3></li><li><h3><a href="/posts">Posts</a></h3></li><li><h3><a href="/tags">Tags</a></h3></li></ul></nav></div></header><div class="wrapper"><article><h1>Build your very own website using Swift - Part 3</h1><div class="post-tags" markdown="1">
+        <a class="post-category post-category-publish" href="/tags/publish">Publish</a>
+        <a class="post-category post-category-website" href="/tags/website">Website</a>
+        <a class="post-category post-category-enums" href="/tags/enums">Enums</a>
+</div><table class="posts-table">
+    <tr>
+        <th class="th-left"><a href="/posts/01-build-a-website-with-publish-part-02" style="text-decoration: none">&larr; Creating your own nodes</a></th>
+        <th class="th-middle"></th>
+        <th class="th-right"><a href="/posts/01-build-a-website-with-publish-part-04" style="text-decoration: none">SplashPlugin and deployment &rarr;</a></th>
+    </tr>
+</table><h3>Adding new pages</h3><p>If you haven't noticed already, you created a nav bar with links to other pages, but they don't work yet! And how does your website already have a working link for <code>http://localhost:8000/posts/</code>? We never actually specifically defined this anywhere during this tutorial. The reason for that is simple, it was already done for you. In fact, you have probably already seen it if you looked at your <code>main.swift</code> file. Go there and check out this code.</p><pre><code><span class="keyword">enum</span> SectionID: <span class="type">String</span>, <span class="type">WebsiteSectionID</span> {
+    <span class="comment">// Add the sections that you want your website to contain here:</span>
+    <span class="keyword">case</span> posts
+}
+</code></pre><p>Each enum case holds a different section of your website, or the following url from your main webpage. In our nav bar, we created three buttons, home, posts, and about. Let's add two more cases so it matches those.</p><pre><code><span class="keyword">enum</span> SectionID: <span class="type">String</span>, <span class="type">WebsiteSectionID</span> {
+    <span class="comment">// Add the sections that you want your website to contain here:</span>
+    <span class="keyword">case</span> home
+    <span class="keyword">case</span> posts
+    <span class="keyword">case</span> about
+}
+</code></pre><p>This tells Publish that our website has a section with these titles, however, at this point Publish still doesn't know what to display for each section. Navigate back over to <code>MyHTMLFactory.swift</code> and look for the following code.</p><pre><code><span class="keyword">func</span> makeSectionHTML(for section: <span class="type">Section</span>&lt;<span class="type">Site</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+    <span class="keyword">try</span> <span class="call">makePostsHTML</span>(for: section, context: context)
+}
+</code></pre><p>This is part of the HTMLFactory protocol that we <strong>need</strong> to have. Notice that it returns an HTML struct, just like your <code>Factory+Posts.swift</code> does. In fact, if you wanted, you could create an extension for makeSectionHTML and put it with your HtmlPages folder, but I'll leave that part up to you. What I want to do now is show you how to use tell Publish which HTML page to render based off which enum case you added in SectionID. All it takes is a simple switch statement telling it to render a different page. Edit your makeSectionHTML to look like this.</p><pre><code><span class="keyword">func</span> makeSectionHTML(for section: <span class="type">Section</span>&lt;<span class="type">Site</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+    <span class="keyword">switch</span> section.<span class="property">id</span>.<span class="property">rawValue</span> {
+    <span class="keyword">case</span> <span class="string">"posts"</span>:
+        <span class="keyword">return try</span> <span class="call">makePostsHTML</span>(for: section, context: context)
+    <span class="keyword">case</span> <span class="string">"home"</span>:
+    <span class="keyword">return</span> <span class="type">HTML</span>(.<span class="call">text</span>(<span class="string">"Hello home!"</span>))
+    <span class="keyword">case</span> <span class="string">"about"</span>:
+        <span class="keyword">return</span> <span class="type">HTML</span>(.<span class="call">text</span>(<span class="string">"Hello about!"</span>))
+    <span class="keyword">default</span>:
+        <span class="keyword">return try</span> <span class="call">makePostsHTML</span>(for: section, context: context)
+    }
+}
+</code></pre><p>If we want to get what we typed inside of our SectionIDs, we can just call <code>section.id.rawValue</code> to get the string of each case. Then depending on what it says you return a different HTML. Note that we had to add in the <code>return</code> keyword this time. This is because as of Swift 5.1 you're allowed to omit the <code>return</code> keyword if you have a single expression. However, with the switch statement, we have multiple expressions. For the default, I left it as returning the posts content page, but feel free to edit that as you see fit.</p><p>You should now be able to click on the navigation items and see your new content, however, it's not that exciting because we haven't actually rendered anything other than a simple two lines of text. Let's go ahead and create a simple home page now. It won't be exciting, but I at least want to show you how to add images to your website.</p><h3>Creating a home page</h3><p>Create a new file called <code>Factory+Home.swift</code>, and add in the following code. This is nothing new, it's just rendering a new html and adding your header and footer.</p><pre><code><span class="keyword">import</span> Publish
+<span class="keyword">import</span> Plot
+
+<span class="keyword">extension</span> <span class="type">MyHTMLFactory</span> {
+    <span class="keyword">func</span> makeHomeHTML&lt;T: <span class="type">Website</span>&gt;(for index: <span class="type">Index</span>, section: <span class="type">Section</span>&lt;<span class="type">T</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">T</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+        <span class="type">HTML</span>(
+            .<span class="call">head</span>(for: index, on: context.<span class="property">site</span>),
+            .<span class="call">body</span>(
+                .<span class="call">myHeader</span>(for: context),
+                .<span class="call">myFooter</span>(for: context.<span class="property">site</span>)
+            )
+        )
+    }
+}
+</code></pre><p>Then navigate back to makeSectionHTML and edit your case for "home" to look like this</p><pre><code><span class="keyword">case</span> <span class="string">"home"</span>:
+    <span class="keyword">return try</span> <span class="call">makeHomeHTML</span>(for: context.<span class="property">index</span>, section: section, context: context)
+</code></pre><p>You should now be able to reload and see your home page with your header and footer showing. But let's add an image at the top. Pick any image you want but I'll be using the following.</p><img class="post-image" src="/Images/Posts/01/01-09.png" alt="Swift logo" width="800"/><p>The first step is adding our image to our project. Inside your project navigator, under the Resources folder create a new folder called Images and drag and drop an image of your choosing in there. Here's what it should look like when you are finished</p><img class="post-image" src="/Images/Posts/01/01-10.png" alt="Xcode running publish" width="800"/><p>In order to add images in Publish we use a .img class="post-image" node which takes a .src(Path) as a parameter. So we need to create a variable that gets the path to your image, then pass that inside our .img class="post-image" node. Let's also give the .img class="post-image" a class so we can edit it if we need to. Back in <code>Factory+Home.swift</code> edit your function to look like this. Note that we also had to add in the <code>return</code> keyword now since we don't have a single expression anymore.</p><pre><code><span class="keyword">extension</span> <span class="type">MyHTMLFactory</span> {
+    <span class="keyword">func</span> makeHomeHTML&lt;T: <span class="type">Website</span>&gt;(for index: <span class="type">Index</span>, section: <span class="type">Section</span>&lt;<span class="type">T</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">T</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+        <span class="keyword">var</span> homeImage: <span class="type">Path</span> { <span class="string">"Images/swift-logo.png"</span> }
+        
+        <span class="keyword">return</span>
+            <span class="type">HTML</span>(
+                .<span class="call">head</span>(for: index, on: context.<span class="property">site</span>),
+                .<span class="call">body</span>(
+                    .<span class="call">myHeader</span>(for: context),
+                    .<span class="call">class</span>(<span class="string">"logo-image"</span>),
+                    .<span class="dotAccess">img</span> <span class="keyword">class</span>=<span class="string">"post-image"</span>(.<span class="call">src</span>(homeImage)),
+                    .<span class="call">myFooter</span>(for: context.<span class="property">site</span>)
+                )
+        )
+    }
+}
+</code></pre><p>For me, I wanted to make my image a bit smaller so I added this to my CSS file.</p><pre><code>.<span class="property">logo</span>-image img <span class="keyword">class</span>=<span class="string">"post-image"</span> {
+    width: <span class="number">30</span>%;
+    margin: 20px;
+}
+</code></pre><p>Here's what your website should look like now.</p><img class="post-image" src="/Images/Posts/01/01-11.png" alt="Home page with logo" width="800"/><p>Great job! You now have a home page! I'll let you go ahead and make your own about me page using the same technique. Remember, you need to create a new <code>Factory+About.swift</code> file and add in your returning HTML. Then you need to go back to <code>MyHTMLFactory.swift</code> and edit your makeSectionHTML function to handle the case of "about".</p><h3>Organizing sections easier</h3><p>This is a small piece, but what I want to show you is a neat little Swift trick. In programming, you really don't want to repeat yourself. However, you'll see that when you create your sections, you also have to create your list of nav items inside your header. Let's fix that. Go to your SectionID enum and make it conform to CaseIterable. It should look like this.</p><pre><code><span class="keyword">enum</span> SectionID: <span class="type">String</span>, <span class="type">WebsiteSectionID</span>, <span class="type">CaseIterable</span> {
+    <span class="comment">// Add the sections that you want your website to contain here:</span>
+    <span class="keyword">case</span> home
+    <span class="keyword">case</span> posts
+    <span class="keyword">case</span> about
+}
+</code></pre><p>Then, go back to your <code>Node+Header.swift</code> and let's edit a few things.</p><ol><li>We will first delete our list that we created.</li></ol><ol start="2"><li>Then we will loop over our enum cases by using <code>BlogExample.SectionID.allCases</code>.</li></ol><ol start="3"><li>Then for our text, we will get the raw value of each enum case and call the capitalized method on it so each word has a capital first letter.</li></ol><p>Here's what it should look like when you finish. Now you can add new sections without having to edit your header file!</p><pre><code><span class="keyword">static func</span> myHeader&lt;T: <span class="type">Website</span>&gt;(for context: <span class="type">PublishingContext</span>&lt;<span class="type">T</span>&gt;) -&gt; <span class="type">Node</span> {
+    <span class="comment">// Create a list of navigation items</span>
+    
+    <span class="keyword">return</span> .<span class="call">header</span>(
+        <span class="comment">// Begin the wrapper class</span>
+        .<span class="call">wrapper</span>(
+            <span class="comment">// Create your main title</span>
+            .<span class="call">h1</span>(<span class="string">"My Swift Blog"</span>),
+            <span class="comment">// Create the nav node</span>
+            .<span class="call">nav</span>(
+                <span class="comment">// Create and undordered list and loop through your navItems yuou created above</span>
+                .<span class="call">ul</span>(
+                    .<span class="call">forEach</span>(
+                        <span class="type">BlogExample</span>.<span class="type">SectionID</span>.<span class="property">allCases</span>
+                    ) { item <span class="keyword">in</span>
+                        .<span class="call">li</span>(
+                            <span class="comment">// Create an anchor tag to make linkes</span>
+                            .<span class="call">a</span>(
+                                <span class="comment">// Redirect the user to a new webpage on your site when they click each item</span>
+                                .<span class="call">href</span>(<span class="string">"/</span>\(item.<span class="property">rawValue</span>.<span class="call">lowercased</span>())<span class="string">"</span>),
+                                .<span class="call">text</span>(item.<span class="property">rawValue</span>.<span class="property">capitalized</span>)
+                            )
+                        )
+                    }
+                )
+            )
+        )
+    )
+}
+</code></pre><h3>Tags</h3><p>We are almost done here, but there's a couple of things left to show you. The next thing on my list is showing you how to add tags to your post. Navigate to one of your markdown files and look towards the top you'll see something like this.</p><pre><code>---
+date: <span class="number">2020</span>-<span class="number">07</span>-<span class="number">30 21</span>:<span class="number">47</span>
+description: <span class="type">A</span> description of my first post.
+tags: first, article
+---
+</code></pre><p>You can add as many tags as you want, so have fun with it. Let's create a new file called <code>Node+Tags.swift</code>. We are going to do a few things here.</p><ol><li>Create a function that returns a list of tags</li></ol><ol start="2"><li>The function accepts two parameters, one is a list of tags while the other is which website you're editing</li></ol><ol start="3"><li>We will loop over each tag and provide two CSS classes. One class for it being a tag, and another class for it being a <em>specific</em> tag so we can edit them differently, such as background color</li></ol><ol start="4"><li>Create a link that when you click on the tag, only posts that have that tag will show up</li></ol><p>Add the following code to <code>Node+Tags.swift</code>.</p><pre><code><span class="keyword">import</span> Publish
+<span class="keyword">import</span> Plot
+
+<span class="keyword">extension</span> <span class="type">Node</span> <span class="keyword">where</span> <span class="type">Context</span> == <span class="type">HTML</span>.<span class="type">BodyContext</span> {
+    
+    <span class="keyword">static func</span> tagList&lt;T: <span class="type">Website</span>&gt;(for tags: [<span class="type">Tag</span>], on site: <span class="type">T</span>) -&gt; <span class="type">Node</span> {
+        <span class="keyword">return</span>
+            .<span class="call">div</span>(
+                .<span class="call">forEach</span>(tags) { tag <span class="keyword">in</span>
+                    .<span class="call">a</span>(
+                        .<span class="call">class</span>(<span class="string">"post-category post-category-</span>\(tag.<span class="property">string</span>.<span class="call">lowercased</span>())<span class="string">"</span>),
+                        .<span class="call">href</span>(site.<span class="call">path</span>(for: tag)),
+                        .<span class="call">text</span>(tag.<span class="property">string</span>)
+                    )
+                })
+    }
+}
+</code></pre><p>Then in <code>Node+PostsContent.swift</code> we need to actually call this function. Edit your file to include your new function. For your parameter, you can get every tag on each item by calling <code>item.tags</code>.</p><pre><code>...
+<span class="comment">// Creates a description  of what our post is about</span>
+.<span class="call">tagList</span>(for: item.<span class="property">tags</span>, on: site),
+.<span class="call">p</span>(.<span class="call">text</span>(item.<span class="property">description</span>)),
+...
+</code></pre><p>Now before you run it, let's add those CSS classes so they look a bit interesting. Go to your CSS file and add the following code.</p><pre><code>.<span class="property">post</span>-<span class="call">category</span> {
+    margin: 1px;
+    padding: <span class="number">0</span>.3em 1em;
+    color: #fff;
+    background: #999;
+    font-size: <span class="number">60</span>%;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.<span class="property">post</span>-category-<span class="call">first</span> {
+    background-color: green;
+}
+
+.<span class="property">post</span>-category-<span class="call">second</span> {
+    background-color: purple;
+}
+
+.<span class="property">post</span>-category-<span class="call">article</span> {
+    background-color: darkred;
+}
+</code></pre><p>Run your program, refresh the cache if necessary (cmd + option + e for Safari), and you should see something like this.</p><img class="post-image" src="/Images/Posts/01/01-12.png" alt="Posts with tags" width="800"/><h3>Adding a tag details page</h3><p>Now you'll notice that if you click on the tags it takes you to a new page, but hasn't filtered your posts. But you will notice that it says "Hello, tag details". Let's go back to <code>MyHTMLFactory.swift</code> and look for this function.</p><pre><code><span class="keyword">func</span> makeTagDetailsHTML(for page: <span class="type">TagDetailsPage</span>, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span>? {
+    <span class="type">HTML</span>(.<span class="call">text</span>(<span class="string">"Hello, tag details"</span>))
+}
+</code></pre><p>Now this next part is your call. Either create a new <code>Factory+TagDetails.swift</code> file and move this function in there, or edit it directly in MyHTMLFactory.swift. Either is fine. Whichever you choose, we need to edit this function to show us our tags. We will do the following things.</p><ol><li>Create a returning HTML() that returns a head like every other HTML() file we have</li></ol><ol start="2"><li>Add the header and footer that you created earlier to the body</li></ol><ol start="3"><li>Add a .postContent node, but with a specific parameter that automatically filters out our tags for us. Note that you do NOT need to add new case statements in your SectionID enum since it will automatically be generated for you with each tag!</li></ol><p>Edit your function to look like this.</p><pre><code><span class="keyword">func</span> makeTagDetailsHTML(for page: <span class="type">TagDetailsPage</span>, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span>? {
+    <span class="type">HTML</span>(
+        .<span class="call">head</span>(for: context.<span class="property">index</span>, on: context.<span class="property">site</span>),
+        .<span class="call">body</span>(
+            .<span class="call">myHeader</span>(for: context),
+            .<span class="call">h1</span>(
+                .<span class="call">text</span>(<span class="string">"All posts with the tag</span> \(page.<span class="property">tag</span>.<span class="property">string</span>)<span class="string">"</span>)
+            ),
+            .<span class="call">postContent</span>(for: context.<span class="call">items</span>(taggedWith: page.<span class="property">tag</span>), on: context.<span class="property">site</span>),
+            .<span class="call">myFooter</span>(for: context.<span class="property">site</span>)
+        )
+    )
+}
+</code></pre><p>Run your code, refresh your website, click on the actual tag itself and you should see your posts automatically filter. Woo-hoo!</p><h3>Adding post content</h3><p>I know it seems weird that we can't actually view our posts yet. I'm sure you've clicked on it only to see "Hello item". At this point I suggest you try to figure out how to fix that on your own. You may be able to do it ;).</p><p>Still here? I'll show you how this works. You'll notice in <code>MyHTMLFactory.swift</code> we have the following function.</p><pre><code><span class="keyword">func</span> makeItemHTML(for item: <span class="type">Item</span>&lt;<span class="type">Site</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+    <span class="type">HTML</span>(.<span class="call">text</span>(<span class="string">"Hello, item"</span>))
+}
+</code></pre><p>All we need to do is return the description of our item in order to see the post. Remember how there are markdown files? The great thing about that is if you format it in the markdown file, you don't need to format it here! Edit your makeItemHTML to look like this.</p><pre><code><span class="keyword">func</span> makeItemHTML(for item: <span class="type">Item</span>&lt;<span class="type">Site</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+    <span class="type">HTML</span>(
+        .<span class="call">head</span>(for: item, on: context.<span class="property">site</span>),
+        .<span class="call">body</span>(
+            .<span class="call">myHeader</span>(for: context),
+            .<span class="call">wrapper</span>(
+                .<span class="call">article</span>(
+                    .<span class="call">contentBody</span>(item.<span class="property">body</span>)
+                )
+            ),
+            .<span class="call">myFooter</span>(for: context.<span class="property">site</span>)
+        )
+    )
+}
+</code></pre><p>You should now be able to click and view your posts! And honestly, we are nearly done! There are a couple of things left we need to do before we actually publish our website. The next item we want to look at is adding metadata.</p><h3>Adding metadata</h3><p>Publish comes with a lot of things to help you organize your website and filter posts, but what if we wanted more? We can actually achieve this using metadata. Head over to <code>main.swift</code> and look for the following function.</p><pre><code><span class="keyword">struct</span> ItemMetadata: <span class="type">WebsiteItemMetadata</span> {
+    <span class="comment">// Add any site-specific metadata that you want to use here.</span>
+}
+</code></pre><p>Let's say you have multiple different authors working on posts for your blog. Add the following variable.</p><pre><code><span class="keyword">struct</span> ItemMetadata: <span class="type">WebsiteItemMetadata</span> {
+    <span class="comment">// Add any site-specific metadata that you want to use here.</span>
+    <span class="keyword">var</span> author: <span class="type">String</span>?
+}
+</code></pre><p>Let's add some authors to our blog posts. Edit your markdown files to look like this, but give each post a different author.</p><p><strong>Note, my posts include Harry Potter spoilers!</strong></p><pre><code>---
+date: <span class="number">2020</span>-<span class="number">08</span>-<span class="number">02 10</span>:<span class="number">57</span>
+description: <span class="type">Dumbledore</span> speaking about <span class="type">Cedric</span>'s death.
+tags: first, article
+author: <span class="type">Albus Dumbledore</span>
+---
+# <span class="type">Dumbledore</span> - <span class="type">Speech</span> about <span class="type">Cedric Diggory
+
+The Ministry</span> of <span class="type">Magic</span> does not wish me to tell you this. <span class="type">It</span> <span class="keyword">is</span> possible that <span class="keyword">some</span> of your parents will be horrified that <span class="type">I</span> have done so – either because they will not believe that <span class="type">Lord Voldemort</span> has returned, or because they think <span class="type">I</span> should not tell you so, young <span class="keyword">as</span> you are. <span class="type">It</span> <span class="keyword">is</span> my belief, however, that the truth <span class="keyword">is</span> generally preferable to lies, and that any attempt to pretend that <span class="type">Cedric</span> died <span class="keyword">as</span> the result of an accident, or <span class="keyword">some</span> sort of blunder of his own, is an insult to his memory.
+</code></pre><pre><code>---
+date: <span class="number">2020</span>-<span class="number">07</span>-<span class="number">30 21</span>:<span class="number">47</span>
+description: <span class="type">Hermione</span> speaking to <span class="type">Harry</span> about <span class="type">Cho</span>'s feelings.
+tags: second, article
+author: <span class="type">Hermione Granger</span>
+---
+# <span class="type">Hermione Granger</span> - <span class="type">To Harry</span> about <span class="type">Cho Chang
+
+Well</span>, obviously, she\'s feeling very sad, because of <span class="type">Cedric</span> dying. <span class="type">Then I</span> expect she's feeling confused because she liked <span class="type">Cedric</span> and now she likes <span class="type">Harry</span>, and she can't work out who she likes best. <span class="type">Then</span> she'll be feeling guilty, thinking it's an insult to <span class="type">Cedric</span>'s memory to be kissing <span class="type">Harry</span> at all, and she'll be worrying about what everyone <span class="keyword">else</span> might say about her <span class="keyword">if</span> she starts going out with <span class="type">Harry</span>. <span class="type">And</span> she probably can't work out what her feelings towards <span class="type">Harry</span> are anyway, because he was the one who was with <span class="type">Cedric</span> when <span class="type">Cedric</span> died, so that's all very mixed up and painful. <span class="type">Oh</span>, and she's afraid she's going to be thrown off the <span class="type">Ravenclaw Quidditch</span> team because she's flying so badly.
+
+</code></pre><p>Then create a new swift file called <code>Node+Author.swift</code> and add in the following code.</p><pre><code><span class="keyword">import</span> Publish
+<span class="keyword">import</span> Plot
+
+<span class="keyword">extension</span> <span class="type">Node</span> <span class="keyword">where</span> <span class="type">Context</span> == <span class="type">HTML</span>.<span class="type">BodyContext</span> {
+    
+    <span class="keyword">static func</span> postsBy(author: <span class="type">String</span>, section: <span class="type">Section</span>&lt;<span class="type">BlogExample</span>&gt;, on site: <span class="type">BlogExample</span>) -&gt; <span class="type">Node</span> {
+        
+        <span class="keyword">let</span> items = section.<span class="property">items</span>.<span class="call">filter</span> {
+            $0.<span class="property">metadata</span>.<span class="property">author</span> == author
+        }
+        
+        <span class="keyword">return</span>
+            .<span class="call">wrapper</span>(
+                .<span class="call">div</span>(
+                    .<span class="call">h1</span>(<span class="string">"Posts by</span> \(author)<span class="string">"</span>),
+                    .<span class="call">postContent</span>(for: items, on: site)
+                )
+        )
+    }
+    
+}
+</code></pre><p>This will take in a specific string, filter out all items from a section by matching up the metadata to the string passed in, then return a wrapper that contains the new filtered list while also creating a heading separating the posts. Head back over to <code>Factory.Posts.swift</code> and change your function to look like this.</p><pre><code><span class="keyword">extension</span> <span class="type">MyHTMLFactory</span> {
+    <span class="keyword">func</span> makePostsHTML(for section: <span class="type">Section</span>&lt;<span class="type">Site</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">Site</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+         <span class="type">HTML</span>(
+            .<span class="call">head</span>(for: context.<span class="property">index</span>, on: context.<span class="property">site</span>),
+            .<span class="call">body</span>(
+                .<span class="call">myHeader</span>(for: context),
+                .<span class="call">postsBy</span>(author: <span class="string">"Albus Dumbledore"</span>, section: section, on: context.<span class="property">site</span>),
+                .<span class="call">postsBy</span>(author: <span class="string">"Hermione Granger"</span>, section: section, on: context.<span class="property">site</span>),
+                .<span class="call">myFooter</span>(for: context.<span class="property">site</span>)
+            )
+        )
+    }
+}
+</code></pre><p>You'll see that we no longer call postsContent, because our new postsBy method automatically calls that for us. There is one other issue here. Trying to access this metadata gives us trouble when using generics. Maybe John Sundell knows a better way to handle this, but I've found that removing the generic portion and actually using our website inside MyHTMLFactory can solve this issue. Go back to <code>MyHTMLFactory.swift</code> and change every instance of <code>Site</code> to <code>BlogExample</code> and remove the <code>&lt;T: Website&gt;</code>. It should look like this when you are finished.</p><pre><code><span class="keyword">struct</span> MyHTMLFactory: <span class="type">HTMLFactory</span> {
+    <span class="keyword">func</span> makeIndexHTML(for index: <span class="type">Index</span>, context: <span class="type">PublishingContext</span>&lt;<span class="type">BlogExample</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+        <span class="type">HTML</span>(.<span class="call">text</span>(<span class="string">"Hello, index"</span>))
+    }
+
+    <span class="keyword">func</span> makeSectionHTML(for section: <span class="type">Section</span>&lt;<span class="type">BlogExample</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">BlogExample</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+        <span class="keyword">switch</span> section.<span class="property">id</span>.<span class="property">rawValue</span> {
+        <span class="keyword">case</span> <span class="string">"posts"</span>:
+            <span class="keyword">return try</span> <span class="call">makePostsHTML</span>(for: section, context: context)
+        <span class="keyword">case</span> <span class="string">"home"</span>:
+            <span class="keyword">return try</span> <span class="call">makeHomeHTML</span>(for: context.<span class="property">index</span>, section: section, context: context)
+        <span class="keyword">case</span> <span class="string">"about"</span>:
+            <span class="keyword">return</span> <span class="type">HTML</span>(.<span class="call">text</span>(<span class="string">"Hello about!"</span>))
+        <span class="keyword">default</span>:
+            <span class="keyword">return try</span> <span class="call">makePostsHTML</span>(for: section, context: context)
+        }
+    }
+
+    <span class="keyword">func</span> makeItemHTML(for item: <span class="type">Item</span>&lt;<span class="type">BlogExample</span>&gt;, context: <span class="type">PublishingContext</span>&lt;<span class="type">BlogExample</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+        <span class="type">HTML</span>(
+            .<span class="call">head</span>(for: item, on: context.<span class="property">site</span>),
+            .<span class="call">body</span>(
+                .<span class="call">myHeader</span>(for: context),
+                .<span class="call">wrapper</span>(
+                    .<span class="call">article</span>(
+                        .<span class="call">contentBody</span>(item.<span class="property">body</span>)
+                    )
+                ),
+                .<span class="call">myFooter</span>(for: context.<span class="property">site</span>)
+            )
+        )
+    }
+
+    <span class="keyword">func</span> makePageHTML(for page: <span class="type">Page</span>, context: <span class="type">PublishingContext</span>&lt;<span class="type">BlogExample</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+        <span class="type">HTML</span>(.<span class="call">text</span>(<span class="string">"Hello, page"</span>))
+    }
+
+    <span class="keyword">func</span> makeTagListHTML(for page: <span class="type">TagListPage</span>, context: <span class="type">PublishingContext</span>&lt;<span class="type">BlogExample</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span>? {
+        <span class="type">HTML</span>(.<span class="call">text</span>(<span class="string">"Hello, tag list"</span>))
+    }
+
+    <span class="keyword">func</span> makeTagDetailsHTML(for page: <span class="type">TagDetailsPage</span>, context: <span class="type">PublishingContext</span>&lt;<span class="type">BlogExample</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span>? {
+        <span class="type">HTML</span>(
+            .<span class="call">head</span>(for: context.<span class="property">index</span>, on: context.<span class="property">site</span>),
+            .<span class="call">body</span>(
+                .<span class="call">myHeader</span>(for: context),
+                .<span class="call">h1</span>(
+                    .<span class="call">text</span>(<span class="string">"All posts with the tag</span> \(page.<span class="property">tag</span>.<span class="property">string</span>)<span class="string">"</span>)
+                ),
+                .<span class="call">postContent</span>(for: context.<span class="call">items</span>(taggedWith: page.<span class="property">tag</span>), on: context.<span class="property">site</span>),
+                .<span class="call">myFooter</span>(for: context.<span class="property">site</span>)
+            )
+        )
+    }
+}
+
+</code></pre><p>Now refresh your webpage and you'll see that your posts are separated by author.</p><h3>Redirecting the index</h3><p>A website's index page is the initial page that automatically loads when you first go to a website. What we are going to do here is redirect our index page to go to our home page. This way whenever you go to www.yourblog.com it automatically takes you to your home page. To achieve this we need to do a few things.</p><ol><li>Create a constant for all sections of the current context</li></ol><ol start="2"><li>Get the first section from the constant created in step 1 where the enum case equals "home"</li></ol><ol start="3"><li>Call your makeHomeHTML function and pass in the proper parameters</li></ol><p>Go back to <code>MyHTMLFactory.swift</code> and edit your makdeIndexHTML to look like this</p><pre><code><span class="keyword">func</span> makeIndexHTML(for index: <span class="type">Index</span>, context: <span class="type">PublishingContext</span>&lt;<span class="type">BlogExample</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">HTML</span> {
+    <span class="keyword">let</span> sections = context.<span class="property">sections</span>
+    <span class="keyword">let</span> section = sections.<span class="call">first</span>(where: { $0.<span class="property">id</span>.<span class="property">rawValue</span> == <span class="string">"home"</span> })!
+    
+    <span class="keyword">return try</span> <span class="call">makeHomeHTML</span>(for: index, section: section, context: context)
+}
+</code></pre><table class="posts-table">
+    <tr>
+        <th class="th-left"><a href="/posts/01-build-a-website-with-publish-part-02" style="text-decoration: none">&larr; Creating your own nodes</a></th>
+        <th class="th-middle"></th>
+        <th class="th-right"><a href="/posts/01-build-a-website-with-publish-part-04" style="text-decoration: none">SplashPlugin and deployment &rarr;</a></th>
+    </tr>
+</table></article></div><div class="footer-social"><div>© 2020 The Swift Protocol</div><div>Generated using <a href="https://github.com/johnsundell/publish">Publish</a>. Written in Swift</div><div><a href="https://www.linkedin.com/in/thomas-kellough/">LinkedIn</a> | <a href="https://github.com/thomaskellough">Github</a> | <a href="mailto:theswiftprotocol@gmail.com">Email</a></div></div></body></html>

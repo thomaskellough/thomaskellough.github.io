@@ -1,0 +1,141 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"/><meta name="og:site_name" content="The Swift Protocol"/><link rel="canonical" href="www.thomaskellough/thomaskellough.github.io/posts/02-biometrics-uikit-part-02"/><meta name="twitter:url" content="www.thomaskellough/thomaskellough.github.io/posts/02-biometrics-uikit-part-02"/><meta name="og:url" content="www.thomaskellough/thomaskellough.github.io/posts/02-biometrics-uikit-part-02"/><title>Use Face ID and Touch ID to lock your app from prying eyes - Part 2 | The Swift Protocol</title><meta name="twitter:title" content="Use Face ID and Touch ID to lock your app from prying eyes - Part 2 | The Swift Protocol"/><meta name="og:title" content="Use Face ID and Touch ID to lock your app from prying eyes - Part 2 | The Swift Protocol"/><meta name="description" content="Part two of adding biometric authentication to your app. This part focuses on handling success and failure for authentication."/><meta name="twitter:description" content="Part two of adding biometric authentication to your app. This part focuses on handling success and failure for authentication."/><meta name="og:description" content="Part two of adding biometric authentication to your app. This part focuses on handling success and failure for authentication."/><meta name="twitter:card" content="summary"/><link rel="stylesheet" href="/styles.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to The Swift Protocol"/></head><body><header><div class="nav-logo"><a href="/"><img src="/Images/blog-logo.png"/></a><nav class="nav-bar"><p>Swift Skill Building With Thomas Kellough</p><ul><li><h3><a href="/home">Home</a></h3></li><li><h3><a href="/posts">Posts</a></h3></li><li><h3><a href="/tags">Tags</a></h3></li></ul></nav></div></header><div class="wrapper"><article><h1>Use Face ID and Touch ID to lock your app from prying eyes - Part 2</h1><div class="post-tags" markdown="1">
+        <a class="post-category post-category-faceid" href="/tags/faceid">FaceID</a>
+        <a class="post-category post-category-touchid" href="/tags/touchid">TouchID</a>
+        <a class="post-category post-category-extensions" href="/tags/extensions">Extensions</a>
+        <a class="post-category post-category-alerts" href="/tags/alerts">Alerts</a>
+        <a class="post-category post-category-autolayout" href="/tags/autolayout">Autolayout</a>
+</div><table class="posts-table">
+    <tr>
+        <th class="th-left"><a href="/posts/02-biometrics-uikit-part-01" style="text-decoration: none">&larr; Introduction and setting up</a></th>
+        <th class="th-middle"></th>
+        <th class="th-right"><a href="/posts/02-biometrics-uikit-part-03" style="text-decoration: none">Adding a login button &rarr;</a></th>
+    </tr>
+</table><h3>Handling Failure</h3><p>Now at this point and time we can ask for identification, but nothing actually happens yet no matter if the user passes or fails their test. Let's fix that now. Let's start by handling the failure. We need to create two error messages, one for handling the case if there is no biometry available to users and the other for if they fail their biometry test. Now if you tried to add an alert right now you wouldn't be able to since it is a subclass of UIViewController. So you need to add an import statement for UIKit while also making our Biometrics class a subclass of UIViewController. Are there other ways around this? Absolutely, but remember, I'm trying to show you how to create something that is easily reusable. You can adjust it as needed in your own project. Add your import statement and edit your class like below.</p><pre><code>...
+<span class="keyword">import</span> UIKit
+
+<span class="comment">// MARK: Class initialization</span>
+<span class="keyword">class</span> Biometrics: <span class="type">UIViewController</span> {
+...
+</code></pre><p>Now back to it. Since we are going to have more than one message, let's go ahead and create a basic alert function as well as two functions that call our basic alert function with specific parameters. You can add this inside your Biometrics class or create an extension below it. I will do the latter here.</p><pre><code><span class="comment">// MARK: Biometric UIAlerts</span>
+<span class="keyword">extension</span> <span class="type">Biometrics</span> {
+    
+    <span class="keyword">func</span> showAlertForBiometryUnavailable() {
+        <span class="keyword">let</span> title = <span class="string">"Biometry unavailable"</span>
+        <span class="keyword">let</span> message = <span class="string">"Your device is not configure for biometric authentication"</span>
+        <span class="call">showAlert</span>(title: title, message: message)
+        
+    }
+    
+    <span class="keyword">func</span> showAlertForFailedVerification() {
+        <span class="keyword">let</span> title = <span class="string">"Authentication failed"</span>
+        <span class="keyword">let</span> message = <span class="string">"Verification failed. Please try again"</span>
+        <span class="call">showAlert</span>(title: title, message: message)
+    }
+    
+    <span class="keyword">func</span> showAlert(title: <span class="type">String</span>, message: <span class="type">String</span>) {
+        <span class="keyword">let</span> ac = <span class="type">UIAlertController</span>(title: title, message: message, preferredStyle: .<span class="dotAccess">alert</span>)
+        ac.<span class="call">addAction</span>(<span class="type">UIAlertAction</span>(title: <span class="string">"OK"</span>, style: .<span class="dotAccess">default</span>, handler: <span class="keyword">nil</span>))
+        <span class="call">present</span>(ac, animated: <span class="keyword">true</span>)
+    }
+    
+}
+</code></pre><p>Then we need to call our functions inside authenticateUser(). Note that we need to call <code>self?</code> for showAlertForFailedVerification because we are using <code>[weak self]</code> inside of our closure. Edit authenticateUser() to look like this</p><pre><code><span class="keyword">func</span> authenticateUser() {
+    
+    <span class="keyword">if</span> context.<span class="call">canEvaluatePolicy</span>(.<span class="dotAccess">deviceOwnerAuthenticationWithBiometrics</span>, error: <span class="keyword">nil</span>) {
+        
+        <span class="keyword">let</span> reason = <span class="string">"Please login using TouchID in order to have access to this app"</span>
+        
+        context.<span class="call">evaluatePolicy</span>(.<span class="dotAccess">deviceOwnerAuthenticationWithBiometrics</span>, localizedReason: reason) {
+            [<span class="keyword">weak self</span>] success, error <span class="keyword">in</span>
+            
+            <span class="type">DispatchQueue</span>.<span class="property">main</span>.<span class="call">async</span> {
+                <span class="keyword">if</span> success {
+                    <span class="comment">// User passed</span>
+                } <span class="keyword">else</span> {
+                    <span class="keyword">self</span>?.<span class="call">showAlertForFailedVerification</span>()
+                }
+            }
+        }
+    } <span class="keyword">else</span> {
+        <span class="call">showAlertForBiometryUnavailable</span>()
+    }
+}
+</code></pre><p>Now go ahead and run your code and fail the biometry portion! You'll notice that you don't actually get the error message. What gives?</p><p>I admit, this part is a bit annoying, but it also teaches you a way to handle this. The UIAlert wants to be displayed from the top level view controller, however, we are currently looking at our main view controller and calling a function from our biometrics (now view controller). What we can do is create an extension that finds the top view controller for us and then displays the alert over it. That means we also need to edit the line that actually presents our view controller for us. Add this extension below, and edit <code>present(ac, animated: true)</code> as well.</p><pre><code><span class="comment">// MARK: UIApplication Extensions</span>
+<span class="keyword">extension</span> <span class="type">UIApplication</span> {
+    <span class="keyword">class func</span> topViewController(controller: <span class="type">UIViewController</span>? = <span class="type">UIApplication</span>.<span class="property">shared</span>.<span class="property">windows</span>.<span class="property">first</span>?.<span class="property">rootViewController</span>) -&gt; <span class="type">UIViewController</span>? {
+        <span class="keyword">if let</span> navigationController = controller <span class="keyword">as</span>? <span class="type">UINavigationController</span> {
+            <span class="keyword">return</span> <span class="call">topViewController</span>(controller: navigationController.<span class="property">visibleViewController</span>)
+        }
+        <span class="keyword">if let</span> tabController = controller <span class="keyword">as</span>? <span class="type">UITabBarController</span> {
+            <span class="keyword">if let</span> selected = tabController.<span class="property">selectedViewController</span> {
+                <span class="keyword">return</span> <span class="call">topViewController</span>(controller: selected)
+            }
+        }
+        <span class="keyword">if let</span> presented = controller?.<span class="property">presentedViewController</span> {
+            <span class="keyword">return</span> <span class="call">topViewController</span>(controller: presented)
+        }
+        <span class="keyword">return</span> controller
+    }
+}
+</code></pre><pre><code><span class="keyword">func</span> showAlert(title: <span class="type">String</span>, message: <span class="type">String</span>) {
+    <span class="keyword">let</span> ac = <span class="type">UIAlertController</span>(title: title, message: message, preferredStyle: .<span class="dotAccess">alert</span>)
+    ac.<span class="call">addAction</span>(<span class="type">UIAlertAction</span>(title: <span class="string">"OK"</span>, style: .<span class="dotAccess">default</span>, handler: <span class="keyword">nil</span>))
+    <span class="type">UIApplication</span>.<span class="call">topViewController</span>()?.<span class="call">present</span>(ac, animated: <span class="keyword">true</span>, completion: <span class="keyword">nil</span>)
+}
+</code></pre><p>Now you should be able to run your app, fail authentication, and see your error pop up!</p><h3>Handling Success</h3><p>Now it's time to actually make this app need a reason to use biometrics. Remember how we edited our main view controller to have one color then our launch screen to have a different color along with a logo? Did you notice that when you launch your app you show your launch screen for a short amount of time and then it still changes to the next view controller? What I want to do is show you how to hide your main view controller until the user passses authentication. Now we can't actually extend the length of time that the launch screen shows, but we can create an initial screen to look exactly like our launch screen. That was the reason I had you use those specific constraints when creating it in the first place.</p><p>The first step is creating a function that makes a new view that looks exactly like our launch screen in code. You can always create the same screen in storyboard, but doing it this way allows you to reuse this code easily in other apps. Here are the steps.</p><ol><li>Create an optional UIView property so we can show it and dismiss it as we please</li></ol><ol start="2"><li>Create the function with parameters for background color, an image, width, and fourth parameter of a uiview that we will pass in from our main view controller</li></ol><ol start="3"><li>Inside the function created in step 2 we will initialize the lockscreen, create an image view, add constraints, and display it on our main screen behind our biometric authentication</li></ol><p>Add this property now inside your Biometrics class</p><pre><code><span class="keyword">var</span> lockScreenView: <span class="type">UIView</span>?
+</code></pre><p>Then create the following function for steps 2 and 3</p><pre><code><span class="comment">// MARK: Configure Lockscreen</span>
+<span class="keyword">extension</span> <span class="type">Biometrics</span> {
+    
+    <span class="keyword">func</span> showLockedScreen(backgroundColor: <span class="type">UIColor</span>, logo: <span class="type">UIImage</span>?, width: <span class="type">CGFloat</span>, toView view: <span class="type">UIView</span>) {
+        lockScreenView = <span class="type">UIView</span>()
+        <span class="call">assert</span>(lockScreenView != <span class="keyword">nil</span>, <span class="string">"There was a problem creating the lock screen view"</span>)
+        lockScreenView!.translatesAutoresizingMaskIntoConstraints = <span class="keyword">false</span>
+        lockScreenView!.backgroundColor = backgroundColor
+        
+        <span class="keyword">let</span> imageView = <span class="type">UIImageView</span>()
+        imageView.<span class="property">translatesAutoresizingMaskIntoConstraints</span> = <span class="keyword">false</span>
+        assert(logo != <span class="keyword">nil</span>, <span class="string">"Could not find image!"</span>)
+        imageView.<span class="property">image</span> = logo!
+        imageView.<span class="property">contentMode</span> = .<span class="dotAccess">scaleAspectFit</span>
+        
+        lockScreenView!.<span class="call">addSubview</span>(imageView)
+        imageView.<span class="property">widthAnchor</span>.<span class="call">constraint</span>(equalTo: lockScreenView!.widthAnchor, multiplier: width).<span class="property">isActive</span> = <span class="keyword">true</span>
+        imageView.<span class="property">centerXAnchor</span>.<span class="call">constraint</span>(equalTo: lockScreenView!.centerXAnchor).<span class="property">isActive</span> = <span class="keyword">true</span>
+        imageView.<span class="property">centerYAnchor</span>.<span class="call">constraint</span>(equalTo: lockScreenView!.centerYAnchor).<span class="property">isActive</span> = <span class="keyword">true</span>
+        
+        view.<span class="call">addSubview</span>(lockScreenView!)
+        lockScreenView?.<span class="property">leadingAnchor</span>.<span class="call">constraint</span>(equalTo: view.<span class="property">leadingAnchor</span>).<span class="property">isActive</span> = <span class="keyword">true</span>
+        lockScreenView?.<span class="property">trailingAnchor</span>.<span class="call">constraint</span>(equalTo: view.<span class="property">trailingAnchor</span>).<span class="property">isActive</span> = <span class="keyword">true</span>
+        lockScreenView?.<span class="property">topAnchor</span>.<span class="call">constraint</span>(equalTo: view.<span class="property">topAnchor</span>).<span class="property">isActive</span> = <span class="keyword">true</span>
+        lockScreenView?.<span class="property">bottomAnchor</span>.<span class="call">constraint</span>(equalTo: view.<span class="property">bottomAnchor</span>).<span class="property">isActive</span> = <span class="keyword">true</span>
+    }
+}
+</code></pre><p>There's a bit going on here so I want to explain what is happening. The <code>assert()</code> function is optional. It just causes your app to fail if there is no logo found. This ensures you type it in correctly. The <code>lockScreenView!.translatesAutoresizingMaskIntoConstraints = false</code> allows us to edit our constraints by code. Then we create a new image using code and attach our logo as its image that will be passed in as a parameter when we call the function. We then add the lockscreen view to our subview and <em>then</em> we set the contsraints. The order here matters. Note that we also pass in a width parameter. Remember in the beginning when we set the width of our logo to 70% of its parent view? When we call showLockedScreen() we can add in 0.7 to set our second logo to the same size so it doesn't look like the screen changes from the launch screen to our locked screen. This isn't perfect, but it's decent enough for now. You may want to adjust this part yourself for your own project. Then, we add our lockScreenView to another view, which will also be passed in as a parameter when calling the function. We will pass in the view of mainViewController since that is the intial view controller shown after the launch screen. Finally, we need to call this function. Let's go ahead and add our fourth line of code to <code>ViewController.swift</code>, by calling the function and passing the correct parameters.</p><pre><code><span class="keyword">class</span> ViewController: <span class="type">UIViewController</span> {
+    
+    <span class="keyword">var</span> biometrics: <span class="type">Biometrics</span>?
+    
+    <span class="keyword">override func</span> viewDidLoad() {
+        <span class="keyword">super</span>.<span class="call">viewDidLoad</span>()
+        
+        biometrics = <span class="type">Biometrics</span>()
+        biometrics?.<span class="call">showLockedScreen</span>(backgroundColor: .<span class="dotAccess">systemYellow</span>, logo: <span class="type">UIImage</span>(named: <span class="string">"logo"</span>), width: <span class="number">0.7</span>, toView: <span class="keyword">self</span>.<span class="property">view</span>)
+        biometrics?.<span class="call">authenticateUser</span>()
+    }
+    
+}
+</code></pre><p>Finally, we need to dismiss our lockScreenView if our authentication passes. We will do this by removing the lock screen from it's superview. Edit your code to look like this</p><pre><code>...
+<span class="type">DispatchQueue</span>.<span class="property">main</span>.<span class="call">async</span> {
+    <span class="keyword">if</span> success {
+        <span class="keyword">self</span>?.<span class="property">lockScreenView</span>?.<span class="call">removeFromSuperview</span>()
+    } <span class="keyword">else</span> {
+        <span class="keyword">self</span>?.<span class="call">showAlertForFailedVerification</span>()
+    }
+}
+...
+</code></pre><p>Run your code and you should be able to pass authentication and see your view controller!</p><table class="posts-table">
+    <tr>
+        <th class="th-left"><a href="/posts/02-biometrics-uikit-part-01" style="text-decoration: none">&larr; Introduction and setting up</a></th>
+        <th class="th-middle"></th>
+        <th class="th-right"><a href="/posts/02-biometrics-uikit-part-03" style="text-decoration: none">Adding a login button &rarr;</a></th>
+    </tr>
+</table></article></div><div class="footer-social"><div>© 2020 The Swift Protocol</div><div>Generated using <a href="https://github.com/johnsundell/publish">Publish</a>. Written in Swift</div><div><a href="https://www.linkedin.com/in/thomas-kellough/">LinkedIn</a> | <a href="https://github.com/thomaskellough">Github</a> | <a href="mailto:theswiftprotocol@gmail.com">Email</a></div></div></body></html>

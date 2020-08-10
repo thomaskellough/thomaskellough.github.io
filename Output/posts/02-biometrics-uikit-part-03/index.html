@@ -1,0 +1,76 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"/><meta name="og:site_name" content="The Swift Protocol"/><link rel="canonical" href="www.thomaskellough/thomaskellough.github.io/posts/02-biometrics-uikit-part-03"/><meta name="twitter:url" content="www.thomaskellough/thomaskellough.github.io/posts/02-biometrics-uikit-part-03"/><meta name="og:url" content="www.thomaskellough/thomaskellough.github.io/posts/02-biometrics-uikit-part-03"/><title>Use Face ID and Touch ID to lock your app from prying eyes - Part 3 | The Swift Protocol</title><meta name="twitter:title" content="Use Face ID and Touch ID to lock your app from prying eyes - Part 3 | The Swift Protocol"/><meta name="og:title" content="Use Face ID and Touch ID to lock your app from prying eyes - Part 3 | The Swift Protocol"/><meta name="description" content="The final part of adding biometric authentication to your app. In this section you will learn to add a login button to call for authentication whenever you want."/><meta name="twitter:description" content="The final part of adding biometric authentication to your app. In this section you will learn to add a login button to call for authentication whenever you want."/><meta name="og:description" content="The final part of adding biometric authentication to your app. In this section you will learn to add a login button to call for authentication whenever you want."/><meta name="twitter:card" content="summary"/><link rel="stylesheet" href="/styles.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to The Swift Protocol"/></head><body><header><div class="nav-logo"><a href="/"><img src="/Images/blog-logo.png"/></a><nav class="nav-bar"><p>Swift Skill Building With Thomas Kellough</p><ul><li><h3><a href="/home">Home</a></h3></li><li><h3><a href="/posts">Posts</a></h3></li><li><h3><a href="/tags">Tags</a></h3></li></ul></nav></div></header><div class="wrapper"><article><h1>Use Face ID and Touch ID to lock your app from prying eyes - Part 3</h1><div class="post-tags" markdown="1">
+        <a class="post-category post-category-faceid" href="/tags/faceid">FaceID</a>
+        <a class="post-category post-category-touchid" href="/tags/touchid">TouchID</a>
+        <a class="post-category post-category-obj-c" href="/tags/objc-c">Obj-c</a>
+        <a class="post-category post-category-closures" href="/tags/closures">Closures</a>
+</div><table class="posts-table">
+    <tr>
+        <th class="th-singl-left"><a href="/posts/02-biometrics-uikit-part-02" style="text-decoration: none">&larr; Handling Results</a></th>
+    </tr>
+</table><h3>Adding a login button</h3><p>At this point in time you have a fully working code that allows a user to either login successully or fail to login and receive an error message. However, after the error message shows there is no way to try authentication again without restarting the app. Let's go ahead and fix this by adding a button that only shows after a failed login attempt. Go ahead and add the the following line to your Biometrics class so we can declare a UIButton that may or may not exist at some point in time.</p><pre><code><span class="keyword">var</span> loginButton: <span class="type">UIButton</span>?
+</code></pre><p>Once again, you can create this button however you want, even in Storyboard, but I want to do this all in code so it's easy to transport to other apps of yours. We will do the following things:</p><ol><li>Create a UIButton from a variable above with a custom type</li></ol><ol start="2"><li>Make the button look a bit prettier by adding colors, borders, some edge insets, and a preferred font</li></ol><ol start="3"><li>Add our loginbutton to our lock screen view (this will be passed in as a parameter)</li></ol><ol start="4"><li>Create some constraints to keep the button towards the bottom of the screen fitting most of the width</li></ol><ol start="5"><li>Add a click function to the button that calls authenticateUser() so we can try authentication again</li></ol><p>Feel free to edit this button as you see fit, but here's mine</p><pre><code><span class="comment">// MARK: Configure loginbutton</span>
+<span class="keyword">extension</span> <span class="type">Biometrics</span> {
+    
+    <span class="keyword">func</span> configureLoginButton(to view: <span class="type">UIView</span>) {
+        loginButton = <span class="type">UIButton</span>(type: .<span class="dotAccess">custom</span>)
+        <span class="call">assert</span>(loginButton != <span class="keyword">nil</span>, <span class="string">"There was a problem creating the login button"</span>)
+        
+        loginButton?.<span class="property">backgroundColor</span> = <span class="type">UIColor</span>.<span class="property">systemGreen</span>
+        loginButton?.<span class="property">layer</span>.<span class="property">cornerRadius</span> = <span class="number">8</span>
+        loginButton?.<span class="property">titleEdgeInsets</span> = <span class="type">UIEdgeInsets</span>(top: <span class="number">5</span>, left: <span class="number">10</span>, bottom: <span class="number">5</span>, right: <span class="number">10</span>)
+        loginButton?.<span class="property">titleLabel</span>?.<span class="property">font</span> = .<span class="call">preferredFont</span>(forTextStyle: .<span class="dotAccess">title1</span>)
+        loginButton?.<span class="property">translatesAutoresizingMaskIntoConstraints</span> = <span class="keyword">false</span>
+        loginButton?.<span class="call">setTitle</span>(<span class="string">"Login"</span>, for: .<span class="dotAccess">normal</span>)
+        loginButton?.<span class="call">setTitleColor</span>(.<span class="dotAccess">white</span>, for: .<span class="dotAccess">normal</span>)
+        
+        view.<span class="call">addSubview</span>(loginButton!)
+        
+        loginButton?.<span class="property">leadingAnchor</span>.<span class="call">constraint</span>(equalTo: view.<span class="property">leadingAnchor</span>, constant: <span class="number">40</span>).<span class="property">isActive</span> = <span class="keyword">true</span>
+        loginButton?.<span class="property">trailingAnchor</span>.<span class="call">constraint</span>(equalTo: view.<span class="property">trailingAnchor</span>, constant: -<span class="number">40</span>).<span class="property">isActive</span> = <span class="keyword">true</span>
+        loginButton?.<span class="property">bottomAnchor</span>.<span class="call">constraint</span>(equalTo: view.<span class="property">bottomAnchor</span>, constant: -<span class="number">40</span>).<span class="property">isActive</span> = <span class="keyword">true</span>
+        loginButton?.<span class="property">centerXAnchor</span>.<span class="call">constraint</span>(equalTo: view.<span class="property">centerXAnchor</span>).<span class="property">isActive</span> = <span class="keyword">true</span>
+        
+        loginButton?.<span class="call">addTarget</span>(<span class="keyword">self</span>, action: <span class="keyword">#selector</span>(authenticateUser), for: .<span class="dotAccess">touchUpInside</span>)
+    }
+    
+}
+</code></pre><p>And then we need to call this function at the very bottom of <code>showLockedScreen()</code> like this</p><pre><code><span class="call">configureLoginButton</span>(to: lockScreenView!)
+</code></pre><p>Now that code will actually fail to compile right now with this error <code>Argument of '#selector' refers to instance method 'authenticateUser()' that is not exposed to Objective-C</code>. Anytime you add a selector in Swift (which here is using addTarget to the loginButton) we need to make sure we tell Swift that we are callling code from Objective-C. Fortunately, it's a very easy fix. Just add <code>@objc</code> before declaring the authenticateUser function so it looks like this</p><pre><code><span class="keyword">@objc func</span> authenticateUser()
+</code></pre><p>Now what I want to do is hide the button until it's needed. It's easy to show the button, but hiding it is a bit of a different story. To show the button, simply write this method at the very top of authenticateUser.</p><pre><code>loginButton?.<span class="property">isHidden</span> = <span class="keyword">true</span>
+</code></pre><p>Yes, we need to use the question mark because this button may or may not be nil at any point in our code. Now onto the more difficult part. We only want to hide the button if the user fails authentication which means we need to do something after clicking "OK" from that alert. This means we need to write a closure. If you don't know already, closures are self-contained blocks of functionality that can be used throughout your code and passed around as parameters if needed. Let's start with creating a parameter inside of <code>showAlert()</code> for an optional closure. We will make it optional because we have two different functions that call <code>showAlert()</code>, but we only want one to pass in a closure. The closure we write will take in a UIAlertAction as a parameter and return nothing. The syntax for that looks like <code>(UIAlertAction) -&gt; Void)</code>. However, we do need to wrap it with another set of parentheses and a <code>?</code> since we are making it optional. Edit <code>showAlert</code> to look like this. Note that we added this parameter inside of <code>ac.addAction</code> but kept the completion nil in the third line of the function.</p><pre><code><span class="keyword">func</span> showAlert(title: <span class="type">String</span>, message: <span class="type">String</span>, completion: ((<span class="type">UIAlertAction</span>) -&gt; <span class="type">Void</span>)?) {
+    <span class="keyword">let</span> ac = <span class="type">UIAlertController</span>(title: title, message: message, preferredStyle: .<span class="dotAccess">alert</span>)
+    ac.<span class="call">addAction</span>(<span class="type">UIAlertAction</span>(title: <span class="string">"OK"</span>, style: .<span class="dotAccess">default</span>, handler: completion))
+    <span class="type">UIApplication</span>.<span class="call">topViewController</span>()?.<span class="call">present</span>(ac, animated: <span class="keyword">true</span>, completion: <span class="keyword">nil</span>)
+}
+</code></pre><p>We now need to edit our two functions that call showAlert(). <code>showAlertForBiometryUnavailable()</code> can just pass in <code>nil</code> as it's completion. But we will use closure syntax for <code>showAlertForFailedVerification()</code> The closure looks like</p><pre><code>{ action <span class="keyword">in
+    self</span>.<span class="property">loginButton</span>?.<span class="property">isHidden</span> = <span class="keyword">false</span>
+}
+</code></pre><p>I know it's a bit strange, but it is very nice being able to do this in Swift. Wrapping these three functions up together should look like this when you are finished.</p><pre><code><span class="keyword">func</span> showAlertForBiometryUnavailable() {
+    <span class="keyword">let</span> title = <span class="string">"Biometry unavailable"</span>
+    <span class="keyword">let</span> message = <span class="string">"Your device is not configure for biometric authentication"</span>
+    <span class="call">showAlert</span>(title: title, message: message, completion: <span class="keyword">nil</span>)
+    
+}
+
+<span class="keyword">func</span> showAlertForFailedVerification() {
+    <span class="keyword">let</span> title = <span class="string">"Authentication failed"</span>
+    <span class="keyword">let</span> message = <span class="string">"Verification failed. Please try again"</span>
+    <span class="call">showAlert</span>(title: title, message: message, completion: { action <span class="keyword">in
+        self</span>.<span class="property">loginButton</span>?.<span class="property">isHidden</span> = <span class="keyword">false</span>
+    })
+}
+
+<span class="keyword">func</span> showAlert(title: <span class="type">String</span>, message: <span class="type">String</span>, completion: ((<span class="type">UIAlertAction</span>) -&gt; <span class="type">Void</span>)?) {
+    <span class="keyword">let</span> ac = <span class="type">UIAlertController</span>(title: title, message: message, preferredStyle: .<span class="dotAccess">alert</span>)
+    ac.<span class="call">addAction</span>(<span class="type">UIAlertAction</span>(title: <span class="string">"OK"</span>, style: .<span class="dotAccess">default</span>, handler: completion))
+    <span class="type">UIApplication</span>.<span class="call">topViewController</span>()?.<span class="call">present</span>(ac, animated: <span class="keyword">true</span>, completion: <span class="keyword">nil</span>)
+}
+</code></pre><p>Go ahead and run your code now. Fail authentication enough times until you get the alert then watch the login button pop up. As soon as you tap the login button it disappears and prompts the biometric screening again!</p><p>I hope you enjoyed this tutorial and you're now able to easily implement biometrics inside your own apps. In case you were wondering, the four lines of code to make it all work are these</p><pre><code><span class="keyword">var</span> biometrics: <span class="type">Biometrics</span>?
+biometrics = <span class="type">Biometrics</span>()
+biometrics?.<span class="call">showLockedScreen</span>(backgroundColor: .<span class="dotAccess">systemYellow</span>, logo: <span class="type">UIImage</span>(named: <span class="string">"logo"</span>), width: <span class="number">0.7</span>, toView: <span class="keyword">self</span>.<span class="property">view</span>)
+biometrics?.<span class="call">authenticateUser</span>()
+</code></pre><p>Of course, you'll need to add the Biometrics class in, but that's as easy as dragging and dropping! You can see the full source code for this project <a href="https://github.com/thomaskellough/iOS-Tutorials-UIKit-Swift/tree/master/How-To-Setup-Biometrics/How-To-Setup-Biometrics">here</a></p><table class="posts-table">
+    <tr>
+        <th class="th-singl-left"><a href="/posts/02-biometrics-uikit-part-02" style="text-decoration: none">&larr; Handling Results</a></th>
+    </tr>
+</table></article></div><div class="footer-social"><div>© 2020 The Swift Protocol</div><div>Generated using <a href="https://github.com/johnsundell/publish">Publish</a>. Written in Swift</div><div><a href="https://www.linkedin.com/in/thomas-kellough/">LinkedIn</a> | <a href="https://github.com/thomaskellough">Github</a> | <a href="mailto:theswiftprotocol@gmail.com">Email</a></div></div></body></html>
