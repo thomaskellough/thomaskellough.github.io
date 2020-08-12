@@ -11,7 +11,7 @@ import Plot
 extension MyHtmlFactory {
     func makeHomeHTML(for index: Index, section: Section<SwiftBlog>, context: PublishingContext<SwiftBlog>) throws -> HTML {
         HTML(
-            .head(for: index, on: context.site),
+            .myHead(for: index, on: context.site),
             .body(
                 .myHeader(for: context),
                 .div(

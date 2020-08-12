@@ -11,7 +11,7 @@ import Plot
 extension MyHtmlFactory {
     func makeTagDetailsHTML(for page: TagDetailsPage, context: PublishingContext<SwiftBlog>) throws -> HTML? {
         HTML(
-            .head(for: context.index, on: context.site),
+            .myHead(for: context.index, on: context.site),
             .body(
                 .myHeader(for: context),
                 .h1(

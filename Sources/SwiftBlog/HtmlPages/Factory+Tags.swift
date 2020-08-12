@@ -16,7 +16,7 @@ extension MyHtmlFactory {
         }
         
         return HTML(
-            .head(for: context.index, on: context.site),
+            .myHead(for: context.index, on: context.site),
             .body(
                 .myHeader(for: context),
                 .h1(.text("Search through contents by tags")),
