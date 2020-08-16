@@ -9,7 +9,6 @@ featuredDescription: Build your very own static website using, you guessed it, S
 <div class="post-tags" markdown="1">
         <a class="post-category post-category-publish" href="/tags/publish">Publish</a>
         <a class="post-category post-category-website" href="/tags/website">Website</a>
-        <a class="post-category post-category-verylongtagfortesting" href="/tags/website">Website</a>
 </div>
 
 <table class="posts-table">

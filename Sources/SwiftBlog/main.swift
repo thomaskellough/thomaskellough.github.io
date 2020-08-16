@@ -42,7 +42,3 @@ try SwiftBlog().publish(
     deployedUsing: .gitHub("thomaskellough/thomaskellough.github.io", useSSH: false),
     plugins: [.splash(withClassPrefix: "")]
 )
-
-// Add to index.html
-//<meta name="twitter:image" content="http://www.theswiftprotocol.com/images/social.png"/>
-//<meta name="og:image" content="http://www.theswiftprotocol.com/images/social.png"/>

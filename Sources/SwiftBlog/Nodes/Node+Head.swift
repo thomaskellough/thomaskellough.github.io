@@ -33,6 +33,7 @@ public extension Node where Context == HTML.DocumentContext {
         
         return .head(
             .encoding(.utf8),
+            .gTag("UA-175451977-1"),
             .siteName(site.name),
             .url(site.url(for: location)),
             .title(title),
