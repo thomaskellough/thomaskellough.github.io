@@ -1,0 +1,33 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"/><script async src="https://www.googletagmanager.com/gtag/js?id=UA-175451977-1"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-175451977-1');</script><meta name="og:site_name" content="The Swift Protocol"/><link rel="canonical" href="www.thomaskellough/thomaskellough.github.io"/><meta name="twitter:url" content="www.thomaskellough/thomaskellough.github.io"/><meta name="og:url" content="www.thomaskellough/thomaskellough.github.io"/><title>Swift Skill Building | The Swift Protocol</title><meta name="twitter:title" content="Swift Skill Building | The Swift Protocol"/><meta name="og:title" content="Swift Skill Building | The Swift Protocol"/><meta name="description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:description" content="Swift Skill Building With Thomas Kellough"/><meta name="og:description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="http://www.theswiftprotocol.com/images/social.png"/><meta name="og:image" content="http://www.theswiftprotocol.com/images/social.png"/><link rel="stylesheet" href="/styles.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to The Swift Protocol"/></head><body><header><div class="nav-logo"><a href="/"><img src="/Images/blog-logo.png"/></a><nav class="nav-bar"><p>Swift Skill Building With Thomas Kellough</p><ul><li><h3><a href="/home">Home</a></h3></li><li><h3><a href="/posts">Posts</a></h3></li><li><h3><a href="/tags">Tags</a></h3></li></ul></nav></div></header><div class="wrapper"><article><h1>Use Alamofire to make an API request for NASA's Astronomy Picture of the Day - Part 3</h1><div class="post-tags" markdown="1">
+        <a class="post-category post-category-api" href="/tags/api">API</a>
+        <a class="post-category post-category-alamofire" href="/tags/alamofire">Alamofire</a>
+        <a class="post-category post-category-errorhandling" href="/tags/errorhandling">Error Handling</a>
+</div><table class="posts-table">
+    <tr>
+        <th class="th-singl-left"><a href="/posts/04-requesting-data-from-an-api-02" style="text-decoration: none">&larr; Making the request</a></th>
+    </tr>
+</table><h3>Handling Errors</h3><p>As I've said before, sometimes NASA's API doesn't return us any data. This is not unique to NASA API's. Anything could happen online that you have no control over. However, you do have control over what happens if your app runs into the error. Instead of letting your app crash, let's explain to the user what's happening.</p><p>During decoding, Alamofire returns a response. This response may or may not have an error attached to it. We can place in a check to see if the response contains an error or not and act appropriately. We will do something simple here by just updating our title label with a message saying an error has occurred, please try again later. It's not perfect, but it's your job to figure out why there is an error in the first place. Then you can handle each case uniquely.</p><p>Add the following function:</p><pre><code><span class="keyword">func</span> errorOccurred() {
+    titleLabel.<span class="property">text</span> = <span class="string">"An error occurred. No data could be found. Please try again later"</span>
+    titleLabel.<span class="property">numberOfLines</span> = <span class="number">0</span>
+}
+</code></pre><p>Then update your fetchAPOD() to look like this:</p><pre><code><span class="keyword">func</span> fetchAPOD() {
+    <span class="keyword">let</span> request = <span class="type">AF</span>.<span class="call">request</span>(apiURL + <span class="type">APIKey</span>)
+    request.<span class="call">responseDecodable</span>(of: <span class="type">APOD</span>.<span class="keyword">self</span>) { response <span class="keyword">in
+        
+        guard</span> response.<span class="property">error</span> == <span class="keyword">nil else</span> {
+            <span class="keyword">self</span>.<span class="call">errorOccurred</span>()
+            
+            <span class="keyword">return</span>
+        }
+        
+        <span class="keyword">guard let</span> apod = response.<span class="property">value</span> <span class="keyword">else</span> { <span class="keyword">return</span> }
+        
+        <span class="keyword">self</span>.<span class="call">loadDetails</span>(apod: apod)
+        <span class="keyword">self</span>.<span class="call">loadImage</span>(urlString: apod.<span class="property">url</span>)
+    }
+}
+</code></pre><p>Now you should see a nice message show up instead of a blank screen or crash. The easiest way to test this at this point in time is to update your url to be incorrect. Run your code and your app should now look like this:</p><img class="post-image img-md" src="/Images/Posts/04/04-06.png" alt="API Request Data and Image" width="800"/><p>That's really all there is to it! In other tutorials, we can take a look at more advanced topics for making API requests. If you'd like to see the full source code for this project you can check it out <a href="https://github.com/thomaskellough/iOS-Tutorials-UIKit-Swift/tree/master/APOD">here</a>.</p><table class="posts-table">
+    <tr>
+        <th class="th-singl-left"><a href="/posts/04-requesting-data-from-an-api-02" style="text-decoration: none">&larr; Making the request</a></th>
+    </tr>
+</table></article></div><div class="footer-social"><div>© 2020 The Swift Protocol</div><div>Generated using <a href="https://github.com/johnsundell/publish">Publish</a>. Written in Swift</div><div><a href="https://www.linkedin.com/in/thomas-kellough/">LinkedIn</a> | <a href="https://github.com/thomaskellough">Github</a> | <a href="mailto:theswiftprotocol@gmail.com">Email</a></div></div></body></html>

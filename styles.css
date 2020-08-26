@@ -305,19 +305,42 @@ a {
     margin: 3px;
 }
 
-.post-category-alerts, .post-category-autolayout, .post-category-avfoundation, .post-category-bezierpath {
+.post-category-alamofire,
+.post-category-alerts,
+.post-category-api,
+.post-category-autolayout,
+.post-category-avfoundation,
+.post-category-bezierpath,
+.post-category-closures {
     background: #D37536;
 }
 
-.post-category-closures, .post-category-css, .post-category-delegates, .post-category-extensions, .post-category-enums {
+.post-category-codable,
+.post-category-css,
+.post-category-delegates,
+.post-category-dispatchqueue,
+.post-category-errorhandling,
+.post-category-extensions,
+.post-category-enums {
     background: #B02E0C;
 }
 
-.post-category-faceid, .post-category-metadata, .post-category-navigation, .post-category-html, .post-category-obj-c {
+.post-category-faceid,
+.post-category-metadata,
+.post-category-models,
+.post-category-navigation,
+.post-category-html,
+.post-category-obj-c,
+.post-category-protocols {
     background: #1C6E8C;
 }
 
-.post-category-protocols, .post-category-publish, .post-category-torch, .post-category-touchid, .post-category-website {
+.post-category-publish,
+.post-category-torch,
+.post-category-touchid,
+.post-category-website,
+.post-category-uiscrollview,
+.post-category-uistackview {
     background: #0C6E61;
 }
 
@@ -468,4 +491,8 @@ pre code .preprocessing {
 
 .post-image {
     width: 100%;
+}
+
+.img-md {
+    width: 50%;
 }
