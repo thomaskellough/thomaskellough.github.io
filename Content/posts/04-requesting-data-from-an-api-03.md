@@ -21,7 +21,7 @@ tags: API, Alamofire, ErrorHandling
 ### Handling Errors
 As I've said before, sometimes NASA's API doesn't return us any data. This is not unique to NASA API's. Anything could happen online that you have no control over. However, you do have control over what happens if your app runs into the error. Instead of letting your app crash, let's explain to the user what's happening. 
 
-During decoding, Alamofire returns a response. This response may or may not have an error attached to it. We can place in a check to see if the response contains an error or not and act appropriately. We will do something simple here by just updating our title label with a message saying an error has occured, please try again later. It's not perfect, but it's your job to figure out why there is an error in the first place. Then you can handle each case uniquely.
+During decoding, Alamofire returns a response. This response may or may not have an error attached to it. We can place in a check to see if the response contains an error or not and act appropriately. We will do something simple here by just updating our title label with a message saying an error has occurred, please try again later. It's not perfect, but it's your job to figure out why there is an error in the first place. Then you can handle each case uniquely.
 
 Add the following function: 
 
@@ -57,7 +57,7 @@ Now you should see a nice message show up instead of a blank screen or crash. Th
 
 <img class="post-image img-md" src="/Images/Posts/04/04-06.png" alt="API Request Data and Image" width="800"/>
 
-That's realy all there is too it! In other tutorials we can take a look at more advanced topics for making API requests. If you'd like to see the full source code for this project you can check it out [here](https://github.com/thomaskellough/iOS-Tutorials-UIKit-Swift/tree/master/APOD).
+That's really all there is to it! In other tutorials, we can take a look at more advanced topics for making API requests. If you'd like to see the full source code for this project you can check it out [here](https://github.com/thomaskellough/iOS-Tutorials-UIKit-Swift/tree/master/APOD).
 
 <table class="posts-table">
     <tr>

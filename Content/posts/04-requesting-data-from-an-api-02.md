@@ -23,7 +23,7 @@ tags: API, Alamofire, Models, DispatchQueue, Codable
 
 ### Creating our model
 
-Before we start making our API request, we need to create a model to store out data nicely. Recall how the data looks when its returned to us. We need to create a struct that holds a property for each piece of data returned and also have the struct conform to Decodable so we can convert it from the JSON object. Go ahead and create a new swift file called `APODmodel.swift` and add the following code:
+Before we start making our API request, we need to create a model to store our data nicely. Recall how the data looks when it's returned to us. We need to create a struct that holds a property for each piece of data returned and also have the struct conform to Decodable so we can convert it from the JSON object. Go ahead and create a new swift file called `APODmodel.swift` and add the following code:
 
 ```
 struct APOD: Decodable {
@@ -36,9 +36,9 @@ struct APOD: Decodable {
 }
 ```
 
-Note that copyright is optional because we may or may not get that back during our request. If we left it as nonoptional then your app would crash on most days. This model allows us to call out the title, date, explanation, or two different types of images that we can download. For this project we will just be using the basic url and not the hdurl (high definition) because it can be much slower to process. 
+Note that copyright is optional because we may or may not get that back during our request. If we left it as nonoptional then your app would crash on most days. This model allows us to call out the title, date, explanation, or two different types of images that we can download. For this project, we will just be using the basic url and not the hdurl (high definition) because it can be much slower to process. 
 
-### Making an API Reqest
+### Making an API Request
 Great! Let's finally start digging into our code in order to make our first API request. You'll be amazed by how easy it is to make an API request and decode it using Alamofire and codable. Add this function to `ViewController.swift` and call it in `viewDidLoad()`:
 
 ```
@@ -98,15 +98,15 @@ Now you can call your function in the closure of your api request. Add the follo
 self.loadDetails(apod: apod)
 ```
 
-That's all it takes to update your labels! You should be able to run your code now and see everything except for the image. Remember, if you don't see anything check your API request in Postman or just copy and paste it into a webbrowser and see what data returns.
+That's all it takes to update your labels! You should be able to run your code now and see everything except for the image. Remember, if you don't see anything check your API request in Postman or just copy and paste it into a web browser and see what data returns.
 
 <img class="post-image" src="/Images/Posts/04/04-04.png" alt="API Request Data Only" width="800"/>
 
 
 ### Updating our image
-Loading an image from a url isn't as difficult is it may sound. Here's the steps to make it happen:
+Loading an image from a url isn't as difficult is it may sound. Here are the steps to make it happen:
 
-1) Create a function that takes in a url string as parameter. We get this from `apod.url`
+1) Create a function that takes in a url string as a parameter. We get this from `apod.url`
 
 2) Create a url object from our url string passed in
 
@@ -134,7 +134,7 @@ func loadImage(urlString: String) {
 }
 ```
 
-Then inside your API request closure you can add 
+Then inside your API request closure, you can add 
 
 ```
 self.loadImage(urlString: apod.url)
@@ -154,7 +154,7 @@ func fetchAPOD() {
 }
 ```
 
-Awesome! Restart your app and learn see your new picture!
+Awesome! Restart your app and see your new picture!
 
 <img class="post-image img-md" src="/Images/Posts/04/04-05.png" alt="API Request Data and Image" width="800"/>
 
