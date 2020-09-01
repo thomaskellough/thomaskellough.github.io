@@ -331,10 +331,11 @@ a {
 .post-category-navigation,
 .post-category-html,
 .post-category-obj-c,
-.post-category-protocols {
+.post-category-postman {
     background: #1C6E8C;
 }
 
+.post-category-protocols,
 .post-category-publish,
 .post-category-torch,
 .post-category-touchid,
