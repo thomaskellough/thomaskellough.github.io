@@ -1,4 +1,168 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content"><channel><title>The Swift Protocol</title><description>Swift Skill Building With Thomas Kellough</description><link>www.thomaskellough/thomaskellough.github.io</link><language>en</language><lastBuildDate>Tue, 1 Sep 2020 12:21:34 -0500</lastBuildDate><pubDate>Tue, 1 Sep 2020 12:21:34 -0500</pubDate><ttl>250</ttl><atom:link href="www.thomaskellough/thomaskellough.github.io/feed.rss" rel="self" type="application/rss+xml"/><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/05-testing-apis-with-postman</guid><title>Using Postman to test your API endpoints</title><description>Learn to test your API endpoints effectively using Postman.</description><link>www.thomaskellough/thomaskellough.github.io/posts/05-testing-apis-with-postman</link><pubDate>Mon, 31 Aug 2020 22:12:00 -0500</pubDate><content:encoded><![CDATA[<h1>Using Postman to test your API endpoints</h1><div class="post-tags" markdown="1">
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content"><channel><title>The Swift Protocol</title><description>Swift Skill Building With Thomas Kellough</description><link>www.thomaskellough/thomaskellough.github.io</link><language>en</language><lastBuildDate>Sun, 6 Sep 2020 19:21:36 -0500</lastBuildDate><pubDate>Sun, 6 Sep 2020 19:21:36 -0500</pubDate><ttl>250</ttl><atom:link href="www.thomaskellough/thomaskellough.github.io/feed.rss" rel="self" type="application/rss+xml"/><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/06-navigationview-with-swiftui</guid><title>All about NavigationView using SwiftUI</title><description>SwiftUI brings an easy way to handle navigation in your apps. This section will show you how to easily add a navigation view as well as navigation bar items to help you handle navigation.</description><link>www.thomaskellough/thomaskellough.github.io/posts/06-navigationview-with-swiftui</link><pubDate>Sat, 5 Sep 2020 20:48:00 -0500</pubDate><content:encoded><![CDATA[<h1>All about NavigationView using SwiftUI</h1><div class="post-tags" markdown="1">
+        <a class="post-category post-category-feature" href="www.thomaskellough/thomaskellough.github.io/tags/feature">Feature</a>
+        <a class="post-category post-category-navigationview" href="www.thomaskellough/thomaskellough.github.io/tags/navigationview">NavigationView</a>
+        <a class="post-category post-category-navigationlink" href="www.thomaskellough/thomaskellough.github.io/tags/navigationlink">NavigationLink</a>
+        <a class="post-category post-category-swiftui" href="www.thomaskellough/thomaskellough.github.io/tags/swiftui">SwiftUI</a>
+</div><h3>Basic NavigationView</h3><p>Nearly all Swift apps have some sort of navigation in place and apps built with SwiftUI are no exception. It's simple to add a navigation view using SwiftUI. All you need to do is add the following code in your view</p><pre><code><span class="type">NavigationView</span> {
+    <span class="comment">// Content here</span>
+}
+</code></pre><p>Adding a title uses a simple modifier like most other views in SwiftUI, but there is a caveat. We do <em>not</em> attach the title to the NavigationView itself. Why? Because the title can change and we do not want to fix that title on every view we have during our navigation. For example, if you have an app that lists different Harry Potter spells by category, you may want the navigation title to be what category each set of spells is in. Let's see what I mean in action.</p><p>Take the following two structs, each one holding a view to different spells by two different categories.</p><pre><code><span class="keyword">struct</span> CharmView: <span class="type">View</span> {
+    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+        <span class="type">List</span>() {
+            <span class="type">VStack</span>(alignment: .<span class="dotAccess">leading</span>) {
+                <span class="type">Text</span>(<span class="string">"Lumos Maxima"</span>)
+                    .<span class="call">font</span>(.<span class="dotAccess">headline</span>)
+                <span class="type">Text</span>(<span class="string">"incantation to a charm that can be used to produce a blinding flash of bright white light from the tip of the wand"</span>)
+                    .<span class="call">font</span>(.<span class="dotAccess">subheadline</span>)
+            }
+            <span class="type">VStack</span>(alignment: .<span class="dotAccess">leading</span>) {
+                <span class="type">Text</span>(<span class="string">"Oculus Reparo"</span>)
+                    .<span class="call">font</span>(.<span class="dotAccess">headline</span>)
+                <span class="type">Text</span>(<span class="string">"incantation of a variant of the Mending Charm, used to repair broken eyeglasses"</span>)
+                    .<span class="call">font</span>(.<span class="dotAccess">subheadline</span>)
+            }
+            <span class="type">Spacer</span>()
+            .<span class="call">navigationBarTitle</span>(<span class="string">"Charm"</span>)
+        }
+    }
+}
+
+<span class="keyword">struct</span> CurseView: <span class="type">View</span> {
+    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+        <span class="type">List</span>() {
+            <span class="type">VStack</span>(alignment: .<span class="dotAccess">leading</span>) {
+                <span class="type">Text</span>(<span class="string">"Fiendfyre"</span>)
+                    .<span class="call">font</span>(.<span class="dotAccess">headline</span>)
+                <span class="type">Text</span>(<span class="string">"A bewitched flame of abnormal size and heat, infused with dark magic, capable of seeking out living targets despite being non-sentient"</span>)
+                    .<span class="call">font</span>(.<span class="dotAccess">subheadline</span>)
+            }
+            <span class="type">VStack</span>(alignment: .<span class="dotAccess">leading</span>) {
+                <span class="type">Text</span>(<span class="string">"Imperius Curse"</span>)
+                    .<span class="call">font</span>(.<span class="dotAccess">headline</span>)
+                <span class="type">Text</span>(<span class="string">"places the victim completely under the caster's control, though a person with exceptional strength of will is capable of resisting it"</span>)
+                    .<span class="call">font</span>(.<span class="dotAccess">subheadline</span>)
+            }
+            <span class="type">Spacer</span>()
+            .<span class="call">navigationBarTitle</span>(<span class="string">"Curse"</span>)
+        }
+    }
+}
+</code></pre><p>Note that we have a <code></code><code>.navigationBarTitle()</code><code></code> modifier added here, even though there is no navigation view. We wrap this entire view inside our NavigationView and then the title can adjust as needed.</p><pre><code><span class="type">NavigationView</span> {
+    <span class="type">CharmView</span>()
+}
+</code></pre><img class="post-image img-md" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/06/06-01.png" alt="Navigation View Charm" width="800"/><pre><code><span class="type">NavigationView</span> {
+    <span class="type">CurseView</span>()
+}
+</code></pre><img class="post-image img-md" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/06/06-02.png" alt="Navigation View Curse" width="800"/><h3>Adding Navigation Bar Items</h3><p>Adding navigation bar items is fairly simple to do as well. Let's create a bar button that toggles between both views created above. This also means we need to create a boolean that our button toggles and add both views in a Group so we can display each one depending on what the boolean equals.</p><pre><code><span class="keyword">struct</span> ContentView: <span class="type">View</span> {
+    
+    <span class="keyword">@State private var</span> typeToggled = <span class="keyword">false
+    
+    var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+        <span class="type">NavigationView</span> {
+            <span class="type">Group</span> {
+                <span class="keyword">if</span> typeToggled {
+                    <span class="type">CurseView</span>()
+                } <span class="keyword">else</span> {
+                    <span class="type">CharmView</span>()
+                }
+            }
+            .<span class="call">navigationBarItems</span>(leading:
+                <span class="type">Button</span>(action: {
+                    <span class="keyword">self</span>.<span class="property">typeToggled</span>.<span class="call">toggle</span>()
+                }) {
+                    <span class="type">Text</span>(<span class="string">"Toggle Type"</span>)
+                }
+            )
+        }
+    }
+}
+</code></pre><p>Note that our <code>.navigationBarItems</code> is a modifier to the group itself, not each view. Remember, each view holds the title.</p><img class="post-image img-md" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/06/06-03.png" alt="Leading bar button item " width="800"/><p>You can also set your bar items as trailing instead of leading.</p><pre><code>.<span class="call">navigationBarItems</span>(trailing:
+    <span class="type">Button</span>(action: {
+        <span class="keyword">self</span>.<span class="property">typeToggled</span>.<span class="call">toggle</span>()
+    }) {
+        <span class="type">Text</span>(<span class="string">"Toggle Type"</span>)
+    }
+)
+</code></pre><img class="post-image img-md" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/06/06-04.png" alt="Trailing bar button item" width="800"/><h3>Adding multiple navigation bar items</h3><p>If you want to add multiple navigation bar items, just use an HStack. You can even mix custom buttons as well as default ones that Apples API provide.</p><pre><code>.<span class="call">navigationBarItems</span>(trailing:
+    <span class="type">HStack</span> {
+        <span class="type">Button</span>(action: {
+            <span class="keyword">self</span>.<span class="property">typeToggled</span>.<span class="call">toggle</span>()
+        }) {
+            <span class="type">Text</span>(<span class="string">"Toggle Type"</span>)
+        }
+        
+        <span class="type">Button</span>(action: {
+            <span class="comment">// second action here</span>
+        }) {
+            <span class="type">Image</span>(systemName: <span class="string">"bolt"</span>)
+        }
+    }
+)
+</code></pre><img class="post-image img-md" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/06/06-05.png" alt="Navigation View Charm" width="800"/><p>It's also possible to add trailing and leding items.</p><pre><code>.<span class="call">navigationBarItems</span>(leading:
+    <span class="type">EditButton</span>(), trailing:
+    <span class="type">HStack</span> {
+        <span class="type">Button</span>(action: {
+            <span class="keyword">self</span>.<span class="property">typeToggled</span>.<span class="call">toggle</span>()
+        }) {
+            <span class="type">Text</span>(<span class="string">"Toggle Type"</span>)
+        }
+        
+        <span class="type">Button</span>(action: {
+            <span class="comment">// second action here</span>
+        }) {
+            <span class="type">Image</span>(systemName: <span class="string">"bolt"</span>)
+        }
+    }
+)
+</code></pre><img class="post-image img-md" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/06/06-06.png" alt="Navigation View Charm" width="800"/><h3>Using NavigationLink</h3><p>NavigationLink can also be used to link to any view you'd like. This automatically pops a new view in your navigation stack and readjusts how the title is shown. Here is a new view that shows how to use the Lumos Maxima spell.</p><pre><code><span class="keyword">struct</span> LumosMaximaHowTo: <span class="type">View</span> {
+    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+        <span class="type">Text</span>(<span class="string">"To cast this light-creation spell, one must flick their wand, then draw it back and flick it a second time, after which it will light, as noted in chapter thirty-two of Extreme Incantations by Violeta Stitch."</span>)
+    }
+}
+</code></pre><p>We can then adjust our CharmView struct to add a navigation link inside of Lumos Maxima VStack and direct it to our new view.</p><pre><code><span class="type">VStack</span>(alignment: .<span class="dotAccess">leading</span>) {
+    <span class="type">Text</span>(<span class="string">"Lumos Maxima"</span>)
+        .<span class="call">font</span>(.<span class="dotAccess">headline</span>)
+    <span class="type">Text</span>(<span class="string">"incantation to a charm that can be used to produce a blinding flash of bright white light from the tip of the wand"</span>)
+        .<span class="call">font</span>(.<span class="dotAccess">subheadline</span>)
+    <span class="type">NavigationLink</span>(<span class="string">"Click here to see how to use the spell"</span>, destination: <span class="type">LumosMaximaHowTo</span>())
+        .<span class="call">font</span>(.<span class="dotAccess">footnote</span>)
+}
+</code></pre><img class="post-image img-md" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/06/06-07.gif" alt="NavigationLink example" width="800"/><h3>Navigation Tags</h3><p>While a simple boolean can control which views are shown, it may get complicated when you have more than two views. SwiftUI and NavigationLink have something called <code>tags</code> that we can use to control navigation with multiple views with ease. A tag is an optional string that's used to identify which view is shown based on what the value is. Codewise, it looks like this.</p><pre><code><span class="keyword">@State private var</span> spellType: <span class="type">String</span>? = <span class="keyword">nil
+
+var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+    <span class="type">NavigationView</span> {
+        <span class="type">VStack</span>(alignment: .<span class="dotAccess">center</span>, spacing: <span class="number">30</span>) {
+            <span class="type">NavigationLink</span>(destination: <span class="type">CharmView</span>(), tag: <span class="string">"Charm"</span>, selection: $spellType) {
+                <span class="type">Text</span>(<span class="string">"Tap to see charms"</span>)
+            }
+            <span class="type">NavigationLink</span>(destination: <span class="type">CurseView</span>(), tag: <span class="string">"Curse"</span>, selection: $spellType) {
+                <span class="type">Text</span>(<span class="string">"Tap to see curses"</span>)
+            }
+        }
+    }
+}
+</code></pre><p>This shows the following view with each link showing it's respective content.</p><img class="post-image img-md" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/06/06-08.gif" alt="NavigationLink example with tags" width="800"/><h3>NavigationLink and isActive</h3><p>NavigationLink also has an optional parameter of <code>isActive</code> that holds a boolean that determins whether a specific view is shown. Then you can create an action, such as a button tap, that toggles the boolean and shows the view attached to it.</p><pre><code><span class="keyword">@State private var</span> charmViewShowing = <span class="keyword">false
+@State private var</span> curseViewShowing = <span class="keyword">false
+
+var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+    <span class="type">NavigationView</span> {
+        <span class="type">VStack</span>(spacing: <span class="number">30</span>) {
+            <span class="type">NavigationLink</span>(destination: <span class="type">CharmView</span>(), isActive: $charmViewShowing) {
+                <span class="type">EmptyView</span>()
+            }
+            <span class="type">NavigationLink</span>(destination: <span class="type">CurseView</span>(), isActive: $curseViewShowing) {
+                <span class="type">EmptyView</span>()
+            }
+            <span class="type">Button</span>(<span class="string">"Toggle charmViewShowing"</span>) {
+                <span class="keyword">self</span>.<span class="property">charmViewShowing</span>.<span class="call">toggle</span>()
+            }
+            <span class="type">Button</span>(<span class="string">"Toggle curseViewShowing"</span>) {
+                <span class="keyword">self</span>.<span class="property">curseViewShowing</span>.<span class="call">toggle</span>()
+            }
+        }
+    }
+}
+</code></pre>]]></content:encoded></item><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/05-testing-apis-with-postman</guid><title>Using Postman to test your API endpoints</title><description>Learn to test your API endpoints effectively using Postman.</description><link>www.thomaskellough/thomaskellough.github.io/posts/05-testing-apis-with-postman</link><pubDate>Mon, 31 Aug 2020 22:12:00 -0500</pubDate><content:encoded><![CDATA[<h1>Using Postman to test your API endpoints</h1><div class="post-tags" markdown="1">
         <a class="post-category post-category-api" href="www.thomaskellough/thomaskellough.github.io/tags/api">API</a>
         <a class="post-category post-category-postman" href="www.thomaskellough/thomaskellough.github.io/tags/postman">Postman</a>
 </div><h3>Introduction</h3><p>Once you start using APIs in your app you'll quickly realize that it becomes very cumbersome to start your app and manually test it on a real device or simulator every time. It takes more resources as well as extra time. For smaller projects, this may not be an issue at all, but as your apps grow increasingly larger so will your desire to separate pieces of your app into more manageable tests.</p><p>While there are multiple options for testing APIs, <a href="https://www.postman.com">Postman</a> is often recommended because it is easy to use, has great documentation, and is free. Give it a download <a href="https://www.postman.com/downloads/">here</a> and let's get to testing!</p><h3>Testing a basic endpoint</h3><p>Once you finish downloading Postman and opening it up, you'll see something similar to this.</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/05/05-01.png" alt="Postman home app" width="800"/><p>Let's start with a simple request. <a href="https://alexwohlbruck.github.io/cat-facts/docs/">Here</a> is a website that will allow us to get free cat facts. <em>Disclaimer: I have not read all of these and do not attest that they are in fact, facts</em>. The endpoint is very simple and doesn't even require authorization. Create a new request in Postman by clicking the "+" button, then type in <code>https://cat-fact.herokuapp.com/facts</code> for the url and set it as a GET. When you press send you should a JSON return with a handful of cat facts!</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/05/05-02.png" alt="Cat facts" width="800"/><h3>Adding paramaters</h3><p>For this next example, we are going to use a free API provided by NASA. The endpoint <code>https://api.nasa.gov/techtransfer/patent/</code> will return a list of patents and software from NASA that are free for the public to search through. However, when you repeat the above steps you'll see that you actually get an error.</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/05/05-03.png" alt="Postman home app" width="800"/><p>This is because, like most other APIs, this endpoint requires an API key that identifies who you are and tracks your requests. Luckily, we can actually use NASA's demo key here or you can sign up for a free one at <a href="https://api.nasa.gov">https://api.nasa.gov</a>. If you want to use the demo key, it's simply <code>DEMO_KEY</code>.</p><p>Let's add the demo key now in Postman. Under where you type in your url you'll see a list of different tabs. Click the one that says <code>Params</code> and you'll see some boxes to type in <code>KEY</code>, <code>VALUE</code>, and a <code>DESCRIPTION</code>. Let's go ahead and a key of <code>api_key</code> with a value of <code>DEMO_KEY</code>. You'll notice two changes here. The first is your url you typed in automatically updated to <code>https://api.nasa.gov/techtransfer/patent/?api_key=DEMO_KEY</code>. This is nice because it formats it for you how it needs to be, but it's easier for you to see the parameters separated below. Sure, it's not a problem with one parameter like this one, but it can get excessive! The second thing you'll notice is that You actually get results back when you click <code>Send</code>.</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/05/05-04.png" alt="Postman home app" width="800"/><h3>Adding multiple parameters</h3><p>Adding more than one parameter is as simple as adding new key values in the <code>Params</code> section. Let's filter our results to contain only software that has something to do with Mars. Add the key <code>software</code> with the value <code>mars</code>. Your results will only get back data the word <code>mars</code> in it now! <em>Note - the data is not perfect. You'll also get results that contain the word Marshall since that contains the word mars in itself</em>.</p><p>Try playing with the other parameter options and see what you can come up with.</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/05/05-05.png" alt="Postman home app" width="800"/><h3>Sending POST requests</h3><p>Up until now, we have only made GET requests, which means you are just trying to retrieve data from somewhere. However, if we want to <em>send</em> data to someone else we can use something like a POST HTTP method. POST methods are often used with submitting information somewhere, such as in a form on the web. The data may be sensitive, so you won't be able to bookmark it or cache it. Let's test some POST methods by using Postmans' own test endpoints. Try sending a request to <code>https://postman-echo.com/post</code>, but changing your method from GET to POST now.</p><p>You should see some information return, including an empty data section.</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/05/05-06.png" alt="Postman basic POST request" width="800"/><p>However, I now want you to navigate to the <code>body</code> section under where you type in the url, select <code>raw</code> and change <code>text</code> to <code>JSON</code>. Then add the following information.</p><pre><code>{
@@ -23,6 +187,7 @@
         <a class="post-category post-category-api" href="www.thomaskellough/thomaskellough.github.io/tags/api">API</a>
         <a class="post-category post-category-alamofire" href="www.thomaskellough/thomaskellough.github.io/tags/alamofire">Alamofire</a>
         <a class="post-category post-category-errorhandling" href="www.thomaskellough/thomaskellough.github.io/tags/errorhandling">Error Handling</a>
+        <a class="post-category post-category-uikit" href="www.thomaskellough/thomaskellough.github.io/tags/uikit">UIKit</a>
 </div><table class="posts-table">
     <tr>
         <th class="th-singl-left"><a href="www.thomaskellough/thomaskellough.github.io/posts/04-requesting-data-from-an-api-02" style="text-decoration: none">&larr; Making the request</a></th>
@@ -57,6 +222,7 @@
         <a class="post-category post-category-models" href="www.thomaskellough/thomaskellough.github.io/tags/models">Models</a>
         <a class="post-category post-category-dispatchqueue" href="www.thomaskellough/thomaskellough.github.io/tags/dispatchqueue">DispatchQueue</a>
         <a class="post-category post-category-codable" href="www.thomaskellough/thomaskellough.github.io/tags/codable">Codable</a>
+        <a class="post-category post-category-uikit" href="www.thomaskellough/thomaskellough.github.io/tags/uikit">UIKit</a>
 </div><table class="posts-table">
     <tr>
         <th class="th-left"><a href="www.thomaskellough/thomaskellough.github.io/posts/04-requesting-data-from-an-api-01" style="text-decoration: none">&larr; Introduction and setting up</a></th>
@@ -136,11 +302,13 @@
         <a class="post-category post-category-api" href="www.thomaskellough/thomaskellough.github.io/tags/api">API</a>
         <a class="post-category post-category-uiscrollview" href="www.thomaskellough/thomaskellough.github.io/tags/uiscrollview">UIScrollView</a>
         <a class="post-category post-category-uistackview" href="www.thomaskellough/thomaskellough.github.io/tags/uistackview">UIStackView</a>
+        <a class="post-category post-category-autolayout" href="www.thomaskellough/thomaskellough.github.io/tags/autolayout">Autolayout</a>
+        <a class="post-category post-category-uikit" href="www.thomaskellough/thomaskellough.github.io/tags/uikit">UIKit</a>
 </div><table class="posts-table">
     <tr>
     <th class="th-single-right"><a href="www.thomaskellough/thomaskellough.github.io/posts/04-requesting-data-from-an-api-02" style="text-decoration: none">Making the request &rarr;</a></th>
     </tr>
-</table><h3>Introduction</h3><p>If you plan to become an iOS developer then chances are you will need to learn networking at some point. If you think about it, how do the apps you use change their data without you having to re-download a new app? Every time you open up a weather app it's not like the data is stored on your personal device. Otherwise, you'd have to download the app daily just to see the weather for the day! Instead, we use APIs, or Application Programming Interfaces. This allows our app to communicate with another application and exchange data. There are many different types of <em>API calls</em> that we can perform, but this tutorial will go over the most basic, which is collecting data from another application without sending anything.</p><p>Let's start by looking at the type of data we are going to collect. As an astronomy lover, I wanted to pick a NASA API because they are very easy to use, highly informational, and many of them are completely <em>free</em>! Head over to <a href="https://api.nasa.gov">NASA's Open APIs</a> and take a look at all what they have to offer. We are going to look at <strong>APOD</strong> which allows us to get an image of the day as well as some information about that image. Note that depending on what time you do this you may not be able to obtain any information. I don't know the exact time that this happens, but it seems to be closer to the evening when they are refreshing the new information for the next day. For example, it is currently 20:06 CST on 08/20/2010 and I don't get any data back. Running the request looks like this <code></code><code>{"code":404,"msg":"No data available for date: 2020-08-21","service_version":"v1"}</code><code></code>. Rest assured, if you just wait a while (or try in the morning) you should get information back!</p><p>That being said, go ahead and sign up (it's completely free and very quick!) and receive your API key. After signing up from the link above you should see something like this:</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/04/04-01.png" alt="NASA API Key" width="800"/><p>You'll see a few things here. You'll notice a long string of characters called an API key. When you request data, who receives it wants to know who it's coming from and how to react. This allows that exchange to happen. Invalid key, no data. Correct key, something can happen and it's tracked. This is used to count the number of times you make API calls because most people charge for their APIs.</p><p>Note: You do not want to share your API key with anyone. Keep it secret! I'm sharing mine here because I'm not actually using this. That's not even my real email! You're more than welcome to use mine during this tutorial if you want, but I make no promises it will be active when you try or that its limits will be reached, which as of this time is 1,000 requests per hour. You can also use NASA's DEMO_KEY which limits you to 50 requests per day and 30 requests per hour.</p><p>Below the key you'll see a unique url. In my example it's <code></code><code>https://api.nasa.gov/planetary/apod?api_key=cau6to6cGexfArd5RfO4Hq1pceMgWpIOpwYs1Y8E</code><code></code>. Now I say unique, but that's only becase of the API key. Anyone who makes this same API call will use <code></code><code>https://api.nasa.gov/planetary/apod?api_key=</code><code></code> plus their specific API key. This is how NASA knows who is making the call. There are many ways to test API's before you even start writing your code. One my favorites it's using Postman, which will be convered in another tutorial. However, for this simple request we can actually just click the link and it will open a new window that looks like this:</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/04/04-02.png" alt="APOD 08-19-2020" width="800"/><p>Let's prettify this and take a look at the data</p><pre><code>{
+</table><h3>Introduction</h3><p>If you plan to become an iOS developer then chances are you will need to learn networking at some point. If you think about it, how do the apps you use change their data without you having to re-download a new app? Every time you open up a weather app it's not like the data is stored on your personal device. Otherwise, you'd have to download the app daily just to see the weather for the day! Instead, we use APIs, or Application Programming Interfaces. This allows our app to communicate with another application and exchange data. There are many different types of <em>API calls</em> that we can perform, but this tutorial will go over the most basic, which is collecting data from another application without sending anything.</p><p>Let's start by looking at the type of data we are going to collect. As an astronomy lover, I wanted to pick a NASA API because they are very easy to use, highly informational, and many of them are completely <em>free</em>! Head over to <a href="https://api.nasa.gov">NASA's Open APIs</a> and take a look at all what they have to offer. We are going to look at <strong>APOD</strong> which allows us to get an image of the day as well as some information about that image. Note that depending on what time you do this you may not be able to obtain any information. I don't know the exact time that this happens, but it seems to be closer to the evening when they are refreshing the new information for the next day. For example, it is currently 20:06 CST on 08/20/2010 and I don't get any data back. Running the request looks like this <code></code><code>{"code":404,"msg":"No data available for date: 2020-08-21","service_version":"v1"}</code><code></code>. Rest assured, if you just wait a while (or try in the morning) you should get information back!</p><p>That being said, go ahead and sign up (it's completely free and very quick!) and receive your API key. After signing up from the link above you should see something like this:</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/04/04-01.png" alt="NASA API Key" width="800"/><p>You'll see a few things here. You'll notice a long string of characters called an API key. When you request data, who receives it wants to know who it's coming from and how to react. This allows that exchange to happen. Invalid key, no data. Correct key, something can happen and it's tracked. This is used to count the number of times you make API calls because most people charge for their APIs.</p><p>Note: You do not want to share your API key with anyone. Keep it secret! I'm sharing mine here because I'm not actually using this. That's not even my real email! You're more than welcome to use mine during this tutorial if you want, but I make no promises it will be active when you try or that its limits will be reached, which as of this time is 1,000 requests per hour. You can also use NASA's DEMO_KEY which limits you to 50 requests per day and 30 requests per hour.</p><p>Below the key you'll see a unique url. In my example it's <code></code><code>https://api.nasa.gov/planetary/apod?api_key=cau6to6cGexfArd5RfO4Hq1pceMgWpIOpwYs1Y8E</code><code></code>. Now I say unique, but that's only becase of the API key. Anyone who makes this same API call will use <code></code><code>https://api.nasa.gov/planetary/apod?api_key=</code><code></code> plus their specific API key. This is how NASA knows who is making the call. There are many ways to test API's before you even start writing your code. One my favorites it's using Postman, which is covered in another tutorial <a href="www.thomaskellough/thomaskellough.github.io/posts/05-testing-apis-with-postman">here</a>. However, for this simple request we can actually just click the link and it will open a new window that looks like this:</p><img class="post-image" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/04/04-02.png" alt="APOD 08-19-2020" width="800"/><p>Let's prettify this and take a look at the data</p><pre><code>{
    <span class="string">"date"</span>:<span class="string">"2020-08-19"</span>,
    <span class="string">"explanation"</span>:<span class="string">"Does the Sun change as it rotates? Yes, and the changes can vary from subtle to dramatic. In the featured time-lapse sequences, our Sun -- as imaged by NASA's Solar Dynamics Observatory -- is shown rotating though an entire month in 2014.  In the large image on the left, the solar chromosphere is depicted in ultraviolet light, while the smaller and lighter image to its upper right simultaneously shows the more familiar solar photosphere in visible light. The rest of the inset six Sun images highlight X-ray emission by relatively rare iron atoms located at different heights of the corona, all false-colored to accentuate differences. The Sun takes just under a month to rotate completely -- rotating fastest at the equator. A large and active sunspot region rotates into view soon after the video starts.  Subtle effects include changes in surface texture and the shapes of active regions. Dramatic effects include numerous flashes in active regions, and fluttering and erupting prominences visible all around the Sun's edge.  Presently, our Sun is passing an unusually low  Solar minimum in activity of its 11-year magnetic cycle. As the video ends, the same large and active sunspot region previously mentioned rotates back into view, this time looking different."</span>,
    <span class="string">"media_type"</span>:<span class="string">"video"</span>,
@@ -174,6 +342,7 @@
         <a class="post-category post-category-avfoundation" href="www.thomaskellough/thomaskellough.github.io/tags/avfoundation">AVFoundation</a>
         <a class="post-category post-category-torch" href="www.thomaskellough/thomaskellough.github.io/tags/torch">Torch</a>
         <a class="post-category post-category-bezierpath" href="www.thomaskellough/thomaskellough.github.io/tags/bezierpath">BezierPath</a>
+        <a class="post-category post-category-uikit" href="www.thomaskellough/thomaskellough.github.io/tags/uikit">UIKit</a>
 </div><table class="posts-table">
     <tr>
         <th class="th-single-left"><a href="www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-02" style="text-decoration: none">&larr; Capturing data</a></th>
@@ -213,6 +382,7 @@ navigationItem.<span class="property">rightBarButtonItem</span> = torchButton
         <a class="post-category post-category-avfoundation" href="www.thomaskellough/thomaskellough.github.io/tags/avfoundation">AVFoundation</a>
         <a class="post-category post-category-metadata" href="www.thomaskellough/thomaskellough.github.io/tags/metadata">Metadata</a>
         <a class="post-category post-category-delegates" href="www.thomaskellough/thomaskellough.github.io/tags/delegates">Delegates</a>
+        <a class="post-category post-category-uikit" href="www.thomaskellough/thomaskellough.github.io/tags/uikit">UIKit</a>
 </div><table class="posts-table">
     <tr>
         <th class="th-left"><a href="www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-01" style="text-decoration: none">&larr; Introduction and setting up</a></th>
@@ -271,9 +441,9 @@ navigationItem.<span class="property">rightBarButtonItem</span> = torchButton
         <th class="th-right"><a href="www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-03" style="text-decoration: none">Adding a torch and scan bounds &rarr;</a></th>
     </tr>
 </table>]]></content:encoded></item><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-01</guid><title>Use AVFoundation to create a scanner to scan your drivers license - Part 1</title><description>Phones have come a long way from just making calls and text messaging. You're now able to use your phone to scan barcodes, such as a drivers license, that collects data and displays in just seconds.</description><link>www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-01</link><pubDate>Sat, 1 Aug 2020 22:12:00 -0500</pubDate><content:encoded><![CDATA[<h1>Use AVFoundation to create a scanner to scan your drivers license - Part 1</h1><div class="post-tags" markdown="1">
-        <a class="post-category post-category-feature" href="www.thomaskellough/thomaskellough.github.io/tags/feature">Feature</a>
         <a class="post-category post-category-avfoundation" href="www.thomaskellough/thomaskellough.github.io/tags/avfoundation">AVFoundation</a>
         <a class="post-category post-category-navigation" href="www.thomaskellough/thomaskellough.github.io/tags/navigation">Navigation</a>
+        <a class="post-category post-category-uikit" href="www.thomaskellough/thomaskellough.github.io/tags/uikit">UIKit</a>
 </div><table class="posts-table">
     <tr>
         <th class="th-single-right"><a href="www.thomaskellough/thomaskellough.github.io/posts/03-scan-a-barcode-part-02" style="text-decoration: none">Capturing data &rarr;</a></th>
@@ -371,6 +541,7 @@ navigationItem.<span class="property">rightBarButtonItem</span> = scanBarButtonI
         <a class="post-category post-category-touchid" href="www.thomaskellough/thomaskellough.github.io/tags/touchid">TouchID</a>
         <a class="post-category post-category-obj-c" href="www.thomaskellough/thomaskellough.github.io/tags/objc-c">Obj-c</a>
         <a class="post-category post-category-closures" href="www.thomaskellough/thomaskellough.github.io/tags/closures">Closures</a>
+        <a class="post-category post-category-uikit" href="www.thomaskellough/thomaskellough.github.io/tags/uikit">UIKit</a>
 </div><table class="posts-table">
     <tr>
         <th class="th-singl-left"><a href="www.thomaskellough/thomaskellough.github.io/posts/02-biometrics-uikit-part-02" style="text-decoration: none">&larr; Handling Results</a></th>
@@ -447,6 +618,7 @@ biometrics?.<span class="call">authenticateUser</span>()
         <a class="post-category post-category-extensions" href="www.thomaskellough/thomaskellough.github.io/tags/extensions">Extensions</a>
         <a class="post-category post-category-alerts" href="www.thomaskellough/thomaskellough.github.io/tags/alerts">Alerts</a>
         <a class="post-category post-category-autolayout" href="www.thomaskellough/thomaskellough.github.io/tags/autolayout">Autolayout</a>
+        <a class="post-category post-category-uikit" href="www.thomaskellough/thomaskellough.github.io/tags/uikit">UIKit</a>
 </div><table class="posts-table">
     <tr>
         <th class="th-left"><a href="www.thomaskellough/thomaskellough.github.io/posts/02-biometrics-uikit-part-01" style="text-decoration: none">&larr; Introduction and setting up</a></th>
@@ -585,6 +757,7 @@ biometrics?.<span class="call">authenticateUser</span>()
         <a class="post-category post-category-feature" href="www.thomaskellough/thomaskellough.github.io/tags/feature">Feature</a>
         <a class="post-category post-category-faceid" href="www.thomaskellough/thomaskellough.github.io/tags/faceid">FaceID</a>
         <a class="post-category post-category-touchid" href="www.thomaskellough/thomaskellough.github.io/tags/touchid">TouchID</a>
+        <a class="post-category post-category-uikit" href="www.thomaskellough/thomaskellough.github.io/tags/uikit">UIKit</a>
 </div><table class="posts-table">
     <tr>
         <th class="th-single-right"><a href="www.thomaskellough/thomaskellough.github.io/posts/02-biometrics-uikit-part-02" style="text-decoration: none">Handling Results &rarr;</a></th>
