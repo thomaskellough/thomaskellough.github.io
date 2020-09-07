@@ -1,7 +1,7 @@
 ---
 date: 2020-07-29 22:12
 description: Part two of adding biometric authentication to your app. This part focuses on handling success and failure for authentication.
-tags: FaceID, TouchID, Extensions, Alerts, Autolayout
+tags: FaceID, TouchID, Extensions, Alerts, Autolayout, UIKit
 featuredDescription: Add Face ID and Touch ID with just four lines of code!
 ---
 # Use Face ID and Touch ID to lock your app from prying eyes - Part 2
@@ -12,6 +12,7 @@ featuredDescription: Add Face ID and Touch ID with just four lines of code!
         <a class="post-category post-category-extensions" href="/tags/extensions">Extensions</a>
         <a class="post-category post-category-alerts" href="/tags/alerts">Alerts</a>
         <a class="post-category post-category-autolayout" href="/tags/autolayout">Autolayout</a>
+        <a class="post-category post-category-uikit" href="/tags/uikit">UIKit</a>
 </div>
 
 <table class="posts-table">

@@ -1,7 +1,7 @@
 ---
 date: 2020-08-21 22:12
 description: Part 2 of using Alamofire to make an API request. This part focuses on creating your model, making the request, and updating your app with your results.
-tags: API, Alamofire, Models, DispatchQueue, Codable
+tags: API, Alamofire, Models, DispatchQueue, Codable, UIKit
 ---
 # Use Alamofire to make an API request for NASA's Astronomy Picture of the Day - Part 2
 
@@ -11,6 +11,7 @@ tags: API, Alamofire, Models, DispatchQueue, Codable
         <a class="post-category post-category-models" href="/tags/models">Models</a>
         <a class="post-category post-category-dispatchqueue" href="/tags/dispatchqueue">DispatchQueue</a>
         <a class="post-category post-category-codable" href="/tags/codable">Codable</a>
+        <a class="post-category post-category-uikit" href="/tags/uikit">UIKit</a>
 </div>
 
 <table class="posts-table">

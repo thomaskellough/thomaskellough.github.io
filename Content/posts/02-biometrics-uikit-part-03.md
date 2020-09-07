@@ -1,7 +1,7 @@
 ---
 date: 2020-07-30 22:12
 description: The final part of adding biometric authentication to your app. In this section you will learn to add a login button to call for authentication whenever you want.
-tags: FaceID, TouchID, Obj-c, Closures
+tags: FaceID, TouchID, Obj-c, Closures, UIKit
 featuredDescription: Add Face ID and Touch ID with just four lines of code!
 ---
 # Use Face ID and Touch ID to lock your app from prying eyes - Part 3
@@ -11,6 +11,7 @@ featuredDescription: Add Face ID and Touch ID with just four lines of code!
         <a class="post-category post-category-touchid" href="/tags/touchid">TouchID</a>
         <a class="post-category post-category-obj-c" href="/tags/objc-c">Obj-c</a>
         <a class="post-category post-category-closures" href="/tags/closures">Closures</a>
+        <a class="post-category post-category-uikit" href="/tags/uikit">UIKit</a>
 </div>
 
 <table class="posts-table">

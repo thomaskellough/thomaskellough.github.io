@@ -1,7 +1,7 @@
 ---
 date: 2020-08-20 22:12
 description: API requests are very common in iOS apps. Alamofire makes calling API's a breeze and this tutorial will show you exactly how to do it. 
-tags: API, UIScrollView, UIStackView
+tags: API, UIScrollView, UIStackView, Autolayout, UIKit
 ---
 # Use Alamofire to make an API request for NASA's Astronomy Picture of the Day - Part 1
 
@@ -9,6 +9,8 @@ tags: API, UIScrollView, UIStackView
         <a class="post-category post-category-api" href="/tags/api">API</a>
         <a class="post-category post-category-uiscrollview" href="/tags/uiscrollview">UIScrollView</a>
         <a class="post-category post-category-uistackview" href="/tags/uistackview">UIStackView</a>
+        <a class="post-category post-category-autolayout" href="/tags/autolayout">Autolayout</a>
+        <a class="post-category post-category-uikit" href="/tags/uikit">UIKit</a>
 </div>
 
 <table class="posts-table">
@@ -30,7 +32,7 @@ You'll see a few things here. You'll notice a long string of characters called a
 
 Note: You do not want to share your API key with anyone. Keep it secret! I'm sharing mine here because I'm not actually using this. That's not even my real email! You're more than welcome to use mine during this tutorial if you want, but I make no promises it will be active when you try or that its limits will be reached, which as of this time is 1,000 requests per hour. You can also use NASA's DEMO_KEY which limits you to 50 requests per day and 30 requests per hour.
 
-Below the key you'll see a unique url. In my example it's ```https://api.nasa.gov/planetary/apod?api_key=cau6to6cGexfArd5RfO4Hq1pceMgWpIOpwYs1Y8E```. Now I say unique, but that's only becase of the API key. Anyone who makes this same API call will use ```https://api.nasa.gov/planetary/apod?api_key=``` plus their specific API key. This is how NASA knows who is making the call. There are many ways to test API's before you even start writing your code. One my favorites it's using Postman, which will be convered in another tutorial. However, for this simple request we can actually just click the link and it will open a new window that looks like this: 
+Below the key you'll see a unique url. In my example it's ```https://api.nasa.gov/planetary/apod?api_key=cau6to6cGexfArd5RfO4Hq1pceMgWpIOpwYs1Y8E```. Now I say unique, but that's only becase of the API key. Anyone who makes this same API call will use ```https://api.nasa.gov/planetary/apod?api_key=``` plus their specific API key. This is how NASA knows who is making the call. There are many ways to test API's before you even start writing your code. One my favorites it's using Postman, which is covered in another tutorial [here](/posts/05-testing-apis-with-postman). However, for this simple request we can actually just click the link and it will open a new window that looks like this: 
 
 <img class="post-image" src="/Images/Posts/04/04-02.png" alt="APOD 08-19-2020" width="800"/>
 

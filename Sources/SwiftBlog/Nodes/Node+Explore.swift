@@ -12,8 +12,8 @@ import Plot
 extension Node where Context == HTML.BodyContext {
     
     static func explore(context: PublishingContext<SwiftBlog>) -> Node {
-//        let randomTags = context.allTags.prefix(5)
-        let randomTags = context.allTags
+        let randomTags = context.allTags.prefix(20)
+//        let randomTags = context.allTags
         
         return .wrapper(
             .div(

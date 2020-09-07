@@ -1,7 +1,7 @@
 ---
 date: 2020-08-08 22:12
 description: The final part of how to scan a barcode. We add some extra features in this section such as a torch and scan bounds. 
-tags: AVFoundation, Torch, BezierPath
+tags: AVFoundation, Torch, BezierPath, UIKit
 featuredDescription: Learn to scan a barcode using the AVFoundation framework to collect data!
 ---
 # Use AVFoundation to create a scanner to scan your drivers license - Part 3
@@ -10,6 +10,7 @@ featuredDescription: Learn to scan a barcode using the AVFoundation framework to
         <a class="post-category post-category-avfoundation" href="/tags/avfoundation">AVFoundation</a>
         <a class="post-category post-category-torch" href="/tags/torch">Torch</a>
         <a class="post-category post-category-bezierpath" href="/tags/bezierpath">BezierPath</a>
+        <a class="post-category post-category-uikit" href="/tags/uikit">UIKit</a>
 </div>
 
 <table class="posts-table">

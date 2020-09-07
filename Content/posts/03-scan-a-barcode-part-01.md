@@ -1,15 +1,14 @@
 ---
 date: 2020-08-01 22:12
 description: Phones have come a long way from just making calls and text messaging. You're now able to use your phone to scan barcodes, such as a drivers license, that collects data and displays in just seconds.
-tags: Feature, AVFoundation, Navigation
-featuredDescription: Learn to scan a barcode using the AVFoundation framework to collect data!
+tags: AVFoundation, Navigation, UIKit
 ---
 # Use AVFoundation to create a scanner to scan your drivers license - Part 1
 
 <div class="post-tags" markdown="1">
-        <a class="post-category post-category-feature" href="/tags/feature">Feature</a>
         <a class="post-category post-category-avfoundation" href="/tags/avfoundation">AVFoundation</a>
         <a class="post-category post-category-navigation" href="/tags/navigation">Navigation</a>
+        <a class="post-category post-category-uikit" href="/tags/uikit">UIKit</a>
 </div>
 
 <table class="posts-table">

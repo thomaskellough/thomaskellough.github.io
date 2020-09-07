@@ -1,7 +1,7 @@
 ---
 date: 2020-08-22 22:12
 description: Part 3 of using Alamofire to make an API request. This part closes out this tutorial by showing you how to handle errors.  
-tags: API, Alamofire, ErrorHandling
+tags: API, Alamofire, ErrorHandling, UIKit
 ---
 # Use Alamofire to make an API request for NASA's Astronomy Picture of the Day - Part 3
 
@@ -9,6 +9,7 @@ tags: API, Alamofire, ErrorHandling
         <a class="post-category post-category-api" href="/tags/api">API</a>
         <a class="post-category post-category-alamofire" href="/tags/alamofire">Alamofire</a>
         <a class="post-category post-category-errorhandling" href="/tags/errorhandling">Error Handling</a>
+        <a class="post-category post-category-uikit" href="/tags/uikit">UIKit</a>
 </div>
 
 <table class="posts-table">

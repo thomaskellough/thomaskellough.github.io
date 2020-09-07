@@ -1,7 +1,7 @@
 ---
 date: 2020-08-04 22:12
 description: Part two of scanning a barcode. This section focuses on capturing the data and displaying it to the user.
-tags: AVFoundation, Metadata, Delegates
+tags: AVFoundation, Metadata, Delegates, UIKit
 featuredDescription: Learn to scan a barcode using the AVFoundation framework to collect data!
 ---
 # Use AVFoundation to create a scanner to scan your drivers license - Part 2
@@ -10,6 +10,7 @@ featuredDescription: Learn to scan a barcode using the AVFoundation framework to
         <a class="post-category post-category-avfoundation" href="/tags/avfoundation">AVFoundation</a>
         <a class="post-category post-category-metadata" href="/tags/metadata">Metadata</a>
         <a class="post-category post-category-delegates" href="/tags/delegates">Delegates</a>
+        <a class="post-category post-category-uikit" href="/tags/uikit">UIKit</a>
 </div>
 
 <table class="posts-table">
