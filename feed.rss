@@ -1,4 +1,93 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content"><channel><title>The Swift Protocol</title><description>Swift Skill Building With Thomas Kellough</description><link>www.thomaskellough/thomaskellough.github.io</link><language>en</language><lastBuildDate>Sun, 6 Sep 2020 19:21:36 -0500</lastBuildDate><pubDate>Sun, 6 Sep 2020 19:21:36 -0500</pubDate><ttl>250</ttl><atom:link href="www.thomaskellough/thomaskellough.github.io/feed.rss" rel="self" type="application/rss+xml"/><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/06-navigationview-with-swiftui</guid><title>All about NavigationView using SwiftUI</title><description>SwiftUI brings an easy way to handle navigation in your apps. This section will show you how to easily add a navigation view as well as navigation bar items to help you handle navigation.</description><link>www.thomaskellough/thomaskellough.github.io/posts/06-navigationview-with-swiftui</link><pubDate>Sat, 5 Sep 2020 20:48:00 -0500</pubDate><content:encoded><![CDATA[<h1>All about NavigationView using SwiftUI</h1><div class="post-tags" markdown="1">
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content"><channel><title>The Swift Protocol</title><description>Swift Skill Building With Thomas Kellough</description><link>www.thomaskellough/thomaskellough.github.io</link><language>en</language><lastBuildDate>Fri, 18 Sep 2020 15:24:57 -0500</lastBuildDate><pubDate>Fri, 18 Sep 2020 15:24:57 -0500</pubDate><ttl>250</ttl><atom:link href="www.thomaskellough/thomaskellough.github.io/feed.rss" rel="self" type="application/rss+xml"/><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/07-how-to-autoincrement-ids-in-models</guid><title>Automatically incrementing id's inside a list of custom objects.</title><description>Creating a list of custom objects can pose challenges. Here we explain how to make it a bit easier by automatically incrementing ID's for each object.</description><link>www.thomaskellough/thomaskellough.github.io/posts/07-how-to-autoincrement-ids-in-models</link><pubDate>Fri, 18 Sep 2020 14:48:00 -0500</pubDate><content:encoded><![CDATA[<h1>Automatically incrementing id's inside a list of custom objects.</h1><div class="post-tags" markdown="1">
+        <a class="post-category post-category-structs" href="www.thomaskellough/thomaskellough.github.io/tags/structs">Structs</a>
+        <a class="post-category post-category-codable" href="www.thomaskellough/thomaskellough.github.io/tags/codable">Codable</a>
+        <a class="post-category post-category-extensions" href="www.thomaskellough/thomaskellough.github.io/tags/extensions">Extensions</a>
+</div><h3>Creating a list of objects</h3><p>Let's say you have a basic JSON list that looks like this:</p><pre><code>[
+  {
+    <span class="string">"id"</span> : <span class="number">1</span>,
+    <span class="string">"name"</span> : <span class="string">"Harry Potter"</span>,
+    <span class="string">"house"</span> : <span class="string">"Gryffindor"</span>
+  },
+  {
+    <span class="string">"id"</span> : <span class="number">2</span>,
+    <span class="string">"name"</span> : <span class="string">"Hermione Granger"</span>,
+    <span class="string">"house"</span> : <span class="string">"Gryffindor"</span>
+  },
+  {
+    <span class="string">"id"</span> : <span class="number">3</span>,
+    <span class="string">"name"</span> : <span class="string">"Draco Malfoy"</span>,
+    <span class="string">"house"</span> : <span class="string">"Slytherin"</span>
+  },
+  {
+    <span class="string">"id"</span> : <span class="number">4</span>,
+    <span class="string">"name"</span> : <span class="string">"Luna Lovegood"</span>,
+    <span class="string">"house"</span> : <span class="string">"Ravenclaw"</span>
+  },
+  {
+    <span class="string">"id"</span> : <span class="number">5</span>,
+    <span class="string">"name"</span> : <span class="string">"Cedric Diggory"</span>,
+    <span class="string">"house"</span> : <span class="string">"Hufflepuff"</span>
+  }
+]
+
+</code></pre><p>This holds a students name, the house they are in, and a custom ID. To create something like this in Swift you might create the following struct:</p><pre><code><span class="keyword">struct</span> Student: <span class="type">Codable</span> {
+    <span class="keyword">let</span> id: <span class="type">Int</span>
+    <span class="keyword">let</span> name: <span class="type">String</span>
+    <span class="keyword">let</span> house: <span class="type">String</span>
+}
+</code></pre><p>Then you can add each student like so:</p><pre><code><span class="keyword">let</span> harry = <span class="type">Student</span>(id: <span class="number">1</span>, name: <span class="string">"Harry Potter"</span>, house: <span class="string">"Gryffindor"</span>)
+<span class="keyword">let</span> hermione = <span class="type">Student</span>(id: <span class="number">2</span>, name: <span class="string">"Hermione Granger"</span>, house: <span class="string">"Gryffindor"</span>)
+<span class="keyword">let</span> draco = <span class="type">Student</span>(id: <span class="number">3</span>, name: <span class="string">"Draco Malfoy"</span>, house: <span class="string">"Slytherin"</span>)
+<span class="keyword">let</span> luna = <span class="type">Student</span>(id: <span class="number">4</span>, name: <span class="string">"Luna Lovegood"</span>, house: <span class="string">"Ravenclaw"</span>)
+<span class="keyword">let</span> cedric = <span class="type">Student</span>(id: <span class="number">5</span>, name: <span class="string">"Cedric Diggory"</span>, house: <span class="string">"Hufflepuff"</span>)
+
+<span class="keyword">let</span> students: [<span class="type">Student</span>] = [harry, hermione, draco, luna, cedric]
+</code></pre><p>This works just fine. But imagine adding more and more students. How do you remember everyone's <code>id</code>? When you are registering each student, you're not expected to know the latest <code>id</code>. The only thing <em>you</em> need to know is their name and house they belong in. So how can we have an <code>id</code> that's created automatically?</p><p>You could create a variable for <code>id</code> and pass that in like this:</p><pre><code><span class="keyword">var</span> studentID = <span class="number">1</span>
+
+<span class="keyword">let</span> harry = <span class="type">Student</span>(id: studentID, name: <span class="string">"Harry Potter"</span>, house: <span class="string">"Gryffindor"</span>)
+studentID += <span class="number">1</span>
+<span class="keyword">let</span> hermione = <span class="type">Student</span>(id: studentID, name: <span class="string">"Hermione Granger"</span>, house: <span class="string">"Gryffindor"</span>)
+studentID += <span class="number">1</span>
+<span class="keyword">let</span> draco = <span class="type">Student</span>(id: studentID, name: <span class="string">"Draco Malfoy"</span>, house: <span class="string">"Slytherin"</span>)
+studentID += <span class="number">1</span>
+<span class="keyword">let</span> luna = <span class="type">Student</span>(id: studentID, name: <span class="string">"Luna Lovegood"</span>, house: <span class="string">"Ravenclaw"</span>)
+studentID += <span class="number">1</span>
+<span class="keyword">let</span> cedric = <span class="type">Student</span>(id: studentID, name: <span class="string">"Cedric Diggory"</span>, house: <span class="string">"Hufflepuff"</span>)
+</code></pre><p>And this would actually work. But it looks messy, right? A better way is to create a custom initializer in your struct that can automatically apply the id for you and automatically increment. This is done by editing your <code>Student</code> struct to look like this:</p><pre><code><span class="keyword">var</span> studentID = <span class="number">1</span>
+
+<span class="keyword">struct</span> Student: <span class="type">Codable</span> {
+    <span class="keyword">let</span> id: <span class="type">Int</span>
+    <span class="keyword">let</span> name: <span class="type">String</span>
+    <span class="keyword">let</span> house: <span class="type">String</span>
+    
+    <span class="keyword">init</span>(name: <span class="type">String</span>, house: <span class="type">String</span>) {
+        <span class="keyword">self</span>.<span class="property">id</span> = studentID
+        <span class="keyword">self</span>.<span class="property">name</span> = name
+        <span class="keyword">self</span>.<span class="property">house</span> = house
+        
+        studentID += <span class="number">1</span>
+    }
+}
+</code></pre><p>Now when you add students you can actually leave the <code>id</code> parameter off completely and it will be taken care of behind the scenes.</p><pre><code><span class="keyword">let</span> harry = <span class="type">Student</span>(name: <span class="string">"Harry Potter"</span>, house: <span class="string">"Gryffindor"</span>)
+<span class="keyword">let</span> hermione = <span class="type">Student</span>(name: <span class="string">"Hermione Granger"</span>, house: <span class="string">"Gryffindor"</span>)
+<span class="keyword">let</span> draco = <span class="type">Student</span>(name: <span class="string">"Draco Malfoy"</span>, house: <span class="string">"Slytherin"</span>)
+<span class="keyword">let</span> luna = <span class="type">Student</span>(name: <span class="string">"Luna Lovegood"</span>, house: <span class="string">"Ravenclaw"</span>)
+<span class="keyword">let</span> cedric = <span class="type">Student</span>(name: <span class="string">"Cedric Diggory"</span>, house: <span class="string">"Hufflepuff"</span>)
+</code></pre><h3>Bonus</h3><p>If you want to print out your JSON in a pretty format here is a nice extension that helps with that. It deserializes your object into a formatted NSString.</p><pre><code><span class="keyword">extension</span> <span class="type">Data</span> {
+    <span class="keyword">var</span> prettyPrintedJSONString: <span class="type">NSString</span>? {
+        <span class="keyword">guard let</span> object = <span class="keyword">try</span>? <span class="type">JSONSerialization</span>.<span class="call">jsonObject</span>(with: <span class="keyword">self</span>, options: []),
+              <span class="keyword">let</span> data = <span class="keyword">try</span>? <span class="type">JSONSerialization</span>.<span class="call">data</span>(withJSONObject: object, options: [.<span class="dotAccess">prettyPrinted</span>]),
+              <span class="keyword">let</span> prettyPrintedString = <span class="type">NSString</span>(data: data, encoding: <span class="type">String</span>.<span class="type">Encoding</span>.<span class="property">utf8</span>.<span class="property">rawValue</span>) <span class="keyword">else</span> { <span class="keyword">return nil</span> }
+        
+        <span class="keyword">return</span> prettyPrintedString
+    }
+}
+
+<span class="keyword">let</span> jsonData = <span class="keyword">try</span> <span class="type">JSONEncoder</span>().<span class="call">encode</span>(students)
+<span class="keyword">let</span> jsonString = <span class="type">String</span>(data: jsonData, encoding: .<span class="dotAccess">utf8</span>)!
+<span class="keyword">let</span> prettyString = jsonString.<span class="call">data</span>(using: .<span class="dotAccess">utf8</span>)!.prettyPrintedJSONString!
+<span class="call">print</span>(prettyString)
+</code></pre>]]></content:encoded></item><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/06-navigationview-with-swiftui</guid><title>All about NavigationView using SwiftUI</title><description>SwiftUI brings an easy way to handle navigation in your apps. This section will show you how to easily add a navigation view as well as navigation bar items to help you handle navigation.</description><link>www.thomaskellough/thomaskellough.github.io/posts/06-navigationview-with-swiftui</link><pubDate>Sat, 5 Sep 2020 20:48:00 -0500</pubDate><content:encoded><![CDATA[<h1>All about NavigationView using SwiftUI</h1><div class="post-tags" markdown="1">
         <a class="post-category post-category-feature" href="www.thomaskellough/thomaskellough.github.io/tags/feature">Feature</a>
         <a class="post-category post-category-navigationview" href="www.thomaskellough/thomaskellough.github.io/tags/navigationview">NavigationView</a>
         <a class="post-category post-category-navigationlink" href="www.thomaskellough/thomaskellough.github.io/tags/navigationlink">NavigationLink</a>

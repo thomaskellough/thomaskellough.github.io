@@ -1,0 +1,90 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"/><script async src="https://www.googletagmanager.com/gtag/js?id=UA-175451977-1"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-175451977-1');</script><meta name="og:site_name" content="The Swift Protocol"/><link rel="canonical" href="www.thomaskellough/thomaskellough.github.io"/><meta name="twitter:url" content="www.thomaskellough/thomaskellough.github.io"/><meta name="og:url" content="www.thomaskellough/thomaskellough.github.io"/><title>Swift Skill Building | The Swift Protocol</title><meta name="twitter:title" content="Swift Skill Building | The Swift Protocol"/><meta name="og:title" content="Swift Skill Building | The Swift Protocol"/><meta name="description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:description" content="Swift Skill Building With Thomas Kellough"/><meta name="og:description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="http://www.theswiftprotocol.com/images/social.png"/><meta name="og:image" content="http://www.theswiftprotocol.com/images/social.png"/><link rel="stylesheet" href="/styles.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to The Swift Protocol"/></head><body><header><div class="nav-logo"><a href="/"><img src="/Images/blog-logo.png"/></a><nav class="nav-bar"><p>Swift Skill Building With Thomas Kellough</p><ul><li><h3><a href="/home">Home</a></h3></li><li><h3><a href="/posts">Posts</a></h3></li><li><h3><a href="/tags">Tags</a></h3></li></ul></nav></div></header><div class="wrapper"><article><h1>Automatically incrementing id's inside a list of custom objects.</h1><div class="post-tags" markdown="1">
+        <a class="post-category post-category-structs" href="/tags/structs">Structs</a>
+        <a class="post-category post-category-codable" href="/tags/codable">Codable</a>
+        <a class="post-category post-category-extensions" href="/tags/extensions">Extensions</a>
+</div><h3>Creating a list of objects</h3><p>Let's say you have a basic JSON list that looks like this:</p><pre><code>[
+  {
+    <span class="string">"id"</span> : <span class="number">1</span>,
+    <span class="string">"name"</span> : <span class="string">"Harry Potter"</span>,
+    <span class="string">"house"</span> : <span class="string">"Gryffindor"</span>
+  },
+  {
+    <span class="string">"id"</span> : <span class="number">2</span>,
+    <span class="string">"name"</span> : <span class="string">"Hermione Granger"</span>,
+    <span class="string">"house"</span> : <span class="string">"Gryffindor"</span>
+  },
+  {
+    <span class="string">"id"</span> : <span class="number">3</span>,
+    <span class="string">"name"</span> : <span class="string">"Draco Malfoy"</span>,
+    <span class="string">"house"</span> : <span class="string">"Slytherin"</span>
+  },
+  {
+    <span class="string">"id"</span> : <span class="number">4</span>,
+    <span class="string">"name"</span> : <span class="string">"Luna Lovegood"</span>,
+    <span class="string">"house"</span> : <span class="string">"Ravenclaw"</span>
+  },
+  {
+    <span class="string">"id"</span> : <span class="number">5</span>,
+    <span class="string">"name"</span> : <span class="string">"Cedric Diggory"</span>,
+    <span class="string">"house"</span> : <span class="string">"Hufflepuff"</span>
+  }
+]
+
+</code></pre><p>This holds a students name, the house they are in, and a custom ID. To create something like this in Swift you might create the following struct:</p><pre><code><span class="keyword">struct</span> Student: <span class="type">Codable</span> {
+    <span class="keyword">let</span> id: <span class="type">Int</span>
+    <span class="keyword">let</span> name: <span class="type">String</span>
+    <span class="keyword">let</span> house: <span class="type">String</span>
+}
+</code></pre><p>Then you can add each student like so:</p><pre><code><span class="keyword">let</span> harry = <span class="type">Student</span>(id: <span class="number">1</span>, name: <span class="string">"Harry Potter"</span>, house: <span class="string">"Gryffindor"</span>)
+<span class="keyword">let</span> hermione = <span class="type">Student</span>(id: <span class="number">2</span>, name: <span class="string">"Hermione Granger"</span>, house: <span class="string">"Gryffindor"</span>)
+<span class="keyword">let</span> draco = <span class="type">Student</span>(id: <span class="number">3</span>, name: <span class="string">"Draco Malfoy"</span>, house: <span class="string">"Slytherin"</span>)
+<span class="keyword">let</span> luna = <span class="type">Student</span>(id: <span class="number">4</span>, name: <span class="string">"Luna Lovegood"</span>, house: <span class="string">"Ravenclaw"</span>)
+<span class="keyword">let</span> cedric = <span class="type">Student</span>(id: <span class="number">5</span>, name: <span class="string">"Cedric Diggory"</span>, house: <span class="string">"Hufflepuff"</span>)
+
+<span class="keyword">let</span> students: [<span class="type">Student</span>] = [harry, hermione, draco, luna, cedric]
+</code></pre><p>This works just fine. But imagine adding more and more students. How do you remember everyone's <code>id</code>? When you are registering each student, you're not expected to know the latest <code>id</code>. The only thing <em>you</em> need to know is their name and house they belong in. So how can we have an <code>id</code> that's created automatically?</p><p>You could create a variable for <code>id</code> and pass that in like this:</p><pre><code><span class="keyword">var</span> studentID = <span class="number">1</span>
+
+<span class="keyword">let</span> harry = <span class="type">Student</span>(id: studentID, name: <span class="string">"Harry Potter"</span>, house: <span class="string">"Gryffindor"</span>)
+studentID += <span class="number">1</span>
+<span class="keyword">let</span> hermione = <span class="type">Student</span>(id: studentID, name: <span class="string">"Hermione Granger"</span>, house: <span class="string">"Gryffindor"</span>)
+studentID += <span class="number">1</span>
+<span class="keyword">let</span> draco = <span class="type">Student</span>(id: studentID, name: <span class="string">"Draco Malfoy"</span>, house: <span class="string">"Slytherin"</span>)
+studentID += <span class="number">1</span>
+<span class="keyword">let</span> luna = <span class="type">Student</span>(id: studentID, name: <span class="string">"Luna Lovegood"</span>, house: <span class="string">"Ravenclaw"</span>)
+studentID += <span class="number">1</span>
+<span class="keyword">let</span> cedric = <span class="type">Student</span>(id: studentID, name: <span class="string">"Cedric Diggory"</span>, house: <span class="string">"Hufflepuff"</span>)
+</code></pre><p>And this would actually work. But it looks messy, right? A better way is to create a custom initializer in your struct that can automatically apply the id for you and automatically increment. This is done by editing your <code>Student</code> struct to look like this:</p><pre><code><span class="keyword">var</span> studentID = <span class="number">1</span>
+
+<span class="keyword">struct</span> Student: <span class="type">Codable</span> {
+    <span class="keyword">let</span> id: <span class="type">Int</span>
+    <span class="keyword">let</span> name: <span class="type">String</span>
+    <span class="keyword">let</span> house: <span class="type">String</span>
+    
+    <span class="keyword">init</span>(name: <span class="type">String</span>, house: <span class="type">String</span>) {
+        <span class="keyword">self</span>.<span class="property">id</span> = studentID
+        <span class="keyword">self</span>.<span class="property">name</span> = name
+        <span class="keyword">self</span>.<span class="property">house</span> = house
+        
+        studentID += <span class="number">1</span>
+    }
+}
+</code></pre><p>Now when you add students you can actually leave the <code>id</code> parameter off completely and it will be taken care of behind the scenes.</p><pre><code><span class="keyword">let</span> harry = <span class="type">Student</span>(name: <span class="string">"Harry Potter"</span>, house: <span class="string">"Gryffindor"</span>)
+<span class="keyword">let</span> hermione = <span class="type">Student</span>(name: <span class="string">"Hermione Granger"</span>, house: <span class="string">"Gryffindor"</span>)
+<span class="keyword">let</span> draco = <span class="type">Student</span>(name: <span class="string">"Draco Malfoy"</span>, house: <span class="string">"Slytherin"</span>)
+<span class="keyword">let</span> luna = <span class="type">Student</span>(name: <span class="string">"Luna Lovegood"</span>, house: <span class="string">"Ravenclaw"</span>)
+<span class="keyword">let</span> cedric = <span class="type">Student</span>(name: <span class="string">"Cedric Diggory"</span>, house: <span class="string">"Hufflepuff"</span>)
+</code></pre><h3>Bonus</h3><p>If you want to print out your JSON in a pretty format here is a nice extension that helps with that. It deserializes your object into a formatted NSString.</p><pre><code><span class="keyword">extension</span> <span class="type">Data</span> {
+    <span class="keyword">var</span> prettyPrintedJSONString: <span class="type">NSString</span>? {
+        <span class="keyword">guard let</span> object = <span class="keyword">try</span>? <span class="type">JSONSerialization</span>.<span class="call">jsonObject</span>(with: <span class="keyword">self</span>, options: []),
+              <span class="keyword">let</span> data = <span class="keyword">try</span>? <span class="type">JSONSerialization</span>.<span class="call">data</span>(withJSONObject: object, options: [.<span class="dotAccess">prettyPrinted</span>]),
+              <span class="keyword">let</span> prettyPrintedString = <span class="type">NSString</span>(data: data, encoding: <span class="type">String</span>.<span class="type">Encoding</span>.<span class="property">utf8</span>.<span class="property">rawValue</span>) <span class="keyword">else</span> { <span class="keyword">return nil</span> }
+        
+        <span class="keyword">return</span> prettyPrintedString
+    }
+}
+
+<span class="keyword">let</span> jsonData = <span class="keyword">try</span> <span class="type">JSONEncoder</span>().<span class="call">encode</span>(students)
+<span class="keyword">let</span> jsonString = <span class="type">String</span>(data: jsonData, encoding: .<span class="dotAccess">utf8</span>)!
+<span class="keyword">let</span> prettyString = jsonString.<span class="call">data</span>(using: .<span class="dotAccess">utf8</span>)!.prettyPrintedJSONString!
+<span class="call">print</span>(prettyString)
+</code></pre></article></div><div class="footer-social"><div>© 2020 The Swift Protocol</div><div>Generated using <a href="https://github.com/johnsundell/publish">Publish</a>. Written in Swift</div><div><a href="https://www.linkedin.com/in/thomas-kellough/">LinkedIn</a> | <a href="https://github.com/thomaskellough">Github</a> | <a href="mailto:theswiftprotocol@gmail.com">Email</a></div></div></body></html>
