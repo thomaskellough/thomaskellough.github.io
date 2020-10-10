@@ -346,6 +346,7 @@ a {
 .post-category-website,
 .post-category-uikit,
 .post-category-uiscrollview,
+.post-category-uisearchcontroller,
 .post-category-uistackview {
     background: #0C6E61;
 }
@@ -504,4 +505,20 @@ pre code .preprocessing {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.img-sm {
+    width: 30%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+  padding: 5px;
 }
