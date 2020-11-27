@@ -1,12 +1,12 @@
 ---
 date: 2020-11-07 14:48
 description: Learn how to use unit testing in your apps to help you write better and safer code
-tags: Unit Testing, UIKit
+tags: UnitTesting, UIKit
 ---
 # Unit Testing with UIKit
 
 <div class="post-tags" markdown="1">
-  <a class="post-category post-category-unittesting" href="/tags/unittesting">Unit Testing</a>
+  <a class="post-category post-category-unittesting" href="/tags/unittesting">UnitTesting</a>
   <a class="post-category post-category-uikit" href="/tags/uikit">UIKit</a>
 </div>
 

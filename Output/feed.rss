@@ -1,5 +1,259 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content"><channel><title>The Swift Protocol</title><description>Swift Skill Building With Thomas Kellough</description><link>www.thomaskellough/thomaskellough.github.io</link><language>en</language><lastBuildDate>Sat, 7 Nov 2020 11:50:55 -0700</lastBuildDate><pubDate>Sat, 7 Nov 2020 11:50:55 -0700</pubDate><ttl>250</ttl><atom:link href="www.thomaskellough/thomaskellough.github.io/feed.rss" rel="self" type="application/rss+xml"/><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/10-how-to-set-up-unit-testing</guid><title>Unit Testing with UIKit</title><description>Learn how to use unit testing in your apps to help you write better and safer code</description><link>www.thomaskellough/thomaskellough.github.io/posts/10-how-to-set-up-unit-testing</link><pubDate>Sat, 7 Nov 2020 14:48:00 -0700</pubDate><content:encoded><![CDATA[<h1>Unit Testing with UIKit</h1><div class="post-tags" markdown="1">
-  <a class="post-category post-category-unittesting" href="www.thomaskellough/thomaskellough.github.io/tags/unittesting">Unit Testing</a>
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content"><channel><title>The Swift Protocol</title><description>Swift Skill Building With Thomas Kellough</description><link>www.thomaskellough/thomaskellough.github.io</link><language>en</language><lastBuildDate>Fri, 27 Nov 2020 15:43:22 -0700</lastBuildDate><pubDate>Fri, 27 Nov 2020 15:43:22 -0700</pubDate><ttl>250</ttl><atom:link href="www.thomaskellough/thomaskellough.github.io/feed.rss" rel="self" type="application/rss+xml"/><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/11-how-to-seprate-tableview-views-and-datasource</guid><title>Separating your UITableViewController into multilpe files</title><description>How to separate your UITableViewController views and datasources</description><link>www.thomaskellough/thomaskellough.github.io/posts/11-how-to-seprate-tableview-views-and-datasource</link><pubDate>Fri, 27 Nov 2020 14:48:00 -0700</pubDate><content:encoded><![CDATA[<h1>Separating your UITableViewController into multilpe files</h1><div class="post-tags" markdown="1">
+  <a class="post-category post-category-designpatterns" href="www.thomaskellough/thomaskellough.github.io/tags/designpatterns">DesignPatterns</a>
+  <a class="post-category post-category-uikit" href="www.thomaskellough/thomaskellough.github.io/tags/uikit">UIKit</a>
+</div><h3>Introduction</h3><p>This article is not to get into the notorious argument of MVC vs MVVM vs VIPER or any other design patterns that we Swift developers like to discuss amongst each other. There are more than ways to skin a cat (although, I'm not a fan of animal cruelty) and your preferred method may not be someone else's preferred method. However, after working on production code that had every view controller 500+ lines of code I was growing frustrated by seeing a lot of extra code that just made finding what I wanted more difficult.</p><p>For example, if I have a Jira ticket that wants me to update what is showing in a tableview then I don't want to see all the methods that the view controller can perform. If I have another ticket that wants me to change how a tableview looks, I don't want to see filter through the code of what kind of data is shown. Some people may read this and think I'm lazy and it's not a big deal and perhaps you're right, but if you continue reading I'll show you how I like to separate my UITableViewControllers into three separate pieces that I think makes life easier.</p><h3>Creating a "regular" UITableViewController</h3><p>Let's start by creating what most developers would recognize as a regular UITableViewController. This will be one Swift file that handles what the tableview shows, how the tableview and cells look, and the logic that ties everything together.</p><p>Start by downloading the start project <a href="https://github.com/thomaskellough/iOS-Tutorials-UIKit-Swift">here</a> so you can follow along. This doesn't do anything exciting, just shows a handful of Game of Thrones characters that displays an alert when you tap their names.</p><p>The icons I used here can be found on https://icons8.com/icon/pack/cinema/officel in their Game of Thrones section and are free to use.</p><p>You'll notice that our Storyboard has one UITableViewController that is the class of <code>ViewController</code> which is currently our main Swift file. Our <code>ViewController</code> class looks like this:</p><pre><code><span class="keyword">import</span> UIKit
+
+<span class="keyword">class</span> ViewController: <span class="type">UITableViewController</span> {
+    
+    <span class="keyword">var</span> characters: [<span class="type">Character</span>] = []
+    
+    <span class="keyword">override func</span> viewDidLoad() {
+        <span class="keyword">super</span>.<span class="call">viewDidLoad</span>()
+        
+        <span class="keyword">let</span> ned = <span class="type">Character</span>(name: <span class="string">"Ned Stark"</span>, house: <span class="string">"Stark"</span>)
+        <span class="keyword">let</span> arya = <span class="type">Character</span>(name: <span class="string">"Arya Stark"</span>, house: <span class="string">"Stark"</span>)
+        <span class="keyword">let</span> daenerys = <span class="type">Character</span>(name: <span class="string">"Daenerys Targaryen"</span>, house: <span class="string">"Targaryen"</span>)
+        <span class="keyword">let</span> rhaegar = <span class="type">Character</span>(name: <span class="string">"Rhaegar Targaryen"</span>, house: <span class="string">"Targaryen"</span>)
+        <span class="keyword">let</span> obern = <span class="type">Character</span>(name: <span class="string">"Obern Martell"</span>, house: <span class="string">"Martell"</span>)
+        <span class="keyword">let</span> doran = <span class="type">Character</span>(name: <span class="string">"Doran Martell"</span>, house: <span class="string">"Martell"</span>)
+        <span class="keyword">let</span> olenna = <span class="type">Character</span>(name: <span class="string">"Olenna Tyrell"</span>, house: <span class="string">"Tyrell"</span>)
+        <span class="keyword">let</span> mace = <span class="type">Character</span>(name: <span class="string">"Mace Tyrell"</span>, house: <span class="string">"Tyrell"</span>)
+        
+        characters = [ned, arya, daenerys, rhaegar, obern, doran, olenna, mace].<span class="call">sorted</span>(by: { $0.<span class="property">name</span> &lt; $1.<span class="property">name</span> })
+        
+    }
+    
+    <span class="keyword">override func</span> tableView(<span class="keyword">_</span> tableView: <span class="type">UITableView</span>, cellForRowAt indexPath: <span class="type">IndexPath</span>) -&gt; <span class="type">UITableViewCell</span> {
+        <span class="keyword">let</span> cell = tableView.<span class="call">dequeueReusableCell</span>(withIdentifier: <span class="string">"Cell"</span>, for: indexPath)
+        <span class="keyword">let</span> character = characters[indexPath.<span class="property">row</span>]
+        
+        cell.<span class="property">textLabel</span>?.<span class="property">text</span> = character.<span class="property">name</span>
+        cell.<span class="property">textLabel</span>?.<span class="property">font</span> = <span class="type">UIFont</span>.<span class="call">preferredFont</span>(forTextStyle: .<span class="dotAccess">title1</span>)
+        
+        cell.<span class="property">detailTextLabel</span>?.<span class="property">text</span> = character.<span class="property">house</span>
+        cell.<span class="property">detailTextLabel</span>?.<span class="property">font</span> = <span class="type">UIFont</span>.<span class="call">preferredFont</span>(forTextStyle: .<span class="dotAccess">title3</span>)
+        
+        <span class="keyword">if let</span> image = <span class="type">UIImage</span>(named: character.<span class="property">house</span>.<span class="call">lowercased</span>()) {
+            cell.<span class="property">imageView</span>?.<span class="property">image</span> = image
+        }
+        
+        <span class="keyword">switch</span> character.<span class="property">house</span>.<span class="call">lowercased</span>() {
+        <span class="keyword">case</span> <span class="string">"stark"</span>:
+            cell.<span class="property">backgroundColor</span> = <span class="type">UIColor</span>(red: <span class="number">128</span>/<span class="number">255</span>, green: <span class="number">128</span>/<span class="number">255</span>, blue: <span class="number">128</span>/<span class="number">255</span>, alpha: <span class="number">1</span>)
+        <span class="keyword">case</span> <span class="string">"tyrell"</span>:
+            cell.<span class="property">backgroundColor</span> = <span class="type">UIColor</span>(red: <span class="number">144</span>/<span class="number">255</span>, green: <span class="number">158</span>/<span class="number">255</span>, blue: <span class="number">131</span>/<span class="number">255</span>, alpha: <span class="number">1</span>)
+        <span class="keyword">case</span> <span class="string">"targaryen"</span>:
+            cell.<span class="property">backgroundColor</span> = <span class="type">UIColor</span>(red: <span class="number">155</span>/<span class="number">255</span>, green: <span class="number">44</span>/<span class="number">255</span>, blue: <span class="number">41</span>/<span class="number">255</span>, alpha: <span class="number">1</span>)
+        <span class="keyword">case</span> <span class="string">"martell"</span>:
+            cell.<span class="property">backgroundColor</span> = <span class="type">UIColor</span>(red: <span class="number">227</span>/<span class="number">255</span>, green: <span class="number">138</span>/<span class="number">255</span>, blue: <span class="number">75</span>/<span class="number">255</span>, alpha: <span class="number">1</span>)
+        <span class="keyword">default</span>:
+            <span class="keyword">break</span>
+        }
+        
+        <span class="keyword">return</span> cell
+    }
+    
+    <span class="keyword">override func</span> tableView(<span class="keyword">_</span> tableView: <span class="type">UITableView</span>, heightForRowAt indexPath: <span class="type">IndexPath</span>) -&gt; <span class="type">CGFloat</span> {
+        <span class="number">75</span>
+    }
+    
+    <span class="keyword">override func</span> tableView(<span class="keyword">_</span> tableView: <span class="type">UITableView</span>, didSelectRowAt indexPath: <span class="type">IndexPath</span>) {
+        <span class="keyword">let</span> character = characters[indexPath.<span class="property">row</span>]
+        
+        <span class="keyword">let</span> ac = <span class="type">UIAlertController</span>(title: character.<span class="property">name</span>, message: character.<span class="property">house</span>, preferredStyle: .<span class="dotAccess">alert</span>)
+        ac.<span class="call">addAction</span>(<span class="type">UIAlertAction</span>(title: <span class="string">"OK"</span>, style: .<span class="dotAccess">default</span>))
+        <span class="call">present</span>(ac, animated: <span class="keyword">true</span>)
+    }
+    
+    <span class="keyword">override func</span> tableView(<span class="keyword">_</span> tableView: <span class="type">UITableView</span>, numberOfRowsInSection section: <span class="type">Int</span>) -&gt; <span class="type">Int</span> {
+        characters.<span class="property">count</span>
+    }
+    
+}
+
+</code></pre><p>We also have a very simple Character model class that looks like this</p><pre><code><span class="keyword">struct</span> Character {
+    <span class="keyword">var</span> name: <span class="type">String</span>
+    <span class="keyword">var</span> house: <span class="type">String</span>
+}
+</code></pre><p>Now I know what you're thinking, this view controller is only 76 lines long which isn't that much. That is absolutely true, but if you've ever worked on large iOS projects you'll know that a view controller that looks like this is rare. We have no logic inside of this view controller, no trailing swipe actions, no functions to call API data, and we lack many other pieces of code that you'll often see in the real world. Still, this can give us a good idea of how separation can help. I will warn you though, it's a bit more work and in the end, may even total more lines of code, but it's the separation that makes maintenance and reusability a lot easier.</p><h3>Separate your data source</h3><p>Tableviews do not manage data. It only represents the data that it is provided. In our example, this is all handled in the <code>ViewController.swift</code>. However, our view controller would be better off forgetting the data and just showing the data that we provide it.</p><p>Create a new file called <code>CharacterDataSource.swift</code>. We want to move our data source methods out of our view controller here. Take a look at Apple's <a href="https://developer.apple.com/documentation/uikit/uitableviewdatasource">UITableViewDataSource documentation</a> to see which methods these are. You'll see that only the following two methods are required:</p><pre><code><span class="comment">// Return the number of rows for the table.</span>     
+<span class="keyword">override func</span> tableView(<span class="keyword">_</span> tableView: <span class="type">UITableView</span>, numberOfRowsInSection section: <span class="type">Int</span>) -&gt; <span class="type">Int</span> {
+   <span class="keyword">return</span> <span class="number">0</span>
+}
+
+<span class="comment">// Provide a cell object for each row.</span>
+<span class="keyword">override func</span> tableView(<span class="keyword">_</span> tableView: <span class="type">UITableView</span>, cellForRowAt indexPath: <span class="type">IndexPath</span>) -&gt; <span class="type">UITableViewCell</span> {
+   <span class="comment">// Fetch a cell of the appropriate type.</span>
+   <span class="keyword">let</span> cell = tableView.<span class="call">dequeueReusableCell</span>(withIdentifier: <span class="string">"cellTypeIdentifier"</span>, for: indexPath)
+   
+   <span class="comment">// Configure the cell’s contents.</span>
+   cell.<span class="property">textLabel</span>!.text = <span class="string">"Cell text"</span>
+       
+   <span class="keyword">return</span> cell
+}
+</code></pre><p>That means in our example we are looking at:</p><pre><code><span class="keyword">override func</span> tableView(<span class="keyword">_</span> tableView: <span class="type">UITableView</span>, numberOfRowsInSection section: <span class="type">Int</span>) -&gt; <span class="type">Int</span> {
+    characters.<span class="property">count</span>
+}
+
+<span class="keyword">override func</span> tableView(<span class="keyword">_</span> tableView: <span class="type">UITableView</span>, cellForRowAt indexPath: <span class="type">IndexPath</span>) -&gt; <span class="type">UITableViewCell</span> {
+    <span class="keyword">let</span> cell = tableView.<span class="call">dequeueReusableCell</span>(withIdentifier: <span class="string">"Cell"</span>, for: indexPath)
+    <span class="keyword">let</span> character = characters[indexPath.<span class="property">row</span>]
+    
+    cell.<span class="property">textLabel</span>?.<span class="property">text</span> = character.<span class="property">name</span>
+    cell.<span class="property">textLabel</span>?.<span class="property">font</span> = <span class="type">UIFont</span>.<span class="call">preferredFont</span>(forTextStyle: .<span class="dotAccess">title1</span>)
+    
+    cell.<span class="property">detailTextLabel</span>?.<span class="property">text</span> = character.<span class="property">house</span>
+    cell.<span class="property">detailTextLabel</span>?.<span class="property">font</span> = <span class="type">UIFont</span>.<span class="call">preferredFont</span>(forTextStyle: .<span class="dotAccess">title3</span>)
+    
+    <span class="keyword">if let</span> image = <span class="type">UIImage</span>(named: character.<span class="property">house</span>.<span class="call">lowercased</span>()) {
+        cell.<span class="property">imageView</span>?.<span class="property">image</span> = image
+    }
+    
+    <span class="keyword">switch</span> character.<span class="property">house</span>.<span class="call">lowercased</span>() {
+    <span class="keyword">case</span> <span class="string">"stark"</span>:
+        cell.<span class="property">backgroundColor</span> = <span class="type">UIColor</span>(red: <span class="number">128</span>/<span class="number">255</span>, green: <span class="number">128</span>/<span class="number">255</span>, blue: <span class="number">128</span>/<span class="number">255</span>, alpha: <span class="number">1</span>)
+    <span class="keyword">case</span> <span class="string">"tyrell"</span>:
+        cell.<span class="property">backgroundColor</span> = <span class="type">UIColor</span>(red: <span class="number">144</span>/<span class="number">255</span>, green: <span class="number">158</span>/<span class="number">255</span>, blue: <span class="number">131</span>/<span class="number">255</span>, alpha: <span class="number">1</span>)
+    <span class="keyword">case</span> <span class="string">"targaryen"</span>:
+        cell.<span class="property">backgroundColor</span> = <span class="type">UIColor</span>(red: <span class="number">155</span>/<span class="number">255</span>, green: <span class="number">44</span>/<span class="number">255</span>, blue: <span class="number">41</span>/<span class="number">255</span>, alpha: <span class="number">1</span>)
+    <span class="keyword">case</span> <span class="string">"martell"</span>:
+        cell.<span class="property">backgroundColor</span> = <span class="type">UIColor</span>(red: <span class="number">227</span>/<span class="number">255</span>, green: <span class="number">138</span>/<span class="number">255</span>, blue: <span class="number">75</span>/<span class="number">255</span>, alpha: <span class="number">1</span>)
+    <span class="keyword">default</span>:
+        <span class="keyword">break</span>
+    }
+    
+    <span class="keyword">return</span> cell
+}
+</code></pre><p>Note that there are other methods that belong to the data source, but in our example, we aren't using them.</p><p>Create an empty data source class as follows:</p><pre><code><span class="keyword">import</span> UIKit
+
+<span class="keyword">class</span> CharacterDataSource: <span class="type">NSObject</span>, <span class="type">UITableViewDataSource</span> {
+}
+</code></pre><p>You'll notice that we need to inherit from <code>NSObject</code> and <code>UITableViewDataSource</code>. This is required.</p><p>When we add our two above functions we need to remove the <code>override</code> keyword because we aren't overriding the data source anymore since we are simply creating one. We will also need to provide a characters array that holds our data, which means removing our characters array from our <code>ViewController.swift</code>.</p><p>When you are finished your <code>CharacterDataSource</code> class should look like this:</p><pre><code><span class="keyword">class</span> CharacterDataSource: <span class="type">NSObject</span>, <span class="type">UITableViewDataSource</span> {
+    
+    <span class="keyword">var</span> characters: [<span class="type">Character</span>] = []
+    
+    <span class="keyword">func</span> tableView(<span class="keyword">_</span> tableView: <span class="type">UITableView</span>, numberOfRowsInSection section: <span class="type">Int</span>) -&gt; <span class="type">Int</span> {
+        characters.<span class="property">count</span>
+    }
+    
+    <span class="keyword">func</span> tableView(<span class="keyword">_</span> tableView: <span class="type">UITableView</span>, cellForRowAt indexPath: <span class="type">IndexPath</span>) -&gt; <span class="type">UITableViewCell</span> {
+        <span class="keyword">let</span> cell = tableView.<span class="call">dequeueReusableCell</span>(withIdentifier: <span class="string">"Cell"</span>, for: indexPath)
+        <span class="keyword">let</span> character = characters[indexPath.<span class="property">row</span>]
+        
+        cell.<span class="property">textLabel</span>?.<span class="property">text</span> = character.<span class="property">name</span>
+        cell.<span class="property">textLabel</span>?.<span class="property">font</span> = <span class="type">UIFont</span>.<span class="call">preferredFont</span>(forTextStyle: .<span class="dotAccess">title1</span>)
+        
+        cell.<span class="property">detailTextLabel</span>?.<span class="property">text</span> = character.<span class="property">house</span>
+        cell.<span class="property">detailTextLabel</span>?.<span class="property">font</span> = <span class="type">UIFont</span>.<span class="call">preferredFont</span>(forTextStyle: .<span class="dotAccess">title3</span>)
+        
+        <span class="keyword">if let</span> image = <span class="type">UIImage</span>(named: character.<span class="property">house</span>.<span class="call">lowercased</span>()) {
+            cell.<span class="property">imageView</span>?.<span class="property">image</span> = image
+        }
+        
+        <span class="keyword">switch</span> character.<span class="property">house</span>.<span class="call">lowercased</span>() {
+        <span class="keyword">case</span> <span class="string">"stark"</span>:
+            cell.<span class="property">backgroundColor</span> = <span class="type">UIColor</span>(red: <span class="number">128</span>/<span class="number">255</span>, green: <span class="number">128</span>/<span class="number">255</span>, blue: <span class="number">128</span>/<span class="number">255</span>, alpha: <span class="number">1</span>)
+        <span class="keyword">case</span> <span class="string">"tyrell"</span>:
+            cell.<span class="property">backgroundColor</span> = <span class="type">UIColor</span>(red: <span class="number">144</span>/<span class="number">255</span>, green: <span class="number">158</span>/<span class="number">255</span>, blue: <span class="number">131</span>/<span class="number">255</span>, alpha: <span class="number">1</span>)
+        <span class="keyword">case</span> <span class="string">"targaryen"</span>:
+            cell.<span class="property">backgroundColor</span> = <span class="type">UIColor</span>(red: <span class="number">155</span>/<span class="number">255</span>, green: <span class="number">44</span>/<span class="number">255</span>, blue: <span class="number">41</span>/<span class="number">255</span>, alpha: <span class="number">1</span>)
+        <span class="keyword">case</span> <span class="string">"martell"</span>:
+            cell.<span class="property">backgroundColor</span> = <span class="type">UIColor</span>(red: <span class="number">227</span>/<span class="number">255</span>, green: <span class="number">138</span>/<span class="number">255</span>, blue: <span class="number">75</span>/<span class="number">255</span>, alpha: <span class="number">1</span>)
+        <span class="keyword">default</span>:
+            <span class="keyword">break</span>
+        }
+        
+        <span class="keyword">return</span> cell
+    }
+    
+}
+</code></pre><p>If you try to run this code it won't compile. That's because we removed our characters array from <code>ViewController.swift</code> and we haven't given it any new data. This is fixed by creating a datasource property and providing that property to our tableviews datasource. This also means everywhere we use <code>characters</code> inside <code>ViewController.swift</code> will have to be changed to <code>dataSource.characters</code>.</p><p>Edit <code>ViewController.swift</code> to look like this:</p><pre><code><span class="keyword">class</span> ViewController: <span class="type">UITableViewController</span> {
+        
+    <span class="keyword">let</span> dataSource = <span class="type">CharacterDataSource</span>() <span class="comment">// we added a referece to our data source</span>
+    
+    <span class="keyword">override func</span> viewDidLoad() {
+        <span class="keyword">super</span>.<span class="call">viewDidLoad</span>()
+        
+        <span class="keyword">self</span>.<span class="property">tableView</span>.<span class="property">dataSource</span> = dataSource <span class="comment">// assign our tableview's datasource our datasource reference from above</span>
+        
+        <span class="keyword">let</span> ned = <span class="type">Character</span>(name: <span class="string">"Ned Stark"</span>, house: <span class="string">"Stark"</span>)
+        <span class="keyword">let</span> arya = <span class="type">Character</span>(name: <span class="string">"Arya Stark"</span>, house: <span class="string">"Stark"</span>)
+        <span class="keyword">let</span> daenerys = <span class="type">Character</span>(name: <span class="string">"Daenerys Targaryen"</span>, house: <span class="string">"Targaryen"</span>)
+        <span class="keyword">let</span> rhaegar = <span class="type">Character</span>(name: <span class="string">"Rhaegar Targaryen"</span>, house: <span class="string">"Targaryen"</span>)
+        <span class="keyword">let</span> obern = <span class="type">Character</span>(name: <span class="string">"Obern Martell"</span>, house: <span class="string">"Martell"</span>)
+        <span class="keyword">let</span> doran = <span class="type">Character</span>(name: <span class="string">"Doran Martell"</span>, house: <span class="string">"Martell"</span>)
+        <span class="keyword">let</span> olenna = <span class="type">Character</span>(name: <span class="string">"Olenna Tyrell"</span>, house: <span class="string">"Tyrell"</span>)
+        <span class="keyword">let</span> mace = <span class="type">Character</span>(name: <span class="string">"Mace Tyrell"</span>, house: <span class="string">"Tyrell"</span>)
+        
+        <span class="comment">// edit our characters array to use our array from our data source</span>
+        dataSource.<span class="property">characters</span> = [ned, arya, daenerys, rhaegar, obern, doran, olenna, mace].<span class="call">sorted</span>(by: { $0.<span class="property">name</span> &lt; $1.<span class="property">name</span> })
+        
+    }
+    
+    <span class="keyword">override func</span> tableView(<span class="keyword">_</span> tableView: <span class="type">UITableView</span>, heightForRowAt indexPath: <span class="type">IndexPath</span>) -&gt; <span class="type">CGFloat</span> {
+        <span class="number">75</span>
+    }
+    
+    <span class="keyword">override func</span> tableView(<span class="keyword">_</span> tableView: <span class="type">UITableView</span>, didSelectRowAt indexPath: <span class="type">IndexPath</span>) {
+        <span class="comment">// edit our characters array to use our array from our data source</span>
+        <span class="keyword">let</span> character = dataSource.<span class="property">characters</span>[indexPath.<span class="property">row</span>]
+        
+        <span class="keyword">let</span> ac = <span class="type">UIAlertController</span>(title: character.<span class="property">name</span>, message: character.<span class="property">house</span>, preferredStyle: .<span class="dotAccess">alert</span>)
+        ac.<span class="call">addAction</span>(<span class="type">UIAlertAction</span>(title: <span class="string">"OK"</span>, style: .<span class="dotAccess">default</span>))
+        <span class="call">present</span>(ac, animated: <span class="keyword">true</span>)
+    }
+    
+}
+</code></pre><p>With that change, our view controller is now down to 44 lines. That's nearly half! It is now much easier to read through your view controller without filtering through the data that is shown. And if you need to edit the data itself, you don't even need to touch the view controller! But can we do better? Yes, we can...</p><h3>Creating a custom table view cell</h3><p>Even though our data source is separated it contains some code that really isn't needed. Our <code>cellForForwAt</code> method is 29 lines long mainly because it's also configuring <em>how</em> the cell should look. This is where creating custom tableview cells comes in handy.</p><p>Start by creating a new CocoaTouch file called <code>CharacterTableViewCell.swift</code> that inherits from UITableViewCell. This will create the following file:</p><pre><code><span class="keyword">class</span> CharacterTableViewCell: <span class="type">UITableViewCell</span> {
+
+    <span class="keyword">override func</span> awakeFromNib() {
+        <span class="keyword">super</span>.<span class="call">awakeFromNib</span>()
+        <span class="comment">// Initialization code</span>
+    }
+
+    <span class="keyword">override func</span> setSelected(<span class="keyword">_</span> selected: <span class="type">Bool</span>, animated: <span class="type">Bool</span>) {
+        <span class="keyword">super</span>.<span class="call">setSelected</span>(selected, animated: animated)
+
+        <span class="comment">// Configure the view for the selected state</span>
+    }
+
+}
+</code></pre><p>Before we start adding stuff, we need to jump into Storyboard, select your tableview cell, select Identity Inspector, and change its class to <code>CharacterTableViewCell</code>. Now back to the code. Create the following setup function inside <code>CharacterTableViewCell</code>.</p><pre><code><span class="keyword">func</span> setUp(with character: <span class="type">Character</span>) {
+    
+}
+</code></pre><p>We can add how we want our tableview cell to look inside of this, then call this function from our datasource. Since we are passing in a character as a parameter, we can use its values to edit the label, detail label, image, and background color. However, since this class inherits <code>UITableViewCell</code> we can leave off of every instance of <code>cell</code> and just call the method directly. Move that code over now so it looks like this.</p><pre><code><span class="keyword">func</span> setUp(with character: <span class="type">Character</span>) {
+    textLabel?.<span class="property">text</span> = character.<span class="property">name</span>
+    textLabel?.<span class="property">font</span> = <span class="type">UIFont</span>.<span class="call">preferredFont</span>(forTextStyle: .<span class="dotAccess">title1</span>)
+    
+    detailTextLabel?.<span class="property">text</span> = character.<span class="property">house</span>
+    detailTextLabel?.<span class="property">font</span> = <span class="type">UIFont</span>.<span class="call">preferredFont</span>(forTextStyle: .<span class="dotAccess">title3</span>)
+    
+    <span class="keyword">if let</span> image = <span class="type">UIImage</span>(named: character.<span class="property">house</span>.<span class="call">lowercased</span>()) {
+        imageView?.<span class="property">image</span> = image
+    }
+    
+    <span class="keyword">switch</span> character.<span class="property">house</span>.<span class="call">lowercased</span>() {
+    <span class="keyword">case</span> <span class="string">"stark"</span>:
+        backgroundColor = <span class="type">UIColor</span>(red: <span class="number">128</span>/<span class="number">255</span>, green: <span class="number">128</span>/<span class="number">255</span>, blue: <span class="number">128</span>/<span class="number">255</span>, alpha: <span class="number">1</span>)
+    <span class="keyword">case</span> <span class="string">"tyrell"</span>:
+        backgroundColor = <span class="type">UIColor</span>(red: <span class="number">144</span>/<span class="number">255</span>, green: <span class="number">158</span>/<span class="number">255</span>, blue: <span class="number">131</span>/<span class="number">255</span>, alpha: <span class="number">1</span>)
+    <span class="keyword">case</span> <span class="string">"targaryen"</span>:
+        backgroundColor = <span class="type">UIColor</span>(red: <span class="number">155</span>/<span class="number">255</span>, green: <span class="number">44</span>/<span class="number">255</span>, blue: <span class="number">41</span>/<span class="number">255</span>, alpha: <span class="number">1</span>)
+    <span class="keyword">case</span> <span class="string">"martell"</span>:
+        backgroundColor = <span class="type">UIColor</span>(red: <span class="number">227</span>/<span class="number">255</span>, green: <span class="number">138</span>/<span class="number">255</span>, blue: <span class="number">75</span>/<span class="number">255</span>, alpha: <span class="number">1</span>)
+    <span class="keyword">default</span>:
+        <span class="keyword">break</span>
+    }
+}
+</code></pre><p>Then back in your data source class we only need to make two changes. The first is casting how your cell is returned as the new tablecell we created. The second is calling our <code>setUp()</code> method while passing in our character. Edit <code>cellForRowAt</code> to look like this:</p><pre><code><span class="keyword">func</span> tableView(<span class="keyword">_</span> tableView: <span class="type">UITableView</span>, cellForRowAt indexPath: <span class="type">IndexPath</span>) -&gt; <span class="type">UITableViewCell</span> {
+    <span class="keyword">let</span> cell = tableView.<span class="call">dequeueReusableCell</span>(withIdentifier: <span class="string">"Cell"</span>, for: indexPath) <span class="keyword">as</span>! <span class="type">CharacterTableViewCell</span>
+    <span class="keyword">let</span> character = characters[indexPath.<span class="property">row</span>]
+    
+    cell.<span class="call">setUp</span>(with: character)
+    
+    <span class="keyword">return</span> cell
+}
+</code></pre><p>This brought our <code>cellForRowAt</code> method down to only 8 lines of code!</p><h3>Conclusion</h3><p>This was a very simple project that showed you how to separate your UITableViewController to have a dedicated data source class and custom tableview cell. You'll find that in large projects, you can even reuse the custom cell view in multiple tableviews if needed, saving you from re-writing all of that code again. Although this creates multiple files, you'll know exactly where to go when you want to change/add/remove something.</p><p>I hope you found this valuable and I encourage you to try it out in your next project. It's also easy enough to refractor your current project one view controller at a time. If you want to see and/or download the final project you can do so <a href="https://github.com/thomaskellough/iOS-Tutorials-UIKit-Swift">here</a>.</p>]]></content:encoded></item><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/10-how-to-set-up-unit-testing</guid><title>Unit Testing with UIKit</title><description>Learn how to use unit testing in your apps to help you write better and safer code</description><link>www.thomaskellough/thomaskellough.github.io/posts/10-how-to-set-up-unit-testing</link><pubDate>Sat, 7 Nov 2020 14:48:00 -0700</pubDate><content:encoded><![CDATA[<h1>Unit Testing with UIKit</h1><div class="post-tags" markdown="1">
+  <a class="post-category post-category-unittesting" href="www.thomaskellough/thomaskellough.github.io/tags/unittesting">UnitTesting</a>
   <a class="post-category post-category-uikit" href="www.thomaskellough/thomaskellough.github.io/tags/uikit">UIKit</a>
 </div><h3>Introduction</h3><p>Unit testing is highly valuable when making apps. Yet, there are so many apps in production that don't use it. It can help you write code that is stronger and more clear, help prevent app crashes, help reduce the re-opening of Jira tickets when the QA team finds an issue and can help you debug your code without running the app. So seriously, what's not to like? Why don't people use it?</p><p>One of the reasons is people don't understand how to use unit testing. It seems weird to write simple tests for something that you <em>know</em> will work, right? Maybe so, but when you have multiple developers working on the same team you're not all working on the same stuff. It's very easy for someone to accidently disrupt the code that you wrote previously. It also takes time to write unit testing. Not a whole lot, but more than none, and many people are rushed. However, neglecting to use unit tests can cause more time spent later on by fixing the bugs that would have been found by simply pressing <code>cmd + u</code>.</p><h3>Setup</h3><p>If you want to set up your own project that's fine. Create some text fields in the main view for first name, last name, date of birth, and 4-dig pin inputs. Then add a submit button at the bottom. Or you can download the starter project <a href="https://github.com/thomaskellough/iOS-Tutorials-UIKit-Swift">here</a>.</p><p>For reference, here is what you get when you run the starter, and here is what the code looks like.</p><img class="post-image img-sm" src="www.thomaskellough/thomaskellough.github.io/Images/Posts/10/10-01.png" alt="Unit Testing Starter"/><pre><code><span class="keyword">import</span> UIKit
 
