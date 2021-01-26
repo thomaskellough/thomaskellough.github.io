@@ -3,7 +3,7 @@ date: 2020-11-27 14:48
 description: How to separate your UITableViewController views and datasources 
 tags: DesignPatterns, UIKit
 ---
-# Separating your UITableViewController into multilpe files
+# Separating your UITableViewController into multiple files
 
 <div class="post-tags" markdown="1">
   <a class="post-category post-category-designpatterns" href="/tags/designpatterns">DesignPatterns</a>

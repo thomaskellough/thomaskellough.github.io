@@ -1,7 +1,7 @@
 ---
 date: 2020-08-20 22:12
 description: API requests are very common in iOS apps. Alamofire makes calling API's a breeze and this tutorial will show you exactly how to do it. 
-tags: API, UIScrollView, UIStackView, Autolayout, UIKit
+tags: API, UIScrollView, UIStackView, Autolayout, UIKit, Cocoapods
 ---
 # Use Alamofire to make an API request for NASA's Astronomy Picture of the Day - Part 1
 
@@ -11,6 +11,7 @@ tags: API, UIScrollView, UIStackView, Autolayout, UIKit
         <a class="post-category post-category-uistackview" href="/tags/uistackview">UIStackView</a>
         <a class="post-category post-category-autolayout" href="/tags/autolayout">Autolayout</a>
         <a class="post-category post-category-uikit" href="/tags/uikit">UIKit</a>
+        <a class="post-category post-category-cocoapods" href="/tags/cocoapods">Cocoapods</a>
 </div>
 
 <table class="posts-table">

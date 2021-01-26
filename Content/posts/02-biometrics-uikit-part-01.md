@@ -1,8 +1,7 @@
 ---
 date: 2020-07-28 22:12
 description: Privacy is one of the most important things when it comes to your personal device. Apple has created ways to allow developers to add privacy without much work on our end! You can add fully functioning Face ID or Touch ID inside your app with only four lines of code!
-tags: Feature, FaceID, TouchID, UIKit
-featuredDescription: Add Face ID and Touch ID with just four lines of code!
+tags: FaceID, TouchID, UIKit
 ---
 # Use Face ID and Touch ID to lock your app from prying eyes - Part 1
 
