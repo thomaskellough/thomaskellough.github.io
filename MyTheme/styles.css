@@ -305,6 +305,7 @@ a {
     margin: 3px;
 }
 
+.post-category-animations,
 .post-category-alamofire,
 .post-category-alerts,
 .post-category-api,
@@ -312,11 +313,13 @@ a {
 .post-category-avfoundation,
 .post-category-bezierpath,
 .post-category-closures,
+.post-category-cocoapods,
 .post-category-codable,
 .post-category-css {
     background: #D37536;
 }
 
+.post-category-dates,
 .post-category-delegates,
 .post-category-designpatterns,
 .post-category-dispatchqueue,
@@ -324,25 +327,28 @@ a {
 .post-category-extensions,
 .post-category-enums,
 .post-category-faceid,
+.post-category-html,
 .post-category-labeledstatements,
-.post-category-metadata,
-.post-category-models {
+.post-category-localnotifications {
     background: #B02E0C;
 }
 
+.post-category-metadata,
+.post-category-models,
 .post-category-navigation,
 .post-category-navigationlink,
 .post-category-navigationview,
-.post-category-html,
 .post-category-obj-c,
+.post-category-optionals,
 .post-category-postman,
 .post-category-protocols,
 .post-category-publish,
-.post-category-structs {
+.post-category-structs,
+.post-category-swiftui {
     background: #1C6E8C;
 }
 
-.post-category-swiftui,
+.post-category-tabbar,
 .post-category-torch,
 .post-category-touchid,
 .post-category-website,
@@ -351,7 +357,9 @@ a {
 .post-category-unittesting,
 .post-category-uiscrollview,
 .post-category-uisearchcontroller,
-.post-category-uistackview {
+.post-category-uistackview,
+.post-category-uitableview,
+.post-category-userdefaults {
     background: #0C6E61;
 }
 
@@ -453,6 +461,33 @@ pre code .preprocessing {
     color: #b68a00;
 }
 
+.optional-container {
+    font-family: monospace;
+    display: inline-block;
+    word-wrap: break-word;
+    padding: 5 5px;
+    color: black;
+    line-height: 1.4em;
+    font-size: 1.2em;
+    background-color: #bfd7ff;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.note-container {
+    font-family: monospace;
+    font-style: italic;
+    display: inline-block;
+    word-wrap: break-word;
+    padding: 5 5px;
+    color: black;
+    line-height: 1.4em;
+    font-size: 1.2em;
+    background-color: #bfd7ff;
+    border-radius: 10px;
+    padding: 20px;
+}
+
 @media (prefers-color-scheme: dark) {
     body {
         background-color: #222;
@@ -482,6 +517,33 @@ pre code .preprocessing {
     
     .title-featured img {
         content: url("/Images/Icons/star-white.png");
+    }
+    
+    .optional-container {
+        font-family: monospace;
+        display: inline-block;
+        word-wrap: break-word;
+        padding: 5 5px;
+        color: black;
+        line-height: 1.4em;
+        font-size: 1.2em;
+        background-color: #bfd7ff;
+        border-radius: 10px;
+        padding: 20px;
+    }
+    
+    .note-container {
+        font-family: monospace;
+        font-style: italic;
+        display: inline-block;
+        word-wrap: break-word;
+        padding: 5 5px;
+        color: black;
+        line-height: 1.4em;
+        font-size: 1.2em;
+        background-color: #94ffb2;
+        border-radius: 10px;
+        padding: 20px;
     }
 }
 

@@ -1,0 +1,229 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"/><script async src="https://www.googletagmanager.com/gtag/js?id=UA-175451977-1"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-175451977-1');</script><meta name="og:site_name" content="The Swift Protocol"/><link rel="canonical" href="www.thomaskellough/thomaskellough.github.io"/><meta name="twitter:url" content="www.thomaskellough/thomaskellough.github.io"/><meta name="og:url" content="www.thomaskellough/thomaskellough.github.io"/><title>Swift Skill Building | The Swift Protocol</title><meta name="twitter:title" content="Swift Skill Building | The Swift Protocol"/><meta name="og:title" content="Swift Skill Building | The Swift Protocol"/><meta name="description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:description" content="Swift Skill Building With Thomas Kellough"/><meta name="og:description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="http://www.theswiftprotocol.com/images/social.png"/><meta name="og:image" content="http://www.theswiftprotocol.com/images/social.png"/><link rel="stylesheet" href="/styles.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to The Swift Protocol"/></head><body><header><div class="nav-logo"><a href="/"><img src="/Images/blog-logo.png"/></a><nav class="nav-bar"><p>Swift Skill Building With Thomas Kellough</p><ul><li><h3><a href="/home">Home</a></h3></li><li><h3><a href="/posts">Posts</a></h3></li><li><h3><a href="/tags">Tags</a></h3></li></ul></nav></div></header><div class="wrapper"><article><h1>Create a unique Valentine's Day app for your loved one - Part 3</h1><div class="post-tags" markdown="1">
+  <a class="post-category post-category-animations" href="/tags/animations">Animations</a>
+  <a class="post-category post-category-dates" href="/tags/dates">Dates</a>
+  <a class="post-category post-category-userdefaults" href="/tags/userdefaults">UserDefaults</a>
+</div><table class="posts-table">
+    <tr>
+        <th class="th-left"><a href="/posts/13-x-things-i-love-about-you-part-02" style="text-decoration: none">&larr; Displaying Data and User Interaction</a></th>
+        <th class="th-middle"></th>
+        <th class="th-right"><a href="/posts/13-x-things-i-love-about-you-part-04" style="text-decoration: none">Adding local notifications &rarr;</a></th>
+    </tr>
+</table><h3>Adding animations</h3><p>Many people would agree that animations make apps more appealing. Let's figure out how we can do that here. Let's start by creating a new animation factory class so it's reusable for your other apps. Create a new swift file called <code>AnimationFactory.swift</code>. Let's create a function to animate our alpha component. The function will take three parameters, one for the uiview to animate, the duration of the animation, and the delay. You can hardcode these values if you want, but as I said before, this helps you reuse this class in other projects. Change your <code>AnimationFactory.Swift</code> to this:</p><pre><code><span class="keyword">import</span> UIKit
+
+<span class="keyword">struct</span> AnimationFactory {
+    <span class="keyword">func</span> animateAlphaComponent(<span class="keyword">_</span> label: <span class="type">UIView</span>, duration: <span class="type">Double</span>, delay: <span class="type">Double</span>) {
+        label.<span class="property">alpha</span> = <span class="number">0</span>
+        
+        <span class="type">UIView</span>.<span class="call">animate</span>(
+            withDuration: duration,
+            delay: delay,
+            options: .<span class="dotAccess">curveEaseInOut</span>,
+            animations: {
+                label.<span class="property">alpha</span> = <span class="number">1</span>
+            })
+    }
+}
+</code></pre><p>To test it out add the following variable to your class variables in <code>ComplimentViewController.swift</code>:</p><pre><code><span class="keyword">var</span> animationFactory: <span class="type">AnimationFactory</span>?
+</code></pre><p>Then in <code>viewDidLoad</code> before you call <code>configureView()</code> add:</p><pre><code>animationFactory = <span class="type">AnimationFactory</span>()
+</code></pre><p>Finally, at the end of <code>configureLabel()</code> add the following line:</p><pre><code>animationFactory?.<span class="call">animateAlphaComponent</span>(label, duration: <span class="number">1</span>, delay: <span class="number">0</span>)
+</code></pre><p>Awesome! You have a cool animation! By why stop there....</p><p>Let's add an animation for our image view. Back in animation factory add the folowing code:</p><pre><code><span class="keyword">func</span> animateViewSmallToBig(<span class="keyword">_</span> view: <span class="type">UIView</span>, duration: <span class="type">Double</span>, delay: <span class="type">Double</span>) {
+    view.<span class="property">transform</span> = <span class="type">CGAffineTransform</span>(scaleX: <span class="number">0</span>/<span class="number">01</span>, y: <span class="number">0.01</span>)
+    
+    <span class="type">UIView</span>.<span class="call">animate</span>(
+        withDuration: duration,
+        delay: delay,
+        options: .<span class="dotAccess">curveEaseInOut</span>,
+        animations: {
+            view.<span class="property">transform</span> = .<span class="dotAccess">identity</span>
+        })
+}
+</code></pre><p>Then, at the end of <code>configureImageView</code> add the following line:</p><pre><code>animationFactory?.<span class="call">animateViewSmallToBig</span>(imageView, duration: <span class="number">1</span>, delay: <span class="number">0</span>)
+</code></pre><p>Now, this is cool and all, but it can be difficult to choose which animation you want to use. I have a solution for that. Why don't we create a way to randomize which animation you want to use! Create the following function in <code>AnimationFactory.swift</code>:</p><pre><code><span class="keyword">func</span> randomAnimation(<span class="keyword">_</span> view: <span class="type">UIView</span>, duration: <span class="type">Double</span>, delay: <span class="type">Double</span>) {
+    <span class="keyword">let</span> random = <span class="type">Int</span>.<span class="call">random</span>(in: <span class="number">0</span>...<span class="number">1</span>)
+    
+    <span class="keyword">switch</span> random {
+    <span class="keyword">case</span> <span class="number">0</span>:
+        <span class="call">animateAlphaComponent</span>(view, duration: duration, delay: delay)
+    <span class="keyword">case</span> <span class="number">1</span>:
+        <span class="call">animateViewSmallToBig</span>(view, duration: duration, delay: delay)
+    <span class="keyword">default</span>:
+        <span class="call">animateAlphaComponent</span>(view, duration: duration, delay: delay)
+    }
+}
+</code></pre><p>Then instead of calling each animation specifically, we can use</p><pre><code>animationFactory?.<span class="call">randomAnimation</span>(label, duration: <span class="number">1</span>, delay: <span class="number">0</span>)
+</code></pre><p>Now when we cycle through and the animation is different every time. You can add as many animations as you'd like this way!</p><h3>Only showing a certain number of compliments</h3><p>I admit, when I originally made this app it was for my wife. Every year on her birthday she always tell me "Okay, now tell me X number of things you love about me" with X being her age. Of course, that means it's never more than 25....</p><p>I figured an app would be a great way to tell her, but my first thought was what would happen after she cycled through all the pictures right after she opened it? Most likely she would stop using it right away. Maybe she'd look at it from time to time, but how could I get her to look at it 25 separate days.</p><p>Luckily, Apple has a solution for us. Using local notifications. Now using the notifications isn't enough, because she could easily just swipe up and ignore it since she knows what it is. But what if we limited the number of compliments she could see and only increased them each day? Once again, Apple has a solution for us. Since this is such a small app we can easily get away with using UserDefaults for our persistence. Let's start by configuring our app to only show the first compliment, then the next day show the first two, then the next day the first three, and so on.</p><p>Remember how we named our variable that held the index of which compliment to show in our array of compliments <code>currentDay</code>? This is the reason for that name. That index will be the current day that the user has opened and looked at the app. It will only increment up to the maximum number of days that the app has been opened. Let's start by setting our <code>currentDay</code> variable to a UserDefault value with a specific key.</p><div class="optional-container">
+Tip: when you try to extract an integer from UserDefault and it does not exist, it returns 0. This is important to know because instead of your app crashing you could get unwanted results. However, this is useful for us in this scenario because we want our default value to be 0 then we can increment it every day.
+</div><p>Inside <code>viewDidLoad</code> of <code>ComplimentViewController</code> add the following line prior to <code>configureView()</code>:</p><pre><code>currentDay = <span class="type">UserDefaults</span>.<span class="property">standard</span>.<span class="call">integer</span>(forKey: currentDayKey)
+</code></pre><p>Then as a class constant add:</p><pre><code><span class="keyword">let</span> currentDayKey = <span class="string">"currentDayKey"</span>
+</code></pre><p>However, we will also need to store the date that the app was last opened, then compare it to the date the next time the app is open, determine if there is a difference of at least one day, then if so, increase our <code>currentDay</code> variable by 1. This will be handled in a series of steps.</p><ol><li>Create a function to determine if the last saved date is the same as today. I'll write that below with a description of each step. We will also add a dateFormatter variable in the class variables section and a new last saved date key for UserDefaults:</li></ol><pre><code><span class="comment">// Add this right under var currentDayKey = "currentDay"</span>
+<span class="keyword">var</span> lastSavedDateKey = <span class="string">"lastSavedDate"</span>
+<span class="keyword">let</span> dateFormatter: <span class="type">DateFormatter</span> = {
+    <span class="keyword">let</span> formatter = <span class="type">DateFormatter</span>()
+    formatter.<span class="property">dateFormat</span> = <span class="string">"yyyy/MM/dd H:m:ss"</span>
+    formatter.<span class="property">timeZone</span> = .<span class="dotAccess">current</span>
+    <span class="keyword">return</span> formatter
+}()
+
+<span class="comment">// Add this with all your other functions</span>
+<span class="keyword">func</span> isSameDay() -&gt; <span class="type">Bool</span> {
+    <span class="comment">// Get today's date using the formatter so we are in the same timezone</span>
+    <span class="keyword">let</span> todayPreFormat = <span class="type">Date</span>()
+    <span class="keyword">let</span> todayString = dateFormatter.<span class="call">string</span>(from: todayPreFormat)
+    <span class="keyword">let</span> today = dateFormatter.<span class="call">date</span>(from: todayString) ?? <span class="type">Date</span>()
+    <span class="comment">// Get the last saved date from user defaults, if it does not exist, get today's date</span>
+    <span class="keyword">let</span> lastSavedDateString = <span class="type">UserDefaults</span>.<span class="property">standard</span>.<span class="call">string</span>(forKey: lastSavedDateKey) ?? todayString
+    <span class="comment">// Using your date formatter from above, create a date from the last saved date string in user defaults</span>
+    <span class="keyword">let</span> lastSavedDate = dateFormatter.<span class="call">date</span>(from: lastSavedDateString) ?? today
+    
+    <span class="comment">// Use the calendar function to determine if the dates are in the same day or not - then return the value</span>
+    <span class="keyword">return</span> <span class="type">Calendar</span>.<span class="property">current</span>.<span class="call">isDate</span>(today, inSameDayAs: lastSavedDate)
+}
+</code></pre><ol start="2"><li>In <code>viewDidLoad</code> compare the date our app is launched to the last saved date. If we are in the same day, continue like normal. However, if not we need to increment our current day only if it won't extend past the total number of compliments we have:</li></ol><pre><code><span class="comment">// Check if we are in the same day</span>
+<span class="keyword">if</span> !<span class="call">isSameDay</span>() {
+    <span class="comment">// We are not in the same day, so increment current day IF it will be less than the total number of compliments - 1. If we don't do this check, our app will continue to increment and eventually crash</span>
+    <span class="keyword">if</span> currentDay &lt; compliments.<span class="property">count</span> - <span class="number">1</span> {
+        currentDay += <span class="number">1</span>
+        <span class="comment">// Set our new user default last saved date to today</span>
+        <span class="type">UserDefaults</span>.<span class="property">standard</span>.<span class="call">setValue</span>(dateFormatter.<span class="call">string</span>(from: <span class="type">Date</span>()), forKey: lastSavedDateKey)
+    }
+}
+</code></pre><ol start="3"><li>We need to create two more UserDefault keys and set them. One for the current date in which we will set our <code>currentDay</code> variable based on that, as well as a max date key and value. Every time we load this app, currentDate and maxDay will be equal. However, <code>currentDay</code> will be able to change so the user can navigate back and forth, but <code>maxDate</code> will stay the same so they can't cycle through all compliments on the first day of opening the app. Create your key and set both values right under where we set <code>lastSavedDateKey</code> just above:</li></ol><pre><code><span class="type">UserDefaults</span>.<span class="property">standard</span>.<span class="call">setValue</span>(currentDay, forKey: currentDayKey)
+<span class="type">UserDefaults</span>.<span class="property">standard</span>.<span class="call">setValue</span>(currentDay, forKey: maxDaymaxDayKey)
+</code></pre><ol start="4"><li>Then, in the same place we hide our "next button", we need to also hide it if current day equals max day. This way each day we can see the next compliment and everything before it. Change <code>configureButtons()</code> to this:</li></ol><pre><code><span class="keyword">func</span> configureButtons() {
+    <span class="keyword">let</span> numberOfCompliments = compliments.<span class="property">count</span> - <span class="number">1</span>
+    <span class="keyword">let</span> maxDay = <span class="type">UserDefaults</span>.<span class="property">standard</span>.<span class="call">integer</span>(forKey: maxDayKey)
+    nextButton.<span class="property">isHidden</span> = currentDay == numberOfCompliments || currentDay ==  maxDay ? true : <span class="keyword">false</span>
+    previousButton.<span class="property">isHidden</span> = currentDay == <span class="number">0</span> ? true : <span class="keyword">false</span>
+}
+</code></pre><ol start="5"><li>We are almost done with this section. There is a problem here. If you run your app and change the date manually to the next day you'll see that we still can't move past that first screen. This is because of UserDefaults. Remember how when we don't have a value for integer we get back 0 which is a value? That's not the case with our <code>lastSavedDate</code> user default value. Since we don't have a good value to save, our nil coalescing in step 1 returns the string date of today. This means it <code>isSameDay</code> will always return true. This is an easy fix, however. We just need to check for a value when our app first launches, if it doesn't exist, set the value. Add this at the top of <code>viewDidLoad</code>:</li></ol><pre><code><span class="comment">// When app opens, set the last saved date to current date and time if needed - first run only</span>
+<span class="keyword">if</span> <span class="type">UserDefaults</span>.<span class="property">standard</span>.<span class="call">value</span>(forKey: lastSavedDateKey) == <span class="keyword">nil</span> {
+    <span class="type">UserDefaults</span>.<span class="property">standard</span>.<span class="call">setValue</span>(dateFormatter.<span class="call">string</span>(from: <span class="type">Date</span>()), forKey: lastSavedDateKey)
+}
+</code></pre><p>You should now be able to launch the app the first time, only be able to view the first compliment, manually change the date on your phone, then you can view the next compliment, so on. So if you have 25 compliments, it will take 25 days before the user can see everything, unless of course they manually change the date.</p><p>That was a lot of code. Hopefully your app is working like it should. If not, please check your code with the following:</p><pre><code><span class="keyword">class</span> ComplimentViewController: <span class="type">UIViewController</span> {
+
+    <span class="keyword">@IBOutlet weak var</span> imageView: <span class="type">UIImageView</span>!
+    <span class="keyword">@IBOutlet weak var</span> label: <span class="type">UILabel</span>!
+    <span class="keyword">@IBOutlet weak var</span> previousButton: <span class="type">UIButton</span>!
+    <span class="keyword">@IBOutlet weak var</span> nextButton: <span class="type">UIButton</span>!
+    
+    <span class="keyword">let</span> compliments = <span class="type">AllCompliments</span>().<span class="property">compliments</span>
+    <span class="keyword">var</span> currentDay = <span class="number">0</span>
+    <span class="keyword">var</span> selectedDay: <span class="type">Int</span>?
+    
+    <span class="keyword">var</span> animationFactory: <span class="type">AnimationFactory</span>?
+    
+    <span class="keyword">var</span> currentDayKey = <span class="string">"currentDay"</span>
+    <span class="keyword">var</span> lastSavedDateKey = <span class="string">"lastSavedDate"</span>
+    <span class="keyword">var</span> maxDayKey = <span class="string">"maxDay"</span>
+    
+    <span class="keyword">let</span> dateFormatter: <span class="type">DateFormatter</span> = {
+        <span class="keyword">let</span> formatter = <span class="type">DateFormatter</span>()
+        formatter.<span class="property">dateFormat</span> = <span class="string">"yyyy/MM/dd H:m:ss"</span>
+        formatter.<span class="property">timeZone</span> = .<span class="dotAccess">current</span>
+        <span class="keyword">return</span> formatter
+    }()
+    
+    <span class="keyword">override func</span> viewDidLoad() {
+        <span class="keyword">super</span>.<span class="call">viewDidLoad</span>()
+        
+        animationFactory = <span class="type">AnimationFactory</span>()
+        
+        <span class="comment">// When app opens, set the last saved date to current date and time if needed - first run only</span>
+        <span class="keyword">if</span> <span class="type">UserDefaults</span>.<span class="property">standard</span>.<span class="call">value</span>(forKey: lastSavedDateKey) == <span class="keyword">nil</span> {
+            <span class="type">UserDefaults</span>.<span class="property">standard</span>.<span class="call">setValue</span>(dateFormatter.<span class="call">string</span>(from: <span class="type">Date</span>()), forKey: lastSavedDateKey)
+        }
+        
+        currentDay = <span class="type">UserDefaults</span>.<span class="property">standard</span>.<span class="call">integer</span>(forKey: currentDayKey)
+        <span class="comment">// Check if we are in the same day</span>
+        <span class="keyword">if</span> !<span class="call">isSameDay</span>() {
+            <span class="comment">// We are not in the same day, so increment current day IF it will be less than the total number of compliments - 1. If we don't do this check, our app will continue to increment and eventually crash</span>
+            <span class="keyword">if</span> currentDay &lt; compliments.<span class="property">count</span> - <span class="number">1</span> {
+                currentDay += <span class="number">1</span>
+                <span class="comment">// Set our new user default last saved date to today</span>
+                <span class="type">UserDefaults</span>.<span class="property">standard</span>.<span class="call">setValue</span>(dateFormatter.<span class="call">string</span>(from: <span class="type">Date</span>()), forKey: lastSavedDateKey)
+                <span class="type">UserDefaults</span>.<span class="property">standard</span>.<span class="call">setValue</span>(currentDay, forKey: currentDayKey)
+                <span class="type">UserDefaults</span>.<span class="property">standard</span>.<span class="call">setValue</span>(currentDay, forKey: maxDayKey)
+            }
+        }
+        
+        <span class="call">configureView</span>()
+    }
+    
+    <span class="keyword">func</span> configureView() {
+        <span class="call">configureLabel</span>()
+        <span class="call">configureImageView</span>()
+        <span class="call">configureButtons</span>()
+    }
+    
+    <span class="keyword">func</span> configureLabel() {
+        currentDay = selectedDay != <span class="keyword">nil</span> ? selectedDay! : currentDay
+        selectedDay = <span class="keyword">nil</span>
+        
+        label.<span class="property">font</span> = <span class="type">UIFont</span>.<span class="call">preferredFont</span>(forTextStyle: .<span class="dotAccess">largeTitle</span>)
+        label.<span class="property">numberOfLines</span> = <span class="number">0</span>
+        label.<span class="property">textColor</span> = <span class="type">UIColor</span>.<span class="type">App</span>.<span class="type">Primary</span>
+        label.<span class="property">textAlignment</span> = .<span class="dotAccess">center</span>
+        label.<span class="property">text</span> = compliments[currentDay].dialogue
+        
+        animationFactory?.<span class="call">randomAnimation</span>(label, duration: <span class="number">1</span>, delay: <span class="number">0</span>)
+    }
+
+    <span class="keyword">func</span> configureImageView() {
+        currentDay = selectedDay != <span class="keyword">nil</span> ? selectedDay! : currentDay
+        
+        imageView.<span class="property">layer</span>.<span class="property">borderWidth</span> = <span class="number">8</span>
+        imageView.<span class="property">layer</span>.<span class="property">borderColor</span> = <span class="type">UIColor</span>.<span class="type">App</span>.<span class="type">Secondary</span>.<span class="property">cgColor</span>
+        imageView.<span class="property">contentMode</span> = .<span class="dotAccess">scaleAspectFill</span>
+        imageView.<span class="property">layer</span>.<span class="property">cornerRadius</span> = <span class="number">5</span>
+
+        <span class="keyword">let</span> image = <span class="type">UIImage</span>(named: compliments[currentDay].image)
+        imageView.<span class="property">image</span> = image
+        
+        animationFactory?.<span class="call">randomAnimation</span>(imageView, duration: <span class="number">1</span>, delay: <span class="number">0</span>)
+    }
+    
+    <span class="keyword">func</span> configureButtons() {
+        <span class="keyword">let</span> numberOfCompliments = compliments.<span class="property">count</span> - <span class="number">1</span>
+        <span class="keyword">let</span> maxDay = <span class="type">UserDefaults</span>.<span class="property">standard</span>.<span class="call">integer</span>(forKey: maxDayKey)
+        nextButton.<span class="property">isHidden</span> = currentDay == numberOfCompliments || currentDay ==  maxDay ? true : <span class="keyword">false</span>
+        previousButton.<span class="property">isHidden</span> = currentDay == <span class="number">0</span> ? true : <span class="keyword">false</span>
+    }
+    <span class="keyword">func</span> isSameDay() -&gt; <span class="type">Bool</span> {
+        <span class="comment">// Get today's date using the formatter so we are in the same timezone</span>
+        <span class="keyword">let</span> todayPreFormat = <span class="type">Date</span>()
+        <span class="keyword">let</span> todayString = dateFormatter.<span class="call">string</span>(from: todayPreFormat)
+        <span class="keyword">let</span> today = dateFormatter.<span class="call">date</span>(from: todayString) ?? <span class="type">Date</span>()
+        <span class="comment">// Get the last saved date from user defaults, if it does not exist, get today's date</span>
+        <span class="keyword">let</span> lastSavedDateString = <span class="type">UserDefaults</span>.<span class="property">standard</span>.<span class="call">string</span>(forKey: lastSavedDateKey) ?? todayString
+        <span class="comment">// Using your date formatter from above, create a date from the last saved date string in user defaults</span>
+        <span class="keyword">let</span> lastSavedDate = dateFormatter.<span class="call">date</span>(from: lastSavedDateString) ?? today
+        
+        <span class="comment">// Use the calendar function to determine if the dates are in the same day or not - then return the value</span>
+        <span class="keyword">return</span> <span class="type">Calendar</span>.<span class="property">current</span>.<span class="call">isDate</span>(today, inSameDayAs: lastSavedDate)
+    }
+    
+    <span class="keyword">@IBAction func</span> previousButtonTapped(<span class="keyword">_</span> sender: <span class="type">UIButton</span>) {
+        currentDay -= <span class="number">1</span>
+        <span class="call">configureView</span>()
+    }
+    
+    <span class="keyword">@IBAction func</span> nextButtonTapped(<span class="keyword">_</span> sender: <span class="type">UIButton</span>) {
+        currentDay += <span class="number">1</span>
+        <span class="call">configureView</span>()
+    }
+    
+}
+</code></pre><h3>Fixing our tableview</h3><p>Now that our main view shows only how many compliments we want, we need to make it so our tableview limits the number of compliments it shows. This isn't nearly as difficult as what we just did. We just need to edit our compliments array to return from index 0 to the max number of days. Find this line in <code>ComplimentsTableViewController.swift</code>:</p><pre><code><span class="keyword">let</span> compliments = <span class="type">AllCompliments</span>().<span class="property">compliments</span>
+</code></pre><p>And change it to this:</p><pre><code><span class="keyword">var</span> compliments: [<span class="type">Compliment</span>] {
+    <span class="keyword">let</span> days = <span class="type">UserDefaults</span>.<span class="property">standard</span>.<span class="call">integer</span>(forKey: <span class="string">"maxDay"</span>)
+    <span class="keyword">let</span> compliments = <span class="type">AllCompliments</span>().<span class="property">compliments</span>
+    
+    <span class="keyword">return</span> <span class="type">Array</span>(compliments[<span class="number">0</span>...days])
+}
+</code></pre><p>You'll note that we hardcoded the "maxDay" key here. This isn't best practice, but this is a small app that's not in production for thousands of users so I'm not too worried about it. Ideally, you could use a static variable for this key or even create a struct that contains all your user default keys (my preferred method). However, you can launch your app now and see that your tableview limits the number of compliments the user can navigate to.</p><table class="posts-table">
+    <tr>
+        <th class="th-left"><a href="/posts/13-x-things-i-love-about-you-part-02" style="text-decoration: none">&larr; Displaying Data and User Interaction</a></th>
+        <th class="th-middle"></th>
+        <th class="th-right"><a href="/posts/13-x-things-i-love-about-you-part-04" style="text-decoration: none">Adding local notifications &rarr;</a></th>
+    </tr>
+</table></article></div><div class="footer-social"><div>© 2021 The Swift Protocol</div><div>Generated using <a href="https://github.com/johnsundell/publish">Publish</a>. Written in Swift</div><div><a href="https://www.linkedin.com/in/thomas-kellough/">LinkedIn</a> | <a href="https://github.com/thomaskellough">Github</a> | <a href="mailto:theswiftprotocol@gmail.com">Email</a></div></div></body></html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"/><script async src="https://www.googletagmanager.com/gtag/js?id=UA-175451977-1"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-175451977-1');</script><meta name="og:site_name" content="The Swift Protocol"/><link rel="canonical" href="www.thomaskellough/thomaskellough.github.io"/><meta name="twitter:url" content="www.thomaskellough/thomaskellough.github.io"/><meta name="og:url" content="www.thomaskellough/thomaskellough.github.io"/><title>Swift Skill Building | The Swift Protocol</title><meta name="twitter:title" content="Swift Skill Building | The Swift Protocol"/><meta name="og:title" content="Swift Skill Building | The Swift Protocol"/><meta name="description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:description" content="Swift Skill Building With Thomas Kellough"/><meta name="og:description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="http://www.theswiftprotocol.com/images/social.png"/><meta name="og:image" content="http://www.theswiftprotocol.com/images/social.png"/><link rel="stylesheet" href="/styles.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to The Swift Protocol"/></head><body><header><div class="nav-logo"><a href="/"><img src="/Images/blog-logo.png"/></a><nav class="nav-bar"><p>Swift Skill Building With Thomas Kellough</p><ul><li><h3><a href="/home">Home</a></h3></li><li><h3><a href="/posts">Posts</a></h3></li><li><h3><a href="/tags">Tags</a></h3></li></ul></nav></div></header><div class="wrapper"><article><h1>Create a unique Valentine's Day app for your loved one - Part 1</h1><div class="post-tags" markdown="1">
+    <a class="post-category post-category-cocoapods" href="/tags/cocoapods">Cocoapods</a>
+    <a class="post-category post-category-tabbar" href="/tags/tabbar">Tabbar</a>
+    <a class="post-category post-category-structs" href="/tags/structs">Structs</a>
+</div><table class="posts-table">
+    <tr>
+        <th class="th-single-right"><a href="/posts/13-x-things-i-love-about-you-part-02" style="text-decoration: none">Displaying Data and User Interaction &rarr;</a></th>
+    </tr>
+</table><h3>Prerequisites</h3><p>Requirements:</p><ul><li>Swift 5.2 (or later)</li></ul><ul><li>macOS Catalina 10.15 (or later)</li></ul><ul><li>Some experience in Swift</li></ul><ul><li>Experience with UIKIt. There are some sections that are glossed over rather quickly. You can download the example app <a href="https://github.com/thomaskellough/X-Things-I-Love-About-You">here</a> if you need to see how I did something.</li></ul><h3>Introduction</h3><p>Valentine's Day is a very popular holiday where you can express your love for someone else. Although you should be doing this 365 days out of the year, the day is extra special to some people. If you want to give your loved one a unique gift this year why not make them an app? This guide will show you how to do just that and you'll learn a lot of great code and techniques along the way.</p><p>If you're in a rush and don't want to follow the entire tutorial, you can download the app directly from github <a href="https://github.com/thomaskellough/X-Things-I-Love-About-You">here</a>.</p><div class="column">
+        <img class="post-image img-sm" src="/Images/Posts/13/13-05.gif" width="800"/>
+        <img class="post-image img-sm" src="/Images/Posts/13/13-06.gif" width="800"/>
+</div><h3>Getting Started</h3><p>This app will focus on using Swift and UIKit. Go ahead and create a new iOS App project called X-Things-I-Love-About-You with Swift as the language and Storyboard as the interface.</p><div class="optional-container">
+Optional: If you want to use cocoapods to make the app look a bit nicer there are some good Tabbar examples that you can use. Feel free to skip this section if you do not like using dependencies and want to create your own tabbar.
+</div><h3>Adding a Custom Tabbar using Cocoapods</h3><p><a href="https://iosexample.com/">iOS Eample</a> gives us a lot of great examples we can use in our project. It lists different packages to enhance our apps without doing too much work on our end. I'll be using <a href="https://iosexample.com/light-way-to-add-fancy-bottom-bar/">SO Tabbar</a>, but feel free to pick a different one or use the default tab bar in UIKit.</p><p>To install using Cocoapods close your app and open terminal. Navigate to your project directory and type in:</p><pre><code>pod <span class="keyword">init
+open</span> podfile
+</code></pre><p>Edit your podfile to:</p><pre><code># <span class="type">Uncomment</span> the next line to define a global platform <span class="keyword">for</span> your project
+platform :ios, '<span class="number">11.0</span>'
+
+target '<span class="type">X</span>-<span class="type">Things</span>-<span class="type">I</span>-<span class="type">Love</span>-<span class="type">About</span>-<span class="type">You</span>' <span class="keyword">do</span>
+  # <span class="type">Comment</span> the next line <span class="keyword">if</span> you don't want to use <span class="keyword">dynamic</span> frameworks
+  use_frameworks!
+
+  # <span class="type">Pods</span> <span class="keyword">for</span> <span class="type">X</span>-<span class="type">Things</span>-<span class="type">I</span>-<span class="type">Love</span>-<span class="type">About</span>-<span class="type">You</span>
+  pod '<span class="type">SOTabBar</span>'
+end
+</code></pre><p>Close our your podfile. Then inside terminal type in:</p><pre><code>pod install
+</code></pre><p>Now that you have a pod installed you must use the xcworkspace as opposed to the xcodeproj. You can open your app directly from terminal with:</p><pre><code><span class="keyword">open</span> <span class="type">X</span>-<span class="type">Things</span>-<span class="type">I</span>-<span class="type">Love</span>-<span class="type">About</span>-<span class="type">You</span>.<span class="property">xcworkspace</span>
+</code></pre><h4>Creating your SO Tabs</h4><p>We are going to have two tabs for this app so we will need to go into storyboard and add the respective views. The first view controller you will add will be the "Compliment View Controller". Drag a regular view controller out into storyboard and give it the Storyboard ID of <code>ComplimentViewController</code>. Right after that, drag a table view controller out and provide it with a Storyboard ID of <code>ComplimentTableViewController</code>.</p><p>Now we need to create some classes to attach these view controllers to. Inside your project navigator create two new swift files.</p><ol><li>ComplimentViewController.swift as a CocoaTouch Class inherited from UIViewController</li></ol><ol start="2"><li>ComplimentTableViewController.swift as a CocoaTouch Class inherited from UITableViewController</li></ol><p>Then back inside your storyboard, make each view controller a custom class of the view controllers you created above.</p><p>Now we can set up our tabs. You can read the settings for SO TabController if you want, or copy what I have here. Navigate to ViewController.swift. and edit your file to look like this:</p><pre><code><span class="keyword">import</span> UIKit
+<span class="keyword">import</span> SOTabBar
+
+<span class="keyword">class</span> ViewController: <span class="type">SOTabBarController</span> {
+    
+    <span class="keyword">override func</span> viewDidLoad() {
+        <span class="keyword">super</span>.<span class="call">viewDidLoad</span>()
+        
+        <span class="keyword">let</span> firstVC = <span class="type">UIStoryboard</span>(name: <span class="string">"Main"</span>, bundle: <span class="keyword">nil</span>).<span class="call">instantiateViewController</span>(withIdentifier: <span class="string">"ComplimentViewController"</span>)
+        <span class="keyword">let</span> secondVC = <span class="type">UIStoryboard</span>(name: <span class="string">"Main"</span>, bundle: <span class="keyword">nil</span>).<span class="call">instantiateViewController</span>(withIdentifier: <span class="string">"ComplimentTableViewController"</span>)
+        
+        <span class="keyword">let</span> firstTabImage = <span class="type">UIImage</span>(systemName: <span class="string">"bolt.heart.fill"</span>)?.<span class="call">withTintColor</span>(<span class="type">UIColor</span>.<span class="type">App</span>.<span class="type">Secondary</span>, renderingMode: .<span class="dotAccess">alwaysOriginal</span>)
+        <span class="keyword">let</span> firstTabImageSelected = <span class="type">UIImage</span>(systemName: <span class="string">"bolt.heart.fill"</span>)?.<span class="call">withTintColor</span>(.<span class="dotAccess">white</span>, renderingMode: .<span class="dotAccess">alwaysOriginal</span>)
+        firstVC.<span class="property">tabBarItem</span> = <span class="type">UITabBarItem</span>(
+            title: <span class="string">"&lt;3"</span>,
+            image: firstTabImage,
+            selectedImage: firstTabImageSelected
+        )
+        
+        <span class="keyword">let</span> secondTabImage = <span class="type">UIImage</span>(systemName: <span class="string">"heart.text.square.fill"</span>)?.<span class="call">withTintColor</span>(<span class="type">UIColor</span>.<span class="type">App</span>.<span class="type">Secondary</span>, renderingMode: .<span class="dotAccess">alwaysOriginal</span>)
+        <span class="keyword">let</span> secondTabImageSelected = <span class="type">UIImage</span>(systemName: <span class="string">"heart.text.square.fill"</span>)?.<span class="call">withTintColor</span>(.<span class="dotAccess">white</span>, renderingMode: .<span class="dotAccess">alwaysOriginal</span>)
+        secondVC.<span class="property">tabBarItem</span> = <span class="type">UITabBarItem</span>(
+            title: <span class="string">"&lt;3&lt;3&lt;3"</span>,
+            image: secondTabImage,
+            selectedImage: secondTabImageSelected
+        )
+        
+        viewControllers = [firstVC, secondVC]
+    }
+    
+    
+    <span class="keyword">override func</span> loadView() {
+        <span class="keyword">super</span>.<span class="call">loadView</span>()
+        
+        <span class="type">SOTabBarSetting</span>.<span class="property">tabBarTintColor</span> = <span class="type">UIColor</span>.<span class="type">App</span>.<span class="type">Secondary
+        SOTabBarSetting</span>.<span class="property">tabBarBackground</span> = <span class="type">UIColor</span>.<span class="type">App</span>.<span class="type">Primary
+        SOTabBarSetting</span>.<span class="property">tabBarSizeImage</span> = <span class="number">40.0</span>
+        <span class="type">SOTabBarSetting</span>.<span class="property">tabBarCircleSize</span> = <span class="type">CGSize</span>(width: <span class="number">65</span>, height: <span class="number">65</span>)
+        <span class="type">SOTabBarSetting</span>.<span class="property">tabBarHeight</span> = <span class="number">60</span>
+    }
+}
+</code></pre><p>Take a look through this code and edit it with what you see fit. You must be using iOS 13 or higher to take advantage of the system images so if you want to support older versions you'll need to find your own images. I used the heart with a lightning bolt because my wife is a nurse and I thought it was fitting when I made this app for her, but this is your app to do with as you please so play around with it! You'll probably also want to edit the titles since I just used some placeholder hearts for mine.</p><p>If you try to run your code right now it won't work. That's because of the handful of <code>UIColor.App.Primary</code> and <code>UIColor.App.Secondary</code> pieces of code we have layered in. This is something I like to do with all my apps and I think it's a great way to organize app-specific attributes. Let's make this code compile and explain what's going on.</p><p>Create a new swift file called <code>UIColor+Extension.swift</code>. Then edit the file to look like this:</p><pre><code><span class="keyword">import</span> UIKit
+
+<span class="keyword">extension</span> <span class="type">UIColor</span> {
+    <span class="keyword">enum</span> App {
+        <span class="keyword">static var</span> <span class="type">Primary</span>: <span class="type">UIColor</span>  {
+            <span class="keyword">let</span> color = <span class="type">UIColor</span>(named: <span class="string">"Primary"</span>)
+            <span class="keyword">if</span> color != <span class="keyword">nil</span> {
+                <span class="keyword">return</span> color!
+            } <span class="keyword">else</span> {
+                <span class="keyword">return</span> <span class="type">UIColor</span>.<span class="property">black</span>
+            }
+        }
+        <span class="keyword">static var</span> <span class="type">Secondary</span>: <span class="type">UIColor</span> {
+            <span class="keyword">let</span> color = <span class="type">UIColor</span>(named: <span class="string">"Secondary"</span>)
+            <span class="keyword">if</span> color != <span class="keyword">nil</span> {
+                <span class="keyword">return</span> color!
+            } <span class="keyword">else</span> {
+                <span class="keyword">return</span> <span class="type">UIColor</span>.<span class="property">white</span>
+            }
+        }
+    }
+}
+</code></pre><div class="optional-container">
+Note: I'm not going to go into details of Unit Testing here since I cover that at https://theswiftprotocol.com/posts/10-how-to-set-up-unit-testing/, but this is a great opportunity to add test cases for these UIColor extensions you just created.
+</div><p>Regardless of if you added testing or not, you'll need to create some app colors unless you want a white and black app. Navigate to <code>Assets.xcassets</code> and add in two new Color sets. Feel free to pick your own color scheme, but for our example, I'll be using:</p><ol><li>Primary - hex #5DD29E</li></ol><ol start="2"><li>Secondary - hex #513A55</li></ol><p>It feels like we've done a lot already and we haven't even launched our app yet. The good news is, it's now ready for its first viewing. Go ahead and run your app now and you should see something like this:</p><img class="post-image img-sm" src="/Images/Posts/13/13-01.png" width="800"/><h3>Adding a model class</h3><p>Now that you have an app up and running we need to add a model for our data. Our model consists of the following:</p><ol><li>A title</li></ol><ol start="2"><li>A compliment</li></ol><ol start="3"><li>An image</li></ol><p>So, create a new file called <code>Compliments.swift</code> and edit it to look like this:</p><pre><code><span class="keyword">import</span> Foundation
+
+<span class="keyword">struct</span> Compliment {
+    <span class="keyword">let</span> title: <span class="type">String</span>
+    <span class="keyword">let</span> dialogue: <span class="type">String</span>
+    <span class="keyword">let</span> image: <span class="type">String</span>
+}
+</code></pre><p>This is just the struct that will contain our information. Our app is going to consist of many compliments so we can cycle through them every day. Let's create a way to return a list of compliments so we can use them in our app. In the same file, create a new struct with the following code.</p><pre><code><span class="keyword">struct</span> AllCompliments {
+    <span class="keyword">var</span> compliments: [<span class="type">Compliment</span>] {
+        <span class="call">getCompliments</span>()
+    }
+    
+    <span class="keyword">func</span> getCompliments() -&gt; [<span class="type">Compliment</span>] {
+        <span class="keyword">var</span> compliments: [<span class="type">Compliment</span>] = []
+        
+        <span class="keyword">let</span> complimentOne = <span class="type">Compliment</span>(title: <span class="string">"Smile"</span>, dialogue: <span class="string">"I love the way you smile"</span>, image: <span class="string">"smile"</span>)
+        <span class="keyword">let</span> complimentTwo = <span class="type">Compliment</span>(title: <span class="string">"Funny"</span>, dialogue: <span class="string">"You're the funniest person I know"</span>, image: <span class="string">"funny"</span>)
+        <span class="keyword">let</span> complimentThree = <span class="type">Compliment</span>(title: <span class="string">"Confidence"</span>, dialogue: <span class="string">"Your confidence is alluring"</span>, image: <span class="string">"confidence"</span>)
+        
+        compliments += [complimentOne, complimentTwo, complimentThree]
+        
+        <span class="keyword">return</span> compliments
+    }
+}
+</code></pre><p>I feel like I don't need to tell you this, but you probably want to create your own title, dialogue, and add your own images. I used images from <a href="https://www.freeimages.com">https://www.freeimages.com</a>. However, when I made my wife the app I focused on images of us and our pets. For the number of compliments, that's up to you. That's what the "X" is for in X-Things-I-Love-About-You. If you're doing this for a birthday maybe you could make the X their age!</p><table class="posts-table">
+    <tr>
+        <th class="th-single-right"><a href="/posts/13-x-things-i-love-about-you-part-02" style="text-decoration: none">Displaying Data and User Interaction &rarr;</a></th>
+    </tr>
+</table></article></div><div class="footer-social"><div>© 2021 The Swift Protocol</div><div>Generated using <a href="https://github.com/johnsundell/publish">Publish</a>. Written in Swift</div><div><a href="https://www.linkedin.com/in/thomas-kellough/">LinkedIn</a> | <a href="https://github.com/thomaskellough">Github</a> | <a href="mailto:theswiftprotocol@gmail.com">Email</a></div></div></body></html>
