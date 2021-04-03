@@ -1,8 +1,7 @@
 ---
 date: 2021-01-24 12:05
 description: This section focuses on getting your app set up.
-tags: Feature, Cocoapods, Tabbar, Structs
-featuredDescription: Create a unique Valentine's Day app!
+tags: Cocoapods, Tabbar, Structs
 ---
 # Create a unique Valentine's Day app for your loved one - Part 1
 
