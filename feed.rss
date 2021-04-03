@@ -1,4 +1,163 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content"><channel><title>The Swift Protocol</title><description>Swift Skill Building With Thomas Kellough</description><link>www.thomaskellough/thomaskellough.github.io</link><language>en</language><lastBuildDate>Sun, 24 Jan 2021 18:47:31 -0700</lastBuildDate><pubDate>Sun, 24 Jan 2021 18:47:31 -0700</pubDate><ttl>250</ttl><atom:link href="www.thomaskellough/thomaskellough.github.io/feed.rss" rel="self" type="application/rss+xml"/><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/13-x-things-i-love-about-you-part-05</guid><title>Create a unique Valentine's Day app for your loved one - Part 5</title><description>This section wraps everything up as well as gives you some ideas on how you can improve your app.</description><link>www.thomaskellough/thomaskellough.github.io/posts/13-x-things-i-love-about-you-part-05</link><pubDate>Sun, 24 Jan 2021 12:09:00 -0700</pubDate><content:encoded><![CDATA[<h1>Create a unique Valentine's Day app for your loved one - Part 5</h1><div class="post-tags" markdown="1">
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content"><channel><title>The Swift Protocol</title><description>Swift Skill Building With Thomas Kellough</description><link>www.thomaskellough/thomaskellough.github.io</link><language>en</language><lastBuildDate>Fri, 2 Apr 2021 19:30:03 -0600</lastBuildDate><pubDate>Fri, 2 Apr 2021 19:30:03 -0600</pubDate><ttl>250</ttl><atom:link href="www.thomaskellough/thomaskellough.github.io/feed.rss" rel="self" type="application/rss+xml"/><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/14-how-to-use-core-location</guid><title>Getting started with Core Location</title><description>Learn how to implement Core Location in your app</description><link>www.thomaskellough/thomaskellough.github.io/posts/14-how-to-use-core-location</link><pubDate>Fri, 2 Apr 2021 12:05:00 -0600</pubDate><content:encoded><![CDATA[<h1>Getting started with Core Location</h1><div class="post-tags" markdown="1">
+    <a class="post-category post-category-swiftui" href="www.thomaskellough/thomaskellough.github.io/tags/swiftui">swiftui</a>
+    <a class="post-category post-category-corelocation" href="www.thomaskellough/thomaskellough.github.io/tags/corelocation">Core Location</a>
+    <a class="post-category post-category-closures" href="www.thomaskellough/thomaskellough.github.io/tags/closures">Closures</a>
+</div><h3>Introduction</h3><p><a href="https://developer.apple.com/documentation/corelocation/">Core Location</a> is a very useful framework that Apple provides for us that is fairly easy to use in your own apps. Core Location allows you to program the device to determine the user's location. As you can imagine, this can be a privacy issue and Apple takes privacy very seriously so you will need to let the user know why you are tracking their location and they must accept it. You need to be thinking about this when you write your code because you can't expect every single one of your users to allow themselves to be tracked. This means you need to write your code to handle what happens when a user declines.</p><h3>Getting Started</h3><p>We are going to write a very simple app using SwiftUI that tells us our location with a button tap. Start a new SwiftUI project now. We will create a few properties to get us started. One property will be a bool to determine if our location is successfully retrieved or not. The second property will be an empty string that will hold our coordinates.</p><pre><code><span class="keyword">@State private var</span> locationRetrieved = <span class="keyword">false
+@State private var</span> coordinates: <span class="type">String</span> = <span class="string">""</span>
+</code></pre><p>Then we can create a button that allows the user to tap to determine their location as well as a Text() that will display location if it's been retrieved. Go ahead and wrap this in a VStack.</p><pre><code><span class="type">VStack</span>(spacing: <span class="number">10</span>) {
+    <span class="type">Button</span>(<span class="string">"Show location"</span>) {
+        <span class="comment">// get location</span>
+    }
+    
+    <span class="keyword">if</span> locationRetrieved {
+        <span class="type">Text</span>(<span class="string">"Your coordinates are:</span> \(coordinates)<span class="string">"</span>)
+    }
+}
+</code></pre><p>When you're finished <code>ContentView</code> will look like this:</p><pre><code><span class="keyword">struct</span> ContentView: <span class="type">View</span> {
+    <span class="keyword">@State private var</span> locationRetrieved = <span class="keyword">false
+    @State private var</span> coordinates: <span class="type">String</span> = <span class="string">""</span>
+    
+    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+        <span class="type">VStack</span>(spacing: <span class="number">10</span>) {
+            <span class="type">Button</span>(<span class="string">"Show location"</span>) {
+                <span class="comment">// get location</span>
+            }
+            
+            <span class="keyword">if</span> locationRetrieved {
+                <span class="type">Text</span>(<span class="string">"Your coordinates are:</span> \(coordinates)<span class="string">"</span>)
+            }
+        }
+    }
+}
+</code></pre><p>Right now you can run your app and tap the button, but nothing interesting happens yet. Create a new Swift file called <code>CoreLocationManager</code> that will handle everything involving Core Location for us. To get started import the CoreLocation framework and make a <code>CoreLocationManager</code> class that inherits from <code>NSObject</code> and <code>CLLocationManagerDelegate</code>:</p><pre><code><span class="keyword">import</span> CoreLocation
+
+<span class="keyword">class</span> CoreLocationManager: <span class="type">NSObject</span>, <span class="type">CLLocationManagerDelegate</span> {    
+
+}
+</code></pre><p>This class needs to hold a property of <code>CLLocationManager()</code> that will be used for nearly everything related to Core Location. Add the following as a class variable.</p><pre><code><span class="keyword">private var</span> locationManager = <span class="type">CLLocationManager</span>()
+</code></pre><p>And now it's time for our first function. The first function we will write will set our <code>locationManager</code> delegate, set our desired accuracy, then allow the location manager to start determining the user's location. Add this function to your class.</p><pre><code><span class="keyword">func</span> determineCurrentLocation() {
+    locationManager.<span class="property">delegate</span> = <span class="keyword">self</span>
+    locationManager.<span class="property">desiredAccuracy</span> = kCLLocationAccuracyBest
+    locationManager.<span class="call">requestWhenInUseAuthorization</span>()
+    
+    <span class="keyword">if</span> <span class="type">CLLocationManager</span>.<span class="call">locationServicesEnabled</span>() {
+        locationManager.<span class="call">startUpdatingLocation</span>()
+    }
+}
+</code></pre><p>For reference, your <code>CoreLocationManager</code> should look like this:</p><pre><code><span class="keyword">import</span> CoreLocation
+
+<span class="keyword">class</span> CoreLocationManager: <span class="type">NSObject</span>, <span class="type">CLLocationManagerDelegate</span> {
+    <span class="keyword">private var</span> locationManager = <span class="type">CLLocationManager</span>()
+    
+    <span class="keyword">func</span> determineCurrentLocation() {
+        locationManager.<span class="property">delegate</span> = <span class="keyword">self</span>
+        locationManager.<span class="property">desiredAccuracy</span> = kCLLocationAccuracyBest
+        locationManager.<span class="call">requestWhenInUseAuthorization</span>()
+        
+        <span class="keyword">if</span> <span class="type">CLLocationManager</span>.<span class="call">locationServicesEnabled</span>() {
+            locationManager.<span class="call">startUpdatingLocation</span>()
+        }
+    }
+}
+</code></pre><p>Perfect! Now we can go back to our ContentView and allow the button to determine our location. First, add a reference to our new class.</p><pre><code><span class="keyword">private let</span> coreLocationManager = <span class="type">CoreLocationManager</span>()
+</code></pre><p>Then, replace <code>// get location</code> with <code>coreLocationManager.determineCurrentLocation</code>. Go ahead and run your app and tap the button to determine your location.</p><p>Uh oh, it didn't work? Remember how I said that Apple takes privacy seriously? This is one of the ways this happens. You haven't yet told the user why you want to access their location. You can even see a warning in the console that looks like this:</p><pre><code><span class="number">2021</span>-<span class="number">04</span>-<span class="number">02 18</span>:<span class="number">16</span>:<span class="number">42.421676</span>-<span class="number">0600</span> <span class="type">How</span>-<span class="type">To</span>-<span class="type">Use</span>-<span class="type">Core</span>-<span class="type">Location</span>[<span class="number">4182</span>:<span class="number">132602</span>] <span class="type">This</span> app has attempted to access privacy-sensitive data without a usage description. <span class="type">The</span> app's <span class="type">Info</span>.<span class="property">plist</span> must contain an “<span class="type">NSLocationWhenInUseUsageDescription</span>” key with a string value explaining to the user how the app uses this data
+</code></pre><p>This is easily handled in the <code>.plist</code> file of your project. Add the following key-value.</p><pre><code><span class="type">Key</span>: <span class="type">Privacy</span> - <span class="type">Location When In Use Usage Description
+Value</span>: <span class="type">Please</span> give us authorization to access your location so we can tell you your location
+</code></pre><p>The value can say anything you want, but if it's not descriptive enough then Apple will reject your app from the app store.</p><p>Great, now you can run your app, tap the button, and see apple's built-in alert that will attempt to obtain confirmation from the user.</p><p>Next, you'll see that your <code>Text</code> isn't updated. The first reason is that we never toggled the boolean to allow it to show. The second reason is that we've only asked the app to update the location, but we never actually <em>get</em> that location. Let's head back over to <code>CoreLocationManager</code> and create a new function to return a coordinate. It's possible that we aren't able to get the user's location, so we need to make sure the return value is optional. Create the following function:</p><pre><code><span class="keyword">func</span> getCurrentLocation() -&gt; <span class="type">CLLocationCoordinate2D</span>? {
+    <span class="call">determineCurrentLocation</span>()
+    
+    <span class="keyword">return</span> locationManager.<span class="property">location</span>?.<span class="property">coordinate</span>
+}
+</code></pre><p>This will allow the device to use the previous function we created, then return the coordinate if it can be found. Head back over to <code>ContentView.swift</code> and edit what your button does to this:</p><pre><code><span class="call">determineLocation</span>()
+</code></pre><p>Now we need to create this function (still in <code>ContentView.swift</code>) which will do a few things. First, it will use our core location manager to get our current location. If we get a nil value, let's bail out and set our <code>locationRetrieved</code> variable to false. If we succeed let's break apart our longitude and latitude, update our coordinates text, then toggle our <code>locationRetrieved</code> variable to true.</p><pre><code><span class="keyword">func</span> determineLocation() {
+    <span class="keyword">guard let</span> location = coreLocationManager.<span class="call">getCurrentLocation</span>() <span class="keyword">else</span> {
+        locationRetrieved = <span class="keyword">false
+        return</span>
+    }
+    <span class="keyword">let</span> latitude = location.<span class="property">latitude</span>
+    <span class="keyword">let</span> longitude = location.<span class="property">longitude</span>
+    coordinates = <span class="string">"</span>\(latitude)<span class="string">,</span> \(longitude)<span class="string">"</span>
+    locationRetrieved = <span class="keyword">true</span>
+}
+</code></pre><p>Voila! You should now see your location appear in your app. Note that if you are using a simulator then you'll need to ensure there is a location enabled. This can be done by going to Features -&gt; Location, and selecting one of the locations that is on the list. Simulators always default to none, so there's a high chance you'll need to do this.</p><h3>Extending past coordinates</h3><p>Core location is very powerful. It can do more than just determine your exact coordinates (which is a bit creepy), but it can even tell you the city, state, and address of where you. Let's create a new function inside <code>CoreLocationManager.swift</code>.</p><p>We are going to do the same thing as we did before by adding a bool, address string, new function to get address from <code>ContentView.swift</code> and a new function to get your address in <code>CoreLocationManager.swift</code>. Edit your <code>ContentView</code> to this:</p><pre><code><span class="keyword">struct</span> ContentView: <span class="type">View</span> {
+    <span class="keyword">@State private var</span> locationRetrieved = <span class="keyword">false
+    @State private var</span> addressRetrieved = <span class="keyword">false
+    @State private var</span> coordinates: <span class="type">String</span> = <span class="string">""</span>
+    <span class="keyword">@State private var</span> address: <span class="type">String</span> = <span class="string">""</span>
+    <span class="keyword">private let</span> coreLocationManager = <span class="type">CoreLocationManager</span>()
+    
+    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+        <span class="type">VStack</span>(spacing: <span class="number">10</span>) {
+            <span class="type">Button</span>(<span class="string">"Show location"</span>) {
+                <span class="call">determineLocation</span>()
+            }
+            
+            <span class="keyword">if</span> locationRetrieved {
+                <span class="type">Text</span>(<span class="string">"Your coordinates are:</span> \(coordinates)<span class="string">"</span>)
+            }
+            
+            <span class="type">Button</span>(<span class="string">"Show address"</span>) {
+                <span class="call">showAddress</span>()
+            }
+            
+            <span class="keyword">if</span> addressRetrieved {
+                <span class="type">Text</span>(<span class="string">"Your address is:</span> \(address)<span class="string">"</span>)
+            }
+        }
+    }
+    
+    <span class="keyword">func</span> determineLocation() {
+        <span class="keyword">guard let</span> location = coreLocationManager.<span class="call">getCurrentLocation</span>() <span class="keyword">else</span> {
+            locationRetrieved = <span class="keyword">false
+            return</span>
+        }
+        <span class="keyword">let</span> latitude = location.<span class="property">latitude</span>
+        <span class="keyword">let</span> longitude = location.<span class="property">longitude</span>
+        coordinates = <span class="string">"</span>\(latitude)<span class="string">,</span> \(longitude)<span class="string">"</span>
+        locationRetrieved = <span class="keyword">true</span>
+    }
+    
+    <span class="keyword">func</span> showAddress() {
+        coreLocationManager.<span class="call">getAddress</span> { returnedAddress <span class="keyword">in
+            guard let</span> unwrappedAddress = returnedAddress <span class="keyword">else</span> {
+                addressRetrieved = <span class="keyword">false
+                return</span>
+            }
+
+            address = unwrappedAddress
+            addressRetrieved = <span class="keyword">true</span>
+            
+        }
+        
+    }
+    
+}
+</code></pre><p>You'll notice something different with our <code>showAddress</code> function. When we use Core Location to get our address it will run in the background and return our information in a closure. So we need a completion handler to handle this for us. Not too difficult if you're familiar with closures, but it's a bit strange if you're not used to it. We also need to write our <code>coreLocationManager</code> function to return an escaping completion handler, because it may take a while to get the information back. When I say it may take a while, I mean in computer terms. It will be near-instantaneous from your perspective.</p><p>Let's write our <code>getAddress</code> function now in <code>CoreLocationManager.swift</code>. We need to first get our user's coordinates (which we already made a function for), then create a <code>CLLocation</code> object out of it. Then we need to create an instance of <code>CLGeocoder</code> and use reverse geocoding in order to get obtain something called <em>placemarks</em>. We can get an error here, so we first need to check if an error exists. If it does, just return your completion as nil. If not, check if placemarks exist (they should, but it's always good to be safe and prevent app crashes). If placemarks exist, we need to make sure we actually have some. It is possible to get more than one, but in this case, we just want to take the first one. I use a lot of <code>guard</code> statements, but feel free to unwrap however it makes you happy. Each placemark has different values that mean different things that may not make sense to you if you've never done this. The street address is called <em>name</em>, the city is called <em>locality</em>, and the state is called <em>administrative area</em>. Unwrap all of these, append it into one string, then return that string as your completion.</p><pre><code><span class="keyword">func</span> getAddress(completion: <span class="keyword">@escaping</span> (<span class="type">String</span>?) -&gt; <span class="type">Void</span>) {
+    <span class="keyword">guard let</span> coordinates = <span class="call">getCurrentLocation</span>() <span class="keyword">else</span> { <span class="keyword">return</span> }
+    <span class="keyword">let</span> location = <span class="type">CLLocation</span>(latitude: coordinates.<span class="property">latitude</span>, longitude: coordinates.<span class="property">longitude</span>)
+    
+    <span class="keyword">let</span> geocoder = <span class="type">CLGeocoder</span>()
+    geocoder.<span class="call">reverseGeocodeLocation</span>(location) { placemarks, error <span class="keyword">in
+        if</span> error != <span class="keyword">nil</span> {
+            <span class="call">print</span>(<span class="string">"Error:</span> \(error)<span class="string">"</span>)
+            <span class="call">completion</span>(<span class="keyword">nil</span>)
+        }
+        
+        <span class="keyword">if</span> placemarks != <span class="keyword">nil</span> {
+            <span class="keyword">guard let</span> first = placemarks?.<span class="property">first</span> <span class="keyword">else</span> {
+                <span class="call">completion</span>(<span class="keyword">nil</span>)
+                <span class="keyword">return</span>
+            }
+            
+            <span class="keyword">guard let</span> street = first.<span class="property">name</span> <span class="keyword">else</span> { <span class="keyword">return</span> }
+            <span class="keyword">guard let</span> city = first.<span class="property">locality</span> <span class="keyword">else</span> { <span class="keyword">return</span> }
+            <span class="keyword">guard let</span> state = first.<span class="property">administrativeArea</span> <span class="keyword">else</span> { <span class="keyword">return</span> }
+            
+            <span class="call">completion</span>(<span class="string">"</span>\(street) \(city)<span class="string">,</span> \(state)<span class="string">"</span>)
+        }
+    }
+}
+</code></pre><p>Give your app a go! You'd be surprised at how accurate it is.</p><p>I hope I helped you learn something new today with Swift and iOS development. It's great being able to implement something that is as powerful as Core Location. Try exploring other things that Core Location offers as we barely touched the surface. Or, use the basics and create your own weather app that can determine the weather near you. If you'd like to find the source code for this project you can do so <a href="https://github.com/thomaskellough/iOS-Tutorials-SwiftUI/tree/main/How-To-Use-Core-Location">here</a>.</p>]]></content:encoded></item><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/13-x-things-i-love-about-you-part-05</guid><title>Create a unique Valentine's Day app for your loved one - Part 5</title><description>This section wraps everything up as well as gives you some ideas on how you can improve your app.</description><link>www.thomaskellough/thomaskellough.github.io/posts/13-x-things-i-love-about-you-part-05</link><pubDate>Sun, 24 Jan 2021 12:09:00 -0700</pubDate><content:encoded><![CDATA[<h1>Create a unique Valentine's Day app for your loved one - Part 5</h1><div class="post-tags" markdown="1">
   <a class="post-category post-category-labeledstatements" href="www.thomaskellough/thomaskellough.github.io/tags/labeledstatements">LabeledStatements</a>
 </div><table class="posts-table">
     <tr>
