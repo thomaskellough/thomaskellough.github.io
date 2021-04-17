@@ -1,0 +1,320 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"/><script async src="https://www.googletagmanager.com/gtag/js?id=UA-175451977-1"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-175451977-1');</script><meta name="og:site_name" content="The Swift Protocol"/><link rel="canonical" href="www.thomaskellough/thomaskellough.github.io"/><meta name="twitter:url" content="www.thomaskellough/thomaskellough.github.io"/><meta name="og:url" content="www.thomaskellough/thomaskellough.github.io"/><title>Swift Skill Building | The Swift Protocol</title><meta name="twitter:title" content="Swift Skill Building | The Swift Protocol"/><meta name="og:title" content="Swift Skill Building | The Swift Protocol"/><meta name="description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:description" content="Swift Skill Building With Thomas Kellough"/><meta name="og:description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="http://www.theswiftprotocol.com/images/social.png"/><meta name="og:image" content="http://www.theswiftprotocol.com/images/social.png"/><link rel="stylesheet" href="/styles.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to The Swift Protocol"/></head><body><header><div class="nav-logo"><a href="/"><img src="/Images/blog-logo.png"/></a><nav class="nav-bar"><p>Swift Skill Building With Thomas Kellough</p><ul><li><h3><a href="/home">Home</a></h3></li><li><h3><a href="/posts">Posts</a></h3></li><li><h3><a href="/tags">Tags</a></h3></li></ul></nav></div></header><div class="wrapper"><article><h1>Learn how to change your app icon dynamically</h1><div class="post-tags" markdown="1">
+    <a class="post-category post-category-swiftui" href="/tags/swiftui">swiftui</a>
+    <a class="post-category post-category-appicon" href="/tags/appicon">App Icon</a>
+</div><h3>Introduction</h3><p>App Icons are the very first thing users will see before opening your app. Most apps do not allow you to edit your app icon, but it's such a simple feature that doesn't take much work at all to give your user an extra experience to help make your app more unique to them. This tutorial will show you how to let users change the app icon based on the images that you have provided.</p><h3>Getting Started</h3><p>Go ahead and start a new SwiftUI project. This app will be very simple and the only thing we will be doing is adding some images, editing the plist, adding ONE function, then adding a Picker. You can reuse either all of this or parts of it for your own projects. If you just want to look at the full solution you can do so <a href="https://github.com/thomaskellough/iOS-Tutorials-SwiftUI">here</a>.</p><h4>Adding Images</h4><p>If you're used to adding your app icon inside the Assets.xcassets folder then forget it now. When dealing with multiple app icons you can't just simply add various ones and expect that to work. You'll need to add every icon you want inside the project navigator. I find it easier to create a new folder called <code>AppIcons</code> and drop all the images in there to keep it organized. You'll also want to add @2x and @3x version for each icon. The sizes for this project are 160x160 and 180x180 for @2x and @3x respectively. Feel free to snag my images I created from GitHub or find your own. My images were just some triangles smashed together in Figma with different colors, nothing fancy.</p><h4>Editing your plist file</h4><p>Now that you've added the images to your project, it's time to edit your plist to read those images. You can do this using the default property list view, but we deal with some nested dictionaries that can get quite confusing. It may be easier if you right-click <code>Info.plist</code> and <code>Open as Source Code</code>. I'm going to break it down step-by-step to make it easier to understand, but you can also scroll down to see the final solution if you prefer.</p><p>When you first open your plist as source code you'll see something like this:</p><pre><code>&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span>?&gt;
+&lt;!<span class="type">DOCTYPE</span> plist <span class="type">PUBLIC</span> <span class="string">"-//Apple</span><span class="comment">//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;</span>
+&lt;plist version=<span class="string">"1.0"</span>&gt;
+&lt;dict&gt;
+    &lt;key&gt;<span class="type">CFBundleDevelopmentRegion</span>&lt;/key&gt;
+    &lt;string&gt;$(<span class="type">DEVELOPMENT_LANGUAGE</span>)&lt;/string&gt;
+    &lt;key&gt;<span class="type">CFBundleExecutable</span>&lt;/key&gt;
+    &lt;string&gt;$(<span class="type">EXECUTABLE_NAME</span>)&lt;/string&gt;
+    &lt;key&gt;<span class="type">CFBundleIdentifier</span>&lt;/key&gt;
+    &lt;string&gt;$(<span class="type">PRODUCT_BUNDLE_IDENTIFIER</span>)&lt;/string&gt;
+    &lt;key&gt;<span class="type">CFBundleInfoDictionaryVersion</span>&lt;/key&gt;
+    &lt;string&gt;<span class="number">6.0</span>&lt;/string&gt;
+    &lt;key&gt;<span class="type">CFBundleName</span>&lt;/key&gt;
+    &lt;string&gt;$(<span class="type">PRODUCT_NAME</span>)&lt;/string&gt;
+    &lt;key&gt;<span class="type">CFBundlePackageType</span>&lt;/key&gt;
+    &lt;string&gt;$(<span class="type">PRODUCT_BUNDLE_PACKAGE_TYPE</span>)&lt;/string&gt;
+    &lt;key&gt;<span class="type">CFBundleShortVersionString</span>&lt;/key&gt;
+    &lt;string&gt;<span class="number">1.0</span>&lt;/string&gt;
+    &lt;key&gt;<span class="type">CFBundleVersion</span>&lt;/key&gt;
+    &lt;string&gt;<span class="number">1</span>&lt;/string&gt;
+    &lt;key&gt;<span class="type">LSRequiresIPhoneOS</span>&lt;/key&gt;
+    &lt;<span class="keyword">true</span>/&gt;
+    &lt;key&gt;<span class="type">UIApplicationSceneManifest</span>&lt;/key&gt;
+    &lt;dict&gt;
+        &lt;key&gt;<span class="type">UIApplicationSupportsMultipleScenes</span>&lt;/key&gt;
+        &lt;<span class="keyword">true</span>/&gt;
+    &lt;/dict&gt;
+    &lt;key&gt;<span class="type">UIApplicationSupportsIndirectInputEvents</span>&lt;/key&gt;
+    &lt;<span class="keyword">true</span>/&gt;
+    &lt;key&gt;<span class="type">UILaunchScreen</span>&lt;/key&gt;
+    &lt;dict/&gt;
+    &lt;key&gt;<span class="type">UIRequiredDeviceCapabilities</span>&lt;/key&gt;
+    &lt;array&gt;
+        &lt;string&gt;armv7&lt;/string&gt;
+    &lt;/array&gt;
+    &lt;key&gt;<span class="type">UISupportedInterfaceOrientations</span>&lt;/key&gt;
+    &lt;array&gt;
+        &lt;string&gt;<span class="type">UIInterfaceOrientationPortrait</span>&lt;/string&gt;
+        &lt;string&gt;<span class="type">UIInterfaceOrientationLandscapeLeft</span>&lt;/string&gt;
+        &lt;string&gt;<span class="type">UIInterfaceOrientationLandscapeRight</span>&lt;/string&gt;
+    &lt;/array&gt;
+    &lt;key&gt;<span class="type">UISupportedInterfaceOrientations</span>~ipad&lt;/key&gt;
+    &lt;array&gt;
+        &lt;string&gt;<span class="type">UIInterfaceOrientationPortrait</span>&lt;/string&gt;
+        &lt;string&gt;<span class="type">UIInterfaceOrientationPortraitUpsideDown</span>&lt;/string&gt;
+        &lt;string&gt;<span class="type">UIInterfaceOrientationLandscapeLeft</span>&lt;/string&gt;
+        &lt;string&gt;<span class="type">UIInterfaceOrientationLandscapeRight</span>&lt;/string&gt;
+    &lt;/array&gt;
+&lt;/dict&gt;
+&lt;/plist&gt;
+</code></pre><p>We will star by adding a new dictionary right below the array of UIInterfaceOrientation options. Every time you add a new object you'll also need to give it a key since it's wrapped in a larger dictionary. This key will be named <code>CFBundleIcons</code>. Add the following code.</p><pre><code>&lt;key&gt;<span class="type">CFBundleIcons</span>&lt;/key&gt;
+&lt;dict&gt;
+&lt;/dict&gt;
+</code></pre><p>Inside the dictionary you just created we are going to add our primary icon. Once again, it's a dictionary so we need a key/value. Our value for this will be <em>another</em> dictionary (see, it can get confusing).</p><pre><code>&lt;key&gt;<span class="type">CFBundleIcons</span>&lt;/key&gt;
+&lt;dict&gt;
+    &lt;key&gt;<span class="type">CFBundlePrimaryIcon</span>&lt;/key&gt;
+    &lt;dict&gt;
+    &lt;/dict&gt;
+&lt;/dict&gt;
+</code></pre><p>Inside of our innermost dictionary, we will add two more key/values. One will be a key/array, and the other will be a key/boolean.</p><pre><code>&lt;key&gt;<span class="type">CFBundleIcons</span>&lt;/key&gt;
+&lt;dict&gt;
+    &lt;key&gt;<span class="type">CFBundlePrimaryIcon</span>&lt;/key&gt;
+    &lt;dict&gt;
+        &lt;key&gt;<span class="type">CFBundleIconFiles</span>&lt;/key&gt;
+        &lt;array&gt;
+        &lt;/array&gt;
+        &lt;key&gt;<span class="type">UIPrerenderedIcon</span>&lt;/key&gt;
+        &lt;<span class="keyword">false</span>/&gt;
+    &lt;/dict&gt;
+&lt;/dict&gt;
+</code></pre><p>You'll notice the key/value for <code>UIPrerenderedIcon</code>. This is unfortunately a very old setting that has to do with a gloss effect that isn't used anymore, but we need to keep it here.</p><p>Inside our array that we created, we will add just ONE string. This string value needs to be the name of your image without the @2/3x.png extension. My images are named:</p><pre><code>redBlack
+yellowPink
+multiColor
+blackGreen
+</code></pre><p>This will also be our default icon when the user first launches the app. In my example, I'll be using <code>redBlack</code> as the default.</p><pre><code>&lt;key&gt;<span class="type">CFBundleIcons</span>&lt;/key&gt;
+&lt;dict&gt;
+    &lt;key&gt;<span class="type">CFBundlePrimaryIcon</span>&lt;/key&gt;
+    &lt;dict&gt;
+        &lt;key&gt;<span class="type">CFBundleIconFiles</span>&lt;/key&gt;
+        &lt;array&gt;
+            &lt;string&gt;redBlack&lt;/string&gt;
+        &lt;/array&gt;
+        &lt;key&gt;<span class="type">UIPrerenderedIcon</span>&lt;/key&gt;
+        &lt;<span class="keyword">false</span>/&gt;
+    &lt;/dict&gt;
+&lt;/dict&gt;
+</code></pre><p>At this point, you should be able to run your app and have an app icon on your device. Next, we will add our alternate icons.</p><p>When we first started editing the plist we added a dictionary with a key of <code>CFbundleIcons</code>. Inside that, we added another dictionary with a key of <code>CFBundlePrimaryIcon</code>. We are going to add a second dictionary (outside of the <code>CFBundlePrimaryIcon</code> dictionary) with a key of <code>CFBundleAlternateIcons</code>.</p><pre><code>&lt;key&gt;<span class="type">CFBundleIcons</span>&lt;/key&gt;
+&lt;dict&gt;
+    &lt;key&gt;<span class="type">CFBundlePrimaryIcon</span>&lt;/key&gt;
+    &lt;dict&gt;
+        &lt;key&gt;<span class="type">CFBundleIconFiles</span>&lt;/key&gt;
+        &lt;array&gt;
+            &lt;string&gt;redBlack&lt;/string&gt;
+        &lt;/array&gt;
+        &lt;key&gt;<span class="type">UIPrerenderedIcon</span>&lt;/key&gt;
+        &lt;<span class="keyword">false</span>/&gt;
+    &lt;/dict&gt;
+    &lt;key&gt;<span class="type">CFBundleAlternateIcons</span>&lt;/key&gt;
+    &lt;dict&gt;
+    &lt;/dict&gt;
+&lt;/dict&gt;
+</code></pre><p>Inside our <code>CFBundleAlternateIcons</code> dictionary let's create another key/dictionary. However, this time the key can be whatever you want. I use a good name for what my icon is, but it does not have to be the exact name of your image. For example, my png for my red and black icon is <code>redBlack@3x.png</code>, but I'm going to use a key of <code>Red and Black</code>.</p><pre><code>&lt;key&gt;<span class="type">CFBundleIcons</span>&lt;/key&gt;
+&lt;dict&gt;
+    &lt;key&gt;<span class="type">CFBundlePrimaryIcon</span>&lt;/key&gt;
+    &lt;dict&gt;
+        &lt;key&gt;<span class="type">CFBundleIconFiles</span>&lt;/key&gt;
+        &lt;array&gt;
+            &lt;string&gt;redBlack&lt;/string&gt;
+        &lt;/array&gt;
+        &lt;key&gt;<span class="type">UIPrerenderedIcon</span>&lt;/key&gt;
+        &lt;<span class="keyword">false</span>/&gt;
+    &lt;/dict&gt;
+    &lt;key&gt;<span class="type">CFBundleAlternateIcons</span>&lt;/key&gt;
+    &lt;dict&gt;
+        &lt;key&gt;<span class="type">Red</span> and <span class="type">Black</span>&lt;/key&gt;
+        &lt;dict&gt;
+        &lt;/dict&gt;
+    &lt;/dict&gt;
+&lt;/dict&gt;
+</code></pre><p>Inside our new dictionary, we are going to do the same thing we did with our <code>CFBundlePrimaryIcon</code> dictionary. Add a <code>CFBundleIconFiles</code> string array and <code>UIPrerenderedIcon</code> boolean. The <code>UIPrerenderedIcon</code> boolean will once again be false, and the and <code>CFBundleIconFiles</code> string array will contain one string with a value of your alternate icon.</p><pre><code>&lt;key&gt;<span class="type">CFBundleIcons</span>&lt;/key&gt;
+&lt;dict&gt;
+    &lt;key&gt;<span class="type">CFBundlePrimaryIcon</span>&lt;/key&gt;
+    &lt;dict&gt;
+        &lt;key&gt;<span class="type">CFBundleIconFiles</span>&lt;/key&gt;
+        &lt;array&gt;
+            &lt;string&gt;redBlack&lt;/string&gt;
+        &lt;/array&gt;
+        &lt;key&gt;<span class="type">UIPrerenderedIcon</span>&lt;/key&gt;
+        &lt;<span class="keyword">false</span>/&gt;
+    &lt;/dict&gt;
+    &lt;key&gt;<span class="type">CFBundleAlternateIcons</span>&lt;/key&gt;
+    &lt;dict&gt;
+        &lt;key&gt;<span class="type">Red</span> and <span class="type">Black</span>&lt;/key&gt;
+        &lt;dict&gt;
+            &lt;key&gt;<span class="type">CFBundleIconFiles</span>&lt;/key&gt;
+            &lt;array&gt;
+                &lt;string&gt;redBlack&lt;/string&gt;
+            &lt;/array&gt;
+            &lt;key&gt;<span class="type">UIPrerenderedIcon</span>&lt;/key&gt;
+            &lt;<span class="keyword">false</span>/&gt;
+        &lt;/dict&gt;
+    &lt;/dict&gt;
+&lt;/dict&gt;
+</code></pre><p>Now we can repeat our steps and add as many alternate app icons as we want. I'm going to add three more. Feel free to copy and paste what you did and edit the key value for the inner dictionary and the string value for each image name you are using.</p><pre><code>&lt;key&gt;<span class="type">CFBundleIcons</span>&lt;/key&gt;
+&lt;dict&gt;
+    &lt;key&gt;<span class="type">CFBundlePrimaryIcon</span>&lt;/key&gt;
+    &lt;dict&gt;
+        &lt;key&gt;<span class="type">CFBundleIconFiles</span>&lt;/key&gt;
+        &lt;array&gt;
+            &lt;string&gt;redBlack&lt;/string&gt;
+        &lt;/array&gt;
+        &lt;key&gt;<span class="type">UIPrerenderedIcon</span>&lt;/key&gt;
+        &lt;<span class="keyword">false</span>/&gt;
+    &lt;/dict&gt;
+    &lt;key&gt;<span class="type">CFBundleAlternateIcons</span>&lt;/key&gt;
+    &lt;dict&gt;
+        &lt;key&gt;<span class="type">Red</span> and <span class="type">Black</span>&lt;/key&gt;
+        &lt;dict&gt;
+            &lt;key&gt;<span class="type">CFBundleIconFiles</span>&lt;/key&gt;
+            &lt;array&gt;
+                &lt;string&gt;redBlack&lt;/string&gt;
+            &lt;/array&gt;
+            &lt;key&gt;<span class="type">UIPrerenderedIcon</span>&lt;/key&gt;
+            &lt;<span class="keyword">false</span>/&gt;
+        &lt;/dict&gt;
+        &lt;key&gt;<span class="type">Black</span> and <span class="type">Green</span>&lt;/key&gt;
+        &lt;dict&gt;
+            &lt;key&gt;<span class="type">CFBundleIconFiles</span>&lt;/key&gt;
+            &lt;array&gt;
+                &lt;string&gt;blackGreen&lt;/string&gt;
+            &lt;/array&gt;
+            &lt;key&gt;<span class="type">UIPrerenderedIcon</span>&lt;/key&gt;
+            &lt;<span class="keyword">false</span>/&gt;
+        &lt;/dict&gt;
+        &lt;key&gt;<span class="type">Multi</span>-<span class="type">Color</span>&lt;/key&gt;
+        &lt;dict&gt;
+            &lt;key&gt;<span class="type">CFBundleIconFiles</span>&lt;/key&gt;
+            &lt;array&gt;
+                &lt;string&gt;multiColor&lt;/string&gt;
+            &lt;/array&gt;
+            &lt;key&gt;<span class="type">UIPrerenderedIcon</span>&lt;/key&gt;
+            &lt;<span class="keyword">false</span>/&gt;
+        &lt;/dict&gt;
+        &lt;key&gt;<span class="type">Yellow And Pink</span>&lt;/key&gt;
+        &lt;dict&gt;
+            &lt;key&gt;<span class="type">CFBundleIconFiles</span>&lt;/key&gt;
+            &lt;array&gt;
+                &lt;string&gt;yellowPink&lt;/string&gt;
+            &lt;/array&gt;
+            &lt;key&gt;<span class="type">UIPrerenderedIcon</span>&lt;/key&gt;
+            &lt;<span class="keyword">false</span>/&gt;
+        &lt;/dict&gt;
+    &lt;/dict&gt;
+&lt;/dict&gt;
+</code></pre><p>You'll notice that I added my primary icon twice, once as the <code>CFBundlePrimaryIcon</code> and once as a <code>CFBundleAlternateIcon</code>. I did this for a reason that you'll find out soon enough, but it's not necessary. I find it easier to search just for alternate icons during my function that gathers all available icons. Feel free to edit this piece of code as you see fit.</p><p>As you can see, all the dictionaries can get messy so it's much easier to add each icon in source code instead of the property list. However, when you are finished your expanded property list should look something like this.</p><img class="post-image" src="/Images/Posts/15/15-01.png" alt="Final property list with icons added" width="800"/><p>Go ahead and run your code and make sure it compiles. You should see the default icon as your app icon currently.</p><h4>Getting available icons</h4><p>We aren't going to make a beautiful UI or anything here, just a simple picker that shows a list of icons that the user can choose from. Let's start by creating the following.</p><ol><li>A string array that holds the name of our app icons. Default will be just our primary icon</li></ol><ol start="2"><li>A string variable that holds our selected icon. Default will be our primary icon.</li></ol><ol start="3"><li>A VStack that contains a Picker that shows us our string array and string variable of available/selected icon.</li></ol><p>Edit your content view to look like this:</p><pre><code><span class="keyword">struct</span> ContentView: <span class="type">View</span> {
+    <span class="keyword">@State private var</span> appIcons = [<span class="string">"redBlack"</span>]
+    <span class="keyword">@State private var</span> selectedIcon = <span class="string">"redBlack"</span>
+    
+    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+        <span class="type">VStack</span> {
+            <span class="type">Picker</span>(<span class="string">"Choose your app icon"</span>, selection: $selectedIcon) {
+                <span class="type">ForEach</span>(appIcons, id: \.<span class="keyword">self</span>) {
+                    <span class="type">Text</span>($0)
+                }
+            }
+        }
+    }
+}
+</code></pre><p>Now, this does nothing interesting yet because we haven't actually done anything to see our available icons. You can add your icons to the array above if you'd like, but then if you ever add/remove an icon from your plist you have to edit this array, too. When writing code you want to only ever have to edit things in one place. Let's create an extension on our bundle that returns an array of possible choices we can use.</p><p>You can do this however you'd like with either a function or variable, but I'm going to go with the route of creating a static variable. It will never be null because I'll set an empty array to return and only append any app icons that we can find. Let's get started by adding the following code:</p><pre><code><span class="keyword">extension</span> <span class="type">Bundle</span> {
+    <span class="keyword">static var</span> appIcons: [<span class="type">String</span>] {
+        <span class="keyword">var</span> availableIcons = [<span class="type">String</span>]()
+        
+        <span class="keyword">return</span> availableIcons
+    }
+}
+</code></pre><p>Searching through a bunch of dictionaries can get complicated, but I've tried to make it as easy as possible. Some people may disagree with my methods because I don't always check that an image exists. But my thought is since it's bundled in your source code and identified from the property list, there is no way that can be bad once your app is shipped. If it is, you've messed up enough where it's probably not even a good idea to have your app available to download. Since they are static files you can create tests that prevent you from deploying if they fail.</p><p>The first thing we will do is get a full dictionary of our info.plist. If we can't get that, throw an error because something is horribly wrong.</p><pre><code><span class="keyword">extension</span> <span class="type">Bundle</span> {
+    <span class="keyword">static var</span> appIcons: [<span class="type">String</span>] {
+        <span class="keyword">var</span> availableIcons = [<span class="type">String</span>]()
+        
+        <span class="keyword">guard let</span> dictionary = <span class="type">Bundle</span>.<span class="property">main</span>.<span class="property">infoDictionary</span> <span class="keyword">else</span> {
+            <span class="call">fatalError</span>(<span class="string">"Could not get dictionary!"</span>)
+        }
+        <span class="keyword">return</span> availableIcons
+    }
+}
+</code></pre><p>Then we will grab all of our icons from that dictionary. Remember, we wrapped them all in a dictionary of their own with a key of <code>CFBundleIcons</code>.</p><pre><code><span class="keyword">extension</span> <span class="type">Bundle</span> {
+    <span class="keyword">static var</span> appIcons: [<span class="type">String</span>] {
+        <span class="keyword">var</span> availableIcons = [<span class="type">String</span>]()
+        
+        <span class="keyword">guard let</span> dictionary = <span class="type">Bundle</span>.<span class="property">main</span>.<span class="property">infoDictionary</span> <span class="keyword">else</span> {
+            <span class="call">fatalError</span>(<span class="string">"Could not get dictionary!"</span>)
+        }
+        
+        <span class="keyword">if let</span> icons = dictionary[<span class="string">"CFBundleIcons"</span>] <span class="keyword">as</span>? [<span class="type">String</span>: <span class="type">Any</span>] {
+            
+        }
+        
+        <span class="keyword">return</span> availableIcons
+    }
+}
+</code></pre><p>Here's what I do. Instead of trying to append the primary icon and also the alternate icons, I just look for the alternate icons and add all of those. This is the reason I add my primary icon as an alternate icon as well.</p><pre><code><span class="keyword">extension</span> <span class="type">Bundle</span> {
+    <span class="keyword">static var</span> appIcons: [<span class="type">String</span>] {
+        <span class="keyword">var</span> availableIcons = [<span class="type">String</span>]()
+        
+        <span class="keyword">guard let</span> dictionary = <span class="type">Bundle</span>.<span class="property">main</span>.<span class="property">infoDictionary</span> <span class="keyword">else</span> {
+            <span class="call">fatalError</span>(<span class="string">"Could not get dictionary!"</span>)
+        }
+        
+        <span class="keyword">if let</span> icons = dictionary[<span class="string">"CFBundleIcons"</span>] <span class="keyword">as</span>? [<span class="type">String</span>: <span class="type">Any</span>] {
+            <span class="keyword">if let</span> alternateIcons = icons[<span class="string">"CFBundleAlternateIcons"</span>] <span class="keyword">as</span>? [<span class="type">String</span>: <span class="type">Any</span>] {
+                
+            }
+        }
+        
+        <span class="keyword">return</span> availableIcons
+    }
+}
+</code></pre><p>And here is the part that some people may not agree with it. If we get <code>alternateIcons</code> then I just go ahead and add the key to our <code>availableIcons</code> array. Yes, it's possible that our images are not in our list, but once again, these items should <em>never</em> change once the app is shipped. If you write excellent XCTests to cover each icon then you'll be safe once the app is on the app store.</p><pre><code><span class="keyword">extension</span> <span class="type">Bundle</span> {
+    <span class="keyword">static var</span> appIcons: [<span class="type">String</span>] {
+        <span class="keyword">var</span> availableIcons = [<span class="type">String</span>]()
+        
+        <span class="keyword">guard let</span> dictionary = <span class="type">Bundle</span>.<span class="property">main</span>.<span class="property">infoDictionary</span> <span class="keyword">else</span> {
+            <span class="call">fatalError</span>(<span class="string">"Could not get dictionary!"</span>)
+        }
+        
+        <span class="keyword">if let</span> icons = dictionary[<span class="string">"CFBundleIcons"</span>] <span class="keyword">as</span>? [<span class="type">String</span>: <span class="type">Any</span>] {
+            <span class="keyword">if let</span> alternateIcons = icons[<span class="string">"CFBundleAlternateIcons"</span>] <span class="keyword">as</span>? [<span class="type">String</span>: <span class="type">Any</span>] {
+                <span class="keyword">for</span> (key, <span class="keyword">_</span>) <span class="keyword">in</span> alternateIcons {
+                    availableIcons.<span class="call">append</span>(key)
+                }
+            }
+        }
+        
+        <span class="keyword">return</span> availableIcons
+    }
+}
+</code></pre><p>Let's now head back up to our <code>ContentView</code> and add an <code>.onAppear()</code> method to our <code>VStack</code>. We will use our bundle extension to set our app icons from our plist as soon as the screen appears.</p><pre><code><span class="keyword">struct</span> ContentView: <span class="type">View</span> {
+    <span class="keyword">@State private var</span> appIcons = [<span class="string">"redBlack"</span>]
+    <span class="keyword">@State private var</span> selectedIcon = <span class="string">"redBlack"</span>
+    
+    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+        <span class="type">VStack</span> {
+            <span class="type">Picker</span>(<span class="string">"Choose your app icon"</span>, selection: $selectedIcon) {
+                <span class="type">ForEach</span>(appIcons, id: \.<span class="keyword">self</span>) {
+                    <span class="type">Text</span>($0)
+                }
+            }
+        }.<span class="call">onAppear</span>(perform: {
+            appIcons = <span class="type">Bundle</span>.<span class="property">appIcons</span>
+        })
+    }
+}
+</code></pre><p>Go ahead and test your app, you should be able to add and remove icons from your plist without editing anything else in your code.</p><h4>Changing your app icon on selection</h4><p>We are nearly finished now. You can launch your app and see the list of available icons. Now we just need to do something when the user changes the picker value. This is as easy as adding an <code>.onReceive</code> method to the end of your picker. Our publisher will be our selected icon variable and our closure will attempt to set the app icon using <code>UIApplication.shared.setAlternateIconName()</code>. We will attempt to catch an error and react accordingly. Edit your <code>ContentView</code> to look like this:</p><pre><code><span class="keyword">struct</span> ContentView: <span class="type">View</span> {
+    <span class="keyword">@State private var</span> appIcons = [<span class="string">"redBlack"</span>]
+    <span class="keyword">@State private var</span> selectedIcon = <span class="string">"redBlack"</span>
+    
+    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+        <span class="type">VStack</span> {
+            <span class="type">Picker</span>(<span class="string">"Choose your app icon"</span>, selection: $selectedIcon) {
+                <span class="type">ForEach</span>(appIcons, id: \.<span class="keyword">self</span>) {
+                    <span class="type">Text</span>($0)
+                }
+            }.<span class="call">onReceive</span>([<span class="keyword">self</span>.<span class="property">selectedIcon</span>].publisher.<span class="call">first</span>()) { (value) <span class="keyword">in</span>
+                <span class="type">UIApplication</span>.<span class="property">shared</span>.<span class="call">setAlternateIconName</span>(selectedIcon) { error <span class="keyword">in
+                    if let</span> error = error {
+                        <span class="call">print</span>(<span class="string">"Error setting icon!</span> \(error.<span class="property">localizedDescription</span>)<span class="string">"</span>)
+                    } <span class="keyword">else</span> {
+                        <span class="call">print</span>(<span class="string">"Successfully set icon"</span>)
+                    }
+                }
+            }
+        }.<span class="call">onAppear</span>(perform: {
+            appIcons = <span class="type">Bundle</span>.<span class="property">appIcons</span>
+        })
+    }
+}
+</code></pre><p>Go ahead and run your app! You should be able to scroll through the picker and see a message that you set your new icon.</p><img class="post-image img-md" src="/Images/Posts/15/15-02.png" alt="New icon selected message" width="800"/><h3>Conclusion</h3><p>I hope I helped you learn something new today with Swift and iOS development. Giving the user ability to change your app icon may seem small, but many people LOVE being able to organize their home screen by colors. App icons are also a way to implement in-app purchases that may earn you a few extra bucks.</p><p>There are many ways you can improve on this. One way is by adding tests to ensure your app icons are always available before you deploy your app. If you don't want to add tests, I suggest finding a place to look for your image and make sure it exists before trying to allow users to change the icon in your app. You can also display your options to the user differently. Right now, it's just a Picker view with some text. It may be better to show an HStack or VStack of images so the user can see them prior to selecting them.</p><p>If you'd like to find the source code for this project you can do so <a href="https://github.com/thomaskellough/iOS-Tutorials-SwiftUI">here</a>.</p></article></div><div class="footer-social"><div>© 2021 The Swift Protocol</div><div>Generated using <a href="https://github.com/johnsundell/publish">Publish</a>. Written in Swift</div><div><a href="https://www.linkedin.com/in/thomas-kellough/">LinkedIn</a> | <a href="https://github.com/thomaskellough">Github</a> | <a href="mailto:theswiftprotocol@gmail.com">Email</a></div></div></body></html>
