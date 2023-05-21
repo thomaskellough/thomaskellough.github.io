@@ -1,0 +1,48 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"/><script async src="https://www.googletagmanager.com/gtag/js?id=UA-175451977-1"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-175451977-1');</script><meta name="og:site_name" content="The Swift Protocol"/><link rel="canonical" href="www.thomaskellough/thomaskellough.github.io"/><meta name="twitter:url" content="www.thomaskellough/thomaskellough.github.io"/><meta name="og:url" content="www.thomaskellough/thomaskellough.github.io"/><title>Swift Skill Building | The Swift Protocol</title><meta name="twitter:title" content="Swift Skill Building | The Swift Protocol"/><meta name="og:title" content="Swift Skill Building | The Swift Protocol"/><meta name="description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:description" content="Swift Skill Building With Thomas Kellough"/><meta name="og:description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="http://www.theswiftprotocol.com/images/social.png"/><meta name="og:image" content="http://www.theswiftprotocol.com/images/social.png"/><link rel="stylesheet" href="/styles.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to The Swift Protocol"/></head><body><header><div class="nav-logo"><a href="/"><img src="/Images/blog-logo.png"/></a><nav class="nav-bar"><p>Swift Skill Building With Thomas Kellough</p><ul><li><h3><a href="/home">Home</a></h3></li><li><h3><a href="/posts">Posts</a></h3></li><li><h3><a href="/tags">Tags</a></h3></li></ul></nav></div></header><div class="wrapper"><article><h1>Using UIColorWell with UIKit</h1><div class="post-tags" markdown="1">
+    <a class="post-category post-category-uicolorwell" href="/tags/uicolorwell">UIColorWell</a>
+    <a class="post-category post-category-uikit" href="/tags/uikit">UIKit</a>
+</div><h3>UIColorWell</h3><p>iOS 14 brought us many new features, one of them being the UIColorWell. This is not to be confused with UIColorPickerViewController, which while similar is handled just a bit differently. UIColorWell is a control that displays a color picker, but it also shows a little icon of the selected color in a wheel format to the user. While you can't add it using storyboard, it's very simple to add it in code.</p><pre><code><span class="keyword">class</span> ViewController: <span class="type">UIViewController</span> {
+    
+    <span class="keyword">var</span> colorWell: <span class="type">UIColorWell</span>!
+    
+    <span class="keyword">override func</span> viewDidLoad() {
+        <span class="keyword">super</span>.<span class="call">viewDidLoad</span>()
+        
+        colorWell = <span class="type">UIColorWell</span>()
+        colorWell.<span class="property">frame</span> = <span class="type">CGRect</span>(x: <span class="number">200</span>, y: <span class="number">135</span>, width: <span class="number">100</span>, height: <span class="number">100</span>)
+        
+        view.<span class="call">addSubview</span>(colorWell)
+    }
+}
+</code></pre><p>The above code will give you a color wheel displayed on the screen, in which you can click can and see various options for how the user can select their own color.</p><img class="post-image img-sm" src="/Images/Posts/09/09-01.gif" alt="Basic Color Picker"/><p>You can customize your color well with a few different options, such as adding a custom title and turning off the alpha support which is true by default. You can also set a selected color that the color wheel will display in its inner circle.</p><pre><code>colorWell.<span class="property">title</span> = <span class="string">"My Custom Title"</span>
+colorWell.<span class="property">selectedColor</span> = .<span class="dotAccess">systemRed</span>
+colorWell.<span class="property">supportsAlpha</span> = <span class="keyword">false</span>
+</code></pre><img class="post-image img-sm" src="/Images/Posts/09/09-02.png" alt="Color Picker Customized"/><p>Finally, you can use the color selected by accessing the <code>colorWell.selectedColor</code> property.</p><pre><code><span class="keyword">class</span> ViewController: <span class="type">UIViewController</span> {
+    
+    <span class="keyword">var</span> colorWell: <span class="type">UIColorWell</span>!
+    
+    <span class="keyword">override func</span> viewDidLoad() {
+        <span class="keyword">super</span>.<span class="call">viewDidLoad</span>()
+        
+        
+        <span class="keyword">let</span> changeBgBtn = <span class="type">UIButton</span>()
+        changeBgBtn.<span class="property">frame</span> = <span class="type">CGRect</span>(x: <span class="number">80</span>, y: <span class="number">100</span>, width: <span class="number">100</span>, height: <span class="number">100</span>)
+        changeBgBtn.<span class="call">setTitle</span>(<span class="string">"Tap me"</span>, for: .<span class="dotAccess">normal</span>)
+        changeBgBtn.<span class="call">addTarget</span>(<span class="keyword">self</span>, action: <span class="keyword">#selector</span>(changeBgColorWheel), for: .<span class="dotAccess">touchUpInside</span>)
+        view.<span class="call">addSubview</span>(changeBgBtn)
+        
+        colorWell = <span class="type">UIColorWell</span>()
+        colorWell.<span class="property">frame</span> = <span class="type">CGRect</span>(x: <span class="number">200</span>, y: <span class="number">135</span>, width: <span class="number">100</span>, height: <span class="number">100</span>)
+        colorWell.<span class="property">title</span> = <span class="string">"My Custom Title"</span>
+        colorWell.<span class="property">selectedColor</span> = .<span class="dotAccess">systemRed</span>
+        
+        view.<span class="call">addSubview</span>(colorWell)
+        
+    }
+    
+    <span class="keyword">@objc func</span> changeBgColorWheel() {
+        <span class="keyword">self</span>.<span class="property">view</span>.<span class="property">backgroundColor</span> = colorWell?.<span class="property">selectedColor</span>
+    }
+    
+}
+</code></pre><img class="post-image img-sm" src="/Images/Posts/09/09-03.gif" alt="Using Color Picker Selected Color"/><p>Feel free to download this project <a href="https://github.com/thomaskellough/iOS-Tutorials-UIKit-Swift">here</a>.</p></article></div><div class="footer-social"><div>© 2023 The Swift Protocol</div><div>Generated using <a href="https://github.com/johnsundell/publish">Publish</a>. Written in Swift</div><div><a href="https://www.linkedin.com/in/thomas-kellough/">LinkedIn</a> | <a href="https://github.com/thomaskellough">Github</a> | <a href="mailto:theswiftprotocol@gmail.com">Email</a></div></div></body></html>

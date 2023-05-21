@@ -1,0 +1,6 @@
+version: "Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)"
+options: "4e8b5b20c1d676af21b98fcd2017d939140fa39a9982e45e088435e81aaecdcd"
+build_start_time: [1684695906, 903967857]
+build_end_time: [1684695908, 862923145]
+inputs:
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/shellout/Sources/ShellOut.swift": [1684695895, 50837278]

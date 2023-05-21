@@ -1,0 +1,11 @@
+{
+  "": {
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SplashPublishPlugin.build/master.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splashpublishplugin/Sources/SplashPublishPlugin/SplashPublishPlugin.swift": {
+    "dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SplashPublishPlugin.build/SplashPublishPlugin.d",
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SplashPublishPlugin.build/SplashPublishPlugin.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SplashPublishPlugin.build/SplashPublishPlugin~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SplashPublishPlugin.build/SplashPublishPlugin.swiftdeps"
+  }
+}

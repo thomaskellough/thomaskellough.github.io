@@ -1,0 +1,270 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"/><script async src="https://www.googletagmanager.com/gtag/js?id=UA-175451977-1"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-175451977-1');</script><meta name="og:site_name" content="The Swift Protocol"/><link rel="canonical" href="www.thomaskellough/thomaskellough.github.io"/><meta name="twitter:url" content="www.thomaskellough/thomaskellough.github.io"/><meta name="og:url" content="www.thomaskellough/thomaskellough.github.io"/><title>Swift Skill Building | The Swift Protocol</title><meta name="twitter:title" content="Swift Skill Building | The Swift Protocol"/><meta name="og:title" content="Swift Skill Building | The Swift Protocol"/><meta name="description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:description" content="Swift Skill Building With Thomas Kellough"/><meta name="og:description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="http://www.theswiftprotocol.com/images/social.png"/><meta name="og:image" content="http://www.theswiftprotocol.com/images/social.png"/><link rel="stylesheet" href="/styles.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to The Swift Protocol"/></head><body><header><div class="nav-logo"><a href="/"><img src="/Images/blog-logo.png"/></a><nav class="nav-bar"><p>Swift Skill Building With Thomas Kellough</p><ul><li><h3><a href="/home">Home</a></h3></li><li><h3><a href="/posts">Posts</a></h3></li><li><h3><a href="/tags">Tags</a></h3></li></ul></nav></div></header><div class="wrapper"><article><h1>Create a unique Valentine's Day app for your loved one - Part 2</h1><div class="post-tags" markdown="1">
+        <a class="post-category post-category-uitableview" href="/tags/uitableview">UITableView</a>
+        <a class="post-category post-category-optionals" href="/tags/optionals">Optionals</a>
+</div><table class="posts-table">
+    <tr>
+        <th class="th-left"><a href="/posts/13-x-things-i-love-about-you-part-01" style="text-decoration: none">&larr; Introduction and setting up</a></th>
+        <th class="th-middle"></th>
+        <th class="th-right"><a href="/posts/13-x-things-i-love-about-you-part-03" style="text-decoration: none">Animations and UserDefaults &rarr;</a></th>
+    </tr>
+</table><h3>Editing your main view</h3><p>You can get creative with this, but for the purpose of this article, we will keep it simple. Inside Storyboard, add an image view, label, and two buttons on the screen. I gave the following constraints for each object:</p><ol><li>UIImageView - top-to-safe-area 40, leading-to-safe-area-20, trailing-to-safe-area 20, height 330</li></ol><ol start="2"><li>Label - top-to-image-view 20, leading-to-safe-area-20, trailing-to-safe-area 20</li></ol><ol start="3"><li>Button 1 - leading-to-safe-area 20, bottom-to-safe-area-20</li></ol><ol start="4"><li>Button 2 - trailing-to-safe-area 20, bottom-to-safe-area-20</li></ol><p>Delete both button titles and replace button 1 image with arrowshape.turn.up.left.fill and button 2 image with arrowshape.turn.up.right.fill. When you're finished you should have something that looks like this:</p><img class="post-image img-lg" src="/Images/Posts/13/13-02.png" width="800"/><p>Last, we will need to create some outlets for each object as well as an IBAction for each button. While you're here, create a constant and a variable for all of our compliments and the current day. When you're done your your <code>ComplimentViewController.swift</code> should look like this:</p><pre><code><span class="keyword">class</span> ComplimentViewController: <span class="type">UIViewController</span> {
+
+    <span class="keyword">@IBOutlet weak var</span> imageView: <span class="type">UIImageView</span>!
+    <span class="keyword">@IBOutlet weak var</span> label: <span class="type">UILabel</span>!
+    <span class="keyword">@IBOutlet weak var</span> previousButton: <span class="type">UIButton</span>!
+    <span class="keyword">@IBOutlet weak var</span> nextButton: <span class="type">UIButton</span>!
+    
+    <span class="keyword">let</span> compliments = <span class="type">AllCompliments</span>().<span class="property">compliments</span>
+    <span class="keyword">var</span> currentDay = <span class="number">0</span>
+    
+    <span class="keyword">override func</span> viewDidLoad() {
+        <span class="keyword">super</span>.<span class="call">viewDidLoad</span>()
+
+    }
+    
+    <span class="keyword">@IBAction func</span> previousButtonTapped(<span class="keyword">_</span> sender: <span class="type">UIButton</span>) {
+        
+    }
+    
+    <span class="keyword">@IBAction func</span> nextButtonTapped(<span class="keyword">_</span> sender: <span class="type">UIButton</span>) {
+        
+    }
+    
+}
+</code></pre><h3>Displaying Model Data</h3><p>You've got your main view and you've got your model data. Let's begin showing it on the screen now. We want to also give our label and image view a bit of style, something else you can edit as your own. Add the following two functions:</p><pre><code><span class="keyword">func</span> configureLabel() {
+    label.<span class="property">font</span> = <span class="type">UIFont</span>.<span class="call">preferredFont</span>(forTextStyle: .<span class="dotAccess">largeTitle</span>)
+    label.<span class="property">numberOfLines</span> = <span class="number">0</span>
+    label.<span class="property">textColor</span> = <span class="type">UIColor</span>.<span class="type">App</span>.<span class="type">Primary</span>
+    label.<span class="property">textAlignment</span> = .<span class="dotAccess">center</span>
+    label.<span class="property">text</span> = compliments[currentDay].dialogue
+}
+
+<span class="keyword">func</span> configureImageView() {
+    imageView.<span class="property">layer</span>.<span class="property">borderWidth</span> = <span class="number">8</span>
+    imageView.<span class="property">layer</span>.<span class="property">borderColor</span> = <span class="type">UIColor</span>.<span class="type">App</span>.<span class="type">Secondary</span>.<span class="property">cgColor</span>
+    imageView.<span class="property">contentMode</span> = .<span class="dotAccess">scaleAspectFill</span>
+    imageView.<span class="property">layer</span>.<span class="property">cornerRadius</span> = <span class="number">5</span>
+
+    <span class="keyword">let</span> image = <span class="type">UIImage</span>(named: compliments[currentDay].image)
+    imageView.<span class="property">image</span> = image
+}
+</code></pre><p>Then to make the call easier for every edit add this function and call it in <code>viewDidLoad</code></p><pre><code><span class="keyword">func</span> configureView() {
+    <span class="call">configureLabel</span>()
+    <span class="call">configureImageView</span>()
+}
+</code></pre><p>Run your app now and you should see something like this:</p><img class="post-image img-sm" src="/Images/Posts/13/13-03.png" width="800"/><p>Awesome. Our app is finally starting to come together!</p><h3>Cycling through images</h3><p>You'll notice that every time you run your app it shows the same image and same compliment. That's because we never change our <code>currentDay</code> variable. (If the variable name of currentDay sounds confusing right now, it will make sense later on!)</p><p>We need to edit both outlets to increase/decrease the current day and call the <code>configureView()</code> after each increment/decrement. This is as easy as changing both those stubs to this:</p><pre><code><span class="keyword">@IBAction func</span> previousButtonTapped(<span class="keyword">_</span> sender: <span class="type">UIButton</span>) {
+    currentDay -= <span class="number">1</span>
+    <span class="call">configureView</span>()
+}
+
+<span class="keyword">@IBAction func</span> nextButtonTapped(<span class="keyword">_</span> sender: <span class="type">UIButton</span>) {
+    currentDay += <span class="number">1</span>
+    <span class="call">configureView</span>()
+}
+</code></pre><img class="post-image img-sm" src="/Images/Posts/13/13-04.gif" width="800"/><p>Cycling through compliments is easy now, but you'll notice if you try to tap back from the first compliment or next at the last one your app will crash. You could put some try/catch blocks, or use if else's, or nil coalescing, or whatever your favorite way of error handling is, but I think it's better to just hide those buttons if they aren't useable. We will hide our <code>previous button</code> if the current day is equal to 0 and our <code>next button</code> if our current day is equal to the number of compliments minus 1. Then we will call this function in <code>configureView</code>. After adding the function for this your updated <code>ComplimentViewController.swift</code> should look like this.</p><pre><code><span class="keyword">class</span> ComplimentViewController: <span class="type">UIViewController</span> {
+
+    <span class="keyword">@IBOutlet weak var</span> imageView: <span class="type">UIImageView</span>!
+    <span class="keyword">@IBOutlet weak var</span> label: <span class="type">UILabel</span>!
+    <span class="keyword">@IBOutlet weak var</span> previousButton: <span class="type">UIButton</span>!
+    <span class="keyword">@IBOutlet weak var</span> nextButton: <span class="type">UIButton</span>!
+    
+    <span class="keyword">let</span> compliments = <span class="type">AllCompliments</span>().<span class="property">compliments</span>
+    <span class="keyword">var</span> currentDay = <span class="number">0</span>
+    
+    <span class="keyword">override func</span> viewDidLoad() {
+        <span class="keyword">super</span>.<span class="call">viewDidLoad</span>()
+        
+        <span class="call">configureView</span>()
+    }
+    
+    <span class="keyword">func</span> configureView() {
+        <span class="call">configureLabel</span>()
+        <span class="call">configureImageView</span>()
+        <span class="call">configureButtons</span>()
+    }
+    
+    <span class="keyword">func</span> configureLabel() {
+        label.<span class="property">font</span> = <span class="type">UIFont</span>.<span class="call">preferredFont</span>(forTextStyle: .<span class="dotAccess">largeTitle</span>)
+        label.<span class="property">numberOfLines</span> = <span class="number">0</span>
+        label.<span class="property">textColor</span> = <span class="type">UIColor</span>.<span class="type">App</span>.<span class="type">Primary</span>
+        label.<span class="property">textAlignment</span> = .<span class="dotAccess">center</span>
+        label.<span class="property">text</span> = compliments[currentDay].dialogue
+    }
+    
+    <span class="keyword">func</span> configureImageView() {
+        imageView.<span class="property">layer</span>.<span class="property">borderWidth</span> = <span class="number">8</span>
+        imageView.<span class="property">layer</span>.<span class="property">borderColor</span> = <span class="type">UIColor</span>.<span class="type">App</span>.<span class="type">Secondary</span>.<span class="property">cgColor</span>
+        imageView.<span class="property">contentMode</span> = .<span class="dotAccess">scaleAspectFill</span>
+        imageView.<span class="property">layer</span>.<span class="property">cornerRadius</span> = <span class="number">5</span>
+    
+        <span class="keyword">let</span> image = <span class="type">UIImage</span>(named: compliments[currentDay].image)
+        imageView.<span class="property">image</span> = image
+    }
+    
+    <span class="keyword">func</span> configureButtons() {
+        <span class="keyword">let</span> numberOfCompliments = compliments.<span class="property">count</span> - <span class="number">1</span>
+        nextButton.<span class="property">isHidden</span> = currentDay == numberOfCompliments ? true : <span class="keyword">false</span>
+        previousButton.<span class="property">isHidden</span> = currentDay == <span class="number">0</span> ? true : <span class="keyword">false</span>
+    }
+    
+    <span class="keyword">@IBAction func</span> previousButtonTapped(<span class="keyword">_</span> sender: <span class="type">UIButton</span>) {
+        currentDay -= <span class="number">1</span>
+        <span class="call">configureView</span>()
+    }
+    
+    <span class="keyword">@IBAction func</span> nextButtonTapped(<span class="keyword">_</span> sender: <span class="type">UIButton</span>) {
+        currentDay += <span class="number">1</span>
+        <span class="call">configureView</span>()
+    }
+    
+}
+</code></pre><h3>Editing your TableViewController</h3><p>We have our main view working, but if end up having a ton of compliments (which you should....) then it may be easier to look through a tableview to find the one you want instead of hitting "next" over and over. Let's configure that now. If you haven't already, give your tableviewcell a reuse identifier of "cell" inside Storyboard. We need to do a few things...</p><ol><li>Create a reference to our compliments</li></ol><ol start="2"><li>Return the number of rows as the number of compliments we have</li></ol><ol start="3"><li>Edit the row size to be a bit bigger so we can use our images inside the tableview cell</li></ol><ol start="4"><li>Configure each cell to show the picture and the title of your compliment</li></ol><ol start="5"><li>Configure the picture to be the same size in every row</li></ol><ol start="6"><li>Navigate back to the view when tapping a cell</li></ol><p>Creating a reference is as trivial as adding the following line as a property to our <code>ComplimentsViewController</code> class:</p><pre><code><span class="keyword">let</span> compliments = <span class="type">AllCompliments</span>().<span class="property">compliments</span>
+</code></pre><p>The next two things are easy enough:</p><pre><code><span class="keyword">override func</span> tableView(<span class="keyword">_</span> tableView: <span class="type">UITableView</span>, numberOfRowsInSection section: <span class="type">Int</span>) -&gt; <span class="type">Int</span> {
+    compliments.<span class="property">count</span>
+}
+
+<span class="keyword">override func</span> tableView(<span class="keyword">_</span> tableView: <span class="type">UITableView</span>, heightForRowAt indexPath: <span class="type">IndexPath</span>) -&gt; <span class="type">CGFloat</span> {
+    <span class="number">75</span>
+}
+</code></pre><p>Configuring each cell to show the title and image is also fairly simple:</p><pre><code><span class="keyword">override func</span> tableView(<span class="keyword">_</span> tableView: <span class="type">UITableView</span>, cellForRowAt indexPath: <span class="type">IndexPath</span>) -&gt; <span class="type">UITableViewCell</span> {
+    <span class="keyword">let</span> cell = tableView.<span class="call">dequeueReusableCell</span>(withIdentifier: <span class="string">"cell"</span>, for: indexPath)
+    
+    <span class="keyword">let</span> compliment = compliments[indexPath.<span class="property">row</span>]
+    
+    <span class="keyword">let</span> image = <span class="type">UIImage</span>(named: compliment.<span class="property">image</span>)
+    cell.<span class="property">imageView</span>?.<span class="property">image</span> = image
+    cell.<span class="property">imageView</span>?.<span class="property">contentMode</span> = .<span class="dotAccess">scaleAspectFill</span>
+    
+    cell.<span class="property">textLabel</span>?.<span class="property">text</span> = compliment.<span class="property">title</span>
+    
+    <span class="keyword">return</span> cell
+}
+</code></pre><p>But you'll notice that the images look a bit messed up. That's where step number five comes in. It's not a lot of code, but it isn't super intuitive either. I love UIKit, but there are many things that I think could make it better. We need to use an image context to draw the exact size that we want. With that being said, let's fix the pictures by adding the following code inside our <code>cellForRowAt</code> method right before we return the cell.</p><pre><code><span class="keyword">let</span> itemSize = <span class="type">CGSize</span>.<span class="keyword">init</span>(width: <span class="number">75</span>, height: <span class="number">75</span>)
+<span class="type">UIGraphicsBeginImageContextWithOptions</span>(itemSize, <span class="keyword">false</span>, <span class="type">UIScreen</span>.<span class="property">main</span>.<span class="property">scale</span>);
+<span class="keyword">let</span> imageRect = <span class="type">CGRect</span>.<span class="keyword">init</span>(origin: <span class="type">CGPoint</span>.<span class="property">zero</span>, size: itemSize)
+cell.<span class="property">imageView</span>?.<span class="property">image</span>!.<span class="call">draw</span>(in: imageRect)
+cell.<span class="property">imageView</span>?.<span class="property">image</span>! = <span class="type">UIGraphicsGetImageFromCurrentImageContext</span>()!;
+<span class="type">UIGraphicsEndImageContext</span>();
+</code></pre><p>Great, now our cells look good, but nothing happens when we tap them. For the final step, we need to break it down into a few small steps:</p><ol><li>Embed our main view controller (the one with the tabs!) inside a navigation controller - which is done by going to Storyboard, selecting View Controller, the going to Editor &gt; Embed In &gt; Navigation Controller</li></ol><ol start="2"><li>Creating a <em>optional</em> variable called <code>selectedDay</code> inside <code>ComplimentViewController.swift'</code> with <em>no</em> default value</li></ol><ol start="3"><li>Giving our <code>currentDay</code> variable in <code>ComplimentViewController.swift</code> the value of <code>selectedDay</code> if it exists</li></ol><ol start="4"><li>Giving that variable in the above step a value when we navigate to it from our <code>ComplimentsTableViewController.swift</code></li></ol><p>Step two is done with adding this line in <code>ComplimentViewController.swift</code> under your other class variables:</p><pre><code><span class="keyword">var</span> selectedDay: <span class="type">Int</span>?
+</code></pre><p>The next step can be edited inside <code>configureLabel()</code> and <code>configureImageView()</code> by adding the following ternary operator at the top of each method:</p><pre><code>currentDay = selectedDay != <span class="keyword">nil</span> ? selectedDay! : currentDay
+</code></pre><p>And step four is done by adding the following <code>didSelectRowAt</code> method in <code>ComplimentsTableViewController.swift</code>:</p><pre><code><span class="keyword">override func</span> tableView(<span class="keyword">_</span> tableView: <span class="type">UITableView</span>, didSelectRowAt indexPath: <span class="type">IndexPath</span>) {
+    <span class="keyword">if let</span> vc = storyboard?.<span class="call">instantiateViewController</span>(withIdentifier: <span class="string">"ComplimentViewController"</span>) <span class="keyword">as</span>? <span class="type">ComplimentViewController</span> {
+        vc.<span class="property">selectedDay</span> = indexPath.<span class="property">row</span>
+        navigationController?.<span class="call">pushViewController</span>(vc, animated: <span class="keyword">true</span>)
+    }
+}
+</code></pre><p>You'll notice that you can now navigate from the tableview to the main view and it shows the correct picture, but your arrow buttons do not work correctly anymore. This is because <code>selectedDay</code> does not change and it's not nil anymore. There are many ways we can handle this, but we are just going to go the easy route here. Right after the line of code we added in step three, add the following:</p><pre><code>selectedDay = <span class="keyword">nil</span>
+</code></pre><p>This means as soon as we navigate from the tableview and configure the view, we also set it back to nil so when we call <code>configureView</code> again the current day doesn't get set to <code>selectedDay</code>. Note that you only need to add this line in either <code>configureImageView</code> or <code>configureLabel</code> and not both places, however, it doesn't hurt if you do.</p><p>Just to recap what both files should look like take a look here:</p><pre><code><span class="keyword">class</span> ComplimentViewController: <span class="type">UIViewController</span> {
+
+    <span class="keyword">@IBOutlet weak var</span> imageView: <span class="type">UIImageView</span>!
+    <span class="keyword">@IBOutlet weak var</span> label: <span class="type">UILabel</span>!
+    <span class="keyword">@IBOutlet weak var</span> previousButton: <span class="type">UIButton</span>!
+    <span class="keyword">@IBOutlet weak var</span> nextButton: <span class="type">UIButton</span>!
+    
+    <span class="keyword">let</span> compliments = <span class="type">AllCompliments</span>().<span class="property">compliments</span>
+    <span class="keyword">var</span> currentDay = <span class="number">0</span>
+    <span class="keyword">var</span> selectedDay: <span class="type">Int</span>?
+    
+    <span class="keyword">override func</span> viewDidLoad() {
+        <span class="keyword">super</span>.<span class="call">viewDidLoad</span>()
+        
+        <span class="call">configureView</span>()
+    }
+    
+    <span class="keyword">func</span> configureView() {
+        <span class="call">configureLabel</span>()
+        <span class="call">configureImageView</span>()
+        <span class="call">configureButtons</span>()
+    }
+    
+    <span class="keyword">func</span> configureLabel() {
+        currentDay = selectedDay != <span class="keyword">nil</span> ? selectedDay! : currentDay
+        selectedDay = <span class="keyword">nil</span>
+        
+        label.<span class="property">font</span> = <span class="type">UIFont</span>.<span class="call">preferredFont</span>(forTextStyle: .<span class="dotAccess">largeTitle</span>)
+        label.<span class="property">numberOfLines</span> = <span class="number">0</span>
+        label.<span class="property">textColor</span> = <span class="type">UIColor</span>.<span class="type">App</span>.<span class="type">Primary</span>
+        label.<span class="property">textAlignment</span> = .<span class="dotAccess">center</span>
+        label.<span class="property">text</span> = compliments[currentDay].dialogue
+    }
+    
+    <span class="keyword">func</span> configureImageView() {
+        currentDay = selectedDay != <span class="keyword">nil</span> ? selectedDay! : currentDay
+        
+        imageView.<span class="property">layer</span>.<span class="property">borderWidth</span> = <span class="number">8</span>
+        imageView.<span class="property">layer</span>.<span class="property">borderColor</span> = <span class="type">UIColor</span>.<span class="type">App</span>.<span class="type">Secondary</span>.<span class="property">cgColor</span>
+        imageView.<span class="property">contentMode</span> = .<span class="dotAccess">scaleAspectFill</span>
+        imageView.<span class="property">layer</span>.<span class="property">cornerRadius</span> = <span class="number">5</span>
+    
+        <span class="keyword">let</span> image = <span class="type">UIImage</span>(named: compliments[currentDay].image)
+        imageView.<span class="property">image</span> = image
+    }
+    
+    <span class="keyword">func</span> configureButtons() {
+        <span class="keyword">let</span> numberOfCompliments = compliments.<span class="property">count</span> - <span class="number">1</span>
+        nextButton.<span class="property">isHidden</span> = currentDay == numberOfCompliments ? true : <span class="keyword">false</span>
+        previousButton.<span class="property">isHidden</span> = currentDay == <span class="number">0</span> ? true : <span class="keyword">false</span>
+    }
+    
+    <span class="keyword">@IBAction func</span> previousButtonTapped(<span class="keyword">_</span> sender: <span class="type">UIButton</span>) {
+        currentDay -= <span class="number">1</span>
+        <span class="call">configureView</span>()
+    }
+    
+    <span class="keyword">@IBAction func</span> nextButtonTapped(<span class="keyword">_</span> sender: <span class="type">UIButton</span>) {
+        currentDay += <span class="number">1</span>
+        <span class="call">configureView</span>()
+    }
+    
+}
+</code></pre><pre><code><span class="keyword">class</span> ComplimentsTableViewController: <span class="type">UITableViewController</span> {
+
+    <span class="keyword">let</span> compliments = <span class="type">AllCompliments</span>().<span class="property">compliments</span>
+    
+    <span class="keyword">override func</span> viewDidLoad() {
+        <span class="keyword">super</span>.<span class="call">viewDidLoad</span>()
+    }
+
+    <span class="keyword">override func</span> tableView(<span class="keyword">_</span> tableView: <span class="type">UITableView</span>, numberOfRowsInSection section: <span class="type">Int</span>) -&gt; <span class="type">Int</span> {
+        compliments.<span class="property">count</span>
+    }
+    
+    <span class="keyword">override func</span> tableView(<span class="keyword">_</span> tableView: <span class="type">UITableView</span>, cellForRowAt indexPath: <span class="type">IndexPath</span>) -&gt; <span class="type">UITableViewCell</span> {
+        <span class="keyword">let</span> cell = tableView.<span class="call">dequeueReusableCell</span>(withIdentifier: <span class="string">"cell"</span>, for: indexPath)
+        
+        <span class="keyword">let</span> compliment = compliments[indexPath.<span class="property">row</span>]
+        
+        <span class="keyword">let</span> image = <span class="type">UIImage</span>(named: compliment.<span class="property">image</span>)
+        cell.<span class="property">imageView</span>?.<span class="property">image</span> = image
+        cell.<span class="property">imageView</span>?.<span class="property">contentMode</span> = .<span class="dotAccess">scaleAspectFill</span>
+        
+        cell.<span class="property">textLabel</span>?.<span class="property">text</span> = compliment.<span class="property">title</span>
+        
+        <span class="keyword">let</span> itemSize = <span class="type">CGSize</span>.<span class="keyword">init</span>(width: <span class="number">75</span>, height: <span class="number">75</span>)
+        <span class="type">UIGraphicsBeginImageContextWithOptions</span>(itemSize, <span class="keyword">false</span>, <span class="type">UIScreen</span>.<span class="property">main</span>.<span class="property">scale</span>);
+        <span class="keyword">let</span> imageRect = <span class="type">CGRect</span>.<span class="keyword">init</span>(origin: <span class="type">CGPoint</span>.<span class="property">zero</span>, size: itemSize)
+        cell.<span class="property">imageView</span>?.<span class="property">image</span>!.<span class="call">draw</span>(in: imageRect)
+        cell.<span class="property">imageView</span>?.<span class="property">image</span>! = <span class="type">UIGraphicsGetImageFromCurrentImageContext</span>()!;
+        <span class="type">UIGraphicsEndImageContext</span>();
+        
+        <span class="keyword">return</span> cell
+    }
+    
+    <span class="keyword">override func</span> tableView(<span class="keyword">_</span> tableView: <span class="type">UITableView</span>, didSelectRowAt indexPath: <span class="type">IndexPath</span>) {
+        <span class="keyword">if let</span> vc = storyboard?.<span class="call">instantiateViewController</span>(withIdentifier: <span class="string">"ComplimentViewController"</span>) <span class="keyword">as</span>? <span class="type">ComplimentViewController</span> {
+            vc.<span class="property">selectedDay</span> = indexPath.<span class="property">row</span>
+            navigationController?.<span class="call">pushViewController</span>(vc, animated: <span class="keyword">true</span>)
+        }
+    }
+    
+    <span class="keyword">override func</span> tableView(<span class="keyword">_</span> tableView: <span class="type">UITableView</span>, heightForRowAt indexPath: <span class="type">IndexPath</span>) -&gt; <span class="type">CGFloat</span> {
+        <span class="number">75</span>
+    }
+}
+</code></pre><p>And honestly, if you want to stop here, write some compliments out for whoever you are making this app for, and give it to them, then by all means go for it! Buuuuut, if you stay a bit longer, we can spice it up a bit more.</p><table class="posts-table">
+    <tr>
+        <th class="th-left"><a href="/posts/13-x-things-i-love-about-you-part-01" style="text-decoration: none">&larr; Introduction and setting up</a></th>
+        <th class="th-middle"></th>
+        <th class="th-right"><a href="/posts/13-x-things-i-love-about-you-part-03" style="text-decoration: none">Animations and UserDefaults &rarr;</a></th>
+    </tr>
+</table></article></div><div class="footer-social"><div>© 2023 The Swift Protocol</div><div>Generated using <a href="https://github.com/johnsundell/publish">Publish</a>. Written in Swift</div><div><a href="https://www.linkedin.com/in/thomas-kellough/">LinkedIn</a> | <a href="https://github.com/thomaskellough">Github</a> | <a href="mailto:theswiftprotocol@gmail.com">Email</a></div></div></body></html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"/><script async src="https://www.googletagmanager.com/gtag/js?id=UA-175451977-1"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-175451977-1');</script><meta name="og:site_name" content="The Swift Protocol"/><link rel="canonical" href="www.thomaskellough/thomaskellough.github.io"/><meta name="twitter:url" content="www.thomaskellough/thomaskellough.github.io"/><meta name="og:url" content="www.thomaskellough/thomaskellough.github.io"/><title>Swift Skill Building | The Swift Protocol</title><meta name="twitter:title" content="Swift Skill Building | The Swift Protocol"/><meta name="og:title" content="Swift Skill Building | The Swift Protocol"/><meta name="description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:description" content="Swift Skill Building With Thomas Kellough"/><meta name="og:description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="http://www.theswiftprotocol.com/images/social.png"/><meta name="og:image" content="http://www.theswiftprotocol.com/images/social.png"/><link rel="stylesheet" href="/styles.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to The Swift Protocol"/></head><body><header><div class="nav-logo"><a href="/"><img src="/Images/blog-logo.png"/></a><nav class="nav-bar"><p>Swift Skill Building With Thomas Kellough</p><ul><li><h3><a href="/home">Home</a></h3></li><li><h3><a href="/posts">Posts</a></h3></li><li><h3><a href="/tags">Tags</a></h3></li></ul></nav></div></header><div class="wrapper"><article><h1>Use Alamofire to make an API request for NASA's Astronomy Picture of the Day - Part 2</h1><div class="post-tags" markdown="1">
+        <a class="post-category post-category-api" href="/tags/api">API</a>
+        <a class="post-category post-category-alamofire" href="/tags/alamofire">Alamofire</a>
+        <a class="post-category post-category-models" href="/tags/models">Models</a>
+        <a class="post-category post-category-dispatchqueue" href="/tags/dispatchqueue">DispatchQueue</a>
+        <a class="post-category post-category-codable" href="/tags/codable">Codable</a>
+        <a class="post-category post-category-uikit" href="/tags/uikit">UIKit</a>
+</div><table class="posts-table">
+    <tr>
+        <th class="th-left"><a href="/posts/04-requesting-data-from-an-api-01" style="text-decoration: none">&larr; Introduction and setting up</a></th>
+        <th class="th-middle"></th>
+        <th class="th-right"><a href="/posts/04-requesting-data-from-an-api-03" style="text-decoration: none">Handling errors &rarr;</a></th>
+    </tr>
+</table><h3>Creating our model</h3><p>Before we start making our API request, we need to create a model to store our data nicely. Recall how the data looks when it's returned to us. We need to create a struct that holds a property for each piece of data returned and also have the struct conform to Decodable so we can convert it from the JSON object. Go ahead and create a new swift file called <code>APODmodel.swift</code> and add the following code:</p><pre><code><span class="keyword">struct</span> APOD: <span class="type">Decodable</span> {
+    <span class="keyword">let</span> title: <span class="type">String</span>
+    <span class="keyword">let</span> date: <span class="type">String</span>
+    <span class="keyword">let</span> explanation: <span class="type">String</span>
+    <span class="keyword">let</span> hdurl: <span class="type">String</span>
+    <span class="keyword">let</span> url: <span class="type">String</span>
+    <span class="keyword">let</span> copyright: <span class="type">String</span>?
+}
+</code></pre><p>Note that copyright is optional because we may or may not get that back during our request. If we left it as nonoptional then your app would crash on most days. This model allows us to call out the title, date, explanation, or two different types of images that we can download. For this project, we will just be using the basic url and not the hdurl (high definition) because it can be much slower to process.</p><h3>Making an API Request</h3><p>Great! Let's finally start digging into our code in order to make our first API request. You'll be amazed by how easy it is to make an API request and decode it using Alamofire and codable. Add this function to <code>ViewController.swift</code> and call it in <code>viewDidLoad()</code>:</p><pre><code><span class="keyword">func</span> fetchAPOD() {
+    <span class="keyword">let</span> request = <span class="type">AF</span>.<span class="call">request</span>(apiURL + <span class="type">APIKey</span>)
+    request.<span class="call">responseDecodable</span>(of: <span class="type">APOD</span>.<span class="keyword">self</span>) { response <span class="keyword">in
+        guard let</span> apod = response.<span class="property">value</span> <span class="keyword">else</span> { <span class="keyword">return</span> }
+    }
+}
+</code></pre><p>Seriously, it's that easy! First Alamofire makes a request using the api endpoint you provided and your specific api key. Then, it takes that result and matches it to the model you created to give you an APOD object. Although, running your code right now won't show you anything of value yet. We haven't done anything with the data.</p><h3>Updating our UI</h3><p>We need to do two different things to update our UI with the data that is returned. Let's start with the easy part, which is updating each label in our stackview appropriately. Let's create a function that does the following things:</p><ol><li>Takes in an APOD object as a parameter</li></ol><ol start="2"><li>Updates the dateLabel/titleLabel/explanationLabel with the data from our APOD object passed in</li></ol><ol start="3"><li>Allow each label to expand to show as many lines as it needs by setting the property <code>label.numberOfLines=0</code></li></ol><ol start="4"><li>Give each label a custom font that can size dynamically and a custom color of our choosing</li></ol><ol start="5"><li>If we get a copyright back, update the label for that, otherwise, hide the label</li></ol><pre><code><span class="keyword">func</span> loadDetails(apod: <span class="type">APOD</span>) {
+    dateLabel.<span class="property">text</span> = apod.<span class="property">date</span>
+    dateLabel.<span class="property">numberOfLines</span> = <span class="number">0</span>
+    dateLabel.<span class="property">font</span> = .<span class="call">preferredFont</span>(forTextStyle: .<span class="dotAccess">callout</span>)
+    dateLabel.<span class="property">adjustsFontForContentSizeCategory</span> = <span class="keyword">true</span>
+
+    titleLabel.<span class="property">text</span> = apod.<span class="property">title</span>
+    titleLabel.<span class="property">textColor</span> = .<span class="dotAccess">systemGreen</span>
+    titleLabel.<span class="property">numberOfLines</span> = <span class="number">0</span>
+    titleLabel.<span class="property">font</span> = .<span class="call">preferredFont</span>(forTextStyle: .<span class="dotAccess">title1</span>)
+    dateLabel.<span class="property">adjustsFontForContentSizeCategory</span> = <span class="keyword">true</span>
+
+    explanationLabel.<span class="property">text</span> = apod.<span class="property">explanation</span>
+    explanationLabel.<span class="property">numberOfLines</span> = <span class="number">0</span>
+    explanationLabel.<span class="property">font</span> = .<span class="call">preferredFont</span>(forTextStyle: .<span class="dotAccess">body</span>)
+    explanationLabel.<span class="property">adjustsFontForContentSizeCategory</span> = <span class="keyword">true
+    
+    if let</span> copyright = apod.<span class="property">copyright</span> {
+        copyrightLabel.<span class="property">text</span> = <span class="string">"Copyright:</span> \(copyright)<span class="string">"</span>
+        copyrightLabel.<span class="property">numberOfLines</span> = <span class="number">0</span>
+        copyrightLabel.<span class="property">font</span> = .<span class="call">preferredFont</span>(forTextStyle: .<span class="dotAccess">caption1</span>)
+    } <span class="keyword">else</span> {
+        copyrightLabel.<span class="property">isHidden</span> = <span class="keyword">true</span>
+    }
+}
+</code></pre><p>Now you can call your function in the closure of your api request. Add the following line:</p><pre><code><span class="keyword">self</span>.<span class="call">loadDetails</span>(apod: apod)
+</code></pre><p>That's all it takes to update your labels! You should be able to run your code now and see everything except for the image. Remember, if you don't see anything check your API request in Postman or just copy and paste it into a web browser and see what data returns.</p><img class="post-image" src="/Images/Posts/04/04-04.png" alt="API Request Data Only" width="800"/><h3>Updating our image</h3><p>Loading an image from a url isn't as difficult is it may sound. Here are the steps to make it happen:</p><ol><li>Create a function that takes in a url string as a parameter. We get this from <code>apod.url</code></li></ol><ol start="2"><li>Create a url object from our url string passed in</li></ol><ol start="3"><li>Using DispatchQueue, try and create a data object out of the contents of our url</li></ol><ol start="4"><li>Try and create an image our of our data object</li></ol><ol start="5"><li>Update our image view with our image using the main thread</li></ol><p>The code looks like this:</p><pre><code><span class="keyword">func</span> loadImage(urlString: <span class="type">String</span>) {
+    <span class="keyword">guard let</span> url = <span class="type">URL</span>(string: urlString) <span class="keyword">else</span> { <span class="keyword">return</span> }
+
+    <span class="type">DispatchQueue</span>.<span class="call">global</span>().<span class="call">async</span> { [<span class="keyword">weak self</span>] <span class="keyword">in
+        if let</span> data = <span class="keyword">try</span>? <span class="type">Data</span>(contentsOf: url) {
+            <span class="keyword">if let</span> image = <span class="type">UIImage</span>(data: data) {
+                <span class="type">DispatchQueue</span>.<span class="property">main</span>.<span class="call">async</span> {
+                    <span class="keyword">self</span>?.<span class="property">imageView</span>.<span class="property">image</span> = image
+                }
+            }
+        }
+    }
+}
+</code></pre><p>Then inside your API request closure, you can add</p><pre><code><span class="keyword">self</span>.<span class="call">loadImage</span>(urlString: apod.<span class="property">url</span>)
+</code></pre><p>Just to update, your entire <code>fetchAPOD()</code> function should now look like this</p><pre><code><span class="keyword">func</span> fetchAPOD() {
+    <span class="keyword">let</span> request = <span class="type">AF</span>.<span class="call">request</span>(apiURL + <span class="type">APIKey</span>)
+    request.<span class="call">responseDecodable</span>(of: <span class="type">APOD</span>.<span class="keyword">self</span>) { response <span class="keyword">in
+        guard let</span> apod = response.<span class="property">value</span> <span class="keyword">else</span> { <span class="keyword">return</span> }
+        
+        <span class="keyword">self</span>.<span class="call">loadDetails</span>(apod: apod)
+        <span class="keyword">self</span>.<span class="call">loadImage</span>(urlString: apod.<span class="property">url</span>)
+    }
+}
+</code></pre><p>Awesome! Restart your app and see your new picture!</p><img class="post-image img-md" src="/Images/Posts/04/04-05.png" alt="API Request Data and Image" width="800"/><table class="posts-table">
+    <tr>
+        <th class="th-left"><a href="/posts/04-requesting-data-from-an-api-01" style="text-decoration: none">&larr; Introduction and setting up</a></th>
+        <th class="th-middle"></th>
+        <th class="th-right"><a href="/posts/04-requesting-data-from-an-api-03" style="text-decoration: none">Handling errors &rarr;</a></th>
+    </tr>
+</table></article></div><div class="footer-social"><div>© 2023 The Swift Protocol</div><div>Generated using <a href="https://github.com/johnsundell/publish">Publish</a>. Written in Swift</div><div><a href="https://www.linkedin.com/in/thomas-kellough/">LinkedIn</a> | <a href="https://github.com/thomaskellough">Github</a> | <a href="mailto:theswiftprotocol@gmail.com">Email</a></div></div></body></html>

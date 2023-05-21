@@ -1,0 +1,12 @@
+{
+  "": {
+    "dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Sweep.build/Sweep.d",
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Sweep.build/Sweep.o",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Sweep.build/master.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/sweep/Sources/Sweep/Sweep.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Sweep.build/Sweep.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Sweep.build/Sweep~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Sweep.build/Sweep.swiftdeps"
+  }
+}

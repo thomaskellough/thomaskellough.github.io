@@ -1,0 +1,6 @@
+version: "Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)"
+options: "e5174b002b306b29c7c434fdb7351946b392737afd8d2ad06796ac7df67008cf"
+build_start_time: [1684695906, 901553153]
+build_end_time: [1684695908, 946179866]
+inputs:
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/sweep/Sources/Sweep/Sweep.swift": [1684695899, 895095348]

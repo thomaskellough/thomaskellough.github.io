@@ -1,0 +1,7 @@
+version: "Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)"
+options: "07d1afbd905906a57334b1156e406be31d34b9eed609984ff06d4f3754dc40c9"
+build_start_time: [1684695915, 608594894]
+build_end_time: [1684695915, 813470840]
+inputs:
+  ? "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splashpublishplugin/Sources/SplashPublishPlugin/SplashPublishPlugin.swift"
+  : [1684695901, 502108573]

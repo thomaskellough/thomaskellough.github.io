@@ -1,0 +1,137 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"/><script async src="https://www.googletagmanager.com/gtag/js?id=UA-175451977-1"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-175451977-1');</script><meta name="og:site_name" content="The Swift Protocol"/><link rel="canonical" href="www.thomaskellough/thomaskellough.github.io"/><meta name="twitter:url" content="www.thomaskellough/thomaskellough.github.io"/><meta name="og:url" content="www.thomaskellough/thomaskellough.github.io"/><title>Swift Skill Building | The Swift Protocol</title><meta name="twitter:title" content="Swift Skill Building | The Swift Protocol"/><meta name="og:title" content="Swift Skill Building | The Swift Protocol"/><meta name="description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:description" content="Swift Skill Building With Thomas Kellough"/><meta name="og:description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="http://www.theswiftprotocol.com/images/social.png"/><meta name="og:image" content="http://www.theswiftprotocol.com/images/social.png"/><link rel="stylesheet" href="/styles.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to The Swift Protocol"/></head><body><header><div class="nav-logo"><a href="/"><img src="/Images/blog-logo.png"/></a><nav class="nav-bar"><p>Swift Skill Building With Thomas Kellough</p><ul><li><h3><a href="/home">Home</a></h3></li><li><h3><a href="/posts">Posts</a></h3></li><li><h3><a href="/tags">Tags</a></h3></li></ul></nav></div></header><div class="wrapper"><article><h1>Using UISearchController with UIKit</h1><div class="post-tags" markdown="1">
+    <a class="post-category post-category-uisearchcontroller" href="/tags/uisearchcontroller">UISearchController</a>
+    <a class="post-category post-category-uikit" href="/tags/uikit">UIKit</a>
+</div><h3>Getting started</h3><p>Go ahead and download the starter project <a href="https://github.com/thomaskellough/iOS-Tutorials-UIKit-Swift">here</a>. If you don't want to download the starter project, just simply make your own tableview embedded in a navigation controller with some pre-populated data. I recommend adding a title and subtitle to your tableview so we can search by two different things, but this tutorial will use my starter project in all the examples.</p><p>Great! So now we have a tableview that lists different Hogwarts students as well as their appropriate houses. I also color-coded it so make it easier to see what's happening. If you're using the start project and you run it you should see something like this:</p><img class="post-image img-sm" src="/Images/Posts/08/08-01.png" alt="Hogwarts Student TableView"/><p>This is created from the following code assuming you have storyboard set up</p><pre><code><span class="keyword">import</span> UIKit
+
+<span class="keyword">class</span> TableViewController: <span class="type">UITableViewController</span>{
+   
+  <span class="keyword">var</span> students = [<span class="type">Student</span>]()
+   
+  <span class="keyword">override func</span> viewDidLoad() {
+    <span class="keyword">super</span>.<span class="call">viewDidLoad</span>()
+     
+    <span class="call">createStudents</span>()
+  }
+   
+  <span class="keyword">func</span> createStudents() {
+    <span class="keyword">let</span> harry = <span class="type">Student</span>(name: <span class="string">"Harry Potter"</span>, house: <span class="string">"Gryffindor"</span>)
+    <span class="keyword">let</span> hermione = <span class="type">Student</span>(name: <span class="string">"Hermione Granger"</span>, house: <span class="string">"Gryffindor"</span>)
+    <span class="keyword">let</span> ron = <span class="type">Student</span>(name: <span class="string">"Ronald Weasley"</span>, house: <span class="string">"Gryffindor"</span>)
+    <span class="keyword">let</span> luna = <span class="type">Student</span>(name: <span class="string">"Luna Lovegood"</span>, house: <span class="string">"Ravenclaw"</span>)
+    <span class="keyword">let</span> ginny = <span class="type">Student</span>(name: <span class="string">"Ginny Weasley"</span>, house: <span class="string">"Gryffindor"</span>)
+    <span class="keyword">let</span> fred = <span class="type">Student</span>(name: <span class="string">"Fred Weasley"</span>, house: <span class="string">"Gryffindor"</span>)
+    <span class="keyword">let</span> george = <span class="type">Student</span>(name: <span class="string">"George Weasley"</span>, house: <span class="string">"Gryffindor"</span>)
+    <span class="keyword">let</span> neville = <span class="type">Student</span>(name: <span class="string">"Neville Longbottom"</span>, house: <span class="string">"Gryffindor"</span>)
+    <span class="keyword">let</span> dean = <span class="type">Student</span>(name: <span class="string">"Dean Thomas"</span>, house: <span class="string">"Gryffindor"</span>)
+    <span class="keyword">let</span> draco = <span class="type">Student</span>(name: <span class="string">"Draco Malfoy"</span>, house: <span class="string">"Slytherin"</span>)
+    <span class="keyword">let</span> parvati = <span class="type">Student</span>(name: <span class="string">"Parvati Patil"</span>, house: <span class="string">"Gryffindor"</span>)
+    <span class="keyword">let</span> padma = <span class="type">Student</span>(name: <span class="string">"Padma Patil"</span>, house: <span class="string">"Ravenclaw"</span>)
+    <span class="keyword">let</span> cedric = <span class="type">Student</span>(name: <span class="string">"Cedric Diggory"</span>, house: <span class="string">"Hufflepuff"</span>)
+    <span class="keyword">let</span> hannah = <span class="type">Student</span>(name: <span class="string">"Hannah Abbott"</span>, house: <span class="string">"Hufflepuff"</span>)
+    <span class="keyword">let</span> zacharias = <span class="type">Student</span>(name: <span class="string">"Zacharias Smith"</span>, house: <span class="string">"Hufflepuff"</span>)
+    <span class="keyword">let</span> crabbe = <span class="type">Student</span>(name: <span class="string">"Vincent Crabbe"</span>, house: <span class="string">"Slytherin"</span>)
+    <span class="keyword">let</span> goyle = <span class="type">Student</span>(name: <span class="string">"Gregory Goyle"</span>, house: <span class="string">"Slytherin"</span>)
+     
+    students += [harry, hermione, ron, ginny, fred, george, luna, neville, dean, draco, parvati, padma, cedric, hannah, zacharias, crabbe, goyle]
+  }
+   
+  <span class="keyword">override func</span> tableView(<span class="keyword">_</span> tableView: <span class="type">UITableView</span>, cellForRowAt indexPath: <span class="type">IndexPath</span>) -&gt; <span class="type">UITableViewCell</span> {
+    <span class="keyword">let</span> cell = tableView.<span class="call">dequeueReusableCell</span>(withIdentifier: <span class="string">"Cell"</span>, for: indexPath)
+     
+    <span class="keyword">let</span> student = students[indexPath.<span class="property">row</span>]
+     
+    cell.<span class="property">textLabel</span>?.<span class="property">text</span> = student.<span class="property">name</span>
+    cell.<span class="property">detailTextLabel</span>?.<span class="property">text</span> = student.<span class="property">house</span>
+    cell.<span class="property">textLabel</span>?.<span class="property">font</span> = .<span class="call">preferredFont</span>(forTextStyle: .<span class="dotAccess">headline</span>)
+    cell.<span class="property">detailTextLabel</span>?.<span class="property">font</span> = .<span class="call">preferredFont</span>(forTextStyle: .<span class="dotAccess">subheadline</span>)
+    cell.<span class="property">textLabel</span>?.<span class="property">textColor</span> = .<span class="dotAccess">white</span>
+    cell.<span class="property">detailTextLabel</span>?.<span class="property">textColor</span> = .<span class="dotAccess">white</span>
+     
+    <span class="keyword">switch</span> student.<span class="property">house</span> {
+    <span class="keyword">case</span> <span class="string">"Gryffindor"</span>:
+      cell.<span class="property">backgroundColor</span> = <span class="type">UIColor</span>(red: <span class="number">174</span>/<span class="number">255</span>, green: <span class="number">0</span>, blue: <span class="number">1</span>/<span class="number">255</span>, alpha: <span class="number">1</span>)
+    <span class="keyword">case</span> <span class="string">"Ravenclaw"</span>:
+      cell.<span class="property">backgroundColor</span> = <span class="type">UIColor</span>(red: <span class="number">34</span>/<span class="number">255</span>, green: <span class="number">47</span>/<span class="number">255</span>, blue: <span class="number">91</span>/<span class="number">255</span>, alpha: <span class="number">1</span>)
+    <span class="keyword">case</span> <span class="string">"Hufflepuff"</span>:
+      cell.<span class="property">backgroundColor</span> = <span class="type">UIColor</span>(red: <span class="number">255</span>/<span class="number">255</span>, green: <span class="number">219</span>/<span class="number">255</span>, blue: <span class="number">0</span>, alpha: <span class="number">1</span>)
+      cell.<span class="property">textLabel</span>?.<span class="property">textColor</span> = .<span class="dotAccess">black</span>
+      cell.<span class="property">detailTextLabel</span>?.<span class="property">textColor</span> = .<span class="dotAccess">black</span>
+    <span class="keyword">case</span> <span class="string">"Slytherin"</span>:
+      cell.<span class="property">backgroundColor</span> = <span class="type">UIColor</span>(red: <span class="number">42</span>/<span class="number">255</span>, green: <span class="number">98</span>/<span class="number">255</span>, blue: <span class="number">61</span>/<span class="number">255</span>, alpha: <span class="number">1</span>)
+    <span class="keyword">default</span>:
+      <span class="keyword">break</span>
+    }
+     
+    <span class="keyword">return</span> cell
+  }
+   
+  <span class="keyword">override func</span> numberOfSections(in tableView: <span class="type">UITableView</span>) -&gt; <span class="type">Int</span> {
+    <span class="number">1</span>
+  }
+
+  <span class="keyword">override func</span> tableView(<span class="keyword">_</span> tableView: <span class="type">UITableView</span>, numberOfRowsInSection section: <span class="type">Int</span>) -&gt; <span class="type">Int</span> {
+    students.<span class="property">count</span>
+  }
+
+}
+
+<span class="keyword">struct</span> Student {
+  <span class="keyword">var</span> name: <span class="type">String</span>
+  <span class="keyword">var</span> house: <span class="type">String</span>
+}
+
+</code></pre><p>The first step is to create the UISearchController and add it to the navigation bar. This is done with the following lines of code inside of your <code>viewDidLoad</code> method.</p><pre><code><span class="keyword">let</span> searchController = <span class="type">UISearchController</span>(searchResultsController: <span class="keyword">nil</span>)
+searchController.<span class="property">searchResultsUpdater</span> = <span class="keyword">self</span>
+searchController.<span class="property">obscuresBackgroundDuringPresentation</span> = <span class="keyword">false</span>
+searchController.<span class="property">searchBar</span>.<span class="property">placeholder</span> = <span class="string">"Search..."</span>
+navigationItem.<span class="property">searchController</span> = searchController
+</code></pre><p>Now your app won't compile, but it's an easy fix. The reason is because we now need to confrom to the <code>UISearchResultsUpdating</code> protocol. So add that protocol now as well as a the following protocol stub that we will look at later.</p><pre><code><span class="keyword">class</span> ViewController: <span class="type">UITableViewController</span>, <span class="type">UISearchResultsUpdating</span> {
+  .....
+  
+  <span class="keyword">func</span> updateSearchResults(for searchController: <span class="type">UISearchController</span>) {
+      <span class="comment">// will fill in later</span>
+  }
+}
+</code></pre><p>When you run your app now you should see a UISearchController inside your app, but it won't do anything yet!</p><img class="post-image img-sm" src="/Images/Posts/08/08-02.png" alt="Hogwarts Student TableView With UISearchController" width="800"/><h3>Setting up filtering</h3><p>There is a trick to filtering your data if you want it to be reusable. Think about it this way. You have a list of something, you filter that list and get a new list back, and you can repeat the process as much as you want. But want if you want all items in the list back? You've already filtered out items so they don't exist anymore! We can solve this by creating <em>two</em> lists. One list will hold all items while the other will be a filtered list.</p><p>Add the following property below your students array at the top of your code.</p><pre><code><span class="keyword">var</span> filteredStudents = [<span class="type">Student</span>]()
+</code></pre><p>Then we want to set up our app to read from <code>filteredStudents</code> instead of <code>students</code>. But we also need to set <code>filteredStudents</code>. Go ahead and set <code>filteredStudents</code> at the bottom of <code>createStudents()</code> by adding</p><pre><code>filteredStudents = students
+</code></pre><p>Then change your <code>cellForRowAt</code> method to be</p><pre><code><span class="keyword">let</span> student = filteredStudents[indexPath.<span class="property">row</span>]
+</code></pre><p>Last, change <code>numberOfRows</code> in section to</p><pre><code>filteredStudents.<span class="property">count</span>
+</code></pre><p>You should be able to run your app now and see the same thing as before, but the UISearchController still won't work!</p><h3>Making the filtering work</h3><p>Here's where we make the magic happen. We need to do a few different things to make our data filterable.</p><ol><li>We need to create a variable that allows us to hold the text we want to filter by.</li></ol><ol start="2"><li>We need to call update our <code>updateSearchController</code> function that changes the variable created in step 1 to what the user types in</li></ol><ol start="3"><li>We need to filter our <code>filteredStudents</code> array every time we set our filtered text in step 2</li></ol><ol start="4"><li>We need to update our tableview every time the filter text gets set and the <code>filteredStudents</code> array gets filtered</li></ol><p>Wow, that can be wordy. But let's do it one step at a time.</p><h4>1) Create a variable that allows us to hold the text we want to filter by</h4><p>Easy enough, add the following at the top of your class function.</p><pre><code><span class="keyword">var</span> filterText: <span class="type">String</span> = <span class="string">""</span>
+</code></pre><h4>2) Change <code>updateSearchController</code> to edit the variable as the user types</h4><pre><code><span class="keyword">func</span> updateSearchResults(for searchController: <span class="type">UISearchController</span>) {
+    <span class="keyword">if let</span> text = searchController.<span class="property">searchBar</span>.<span class="property">text</span> {
+        filterText = text
+    }
+}
+</code></pre><p><em>Note: I choose to unwrap the text here so I don't have to unwrap it later. It's your choice!</em></p><h4>3) Filter our <code>filteredStudents</code> array everytime <code>filteredText</code> is set.</h4><p>This is done easily enough by using a <code>didSet</code> method on our variable. This means that every time we set the variable, we can do something else. Edit <code>filteredText</code> to look like this.</p><pre><code><span class="keyword">var</span> filterText: <span class="type">String</span> = <span class="string">""</span> {
+    <span class="keyword">didSet</span> {
+        filteredStudents = students.<span class="call">matching</span>(filterText)
+    }
+}
+</code></pre><p>This code won't run yet, because we don't have a <code>matching</code> function. We can create an extension on <code>Array</code> that allows us to pass in a string to help filter our array. Note that we don't need to unwrap here since it was done in step 2. The extension does a couple of things.</p><ol><li>Takes in a string and returns a student array <code>[Student]</code>.</li></ol><ol start="2"><li>If the text has a count greater than 0, or <em>something</em> we can filter by, call the <code>filter()</code> function that arrays already have. If you want to keep it case-insensitive then make sure you lowercase both the element in the array as well as the text passed in. This is the section where you can add any kind of logic you want. In this example, we will filter by name OR house using the || operator.</li></ol><ol start="3"><li>If <code>text.count</code> is equal to zero it means there is nothing written in the UISearchController so just return the full array. Add this extension now.</li></ol><pre><code><span class="keyword">extension</span> <span class="type">Array</span> <span class="keyword">where</span> <span class="type">Element</span> == <span class="type">Student</span> {
+  <span class="keyword">func</span> matching(<span class="keyword">_</span> text: <span class="type">String</span>) -&gt; [<span class="type">Student</span>] {
+    <span class="keyword">if</span> text.<span class="property">count</span> &gt; <span class="number">0</span> {
+      <span class="keyword">return self</span>.<span class="call">filter</span> {
+        $0.<span class="property">name</span>.<span class="call">lowercased</span>().<span class="call">contains</span>(text.<span class="call">lowercased</span>()) || $0.<span class="property">house</span>.<span class="call">lowercased</span>().<span class="call">contains</span>(text.<span class="call">lowercased</span>())
+      }
+    } <span class="keyword">else</span> {
+      <span class="keyword">return self</span>
+    }
+  }
+}
+</code></pre><h4>4) Update our tableview everytime the filter text gets set and <code>filteredStudents</code> array gets filtered.</h4><p>This part can be done a couple of ways. The easiest way is to call <code>self.tableView.reloadData()</code> inside of your did set.</p><pre><code><span class="keyword">var</span> filterText: <span class="type">String</span> = <span class="string">""</span> {
+  <span class="keyword">didSet</span> {
+    filteredStudents = students.<span class="call">matching</span>(filterText)
+    <span class="keyword">self</span>.<span class="property">tableView</span>.<span class="call">reloadData</span>()
+  }
+}
+</code></pre><p>Another, and arguably better option, is to create a closure that gets called when <code>filterSet</code> is set and give that closure a method in <code>viewDidLoad</code>. This is helpful if you have your data source separated from your view controller. If you want to go that route then add the following variable and edit <code>filterText</code> to this.</p><pre><code><span class="keyword">var</span> dataChanged: (() -&gt; <span class="type">Void</span>)?
+<span class="keyword">var</span> filterText: <span class="type">String</span> = <span class="string">""</span> {
+  <span class="keyword">didSet</span> {
+    filteredStudents = students.<span class="call">matching</span>(filterText)
+    dataChanged?()
+  }
+}
+</code></pre><p>Then inside of <code>viewDidLoad</code> you can set <code>dataChanged</code> like this.</p><pre><code>dataChanged = {
+  <span class="keyword">self</span>.<span class="property">tableView</span>.<span class="call">reloadData</span>()
+}
+</code></pre><img class="post-image img-sm" src="/Images/Posts/08/08-05.gif" alt="Filtering gif" width="800"/><p>Whichever method you choose, you should be good to go! Go ahead and run the app now and you should be able to filter in real-time. Feel free to also take a look at the full project <a href="https://github.com/thomaskellough/iOS-Tutorials-UIKit-Swift">here</a>.</p></article></div><div class="footer-social"><div>© 2023 The Swift Protocol</div><div>Generated using <a href="https://github.com/johnsundell/publish">Publish</a>. Written in Swift</div><div><a href="https://www.linkedin.com/in/thomas-kellough/">LinkedIn</a> | <a href="https://github.com/thomaskellough">Github</a> | <a href="mailto:theswiftprotocol@gmail.com">Email</a></div></div></body></html>

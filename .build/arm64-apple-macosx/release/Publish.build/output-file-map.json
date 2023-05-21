@@ -1,0 +1,292 @@
+{
+  "": {
+    "dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Publish.d",
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Publish.o",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/master.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/AnyItem.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/AnyItem.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/AnyItem~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/AnyItem.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Audio.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Audio.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Audio~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Audio.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Content.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Content.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Content~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Content.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/ContentProtocol.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/ContentProtocol.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/ContentProtocol~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/ContentProtocol.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/DeploymentMethod.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/DeploymentMethod.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/DeploymentMethod~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/DeploymentMethod.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Favicon.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Favicon.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Favicon~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Favicon.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/FeedConfiguration.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/FeedConfiguration.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/FeedConfiguration~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/FeedConfiguration.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/HTMLFactory.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/HTMLFactory.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/HTMLFactory~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/HTMLFactory.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/HTMLFileMode.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/HTMLFileMode.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/HTMLFileMode~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/HTMLFileMode.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Index.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Index.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Index~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Index.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Item.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Item.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Item~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Item.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/ItemRSSProperties.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/ItemRSSProperties.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/ItemRSSProperties~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/ItemRSSProperties.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Location.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Location.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Location~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Location.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Mutations.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Mutations.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Mutations~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Mutations.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Page.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Page.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Page~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Page.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Path.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Path.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Path~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Path.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PlotComponents.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PlotComponents.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PlotComponents~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PlotComponents.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Plugin.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Plugin.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Plugin~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Plugin.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PodcastAuthor.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PodcastAuthor.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PodcastAuthor~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PodcastAuthor.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PodcastCompatibleWebsiteItemMetadata.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PodcastCompatibleWebsiteItemMetadata.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PodcastCompatibleWebsiteItemMetadata~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PodcastCompatibleWebsiteItemMetadata.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PodcastEpisodeMetadata.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PodcastEpisodeMetadata.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PodcastEpisodeMetadata~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PodcastEpisodeMetadata.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PodcastFeedConfiguration.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PodcastFeedConfiguration.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PodcastFeedConfiguration~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PodcastFeedConfiguration.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Predicate.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Predicate.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Predicate~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Predicate.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PublishedWebsite.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PublishedWebsite.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PublishedWebsite~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PublishedWebsite.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PublishingContext.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PublishingContext.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PublishingContext~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PublishingContext.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PublishingError.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PublishingError.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PublishingError~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PublishingError.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PublishingStep.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PublishingStep.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PublishingStep~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/PublishingStep.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/RSSFeedConfiguration.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/RSSFeedConfiguration.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/RSSFeedConfiguration~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/RSSFeedConfiguration.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Section.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Section.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Section~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Section.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/SectionMap.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/SectionMap.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/SectionMap~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/SectionMap.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/SortOrder.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/SortOrder.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/SortOrder~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/SortOrder.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/StringWrapper.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/StringWrapper.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/StringWrapper~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/StringWrapper.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Tag.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Tag.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Tag~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Tag.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/TagDetailsPage.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/TagDetailsPage.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/TagDetailsPage~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/TagDetailsPage.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/TagHTMLConfiguration.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/TagHTMLConfiguration.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/TagHTMLConfiguration~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/TagHTMLConfiguration.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/TagListPage.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/TagListPage.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/TagListPage~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/TagListPage.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Theme+Foundation.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Theme+Foundation.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Theme+Foundation~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Theme+Foundation.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Theme.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Theme.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Theme~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Theme.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Video.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Video.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Video~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Video.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Website.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Website.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Website~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/API/Website.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/Array+Appending.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/Array+Appending.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/Array+Appending~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/Array+Appending.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/CommandLine+Output.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/CommandLine+Output.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/CommandLine+Output~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/CommandLine+Output.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/ContentError.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/ContentError.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/ContentError~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/ContentError.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/File+SwiftPackageFolder.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/File+SwiftPackageFolder.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/File+SwiftPackageFolder~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/File+SwiftPackageFolder.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/FileIOError.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/FileIOError.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/FileIOError~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/FileIOError.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/Folder+Group.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/Folder+Group.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/Folder+Group~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/Folder+Group.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/HTMLGenerator.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/HTMLGenerator.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/HTMLGenerator~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/HTMLGenerator.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/MarkdownContentFactory.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/MarkdownContentFactory.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/MarkdownContentFactory~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/MarkdownContentFactory.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/MarkdownFileHandler.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/MarkdownFileHandler.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/MarkdownFileHandler~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/MarkdownFileHandler.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/MarkdownMetadataDecoder.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/MarkdownMetadataDecoder.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/MarkdownMetadataDecoder~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/MarkdownMetadataDecoder.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/PodcastError.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/PodcastError.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/PodcastError~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/PodcastError.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/PodcastFeedGenerator.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/PodcastFeedGenerator.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/PodcastFeedGenerator~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/PodcastFeedGenerator.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/PublishingPipeline.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/PublishingPipeline.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/PublishingPipeline~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/PublishingPipeline.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/RSSFeedGenerator.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/RSSFeedGenerator.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/RSSFeedGenerator~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/RSSFeedGenerator.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/ShellOutError+PublishingErrorConvertible.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/ShellOutError+PublishingErrorConvertible.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/ShellOutError+PublishingErrorConvertible~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/ShellOutError+PublishingErrorConvertible.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/SiteMapGenerator.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/SiteMapGenerator.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/SiteMapGenerator~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/SiteMapGenerator.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/String+Normalized.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/String+Normalized.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/String+Normalized~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Internal/String+Normalized.swiftdeps"
+  }
+}

@@ -1,0 +1,4 @@
+module Files {
+    header "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Files.build/Files-Swift.h"
+    requires objc
+}

@@ -1,0 +1,165 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"/><script async src="https://www.googletagmanager.com/gtag/js?id=UA-175451977-1"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-175451977-1');</script><meta name="og:site_name" content="The Swift Protocol"/><link rel="canonical" href="www.thomaskellough/thomaskellough.github.io"/><meta name="twitter:url" content="www.thomaskellough/thomaskellough.github.io"/><meta name="og:url" content="www.thomaskellough/thomaskellough.github.io"/><title>Swift Skill Building | The Swift Protocol</title><meta name="twitter:title" content="Swift Skill Building | The Swift Protocol"/><meta name="og:title" content="Swift Skill Building | The Swift Protocol"/><meta name="description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:description" content="Swift Skill Building With Thomas Kellough"/><meta name="og:description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="http://www.theswiftprotocol.com/images/social.png"/><meta name="og:image" content="http://www.theswiftprotocol.com/images/social.png"/><link rel="stylesheet" href="/styles.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to The Swift Protocol"/></head><body><header><div class="nav-logo"><a href="/"><img src="/Images/blog-logo.png"/></a><nav class="nav-bar"><p>Swift Skill Building With Thomas Kellough</p><ul><li><h3><a href="/home">Home</a></h3></li><li><h3><a href="/posts">Posts</a></h3></li><li><h3><a href="/tags">Tags</a></h3></li></ul></nav></div></header><div class="wrapper"><article><h1>All about NavigationView using SwiftUI</h1><div class="post-tags" markdown="1">
+        <a class="post-category post-category-feature" href="/tags/feature">Feature</a>
+        <a class="post-category post-category-navigationview" href="/tags/navigationview">NavigationView</a>
+        <a class="post-category post-category-navigationlink" href="/tags/navigationlink">NavigationLink</a>
+        <a class="post-category post-category-swiftui" href="/tags/swiftui">SwiftUI</a>
+</div><h3>Basic NavigationView</h3><p>Nearly all Swift apps have some sort of navigation in place and apps built with SwiftUI are no exception. It's simple to add a navigation view using SwiftUI. All you need to do is add the following code in your view</p><pre><code><span class="type">NavigationView</span> {
+    <span class="comment">// Content here</span>
+}
+</code></pre><p>Adding a title uses a simple modifier like most other views in SwiftUI, but there is a caveat. We do <em>not</em> attach the title to the NavigationView itself. Why? Because the title can change and we do not want to fix that title on every view we have during our navigation. For example, if you have an app that lists different Harry Potter spells by category, you may want the navigation title to be what category each set of spells is in. Let's see what I mean in action.</p><p>Take the following two structs, each one holding a view to different spells by two different categories.</p><pre><code><span class="keyword">struct</span> CharmView: <span class="type">View</span> {
+    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+        <span class="type">List</span>() {
+            <span class="type">VStack</span>(alignment: .<span class="dotAccess">leading</span>) {
+                <span class="type">Text</span>(<span class="string">"Lumos Maxima"</span>)
+                    .<span class="call">font</span>(.<span class="dotAccess">headline</span>)
+                <span class="type">Text</span>(<span class="string">"incantation to a charm that can be used to produce a blinding flash of bright white light from the tip of the wand"</span>)
+                    .<span class="call">font</span>(.<span class="dotAccess">subheadline</span>)
+            }
+            <span class="type">VStack</span>(alignment: .<span class="dotAccess">leading</span>) {
+                <span class="type">Text</span>(<span class="string">"Oculus Reparo"</span>)
+                    .<span class="call">font</span>(.<span class="dotAccess">headline</span>)
+                <span class="type">Text</span>(<span class="string">"incantation of a variant of the Mending Charm, used to repair broken eyeglasses"</span>)
+                    .<span class="call">font</span>(.<span class="dotAccess">subheadline</span>)
+            }
+            <span class="type">Spacer</span>()
+            .<span class="call">navigationBarTitle</span>(<span class="string">"Charm"</span>)
+        }
+    }
+}
+
+<span class="keyword">struct</span> CurseView: <span class="type">View</span> {
+    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+        <span class="type">List</span>() {
+            <span class="type">VStack</span>(alignment: .<span class="dotAccess">leading</span>) {
+                <span class="type">Text</span>(<span class="string">"Fiendfyre"</span>)
+                    .<span class="call">font</span>(.<span class="dotAccess">headline</span>)
+                <span class="type">Text</span>(<span class="string">"A bewitched flame of abnormal size and heat, infused with dark magic, capable of seeking out living targets despite being non-sentient"</span>)
+                    .<span class="call">font</span>(.<span class="dotAccess">subheadline</span>)
+            }
+            <span class="type">VStack</span>(alignment: .<span class="dotAccess">leading</span>) {
+                <span class="type">Text</span>(<span class="string">"Imperius Curse"</span>)
+                    .<span class="call">font</span>(.<span class="dotAccess">headline</span>)
+                <span class="type">Text</span>(<span class="string">"places the victim completely under the caster's control, though a person with exceptional strength of will is capable of resisting it"</span>)
+                    .<span class="call">font</span>(.<span class="dotAccess">subheadline</span>)
+            }
+            <span class="type">Spacer</span>()
+            .<span class="call">navigationBarTitle</span>(<span class="string">"Curse"</span>)
+        }
+    }
+}
+</code></pre><p>Note that we have a <code></code><code>.navigationBarTitle()</code><code></code> modifier added here, even though there is no navigation view. We wrap this entire view inside our NavigationView and then the title can adjust as needed.</p><pre><code><span class="type">NavigationView</span> {
+    <span class="type">CharmView</span>()
+}
+</code></pre><img class="post-image img-md" src="/Images/Posts/06/06-01.png" alt="Navigation View Charm" width="800"/><pre><code><span class="type">NavigationView</span> {
+    <span class="type">CurseView</span>()
+}
+</code></pre><img class="post-image img-md" src="/Images/Posts/06/06-02.png" alt="Navigation View Curse" width="800"/><h3>Adding Navigation Bar Items</h3><p>Adding navigation bar items is fairly simple to do as well. Let's create a bar button that toggles between both views created above. This also means we need to create a boolean that our button toggles and add both views in a Group so we can display each one depending on what the boolean equals.</p><pre><code><span class="keyword">struct</span> ContentView: <span class="type">View</span> {
+    
+    <span class="keyword">@State private var</span> typeToggled = <span class="keyword">false
+    
+    var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+        <span class="type">NavigationView</span> {
+            <span class="type">Group</span> {
+                <span class="keyword">if</span> typeToggled {
+                    <span class="type">CurseView</span>()
+                } <span class="keyword">else</span> {
+                    <span class="type">CharmView</span>()
+                }
+            }
+            .<span class="call">navigationBarItems</span>(leading:
+                <span class="type">Button</span>(action: {
+                    <span class="keyword">self</span>.<span class="property">typeToggled</span>.<span class="call">toggle</span>()
+                }) {
+                    <span class="type">Text</span>(<span class="string">"Toggle Type"</span>)
+                }
+            )
+        }
+    }
+}
+</code></pre><p>Note that our <code>.navigationBarItems</code> is a modifier to the group itself, not each view. Remember, each view holds the title.</p><img class="post-image img-md" src="/Images/Posts/06/06-03.png" alt="Leading bar button item " width="800"/><p>You can also set your bar items as trailing instead of leading.</p><pre><code>.<span class="call">navigationBarItems</span>(trailing:
+    <span class="type">Button</span>(action: {
+        <span class="keyword">self</span>.<span class="property">typeToggled</span>.<span class="call">toggle</span>()
+    }) {
+        <span class="type">Text</span>(<span class="string">"Toggle Type"</span>)
+    }
+)
+</code></pre><img class="post-image img-md" src="/Images/Posts/06/06-04.png" alt="Trailing bar button item" width="800"/><h3>Adding multiple navigation bar items</h3><p>If you want to add multiple navigation bar items, just use an HStack. You can even mix custom buttons as well as default ones that Apples API provide.</p><pre><code>.<span class="call">navigationBarItems</span>(trailing:
+    <span class="type">HStack</span> {
+        <span class="type">Button</span>(action: {
+            <span class="keyword">self</span>.<span class="property">typeToggled</span>.<span class="call">toggle</span>()
+        }) {
+            <span class="type">Text</span>(<span class="string">"Toggle Type"</span>)
+        }
+        
+        <span class="type">Button</span>(action: {
+            <span class="comment">// second action here</span>
+        }) {
+            <span class="type">Image</span>(systemName: <span class="string">"bolt"</span>)
+        }
+    }
+)
+</code></pre><img class="post-image img-md" src="/Images/Posts/06/06-05.png" alt="Navigation View Charm" width="800"/><p>It's also possible to add trailing and leding items.</p><pre><code>.<span class="call">navigationBarItems</span>(leading:
+    <span class="type">EditButton</span>(), trailing:
+    <span class="type">HStack</span> {
+        <span class="type">Button</span>(action: {
+            <span class="keyword">self</span>.<span class="property">typeToggled</span>.<span class="call">toggle</span>()
+        }) {
+            <span class="type">Text</span>(<span class="string">"Toggle Type"</span>)
+        }
+        
+        <span class="type">Button</span>(action: {
+            <span class="comment">// second action here</span>
+        }) {
+            <span class="type">Image</span>(systemName: <span class="string">"bolt"</span>)
+        }
+    }
+)
+</code></pre><img class="post-image img-md" src="/Images/Posts/06/06-06.png" alt="Navigation View Charm" width="800"/><h3>Using NavigationLink</h3><p>NavigationLink can also be used to link to any view you'd like. This automatically pops a new view in your navigation stack and readjusts how the title is shown. Here is a new view that shows how to use the Lumos Maxima spell.</p><pre><code><span class="keyword">struct</span> LumosMaximaHowTo: <span class="type">View</span> {
+    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+        <span class="type">Text</span>(<span class="string">"To cast this light-creation spell, one must flick their wand, then draw it back and flick it a second time, after which it will light, as noted in chapter thirty-two of Extreme Incantations by Violeta Stitch."</span>)
+    }
+}
+</code></pre><p>We can then adjust our CharmView struct to add a navigation link inside of Lumos Maxima VStack and direct it to our new view.</p><pre><code><span class="type">VStack</span>(alignment: .<span class="dotAccess">leading</span>) {
+    <span class="type">Text</span>(<span class="string">"Lumos Maxima"</span>)
+        .<span class="call">font</span>(.<span class="dotAccess">headline</span>)
+    <span class="type">Text</span>(<span class="string">"incantation to a charm that can be used to produce a blinding flash of bright white light from the tip of the wand"</span>)
+        .<span class="call">font</span>(.<span class="dotAccess">subheadline</span>)
+    <span class="type">NavigationLink</span>(<span class="string">"Click here to see how to use the spell"</span>, destination: <span class="type">LumosMaximaHowTo</span>())
+        .<span class="call">font</span>(.<span class="dotAccess">footnote</span>)
+}
+</code></pre><img class="post-image img-md" src="/Images/Posts/06/06-07.gif" alt="NavigationLink example" width="800"/><h3>Navigation Tags</h3><p>While a simple boolean can control which views are shown, it may get complicated when you have more than two views. SwiftUI and NavigationLink have something called <code>tags</code> that we can use to control navigation with multiple views with ease. A tag is an optional string that's used to identify which view is shown based on what the value is. Codewise, it looks like this.</p><pre><code><span class="keyword">@State private var</span> spellType: <span class="type">String</span>? = <span class="keyword">nil
+
+var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+    <span class="type">NavigationView</span> {
+        <span class="type">VStack</span>(alignment: .<span class="dotAccess">center</span>, spacing: <span class="number">30</span>) {
+            <span class="type">NavigationLink</span>(destination: <span class="type">CharmView</span>(), tag: <span class="string">"Charm"</span>, selection: $spellType) {
+                <span class="type">Text</span>(<span class="string">"Tap to see charms"</span>)
+            }
+            <span class="type">NavigationLink</span>(destination: <span class="type">CurseView</span>(), tag: <span class="string">"Curse"</span>, selection: $spellType) {
+                <span class="type">Text</span>(<span class="string">"Tap to see curses"</span>)
+            }
+        }
+    }
+}
+</code></pre><p>This shows the following view with each link showing it's respective content.</p><img class="post-image img-md" src="/Images/Posts/06/06-08.gif" alt="NavigationLink example with tags" width="800"/><h3>NavigationLink and isActive</h3><p>NavigationLink also has an optional parameter of <code>isActive</code> that holds a boolean that determins whether a specific view is shown. Then you can create an action, such as a button tap, that toggles the boolean and shows the view attached to it.</p><pre><code><span class="keyword">@State private var</span> charmViewShowing = <span class="keyword">false
+@State private var</span> curseViewShowing = <span class="keyword">false
+
+var</span> body: <span class="keyword">some</span> <span class="type">View</span> {
+    <span class="type">NavigationView</span> {
+        <span class="type">VStack</span>(spacing: <span class="number">30</span>) {
+            <span class="type">NavigationLink</span>(destination: <span class="type">CharmView</span>(), isActive: $charmViewShowing) {
+                <span class="type">EmptyView</span>()
+            }
+            <span class="type">NavigationLink</span>(destination: <span class="type">CurseView</span>(), isActive: $curseViewShowing) {
+                <span class="type">EmptyView</span>()
+            }
+            <span class="type">Button</span>(<span class="string">"Toggle charmViewShowing"</span>) {
+                <span class="keyword">self</span>.<span class="property">charmViewShowing</span>.<span class="call">toggle</span>()
+            }
+            <span class="type">Button</span>(<span class="string">"Toggle curseViewShowing"</span>) {
+                <span class="keyword">self</span>.<span class="property">curseViewShowing</span>.<span class="call">toggle</span>()
+            }
+        }
+    }
+}
+</code></pre></article></div><div class="footer-social"><div>© 2023 The Swift Protocol</div><div>Generated using <a href="https://github.com/johnsundell/publish">Publish</a>. Written in Swift</div><div><a href="https://www.linkedin.com/in/thomas-kellough/">LinkedIn</a> | <a href="https://github.com/thomaskellough">Github</a> | <a href="mailto:theswiftprotocol@gmail.com">Email</a></div></div></body></html>

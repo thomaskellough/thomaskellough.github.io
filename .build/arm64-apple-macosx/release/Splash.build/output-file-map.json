@@ -1,0 +1,137 @@
+{
+  "": {
+    "dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Splash.d",
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Splash.o",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/master.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/CharacterSet/CharacterSet+Contains.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/CharacterSet/CharacterSet+Contains.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/CharacterSet/CharacterSet+Contains~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/CharacterSet/CharacterSet+Contains.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Equatable/Equatable+AnyOf.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Equatable/Equatable+AnyOf.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Equatable/Equatable+AnyOf~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Equatable/Equatable+AnyOf.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Int/Int+IsOdd.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Int/Int+IsOdd.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Int/Int+IsOdd~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Int/Int+IsOdd.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Sequence/Sequence+AnyOf.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Sequence/Sequence+AnyOf.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Sequence/Sequence+AnyOf~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Sequence/Sequence+AnyOf.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Sequence/Sequence+Occurrences.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Sequence/Sequence+Occurrences.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Sequence/Sequence+Occurrences~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Sequence/Sequence+Occurrences.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Strings/String+HTMLEntities.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Strings/String+HTMLEntities.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Strings/String+HTMLEntities~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Strings/String+HTMLEntities.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Strings/String+IsNumber.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Strings/String+IsNumber.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Strings/String+IsNumber~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Strings/String+IsNumber.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Strings/String+PrefixChecking.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Strings/String+PrefixChecking.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Strings/String+PrefixChecking~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Strings/String+PrefixChecking.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Strings/String+Removing.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Strings/String+Removing.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Strings/String+Removing~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Strings/String+Removing.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Strings/Substring+HasSuffix.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Strings/Substring+HasSuffix.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Strings/Substring+HasSuffix~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Extensions/Strings/Substring+HasSuffix.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Grammar/Grammar.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Grammar/Grammar.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Grammar/Grammar~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Grammar/Grammar.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Grammar/SwiftGrammar.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Grammar/SwiftGrammar.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Grammar/SwiftGrammar~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Grammar/SwiftGrammar.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Output/AttributedStringOutputFormat.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Output/AttributedStringOutputFormat.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Output/AttributedStringOutputFormat~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Output/AttributedStringOutputFormat.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Output/HTMLOutputFormat.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Output/HTMLOutputFormat.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Output/HTMLOutputFormat~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Output/HTMLOutputFormat.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Output/MarkdownDecorator.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Output/MarkdownDecorator.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Output/MarkdownDecorator~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Output/MarkdownDecorator.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Output/OutputBuilder.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Output/OutputBuilder.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Output/OutputBuilder~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Output/OutputBuilder.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Output/OutputFormat.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Output/OutputFormat.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Output/OutputFormat~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Output/OutputFormat.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Syntax/SyntaxHighlighter.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Syntax/SyntaxHighlighter.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Syntax/SyntaxHighlighter~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Syntax/SyntaxHighlighter.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Syntax/SyntaxRule.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Syntax/SyntaxRule.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Syntax/SyntaxRule~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Syntax/SyntaxRule.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Theming/Color.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Theming/Color.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Theming/Color~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Theming/Color.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Theming/Font.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Theming/Font.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Theming/Font~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Theming/Font.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Theming/Theme+Defaults.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Theming/Theme+Defaults.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Theming/Theme+Defaults~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Theming/Theme+Defaults.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Theming/Theme.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Theming/Theme.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Theming/Theme~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Theming/Theme.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Tokenizing/Segment.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Tokenizing/Segment.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Tokenizing/Segment~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Tokenizing/Segment.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Tokenizing/TokenType.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Tokenizing/TokenType.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Tokenizing/TokenType~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Tokenizing/TokenType.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Tokenizing/Tokenizer.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Tokenizing/Tokenizer.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Tokenizing/Tokenizer~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Splash.build/Tokenizing/Tokenizer.swiftdeps"
+  }
+}

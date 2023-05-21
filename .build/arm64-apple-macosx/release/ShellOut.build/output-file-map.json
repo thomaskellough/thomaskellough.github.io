@@ -1,0 +1,12 @@
+{
+  "": {
+    "dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/ShellOut.build/ShellOut.d",
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/ShellOut.build/ShellOut.o",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/ShellOut.build/master.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/shellout/Sources/ShellOut.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/ShellOut.build/ShellOut.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/ShellOut.build/ShellOut~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/ShellOut.build/ShellOut.swiftdeps"
+  }
+}

@@ -1,0 +1,4 @@
+module Splash {
+    header "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Splash-Swift.h"
+    requires objc
+}

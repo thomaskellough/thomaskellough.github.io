@@ -1,0 +1,34 @@
+version: "Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)"
+options: "4944a4dbfe397835cd8bb664212c2a1a8dc4bfb3325b7096fe6842c235808b50"
+build_start_time: [1684697026, 74301958]
+build_end_time: [1684697031, 213739871]
+inputs:
+  ? "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/CharacterSet/CharacterSet+Contains.swift"
+  : [1684695897, 320218801]
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Equatable/Equatable+AnyOf.swift": [1684695897, 320558547]
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Int/Int+IsOdd.swift": [1684695897, 320849418]
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Sequence/Sequence+AnyOf.swift": [1684695897, 321151733]
+  ? "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Sequence/Sequence+Occurrences.swift"
+  : [1684695897, 321319103]
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Strings/String+HTMLEntities.swift": [1684695897, 321624517]
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Strings/String+IsNumber.swift": [1684695897, 321795463]
+  ? "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Strings/String+PrefixChecking.swift"
+  : [1684695897, 321979522]
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Strings/String+Removing.swift": [1684695897, 322342634]
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Strings/Substring+HasSuffix.swift": [1684695897, 322505474]
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Grammar/Grammar.swift": [1684695897, 322809219]
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Grammar/SwiftGrammar.swift": [1684695897, 323094367]
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Output/AttributedStringOutputFormat.swift": [1684695897, 323544025]
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Output/HTMLOutputFormat.swift": [1684695897, 324126243]
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Output/MarkdownDecorator.swift": [1684695897, 324318170]
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Output/OutputBuilder.swift": [1684695897, 324701786]
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Output/OutputFormat.swift": [1684695897, 325093269]
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Syntax/SyntaxHighlighter.swift": [1684695897, 325728893]
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Syntax/SyntaxRule.swift": [1684695897, 325912475]
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Theming/Color.swift": [1684695897, 326241970]
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Theming/Font.swift": [1684695897, 326474905]
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Theming/Theme+Defaults.swift": [1684695897, 326655387]
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Theming/Theme.swift": [1684695897, 326828718]
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Tokenizing/Segment.swift": [1684695897, 327169179]
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Tokenizing/TokenType.swift": [1684695897, 327359676]
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Tokenizing/Tokenizer.swift": [1684695897, 327568054]

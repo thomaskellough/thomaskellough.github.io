@@ -1,0 +1,23 @@
+version: "Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)"
+options: "ae54e7fb531d02d3ecff44f8889a278e035e1118d649cdf34321167e379b3afb"
+build_start_time: [1684697032, 689478874]
+build_end_time: [1684697033, 126142978]
+inputs:
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+About.swift": [1684695734, 980985879]
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+Home.swift": [1684695734, 981154203]
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+Item.swift": [1684695734, 981315135]
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+Posts.swift": [1684695734, 981462001]
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+TagDetails.swift": [1684695734, 981615543]
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+Tags.swift": [1684695734, 982501983]
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Images.swift": [1684695734, 982665300]
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Explore.swift": [1684695734, 983433246]
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Featured.swift": [1684695734, 983657360]
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Footer.swift": [1684695734, 983920097]
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Gtag.swift": [1684695734, 984075069]
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Head.swift": [1684695734, 984243392]
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Header.swift": [1684695734, 984428167]
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+PostsContent.swift": [1684695734, 984771728]
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Tags.swift": [1684695734, 984947681]
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Wrapper.swift": [1684695734, 985103368]
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/main.swift": [1684695734, 985299587]
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/myHtmlFactory.swift": [1684695734, 985456466]

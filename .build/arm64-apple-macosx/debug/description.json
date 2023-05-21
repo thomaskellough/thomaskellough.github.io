@@ -1,0 +1,2684 @@
+{
+  "builtTestProducts" : [
+
+  ],
+  "copyCommands" : {
+
+  },
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.Codextended-debug.module" : {
+      "executable" : "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "importPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/codextended/Sources/Codextended/Codextended.swift"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "Codextended",
+      "moduleOutputPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Codextended.swiftmodule",
+      "objects" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Codextended.build/Codextended.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx10.13",
+        "-swift-version",
+        "5",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-g",
+        "-j10",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Codextended.build/Codextended-Swift.h",
+        "-sdk",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk",
+        "-F",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-suppress-warnings"
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Codextended.build/Codextended.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Codextended.swiftmodule"
+        }
+      ],
+      "sources" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/codextended/Sources/Codextended/Codextended.swift"
+      ],
+      "tempsPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Codextended.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.Files-debug.module" : {
+      "executable" : "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "importPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/files/Sources/Files.swift"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "Files",
+      "moduleOutputPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Files.swiftmodule",
+      "objects" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Files.build/Files.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx10.13",
+        "-swift-version",
+        "5",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-g",
+        "-j10",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Files.build/Files-Swift.h",
+        "-sdk",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk",
+        "-F",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-suppress-warnings"
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Files.build/Files.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Files.swiftmodule"
+        }
+      ],
+      "sources" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/files/Sources/Files.swift"
+      ],
+      "tempsPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Files.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.Ink-debug.module" : {
+      "executable" : "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "importPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/API/Markdown.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/API/MarkdownParser.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/API/Modifier.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Blockquote.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Character+Classification.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Character+Escaping.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/CodeBlock.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/FormattedText.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Fragment.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/HTML.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/HTMLConvertible.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Hashable+AnyOf.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Heading.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/HorizontalLine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Image.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/InlineCode.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/KeyPathPatterns.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Link.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/List.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Metadata.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Modifiable.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/ModifierCollection.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/NamedURLCollection.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Paragraph.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/PlainTextConvertible.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Readable.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Reader.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Require.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Substring+Trimming.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Table.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/TextStyle.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/TextStyleMarker.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/URL.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/URLDeclaration.swift"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "Ink",
+      "moduleOutputPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.swiftmodule",
+      "objects" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/API/Markdown.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/API/MarkdownParser.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/API/Modifier.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Blockquote.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Character+Classification.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Character+Escaping.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/CodeBlock.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/FormattedText.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Fragment.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/HTML.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/HTMLConvertible.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Hashable+AnyOf.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Heading.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/HorizontalLine.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Image.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/InlineCode.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/KeyPathPatterns.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Link.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/List.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Metadata.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Modifiable.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/ModifierCollection.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/NamedURLCollection.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Paragraph.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/PlainTextConvertible.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Readable.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Reader.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Require.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Substring+Trimming.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Table.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/TextStyle.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/TextStyleMarker.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/URL.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/URLDeclaration.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx10.13",
+        "-swift-version",
+        "5",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-g",
+        "-j10",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Ink-Swift.h",
+        "-sdk",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk",
+        "-F",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-suppress-warnings"
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/API/Markdown.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/API/MarkdownParser.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/API/Modifier.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Blockquote.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Character+Classification.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Character+Escaping.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/CodeBlock.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/FormattedText.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Fragment.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/HTML.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/HTMLConvertible.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Hashable+AnyOf.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Heading.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/HorizontalLine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Image.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/InlineCode.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/KeyPathPatterns.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Link.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/List.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Metadata.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Modifiable.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/ModifierCollection.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/NamedURLCollection.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Paragraph.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/PlainTextConvertible.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Readable.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Reader.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Require.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Substring+Trimming.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/Table.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/TextStyle.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/TextStyleMarker.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/URL.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build/Internal/URLDeclaration.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.swiftmodule"
+        }
+      ],
+      "sources" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/API/Markdown.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/API/MarkdownParser.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/API/Modifier.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Blockquote.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Character+Classification.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Character+Escaping.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/CodeBlock.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/FormattedText.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Fragment.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/HTML.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/HTMLConvertible.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Hashable+AnyOf.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Heading.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/HorizontalLine.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Image.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/InlineCode.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/KeyPathPatterns.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Link.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/List.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Metadata.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Modifiable.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/ModifierCollection.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/NamedURLCollection.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Paragraph.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/PlainTextConvertible.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Readable.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Reader.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Require.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Substring+Trimming.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/Table.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/TextStyle.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/TextStyleMarker.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/URL.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/Internal/URLDeclaration.swift"
+      ],
+      "tempsPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.InkCLI-debug.module" : {
+      "executable" : "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "importPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/InkCLI/Printing.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/InkCLI/main.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.swiftmodule"
+        }
+      ],
+      "isLibrary" : false,
+      "moduleName" : "InkCLI",
+      "moduleOutputPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/InkCLI.build/InkCLI.swiftmodule",
+      "objects" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/InkCLI.build/Printing.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/InkCLI.build/main.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx10.13",
+        "-swift-version",
+        "5",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-g",
+        "-j10",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-sdk",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk",
+        "-F",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-suppress-warnings"
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/InkCLI.build/Printing.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/InkCLI.build/main.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/InkCLI.build/InkCLI.swiftmodule"
+        }
+      ],
+      "sources" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/InkCLI/Printing.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/InkCLI/main.swift"
+      ],
+      "tempsPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/InkCLI.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.Plot-debug.module" : {
+      "executable" : "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "importPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/Attribute.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/ControlFlow.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/Document.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/DocumentEncoding.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/Element.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTML.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTMLAnchorRelationship.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTMLAnchorTarget.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTMLAttributes.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTMLAudioFormat.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTMLComponents.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTMLElements.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTMLFormContentType.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTMLFormMethod.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTMLInputType.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTMLLinkRelationship.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTMLVideoFormat.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTMLViewportWidthMode.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/Indentation.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/Language.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/Node.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/PodcastAttributes.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/PodcastComponents.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/PodcastElements.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/PodcastEpisodeType.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/PodcastFeed.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/PodcastMediaType.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/PodcastType.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/RSS.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/RSSAttributes.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/RSSElements.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/Renderable.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/SiteMap.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/SiteMapChangeFrequency.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/SiteMapElements.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/TwitterCardType.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/URLRepresentable.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/XML.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/XMLAttributes.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/XMLElements.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/Internal/AnyNode.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/Internal/ElementRenderer.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/Internal/NodeConvertible.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/Internal/String+Escaping.swift"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "Plot",
+      "moduleOutputPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.swiftmodule",
+      "objects" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/Attribute.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/ControlFlow.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/Document.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/DocumentEncoding.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/Element.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTML.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTMLAnchorRelationship.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTMLAnchorTarget.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTMLAttributes.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTMLAudioFormat.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTMLComponents.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTMLElements.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTMLFormContentType.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTMLFormMethod.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTMLInputType.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTMLLinkRelationship.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTMLVideoFormat.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTMLViewportWidthMode.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/Indentation.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/Language.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/Node.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/PodcastAttributes.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/PodcastComponents.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/PodcastElements.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/PodcastEpisodeType.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/PodcastFeed.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/PodcastMediaType.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/PodcastType.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/RSS.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/RSSAttributes.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/RSSElements.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/Renderable.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/SiteMap.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/SiteMapChangeFrequency.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/SiteMapElements.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/TwitterCardType.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/URLRepresentable.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/XML.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/XMLAttributes.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/XMLElements.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/Internal/AnyNode.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/Internal/ElementRenderer.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/Internal/NodeConvertible.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/Internal/String+Escaping.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx10.13",
+        "-swift-version",
+        "5",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-g",
+        "-j10",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/Plot-Swift.h",
+        "-sdk",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk",
+        "-F",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-suppress-warnings"
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/Attribute.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/ControlFlow.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/Document.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/DocumentEncoding.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/Element.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTML.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTMLAnchorRelationship.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTMLAnchorTarget.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTMLAttributes.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTMLAudioFormat.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTMLComponents.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTMLElements.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTMLFormContentType.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTMLFormMethod.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTMLInputType.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTMLLinkRelationship.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTMLVideoFormat.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/HTMLViewportWidthMode.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/Indentation.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/Language.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/Node.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/PodcastAttributes.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/PodcastComponents.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/PodcastElements.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/PodcastEpisodeType.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/PodcastFeed.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/PodcastMediaType.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/PodcastType.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/RSS.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/RSSAttributes.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/RSSElements.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/Renderable.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/SiteMap.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/SiteMapChangeFrequency.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/SiteMapElements.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/TwitterCardType.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/URLRepresentable.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/XML.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/XMLAttributes.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/API/XMLElements.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/Internal/AnyNode.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/Internal/ElementRenderer.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/Internal/NodeConvertible.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build/Internal/String+Escaping.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.swiftmodule"
+        }
+      ],
+      "sources" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/Attribute.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/ControlFlow.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/Document.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/DocumentEncoding.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/Element.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTML.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTMLAnchorRelationship.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTMLAnchorTarget.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTMLAttributes.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTMLAudioFormat.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTMLComponents.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTMLElements.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTMLFormContentType.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTMLFormMethod.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTMLInputType.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTMLLinkRelationship.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTMLVideoFormat.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/HTMLViewportWidthMode.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/Indentation.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/Language.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/Node.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/PodcastAttributes.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/PodcastComponents.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/PodcastElements.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/PodcastEpisodeType.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/PodcastFeed.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/PodcastMediaType.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/PodcastType.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/RSS.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/RSSAttributes.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/RSSElements.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/Renderable.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/SiteMap.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/SiteMapChangeFrequency.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/SiteMapElements.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/TwitterCardType.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/URLRepresentable.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/XML.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/XMLAttributes.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/API/XMLElements.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/Internal/AnyNode.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/Internal/ElementRenderer.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/Internal/NodeConvertible.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/plot/Sources/Plot/Internal/String+Escaping.swift"
+      ],
+      "tempsPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.Publish-debug.module" : {
+      "executable" : "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "importPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/AnyItem.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Audio.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Content.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/ContentProtocol.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/DeploymentMethod.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Favicon.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/FeedConfiguration.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/HTMLFactory.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/HTMLFileMode.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Index.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Item.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/ItemRSSProperties.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Location.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Mutations.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Page.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Path.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PlotComponents.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Plugin.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PodcastAuthor.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PodcastCompatibleWebsiteItemMetadata.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PodcastEpisodeMetadata.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PodcastFeedConfiguration.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Predicate.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PublishedWebsite.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PublishingContext.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PublishingError.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PublishingStep.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/RSSFeedConfiguration.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Section.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/SectionMap.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/SortOrder.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/StringWrapper.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Tag.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/TagDetailsPage.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/TagHTMLConfiguration.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/TagListPage.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Theme+Foundation.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Theme.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Video.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Website.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/Array+Appending.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/CommandLine+Output.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/ContentError.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/File+SwiftPackageFolder.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/FileIOError.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/Folder+Group.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/HTMLGenerator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/MarkdownContentFactory.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/MarkdownFileHandler.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/MarkdownMetadataDecoder.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/PodcastError.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/PodcastFeedGenerator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/PublishingPipeline.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/RSSFeedGenerator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/ShellOutError+PublishingErrorConvertible.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/SiteMapGenerator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/String+Normalized.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Ink.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Plot.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Files.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Codextended.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/ShellOut.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Sweep.swiftmodule"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "Publish",
+      "moduleOutputPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.swiftmodule",
+      "objects" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/AnyItem.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Audio.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Content.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/ContentProtocol.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/DeploymentMethod.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Favicon.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/FeedConfiguration.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/HTMLFactory.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/HTMLFileMode.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Index.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Item.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/ItemRSSProperties.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Location.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Mutations.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Page.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Path.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/PlotComponents.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Plugin.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/PodcastAuthor.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/PodcastCompatibleWebsiteItemMetadata.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/PodcastEpisodeMetadata.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/PodcastFeedConfiguration.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Predicate.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/PublishedWebsite.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/PublishingContext.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/PublishingError.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/PublishingStep.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/RSSFeedConfiguration.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Section.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/SectionMap.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/SortOrder.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/StringWrapper.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Tag.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/TagDetailsPage.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/TagHTMLConfiguration.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/TagListPage.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Theme+Foundation.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Theme.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Video.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Website.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/Array+Appending.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/CommandLine+Output.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/ContentError.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/File+SwiftPackageFolder.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/FileIOError.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/Folder+Group.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/HTMLGenerator.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/MarkdownContentFactory.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/MarkdownFileHandler.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/MarkdownMetadataDecoder.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/PodcastError.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/PodcastFeedGenerator.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/PublishingPipeline.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/RSSFeedGenerator.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/ShellOutError+PublishingErrorConvertible.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/SiteMapGenerator.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/String+Normalized.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx10.13",
+        "-swift-version",
+        "5",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-g",
+        "-j10",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Publish-Swift.h",
+        "-sdk",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk",
+        "-F",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-suppress-warnings"
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/AnyItem.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Audio.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Content.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/ContentProtocol.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/DeploymentMethod.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Favicon.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/FeedConfiguration.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/HTMLFactory.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/HTMLFileMode.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Index.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Item.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/ItemRSSProperties.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Location.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Mutations.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Page.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Path.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/PlotComponents.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Plugin.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/PodcastAuthor.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/PodcastCompatibleWebsiteItemMetadata.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/PodcastEpisodeMetadata.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/PodcastFeedConfiguration.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Predicate.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/PublishedWebsite.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/PublishingContext.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/PublishingError.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/PublishingStep.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/RSSFeedConfiguration.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Section.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/SectionMap.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/SortOrder.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/StringWrapper.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Tag.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/TagDetailsPage.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/TagHTMLConfiguration.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/TagListPage.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Theme+Foundation.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Theme.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Video.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/API/Website.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/Array+Appending.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/CommandLine+Output.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/ContentError.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/File+SwiftPackageFolder.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/FileIOError.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/Folder+Group.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/HTMLGenerator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/MarkdownContentFactory.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/MarkdownFileHandler.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/MarkdownMetadataDecoder.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/PodcastError.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/PodcastFeedGenerator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/PublishingPipeline.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/RSSFeedGenerator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/ShellOutError+PublishingErrorConvertible.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/SiteMapGenerator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build/Internal/String+Normalized.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.swiftmodule"
+        }
+      ],
+      "sources" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/AnyItem.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Audio.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Content.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/ContentProtocol.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/DeploymentMethod.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Favicon.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/FeedConfiguration.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/HTMLFactory.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/HTMLFileMode.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Index.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Item.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/ItemRSSProperties.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Location.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Mutations.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Page.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Path.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PlotComponents.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Plugin.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PodcastAuthor.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PodcastCompatibleWebsiteItemMetadata.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PodcastEpisodeMetadata.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PodcastFeedConfiguration.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Predicate.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PublishedWebsite.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PublishingContext.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PublishingError.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/PublishingStep.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/RSSFeedConfiguration.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Section.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/SectionMap.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/SortOrder.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/StringWrapper.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Tag.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/TagDetailsPage.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/TagHTMLConfiguration.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/TagListPage.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Theme+Foundation.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Theme.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Video.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/API/Website.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/Array+Appending.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/CommandLine+Output.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/ContentError.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/File+SwiftPackageFolder.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/FileIOError.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/Folder+Group.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/HTMLGenerator.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/MarkdownContentFactory.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/MarkdownFileHandler.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/MarkdownMetadataDecoder.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/PodcastError.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/PodcastFeedGenerator.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/PublishingPipeline.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/RSSFeedGenerator.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/ShellOutError+PublishingErrorConvertible.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/SiteMapGenerator.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/Publish/Internal/String+Normalized.swift"
+      ],
+      "tempsPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.PublishCLI-debug.module" : {
+      "executable" : "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "importPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/PublishCLI/main.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLICore.swiftmodule"
+        }
+      ],
+      "isLibrary" : false,
+      "moduleName" : "PublishCLI",
+      "moduleOutputPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLI.build/PublishCLI.swiftmodule",
+      "objects" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLI.build/main.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx10.13",
+        "-swift-version",
+        "5",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-g",
+        "-j10",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-sdk",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk",
+        "-F",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-suppress-warnings"
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLI.build/main.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLI.build/PublishCLI.swiftmodule"
+        }
+      ],
+      "sources" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/PublishCLI/main.swift"
+      ],
+      "tempsPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLI.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.PublishCLICore-debug.module" : {
+      "executable" : "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "importPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/PublishCLICore/CLI.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/PublishCLICore/CLIError.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/PublishCLICore/Folder+SwiftPackage.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/PublishCLICore/ProjectGenerator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/PublishCLICore/ProjectKind.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/PublishCLICore/WebsiteDeployer.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/PublishCLICore/WebsiteGenerator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/PublishCLICore/WebsiteRunner.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.swiftmodule"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "PublishCLICore",
+      "moduleOutputPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLICore.swiftmodule",
+      "objects" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLICore.build/CLI.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLICore.build/CLIError.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLICore.build/Folder+SwiftPackage.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLICore.build/ProjectGenerator.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLICore.build/ProjectKind.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLICore.build/WebsiteDeployer.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLICore.build/WebsiteGenerator.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLICore.build/WebsiteRunner.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx10.13",
+        "-swift-version",
+        "5",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-g",
+        "-j10",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLICore.build/PublishCLICore-Swift.h",
+        "-sdk",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk",
+        "-F",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-suppress-warnings"
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLICore.build/CLI.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLICore.build/CLIError.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLICore.build/Folder+SwiftPackage.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLICore.build/ProjectGenerator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLICore.build/ProjectKind.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLICore.build/WebsiteDeployer.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLICore.build/WebsiteGenerator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLICore.build/WebsiteRunner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLICore.swiftmodule"
+        }
+      ],
+      "sources" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/PublishCLICore/CLI.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/PublishCLICore/CLIError.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/PublishCLICore/Folder+SwiftPackage.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/PublishCLICore/ProjectGenerator.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/PublishCLICore/ProjectKind.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/PublishCLICore/WebsiteDeployer.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/PublishCLICore/WebsiteGenerator.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/publish/Sources/PublishCLICore/WebsiteRunner.swift"
+      ],
+      "tempsPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/PublishCLICore.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.ShellOut-debug.module" : {
+      "executable" : "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "importPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/shellout/Sources/ShellOut.swift"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "ShellOut",
+      "moduleOutputPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/ShellOut.swiftmodule",
+      "objects" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/ShellOut.build/ShellOut.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx10.13",
+        "-swift-version",
+        "4.2",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-g",
+        "-j10",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/ShellOut.build/ShellOut-Swift.h",
+        "-sdk",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk",
+        "-F",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-suppress-warnings"
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/ShellOut.build/ShellOut.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/ShellOut.swiftmodule"
+        }
+      ],
+      "sources" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/shellout/Sources/ShellOut.swift"
+      ],
+      "tempsPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/ShellOut.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.Splash-debug.module" : {
+      "executable" : "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "importPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/CharacterSet/CharacterSet+Contains.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Equatable/Equatable+AnyOf.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Int/Int+IsOdd.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Sequence/Sequence+AnyOf.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Sequence/Sequence+Occurrences.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Strings/String+HTMLEntities.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Strings/String+IsNumber.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Strings/String+PrefixChecking.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Strings/String+Removing.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Strings/Substring+HasSuffix.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Grammar/Grammar.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Grammar/SwiftGrammar.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Output/AttributedStringOutputFormat.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Output/HTMLOutputFormat.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Output/MarkdownDecorator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Output/OutputBuilder.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Output/OutputFormat.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Syntax/SyntaxHighlighter.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Syntax/SyntaxRule.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Theming/Color.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Theming/Font.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Theming/Theme+Defaults.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Theming/Theme.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Tokenizing/Segment.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Tokenizing/TokenType.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Tokenizing/Tokenizer.swift"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "Splash",
+      "moduleOutputPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.swiftmodule",
+      "objects" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Extensions/CharacterSet/CharacterSet+Contains.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Extensions/Equatable/Equatable+AnyOf.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Extensions/Int/Int+IsOdd.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Extensions/Sequence/Sequence+AnyOf.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Extensions/Sequence/Sequence+Occurrences.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Extensions/Strings/String+HTMLEntities.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Extensions/Strings/String+IsNumber.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Extensions/Strings/String+PrefixChecking.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Extensions/Strings/String+Removing.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Extensions/Strings/Substring+HasSuffix.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Grammar/Grammar.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Grammar/SwiftGrammar.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Output/AttributedStringOutputFormat.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Output/HTMLOutputFormat.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Output/MarkdownDecorator.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Output/OutputBuilder.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Output/OutputFormat.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Syntax/SyntaxHighlighter.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Syntax/SyntaxRule.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Theming/Color.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Theming/Font.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Theming/Theme+Defaults.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Theming/Theme.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Tokenizing/Segment.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Tokenizing/TokenType.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Tokenizing/Tokenizer.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx10.13",
+        "-swift-version",
+        "5",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-g",
+        "-j10",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Splash-Swift.h",
+        "-sdk",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk",
+        "-F",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-suppress-warnings"
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Extensions/CharacterSet/CharacterSet+Contains.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Extensions/Equatable/Equatable+AnyOf.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Extensions/Int/Int+IsOdd.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Extensions/Sequence/Sequence+AnyOf.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Extensions/Sequence/Sequence+Occurrences.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Extensions/Strings/String+HTMLEntities.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Extensions/Strings/String+IsNumber.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Extensions/Strings/String+PrefixChecking.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Extensions/Strings/String+Removing.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Extensions/Strings/Substring+HasSuffix.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Grammar/Grammar.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Grammar/SwiftGrammar.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Output/AttributedStringOutputFormat.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Output/HTMLOutputFormat.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Output/MarkdownDecorator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Output/OutputBuilder.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Output/OutputFormat.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Syntax/SyntaxHighlighter.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Syntax/SyntaxRule.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Theming/Color.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Theming/Font.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Theming/Theme+Defaults.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Theming/Theme.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Tokenizing/Segment.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Tokenizing/TokenType.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build/Tokenizing/Tokenizer.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.swiftmodule"
+        }
+      ],
+      "sources" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/CharacterSet/CharacterSet+Contains.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Equatable/Equatable+AnyOf.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Int/Int+IsOdd.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Sequence/Sequence+AnyOf.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Sequence/Sequence+Occurrences.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Strings/String+HTMLEntities.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Strings/String+IsNumber.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Strings/String+PrefixChecking.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Strings/String+Removing.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Extensions/Strings/Substring+HasSuffix.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Grammar/Grammar.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Grammar/SwiftGrammar.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Output/AttributedStringOutputFormat.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Output/HTMLOutputFormat.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Output/MarkdownDecorator.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Output/OutputBuilder.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Output/OutputFormat.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Syntax/SyntaxHighlighter.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Syntax/SyntaxRule.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Theming/Color.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Theming/Font.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Theming/Theme+Defaults.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Theming/Theme.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Tokenizing/Segment.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Tokenizing/TokenType.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splash/Sources/Splash/Tokenizing/Tokenizer.swift"
+      ],
+      "tempsPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.SplashPublishPlugin-debug.module" : {
+      "executable" : "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "importPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splashpublishplugin/Sources/SplashPublishPlugin/SplashPublishPlugin.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Splash.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.swiftmodule"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "SplashPublishPlugin",
+      "moduleOutputPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SplashPublishPlugin.swiftmodule",
+      "objects" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SplashPublishPlugin.build/SplashPublishPlugin.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx10.13",
+        "-swift-version",
+        "5",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-g",
+        "-j10",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SplashPublishPlugin.build/SplashPublishPlugin-Swift.h",
+        "-sdk",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk",
+        "-F",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-suppress-warnings"
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SplashPublishPlugin.build/SplashPublishPlugin.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SplashPublishPlugin.swiftmodule"
+        }
+      ],
+      "sources" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/splashpublishplugin/Sources/SplashPublishPlugin/SplashPublishPlugin.swift"
+      ],
+      "tempsPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SplashPublishPlugin.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.Sweep-debug.module" : {
+      "executable" : "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "importPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/sweep/Sources/Sweep/Sweep.swift"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "Sweep",
+      "moduleOutputPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Sweep.swiftmodule",
+      "objects" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Sweep.build/Sweep.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx10.13",
+        "-swift-version",
+        "5",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-g",
+        "-j10",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Sweep.build/Sweep-Swift.h",
+        "-sdk",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk",
+        "-F",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-suppress-warnings"
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Sweep.build/Sweep.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Sweep.swiftmodule"
+        }
+      ],
+      "sources" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/sweep/Sources/Sweep/Sweep.swift"
+      ],
+      "tempsPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Sweep.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.SwiftBlog-debug.module" : {
+      "executable" : "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "importPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+About.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+Home.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+Item.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+Posts.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+TagDetails.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+Tags.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Images.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Explore.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Featured.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Footer.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Gtag.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Head.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Header.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+PostsContent.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Tags.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Wrapper.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/main.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/myHtmlFactory.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/Publish.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SplashPublishPlugin.swiftmodule"
+        }
+      ],
+      "isLibrary" : false,
+      "moduleName" : "SwiftBlog",
+      "moduleOutputPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/SwiftBlog.swiftmodule",
+      "objects" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/HtmlPages/Factory+About.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/HtmlPages/Factory+Home.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/HtmlPages/Factory+Item.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/HtmlPages/Factory+Posts.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/HtmlPages/Factory+TagDetails.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/HtmlPages/Factory+Tags.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/Images.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/Nodes/Node+Explore.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/Nodes/Node+Featured.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/Nodes/Node+Footer.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/Nodes/Node+Gtag.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/Nodes/Node+Head.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/Nodes/Node+Header.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/Nodes/Node+PostsContent.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/Nodes/Node+Tags.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/Nodes/Node+Wrapper.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/main.swift.o",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/myHtmlFactory.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx10.13",
+        "-swift-version",
+        "5",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-g",
+        "-j10",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-sdk",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk",
+        "-F",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode_14.2.0_14C18_fb.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib"
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/HtmlPages/Factory+About.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/HtmlPages/Factory+Home.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/HtmlPages/Factory+Item.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/HtmlPages/Factory+Posts.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/HtmlPages/Factory+TagDetails.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/HtmlPages/Factory+Tags.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/Images.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/Nodes/Node+Explore.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/Nodes/Node+Featured.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/Nodes/Node+Footer.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/Nodes/Node+Gtag.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/Nodes/Node+Head.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/Nodes/Node+Header.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/Nodes/Node+PostsContent.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/Nodes/Node+Tags.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/Nodes/Node+Wrapper.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/main.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/myHtmlFactory.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build/SwiftBlog.swiftmodule"
+        }
+      ],
+      "sources" : [
+        "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+About.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+Home.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+Item.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+Posts.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+TagDetails.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+Tags.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Images.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Explore.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Featured.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Footer.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Gtag.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Head.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Header.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+PostsContent.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Tags.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Wrapper.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/main.swift",
+        "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/myHtmlFactory.swift"
+      ],
+      "tempsPath" : "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/debug/SwiftBlog.build",
+      "wholeModuleOptimization" : false
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "testDiscoveryCommands" : {
+
+  }
+}

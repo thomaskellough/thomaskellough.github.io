@@ -1,0 +1,4 @@
+module Sweep {
+    header "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Sweep.build/Sweep-Swift.h"
+    requires objc
+}

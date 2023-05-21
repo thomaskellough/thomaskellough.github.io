@@ -1,0 +1,97 @@
+{
+  "": {
+    "dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/SwiftBlog.d",
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/SwiftBlog.o",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/master.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+About.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/HtmlPages/Factory+About.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/HtmlPages/Factory+About~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/HtmlPages/Factory+About.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+Home.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/HtmlPages/Factory+Home.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/HtmlPages/Factory+Home~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/HtmlPages/Factory+Home.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+Item.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/HtmlPages/Factory+Item.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/HtmlPages/Factory+Item~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/HtmlPages/Factory+Item.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+Posts.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/HtmlPages/Factory+Posts.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/HtmlPages/Factory+Posts~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/HtmlPages/Factory+Posts.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+TagDetails.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/HtmlPages/Factory+TagDetails.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/HtmlPages/Factory+TagDetails~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/HtmlPages/Factory+TagDetails.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+Tags.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/HtmlPages/Factory+Tags.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/HtmlPages/Factory+Tags~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/HtmlPages/Factory+Tags.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Images.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Images.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Images~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Images.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Explore.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+Explore.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+Explore~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+Explore.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Featured.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+Featured.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+Featured~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+Featured.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Footer.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+Footer.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+Footer~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+Footer.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Gtag.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+Gtag.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+Gtag~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+Gtag.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Head.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+Head.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+Head~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+Head.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Header.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+Header.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+Header~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+Header.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+PostsContent.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+PostsContent.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+PostsContent~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+PostsContent.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Tags.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+Tags.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+Tags~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+Tags.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/Nodes/Node+Wrapper.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+Wrapper.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+Wrapper~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/Nodes/Node+Wrapper.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/main.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/main.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/main~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/main.swiftdeps"
+  },
+  "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/myHtmlFactory.swift": {
+    "object": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/myHtmlFactory.swift.o",
+    "swiftmodule": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/myHtmlFactory~partial.swiftmodule",
+    "swift-dependencies": "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/SwiftBlog.build/myHtmlFactory.swiftdeps"
+  }
+}

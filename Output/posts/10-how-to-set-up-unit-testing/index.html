@@ -1,0 +1,162 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"/><script async src="https://www.googletagmanager.com/gtag/js?id=UA-175451977-1"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-175451977-1');</script><meta name="og:site_name" content="The Swift Protocol"/><link rel="canonical" href="www.thomaskellough/thomaskellough.github.io"/><meta name="twitter:url" content="www.thomaskellough/thomaskellough.github.io"/><meta name="og:url" content="www.thomaskellough/thomaskellough.github.io"/><title>Swift Skill Building | The Swift Protocol</title><meta name="twitter:title" content="Swift Skill Building | The Swift Protocol"/><meta name="og:title" content="Swift Skill Building | The Swift Protocol"/><meta name="description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:description" content="Swift Skill Building With Thomas Kellough"/><meta name="og:description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="http://www.theswiftprotocol.com/images/social.png"/><meta name="og:image" content="http://www.theswiftprotocol.com/images/social.png"/><link rel="stylesheet" href="/styles.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to The Swift Protocol"/></head><body><header><div class="nav-logo"><a href="/"><img src="/Images/blog-logo.png"/></a><nav class="nav-bar"><p>Swift Skill Building With Thomas Kellough</p><ul><li><h3><a href="/home">Home</a></h3></li><li><h3><a href="/posts">Posts</a></h3></li><li><h3><a href="/tags">Tags</a></h3></li></ul></nav></div></header><div class="wrapper"><article><h1>Unit Testing with UIKit</h1><div class="post-tags" markdown="1">
+  <a class="post-category post-category-unittesting" href="/tags/unittesting">UnitTesting</a>
+  <a class="post-category post-category-uikit" href="/tags/uikit">UIKit</a>
+</div><h3>Introduction</h3><p>Unit testing is highly valuable when making apps. Yet, there are so many apps in production that don't use it. It can help you write code that is stronger and more clear, help prevent app crashes, help reduce the re-opening of Jira tickets when the QA team finds an issue and can help you debug your code without running the app. So seriously, what's not to like? Why don't people use it?</p><p>One of the reasons is people don't understand how to use unit testing. It seems weird to write simple tests for something that you <em>know</em> will work, right? Maybe so, but when you have multiple developers working on the same team you're not all working on the same stuff. It's very easy for someone to accidently disrupt the code that you wrote previously. It also takes time to write unit testing. Not a whole lot, but more than none, and many people are rushed. However, neglecting to use unit tests can cause more time spent later on by fixing the bugs that would have been found by simply pressing <code>cmd + u</code>.</p><h3>Setup</h3><p>If you want to set up your own project that's fine. Create some text fields in the main view for first name, last name, date of birth, and 4-dig pin inputs. Then add a submit button at the bottom. Or you can download the starter project <a href="https://github.com/thomaskellough/iOS-Tutorials-UIKit-Swift">here</a>.</p><p>For reference, here is what you get when you run the starter, and here is what the code looks like.</p><img class="post-image img-sm" src="/Images/Posts/10/10-01.png" alt="Unit Testing Starter"/><pre><code><span class="keyword">import</span> UIKit
+
+<span class="keyword">class</span> ViewController: <span class="type">UIViewController</span> {
+
+  <span class="keyword">@IBOutlet weak var</span> firstNameTextField: <span class="type">UITextField</span>!
+  <span class="keyword">@IBOutlet weak var</span> lastNameTextField: <span class="type">UITextField</span>!
+  <span class="keyword">@IBOutlet weak var</span> dateOfBirthTextField: <span class="type">UITextField</span>!
+  <span class="keyword">@IBOutlet weak var</span> pinNumberTextField: <span class="type">UITextField</span>!
+   
+   
+  <span class="keyword">override func</span> viewDidLoad() {
+    <span class="keyword">super</span>.<span class="call">viewDidLoad</span>()
+    <span class="comment">// Do any additional setup after loading the view.</span>
+  }
+
+  <span class="keyword">@IBAction func</span> validateTapped(<span class="keyword">_</span> sender: <span class="type">Any</span>) {
+     
+  }
+   
+}
+</code></pre><p>As you can see, there isn't much going on at the moment. The idea of the app is to have a user type in their first name, last name, date of birth, and PIN then hit validate. Although this app does nothing, it's a great way to see how unit testing works.</p><p>Before we can start, we need to add unit testing to our project. Now, if you start the project from scratch, you can check a box that says "Unit Testing". And I recommend doing this with all your projects. However, it's not impossible to add unit testing to already existing projects that don't already incorporate it. To do this, go to <code>File &gt; New &gt; Target</code> then filter for <code>Unit Testing Bundle</code> and add it to your project target. There should only be one, but if you have multiple targets in your project then you will need to add multiple unit tests.</p><img class="post-image" src="/Images/Posts/10/10-02.png" alt="File Tree Unit Testing"/><img class="post-image" src="/Images/Posts/10/10-03.png" alt="Unit Testing Bundle"/><img class="post-image" src="/Images/Posts/10/10-04.png" alt="Project Directy After Adding Unit Testing"/><h3>Writing Your First Test</h3><p>Now you'll often hear the term <code>Test-Driven Development</code>. Many people take this approach because it helps you understand your code and ensure your tests are working. The steps, in short, are</p><ol><li>Write a failing test</li></ol><ol start="2"><li>Run the code, ensure your code fails (What? Yes, for real)</li></ol><ol start="3"><li>Write the code to make the test pass</li></ol><ol start="4"><li>Run your tests again</li></ol><ol start="5"><li>Refractor as needed</li></ol><p>Let's start with writing a failing test. You'd think we need to jump into our new unit testing Swift file, but we can't do that yet. Mainly because the way we will validate our fields will be by using extensions. We can't test a function or property that doesn't exist. Instead, I want you to create a new folder inside your project directory called <code>Extensions</code>. The purpose of the new folder is purely for better organization. Inside the new folder, create a swift file called <code>String+Extensions</code>. Note here, when you add the file you do NOT need to check the box for your unit testing target. Only check the box for the main project target.</p><p>Let's start with testing the first name input that the user tries to validate. However, we are going to make it return false since that's the first step to test-driven development.</p><p>Create a new <code>String</code> extension property below. <em>Note - You can do this using properties or functions. I prefer a property for this, but it's your choice</em></p><pre><code><span class="keyword">extension</span> <span class="type">String</span> {
+  <span class="keyword">var</span> isValidFirstName: <span class="type">Bool</span> {
+    <span class="keyword">return false</span>
+  }
+}
+</code></pre><p>While we are on extensions, create a new one for <code>UITextField</code> to show our invalid and valid fields. Of course, feel free to edit them as you see fit.</p><pre><code><span class="keyword">extension</span> <span class="type">UITextField</span> {
+  <span class="keyword">func</span> invalidate() {
+    backgroundColor = .<span class="dotAccess">red</span>
+    textColor = .<span class="dotAccess">white</span>
+  }
+   
+  <span class="keyword">func</span> validate() {
+    backgroundColor = .<span class="dotAccess">systemBackground</span>
+    textColor = .<span class="dotAccess">label</span>
+  }
+}
+</code></pre><p>Now let's write our first test. Head over to <code>How_To_Use_Unit_TestingTests.swift</code> and take a look at what you see.</p><pre><code><span class="keyword">import</span> XCTest
+
+<span class="keyword">class</span> How_To_Use_Unit_TestingTests: <span class="type">XCTestCase</span> {
+
+  <span class="keyword">override func</span> setUpWithError() <span class="keyword">throws</span> {
+    <span class="comment">// Put setup code here. This method is called before the invocation of each test method in the class.</span>
+  }
+
+  <span class="keyword">override func</span> tearDownWithError() <span class="keyword">throws</span> {
+    <span class="comment">// Put teardown code here. This method is called after the invocation of each test method in the class.</span>
+  }
+
+  <span class="keyword">func</span> testExample() <span class="keyword">throws</span> {
+    <span class="comment">// This is an example of a functional test case.
+    // Use XCTAssert and related functions to verify your tests produce the correct results.</span>
+  }
+
+  <span class="keyword">func</span> testPerformanceExample() <span class="keyword">throws</span> {
+    <span class="comment">// This is an example of a performance test case.</span>
+    <span class="call">measure</span> {
+      <span class="comment">// Put the code you want to measure the time of here.</span>
+    }
+  }
+
+}
+</code></pre><p>The <code>setUpWithError()</code> and <code>tearDownWithError()</code> are two functions that get called before and after (respectively) every single test is run. For this project, we don't need it because we are only testing extension properties. The <code>testExample()</code> can be removed and the <code>testPerformanceExample()</code> can also be removed. The latter will time your code so you can refractor and improve costly calculations. This is beyond the scope of this tutorial.</p><p>Before we can start testing and using our functions, we need to add one line of code towards the top. Under <code>import XCTest</code> add the following.</p><pre><code><span class="keyword">@testable import</span> How_To_Use_Unit_Testing
+</code></pre><p>This allows us to test our project and use any functions and extensions that we wrote for it.</p><p>When we write a test, you need to name the function a specific way. It needs to start with <code>test</code> then you can fill in the rest how you want. There are various naming conventions, and you can choose the one you like. Personally, I like to name it <code>test(what am I testing)_(what should the result be)</code>. Then, to check our result, we use the <code>XCTAssert</code> function. There are many to choose from, and often, you can choose the one you want. You can use <code>XCTAssert</code> for everything and type in your conditions yourself. However, I like to be explicit. Since we are validating something is true, let's use <code>XCTAssertTrue()</code>. Let's write our first test for a passing first name</p><pre><code><span class="keyword">func</span> testFirstNameHarryIsValid_True() {
+  <span class="keyword">let</span> name = <span class="string">"Harry"</span>
+  <span class="keyword">let</span> isValid = name.<span class="property">isValidFirstName</span>
+  <span class="call">XCTAssertTrue</span>(isValid, <span class="string">"Uh oh!</span> \(name) <span class="string">is not valid"</span>)
+}
+</code></pre><p>Now, either press <code>cmd + u</code> to run your test or press the diamond next to the function (or the class to run all tests). You should see this.</p><img class="post-image" src="/Images/Posts/10/10-05.png" alt="Failing Test"/><p>Oh no! Our test failed! However, that was expected. At this point, we should go correct our string extension to help us pass our test. But before we do that, I want you to navigate to <code>viewController.swift</code>, and let's add some code. I want you to see it failing in the app first, then we can finish the tests. Inside <code>viewController.swift</code>, edit your button tapped function. We want to check for validation, and if it's invalid set up an alert as we well as highlight which text field is invalid. This means we want to create a bool variable as true, but turn it to false if our textfield is invalid. Let's also add some color to our textfield so it's easier for the user to know which textfield is invalid. Edit your function in <code>viewDidLoad</code> to look like this</p><pre><code><span class="keyword">@IBAction func</span> validateTapped(<span class="keyword">_</span> sender: <span class="type">Any</span>) {
+  <span class="keyword">var</span> validForm = <span class="keyword">true
+   
+  if let</span> firstName = firstNameTextField.<span class="property">text</span> {
+    <span class="keyword">if</span> !firstName.<span class="property">isValidFirstName</span> {
+      validForm = <span class="keyword">false</span>
+      firstNameTextField.<span class="call">invalidate</span>()
+    }
+  } <span class="keyword">else</span> {
+    validForm = <span class="keyword">false</span>
+    firstNameTextField.<span class="call">invalidate</span>()
+  }
+   
+  <span class="keyword">var</span> title = <span class="string">""</span>
+  <span class="keyword">var</span> message = <span class="string">""</span>
+  <span class="keyword">if</span> validForm {
+    title = <span class="string">"Success!"</span>
+    message = <span class="string">"All of your forms are valid"</span>
+  } <span class="keyword">else</span> {
+    title = <span class="string">"Oops!"</span>
+    message = <span class="string">"Some fields are invalid. Please correct and resubmit."</span>
+  }
+   
+  <span class="keyword">let</span> ac = <span class="type">UIAlertController</span>(title: title, message: message, preferredStyle: .<span class="dotAccess">alert</span>)
+  ac.<span class="call">addAction</span>(<span class="type">UIAlertAction</span>(title: <span class="string">"OK"</span>, style: .<span class="dotAccess">default</span>))
+  <span class="call">present</span>(ac, animated: <span class="keyword">true</span>)
+}
+</code></pre><p>Let's discuss what this does.</p><ol><li>Create a bool that starts as true</li></ol><ol start="2"><li>Check to see if the textfield contains text. If it doesn't mark the form as invalid and also invalidate the text field.</li></ol><ol start="3"><li>If it is valid, continue without doing anything</li></ol><ol start="4"><li>Once all validation is complete, show an alert either saying everything is valid or telling the user to correct their mistake and resubmit.</li></ol><p>As you can guess, we should have an invalid form when we are finished. After all, our string extension returns <code>false</code>.</p><img class="post-image" src="/Images/Posts/10/10-06.gif" alt="First Name Invalidation"/><h3>Making Our Test Pass</h3><p>Now let's head back over to <code>String+Extension</code> and help our test pass. It comes down to you, as the programmer, on what you want to allow to pass. Every app and be different, although, you will probably be able to reuse some functions. We will write some very basic validation steps for the purpose of this app. We will make sure that <code>firstName</code> is only characters. We will add a bit of spice to make it case-insensitive, though. Edit <code>isValidFirstName</code> to look like this.</p><pre><code><span class="keyword">var</span> isValidFirstName: <span class="type">Bool</span> {
+  <span class="keyword">guard self</span>.<span class="property">count</span> &gt; <span class="number">0</span> <span class="keyword">else</span> { <span class="keyword">return false</span> }
+  <span class="keyword">let</span> array = <span class="type">Array</span>(<span class="keyword">self</span>.<span class="call">lowercased</span>().<span class="call">trimmingCharacters</span>(in: .<span class="dotAccess">whitespaces</span>))
+  <span class="keyword">let</span> characters = <span class="string">"abcdefghijklmnopqrstuvwxyz"</span>
+  <span class="keyword">for</span> character <span class="keyword">in</span> array {
+    <span class="keyword">if</span> !characters.<span class="call">contains</span>(character) {
+      <span class="keyword">return false</span>
+    }
+  }
+   
+  <span class="keyword">return true</span>
+}
+</code></pre><ol><li>This will check to see if the string contains at least something, or return false</li></ol><ol start="2"><li>Then it creates an array of all the characters in the string</li></ol><ol start="3"><li>Create a string of characters we want to be valid</li></ol><ol start="4"><li>Loop through our array of characters, if our valid character contains the character being checked, do nothing. If it doesn't, bail and return false.</li></ol><ol start="5"><li>If we make it through the end, it means all characters are valid so we can return true.</li></ol><p>You should be able to run your test now and see it pass. Here are a couple more tests that you can use. Note that you should also test false cases. There is no such thing as too many tests!!!</p><pre><code><span class="keyword">func</span> testFirstNamehermioneIsValid_True() {
+  <span class="keyword">let</span> name = <span class="string">"hermione"</span>
+  <span class="keyword">let</span> isValid = name.<span class="property">isValidFirstName</span>
+  <span class="call">XCTAssertTrue</span>(isValid, <span class="string">"Uh oh!</span> \(name) <span class="string">is not valid"</span>)
+}
+<span class="keyword">func</span> testFirstNameRon5IsValid_False() {
+  <span class="keyword">let</span> name = <span class="string">"Ron5"</span>
+  <span class="keyword">let</span> isValid = name.<span class="property">isValidFirstName</span>
+  <span class="call">XCTAssertFalse</span>(isValid, <span class="string">"Uh oh!</span> \(name) <span class="string">is not valid"</span>)
+}
+</code></pre><h3>Writing Date of Birth Test</h3><p>Remember to start with a failing test. Here's my <code>String</code> extension as well as my first test case.</p><pre><code><span class="keyword">var</span> isValidDOB: <span class="type">Bool</span> {
+  <span class="keyword">return false</span>
+}
+
+<span class="keyword">func</span> testDobIsValid1_True() {
+  <span class="keyword">let</span> dob = <span class="string">"07/31/1980"</span>
+  <span class="keyword">let</span> isValid = dob.<span class="property">isValidDOB</span>
+  <span class="call">XCTAssertTrue</span>(isValid)
+}
+</code></pre><p>After verifying my test fails, it's time to correct the <code>String</code> property. Note that we do not have to run our app right now. We can do that at the very end after all of our test cases! Now there are many ways to test date of birth. And honestly, letting a user manually type it in will only cause you more trouble than it's worth. It's better to use a picker so they pretty much have to enter it in the format that you want. However, for the purpose of this tutorial, we will be checking for one format. Edit <code>isValidDOB</code> to this. Here is also another test case you can use.</p><pre><code><span class="keyword">var</span> isValidDateOfBirth: <span class="type">Bool</span> {
+  <span class="keyword">let</span> formatter = <span class="type">DateFormatter</span>()
+  formatter.<span class="property">dateFormat</span> = <span class="string">"MM/dd/yyyy"</span>
+   
+  <span class="keyword">return</span> formatter.<span class="call">date</span>(from: <span class="keyword">self</span>) != <span class="keyword">nil</span> &amp;&amp; <span class="keyword">self</span>.<span class="property">count</span> &gt; <span class="number">8</span>
+}
+
+<span class="keyword">func</span> testDobIsValid1_False() {
+  <span class="keyword">let</span> dob = <span class="string">"07/31/80"</span>
+  <span class="keyword">let</span> isValid = dob.<span class="property">isValidDOB</span>
+  <span class="call">XCTAssertFalse</span>(isValid)
+}
+</code></pre><p>Once again, add more tests, keep refractoring the code to what you want.</p><h3>Writing PIN number test</h3><p>A valid PIN should be four digits long and contain only numbers. This is very easy to do if you know the shortcut. We can test the string for a count == 4, then see if it contains only numbers. Most people go in the same direction we took with the name, by creating an array of digits, looping through the string, comparing each loop through the array of digits, and react accordingly. This works, sure. But it's more code than is needed. Instead, let's use some Swift skills! Swift gives you the option to convert any string into an Integer. However, you can't convert something like <code>firebolt</code> to a number. So when you try this in Swift, it returns a <code>nil</code> value. So let's check if we can convert our string to an integer, and then we can return <code>true/false</code> based on if we get a nil value or not. Here is the <code>String</code> extension as well as some test cases for you.</p><pre><code><span class="keyword">var</span> isValidPin: <span class="type">Bool</span> {
+  <span class="keyword">return self</span>.<span class="property">count</span> == <span class="number">4</span> &amp;&amp; <span class="type">Int</span>(<span class="keyword">self</span>) != <span class="keyword">nil</span>
+}
+
+<span class="keyword">func</span> test1234IsValid_True() {
+  <span class="keyword">let</span> pin = <span class="string">"1234"</span>
+  <span class="keyword">let</span> isValid = pin.<span class="property">isValidPin</span>
+  <span class="call">XCTAssertTrue</span>(isValid)
+}
+
+<span class="keyword">func</span> test12345IsValid_False() {
+  <span class="keyword">let</span> pin = <span class="string">"12345"</span>
+  <span class="keyword">let</span> isValid = pin.<span class="property">isValidPin</span>
+  <span class="call">XCTAssertFalse</span>(isValid)
+}
+
+<span class="keyword">func</span> testa234ISValid_False() {
+  <span class="keyword">let</span> pin = <span class="string">"a234"</span>
+  <span class="keyword">let</span> isValid = pin.<span class="property">isValidPin</span>
+  <span class="call">XCTAssertFalse</span>(isValid)
+}
+</code></pre><h3>Conclusion</h3><p>And there you have it! You can now write your code and ensure you get the results you want. Note that you didn't even have to start anything in <code>viewController.swift</code> yet. Of course, you'll want to test it in simulator or a real device before deploying, but I hope you see how using Unit Testing can help you become a better programmer and save headaches in the future. In your own projects, you should write as many unique test cases as you can think of and run your tests often. If you are adding test cases to an already existing project that doesn't contain them, you may find it difficult and "not worth it". Just add them sporadically as you work on something relevant. If you want to see and/or download the final project you can do so <a href="https://github.com/thomaskellough/iOS-Tutorials-UIKit-Swift">here</a>.</p></article></div><div class="footer-social"><div>© 2023 The Swift Protocol</div><div>Generated using <a href="https://github.com/johnsundell/publish">Publish</a>. Written in Swift</div><div><a href="https://www.linkedin.com/in/thomas-kellough/">LinkedIn</a> | <a href="https://github.com/thomaskellough">Github</a> | <a href="mailto:theswiftprotocol@gmail.com">Email</a></div></div></body></html>

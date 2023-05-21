@@ -1,0 +1,6 @@
+version: "Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)"
+options: "757648572a8e1d23641ef401efe45524812eb2b507a727468803c2fa2aa04bc9"
+build_start_time: [1684695906, 905490875]
+build_end_time: [1684695911, 303747177]
+inputs:
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/files/Sources/Files.swift": [1684695902, 367703437]

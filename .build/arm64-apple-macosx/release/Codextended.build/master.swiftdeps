@@ -1,0 +1,6 @@
+version: "Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)"
+options: "4b6aa9430e82010f7c778ca48d18fe3dc69dd082417e84f7acdf147c17f99c7b"
+build_start_time: [1684695906, 905290126]
+build_end_time: [1684695908, 743558883]
+inputs:
+  "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/codextended/Sources/Codextended/Codextended.swift": [1684695900, 676781177]

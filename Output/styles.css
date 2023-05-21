@@ -330,11 +330,11 @@ a {
 .post-category-enums,
 .post-category-faceid,
 .post-category-html,
-.post-category-labeledstatements,
-.post-category-localnotifications {
+.post-category-labeledstatements {
     background: #B02E0C;
 }
 
+.post-category-localnotifications,
 .post-category-metadata,
 .post-category-models,
 .post-category-navigation,
@@ -367,6 +367,18 @@ a {
 
 .post-category-feature {
     background: #954B85;
+}
+
+.post-category-leetcodeeasy {
+    background: #409182;
+}
+
+.post-category-leetcodemedium {
+    background: #86651f;
+}
+
+.post-category-leetcodehard {
+    background: #9d1f27;
 }
 
 .footer {
@@ -490,6 +502,21 @@ pre code .preprocessing {
     padding: 20px;
 }
 
+.problem-container {
+    font-family: monospace;
+    font-style: italic;
+    display: inline-block;
+    word-wrap: break-word;
+    padding: 5px;
+    color: black;
+    line-height: 1.4em;
+    font-size: 1.2em;
+    background-color: skyblue;
+    border-radius: 10px;
+    padding: 20px;
+    white-space: pre-wrap;
+}
+
 @media (prefers-color-scheme: dark) {
     body {
         background-color: #222;
@@ -546,6 +573,21 @@ pre code .preprocessing {
         background-color: #94ffb2;
         border-radius: 10px;
         padding: 20px;
+    }
+    
+    .problem-container {
+        font-family: monospace;
+        font-style: italic;
+        display: inline-block;
+        word-wrap: break-word;
+        padding: 5px;
+        color: black;
+        line-height: 1.4em;
+        font-size: 1.2em;
+        background-color: skyblue;
+        border-radius: 10px;
+        padding: 20px;
+        white-space: pre-wrap;
     }
 }
 

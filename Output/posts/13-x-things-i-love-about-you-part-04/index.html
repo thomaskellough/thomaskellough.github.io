@@ -1,0 +1,79 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"/><script async src="https://www.googletagmanager.com/gtag/js?id=UA-175451977-1"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-175451977-1');</script><meta name="og:site_name" content="The Swift Protocol"/><link rel="canonical" href="www.thomaskellough/thomaskellough.github.io"/><meta name="twitter:url" content="www.thomaskellough/thomaskellough.github.io"/><meta name="og:url" content="www.thomaskellough/thomaskellough.github.io"/><title>Swift Skill Building | The Swift Protocol</title><meta name="twitter:title" content="Swift Skill Building | The Swift Protocol"/><meta name="og:title" content="Swift Skill Building | The Swift Protocol"/><meta name="description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:description" content="Swift Skill Building With Thomas Kellough"/><meta name="og:description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="http://www.theswiftprotocol.com/images/social.png"/><meta name="og:image" content="http://www.theswiftprotocol.com/images/social.png"/><link rel="stylesheet" href="/styles.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to The Swift Protocol"/></head><body><header><div class="nav-logo"><a href="/"><img src="/Images/blog-logo.png"/></a><nav class="nav-bar"><p>Swift Skill Building With Thomas Kellough</p><ul><li><h3><a href="/home">Home</a></h3></li><li><h3><a href="/posts">Posts</a></h3></li><li><h3><a href="/tags">Tags</a></h3></li></ul></nav></div></header><div class="wrapper"><article><h1>Create a unique Valentine's Day app for your loved one - Part 4</h1><div class="post-tags" markdown="1">
+  <a class="post-category post-category-localnotifications" href="/tags/localnotifications">LocalNotifications</a>
+</div><table class="posts-table">
+    <tr>
+        <th class="th-left"><a href="/posts/13-x-things-i-love-about-you-part-03" style="text-decoration: none">&larr; Animations and UserDefaults</a></th>
+        <th class="th-middle"></th>
+        <th class="th-right"><a href="/posts/13-x-things-i-love-about-you-part-05" style="text-decoration: none">Conclusion &rarr;</a></th>
+    </tr>
+</table><h3>Adding local notifications</h3><p>Now that we have our app configured how we want, we need to add local notifications. This means every day the user will get a reminder to open the app and see the next thing you love about them.</p><p>I think it's best to separate your local notification in one class by itself. So, create a new swift file called <code>NotificationManager.swift</code>. UserNotifications can be complicated, so I'll just paste the entire file and comment out what's happening in each step:</p><pre><code><span class="keyword">import</span> Foundation
+<span class="keyword">import</span> UserNotifications
+
+<span class="keyword">class</span> NotificationManager {
+    
+    <span class="comment">// This will be the function we call in order to register local notifications for the user</span>
+    <span class="keyword">func</span> registerLocal() {
+        <span class="keyword">let</span> center = <span class="type">UNUserNotificationCenter</span>.<span class="call">current</span>()
+        
+        <span class="comment">// If we are at the end of the list, stop scheduling notifications</span>
+        <span class="keyword">let</span> maxDay = <span class="type">UserDefaults</span>.<span class="property">standard</span>.<span class="call">integer</span>(forKey: <span class="string">"maxDay"</span>)
+        <span class="keyword">let</span> totalCompliments = <span class="type">AllCompliments</span>().<span class="property">compliments</span>.<span class="property">count</span> - <span class="number">1</span>
+
+        <span class="comment">// If we are at the maximum number of compliments, stop sending notifications!</span>
+        <span class="keyword">if</span> maxDay == totalCompliments {
+            center.<span class="call">removeAllPendingNotificationRequests</span>()
+            <span class="keyword">return</span>
+        }
+        
+        <span class="comment">// If we made it here then we still have more compliments to go. Ask the user for permission and if they grant, schedule the notifications.</span>
+        center.<span class="call">requestAuthorization</span>(options: [.<span class="dotAccess">alert</span>, .<span class="dotAccess">badge</span>, .<span class="dotAccess">sound</span>]) {
+            granted, error <span class="keyword">in
+            if</span> granted {
+                <span class="keyword">self</span>.<span class="call">scheduleLocal</span>()
+            } <span class="keyword">else</span> {
+                <span class="call">print</span>(<span class="string">"User denied permission!"</span>)
+            }
+        }
+        
+        <span class="call">registerCateories</span>()
+    }
+    
+    <span class="comment">// This function is what shows then the user gets the notification and swipes down.</span>
+    <span class="keyword">func</span> registerCateories() {
+        <span class="keyword">let</span> center = <span class="type">UNUserNotificationCenter</span>.<span class="call">current</span>()
+
+        <span class="keyword">let</span> show = <span class="type">UNNotificationAction</span>(identifier: <span class="string">"show"</span>, title: <span class="string">"Okay, tell me!"</span>, options: .<span class="dotAccess">foreground</span>)
+        <span class="keyword">let</span> category = <span class="type">UNNotificationCategory</span>(identifier: <span class="string">"alarm"</span>, actions: [show], intentIdentifiers: [], options: [])
+        center.<span class="call">setNotificationCategories</span>([category])
+    }
+    
+    <span class="comment">// This is what the notification will say to the user</span>
+    <span class="keyword">func</span> scheduleLocal() {
+        <span class="call">registerCateories</span>()
+        <span class="keyword">let</span> center = <span class="type">UNUserNotificationCenter</span>.<span class="call">current</span>()
+        <span class="comment">// It's a good idea to remove any pending notifications before we schedule more.</span>
+        center.<span class="call">removeAllPendingNotificationRequests</span>()
+        
+        <span class="keyword">let</span> content = <span class="type">UNMutableNotificationContent</span>()
+        content.<span class="property">title</span> = <span class="string">"I love you!"</span>
+        content.<span class="property">body</span> = <span class="string">"Come see the next thing I love about you!"</span>
+        content.<span class="property">categoryIdentifier</span> = <span class="string">"alarm"</span>
+        content.<span class="property">sound</span> = .<span class="dotAccess">default</span>
+        
+        <span class="comment">// When do you want to show it. This will notify the user at 8:00 am every morning.</span> 
+        <span class="keyword">var</span> dateComponents = <span class="type">DateComponents</span>()
+        dateComponents.<span class="property">hour</span> = <span class="number">8</span>
+        dateComponents.<span class="property">minute</span> = <span class="number">0</span>
+        <span class="keyword">let</span> trigger = <span class="type">UNCalendarNotificationTrigger</span>(dateMatching: dateComponents, repeats: <span class="keyword">true</span>)
+        <span class="keyword">let</span> requests = <span class="type">UNNotificationRequest</span>(identifier: <span class="type">UUID</span>().<span class="property">uuidString</span>, content: content, trigger: trigger)
+        center.<span class="call">add</span>(requests)
+    }
+}
+</code></pre><p>Then, in <code>viewDidLoad</code> of <code>ComplimentViewController.swift</code> add the following line at the end:</p><pre><code><span class="type">NotificationManager</span>().<span class="call">registerLocal</span>()
+</code></pre><table class="posts-table">
+    <tr>
+        <th class="th-left"><a href="/posts/13-x-things-i-love-about-you-part-03" style="text-decoration: none">&larr; Animations and UserDefaults</a></th>
+        <th class="th-middle"></th>
+        <th class="th-right"><a href="/posts/13-x-things-i-love-about-you-part-05" style="text-decoration: none">Conclusion &rarr;</a></th>
+    </tr>
+</table></article></div><div class="footer-social"><div>© 2023 The Swift Protocol</div><div>Generated using <a href="https://github.com/johnsundell/publish">Publish</a>. Written in Swift</div><div><a href="https://www.linkedin.com/in/thomas-kellough/">LinkedIn</a> | <a href="https://github.com/thomaskellough">Github</a> | <a href="mailto:theswiftprotocol@gmail.com">Email</a></div></div></body></html>

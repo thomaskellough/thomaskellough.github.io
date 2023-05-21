@@ -1,0 +1,4 @@
+module Publish {
+    header "/Users/tkellough/TK/thomaskellough.github.io/.build/arm64-apple-macosx/release/Publish.build/Publish-Swift.h"
+    requires objc
+}
