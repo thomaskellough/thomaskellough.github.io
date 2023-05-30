@@ -1,13 +1,12 @@
 ---
 date: 2020-09-05 20:48
 description: SwiftUI brings an easy way to handle navigation in your apps. This section will show you how to easily add a navigation view as well as navigation bar items to help you handle navigation.
-tags: Feature, NavigationView, NavigationLink, SwiftUI
+tags: NavigationView, NavigationLink, SwiftUI
 featuredDescription: Learn how to handl NavigationView using SwiftUI
 ---
 # All about NavigationView using SwiftUI
 
 <div class="post-tags" markdown="1">
-        <a class="post-category post-category-feature" href="/tags/feature">Feature</a>
         <a class="post-category post-category-navigationview" href="/tags/navigationview">NavigationView</a>
         <a class="post-category post-category-navigationlink" href="/tags/navigationlink">NavigationLink</a>
         <a class="post-category post-category-swiftui" href="/tags/swiftui">SwiftUI</a>
