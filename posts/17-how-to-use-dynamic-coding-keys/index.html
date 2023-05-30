@@ -1,0 +1,331 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"/><script async src="https://www.googletagmanager.com/gtag/js?id=UA-175451977-1"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-175451977-1');</script><meta name="og:site_name" content="The Swift Protocol"/><link rel="canonical" href="www.thomaskellough/thomaskellough.github.io"/><meta name="twitter:url" content="www.thomaskellough/thomaskellough.github.io"/><meta name="og:url" content="www.thomaskellough/thomaskellough.github.io"/><title>Swift Skill Building | The Swift Protocol</title><meta name="twitter:title" content="Swift Skill Building | The Swift Protocol"/><meta name="og:title" content="Swift Skill Building | The Swift Protocol"/><meta name="description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:description" content="Swift Skill Building With Thomas Kellough"/><meta name="og:description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="http://www.theswiftprotocol.com/images/social.png"/><meta name="og:image" content="http://www.theswiftprotocol.com/images/social.png"/><link rel="stylesheet" href="/styles.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to The Swift Protocol"/></head><body><header><div class="nav-logo"><a href="/"><img src="/Images/blog-logo.png"/></a><nav class="nav-bar"><p>Swift Skill Building With Thomas Kellough</p><ul><li><h3><a href="/home">Home</a></h3></li><li><h3><a href="/posts">Posts</a></h3></li><li><h3><a href="/tags">Tags</a></h3></li></ul></nav></div></header><div class="wrapper"><article><h1>Learn how to use dynamic coding keys in your app</h1><div class="post-tags" markdown="1">
+    <a class="post-category post-category-feature" href="/tags/feature">Feature</a>
+    <a class="post-category post-category-swiftui" href="/tags/swiftui">SwiftUI</a>
+    <a class="post-category post-category-codable" href="/tags/appicon">Codable</a>
+</div><h3>Introduction</h3><p>In mobile development, one common task is fetching data from a server and displaying it in your app. In iOS development using Swift, this often involves decoding JSON data and presenting it to users. While it's relatively straightforward to decode JSON and display the data, there are scenarios where the code can become less scalable and more difficult to maintain. This tutorial will address one such scenario by introducing dynamic coding keys, which provide a flexible approach to handling JSON data with varying keys. By leveraging dynamic coding keys, you can make your code more readable and adaptable to changes in the backend data.</p><h3>Getting Started</h3><p>To follow along with this tutorial, you can download the starter project <a href="https://github.com/thomaskellough/iOS-Tutorials-SwiftUI/tree/main/How-To-Use-Dynamic-Coding-Keys-Starter">here</a>.</p><h3>Problem</h3><p>The starter project is a simple app that decodes a list of homes for sale and displays some data about the homes to the user. Let's take a look at an example home from the <a href="https://github.com/thomaskellough/iOS-Tutorials-SwiftUI/blob/main/How-To-Use-Dynamic-Coding-Keys-Starter/How-To-Use-Dynamic-Coding-Keys/homesData.json">JSON</a> data:</p><pre><code>{
+    <span class="string">"id"</span>: <span class="number">1</span>,
+    <span class="string">"address"</span>: <span class="string">"123 Main St"</span>,
+    <span class="string">"city"</span>: <span class="string">"Exampleville"</span>,
+    <span class="string">"state"</span>: <span class="string">"Exampshire"</span>,
+    <span class="string">"zip"</span>: <span class="string">"12345"</span>,
+    <span class="string">"price"</span>: <span class="number">250000</span>,
+    <span class="string">"bedrooms"</span>: <span class="number">3</span>,
+    <span class="string">"bathrooms"</span>: <span class="number">2</span>,
+    <span class="string">"description"</span>: <span class="string">"This beautiful home features a spacious living room, modern kitchen, and a backyard garden."</span>,
+    <span class="string">"amenity1"</span>: <span class="string">"Swimming Pool"</span>,
+    <span class="string">"amenity2"</span>: <span class="string">"Fireplace"</span>,
+    <span class="string">"amenity3"</span>: <span class="string">"Garage"</span>,
+    <span class="string">"amenity4"</span>: <span class="string">"Garden"</span>,
+    <span class="string">"amenity5"</span>: <span class="string">""</span>,
+    <span class="string">"amenity6"</span>: <span class="string">""</span>,
+    <span class="string">"amenity7"</span>: <span class="string">""</span>,
+    <span class="string">"amenity8"</span>: <span class="string">""</span>,
+    <span class="string">"amenity9"</span>: <span class="string">""</span>,
+    <span class="string">"amenity10"</span>: <span class="string">""</span>,
+    <span class="string">"photos"</span>: [
+        <span class="string">"https://example.com/photos/1.jpg"</span>,
+        <span class="string">"https://example.com/photos/2.jpg"</span>,
+        <span class="string">"https://example.com/photos/3.jpg"</span>
+    ]
+}
+</code></pre><p>At first glance, this JSON seems straightforward. You might be tempted to write code to fetch and decode this data, and display it to the user. However, there is a problem with the way this JSON is formatted. Notice the amenities section with keys like "amenity1", "amenity2", and so on. This solution requires hard-coding each amenity as a separate property in the Home struct. But what happens when new amenities are added? We would need to update our code and release a new version of the app. This is not ideal, as it introduces more room for errors and makes our code less adaptable to changes in the backend data. A naive solution may look something like this:</p><pre><code><span class="keyword">struct</span> Home: <span class="type">Codable</span> {
+    <span class="keyword">let</span> id: <span class="type">Int</span>
+    <span class="keyword">let</span> address: <span class="type">String</span>
+    <span class="keyword">let</span> city: <span class="type">String</span>
+    <span class="keyword">let</span> state: <span class="type">String</span>
+    <span class="keyword">let</span> zip: <span class="type">String</span>
+    <span class="keyword">let</span> price: <span class="type">Int</span>
+    <span class="keyword">let</span> bedrooms: <span class="type">Int</span>
+    <span class="keyword">let</span> bathrooms: <span class="type">Int</span>
+    <span class="keyword">let</span> description: <span class="type">String</span>
+    
+    <span class="keyword">private let</span> amenity1: <span class="type">String</span>
+    <span class="keyword">private let</span> amenity2: <span class="type">String</span>
+    <span class="keyword">private let</span> amenity3: <span class="type">String</span>
+    <span class="keyword">private let</span> amenity4: <span class="type">String</span>
+    <span class="keyword">private let</span> amenity5: <span class="type">String</span>
+    <span class="keyword">private let</span> amenity6: <span class="type">String</span>
+    <span class="keyword">private let</span> amenity7: <span class="type">String</span>
+    <span class="keyword">private let</span> amenity8: <span class="type">String</span>
+    <span class="keyword">private let</span> amenity9: <span class="type">String</span>
+    <span class="keyword">private let</span> amenity10: <span class="type">String</span>
+    
+    <span class="keyword">init</span>(id: <span class="type">Int</span>, address: <span class="type">String</span>, city: <span class="type">String</span>, state: <span class="type">String</span>, zip: <span class="type">String</span>, price: <span class="type">Int</span>, bedrooms: <span class="type">Int</span>, bathrooms: <span class="type">Int</span>, description: <span class="type">String</span>, photos: [<span class="type">String</span>], amenity1: <span class="type">String</span>, amenity2: <span class="type">String</span>, amenity3: <span class="type">String</span>, amenity4: <span class="type">String</span>, amenity5: <span class="type">String</span>, amenity6: <span class="type">String</span>, amenity7: <span class="type">String</span>, amenity8: <span class="type">String</span>, amenity9: <span class="type">String</span>, amenity10: <span class="type">String</span>) {
+        <span class="keyword">self</span>.<span class="property">id</span> = id
+        <span class="keyword">self</span>.<span class="property">address</span> = address
+        <span class="keyword">self</span>.<span class="property">city</span> = city
+        <span class="keyword">self</span>.<span class="property">state</span> = state
+        <span class="keyword">self</span>.<span class="property">zip</span> = zip
+        <span class="keyword">self</span>.<span class="property">price</span> = price
+        <span class="keyword">self</span>.<span class="property">bedrooms</span> = bedrooms
+        <span class="keyword">self</span>.<span class="property">bathrooms</span> = bathrooms
+        <span class="keyword">self</span>.<span class="property">description</span> = description
+        <span class="keyword">self</span>.<span class="property">amenity1</span> = amenity1
+        <span class="keyword">self</span>.<span class="property">amenity2</span> = amenity2
+        <span class="keyword">self</span>.<span class="property">amenity3</span> = amenity3
+        <span class="keyword">self</span>.<span class="property">amenity4</span> = amenity4
+        <span class="keyword">self</span>.<span class="property">amenity5</span> = amenity5
+        <span class="keyword">self</span>.<span class="property">amenity6</span> = amenity6
+        <span class="keyword">self</span>.<span class="property">amenity7</span> = amenity7
+        <span class="keyword">self</span>.<span class="property">amenity8</span> = amenity8
+        <span class="keyword">self</span>.<span class="property">amenity9</span> = amenity9
+        <span class="keyword">self</span>.<span class="property">amenity10</span> = amenity10
+    }
+    
+    <span class="keyword">func</span> getAmenities() -&gt; [<span class="type">String</span>] {
+        <span class="keyword">return</span> [amenity1, amenity2, amenity3, amenity4, amenity5, amenity6, amenity7, amenity8, amenity9, amenity10].<span class="call">filter</span> { !$0.<span class="property">isEmpty</span> }
+    }
+}
+</code></pre><h3>Solution Approach</h3><p>To address the limitations of the current solution, we will leverage dynamic coding keys. Dynamic coding keys allow us to handle varying keys in the JSON data without the need for hard-coding each property. With this approach, our code can gracefully handle new amenities being added without requiring manual updates and releases.</p><h4>Step 1: Refining the Data Model</h4><p>First, we will enhance the data model to effectively handle the dynamic nature of amenities. We'll introduce a new property, amenities, as a list to store all the amenities associated with a home. This modification allows for seamless expansion of amenity options without the need to modify the codebase. Here's an updated version of the Home struct:</p><pre><code><span class="keyword">struct</span> Home: <span class="type">Codable</span> {
+    <span class="keyword">let</span> id: <span class="type">Int</span>
+    <span class="keyword">let</span> address: <span class="type">String</span>
+    <span class="keyword">let</span> city: <span class="type">String</span>
+    <span class="keyword">let</span> state: <span class="type">String</span>
+    <span class="keyword">let</span> zip: <span class="type">String</span>
+    <span class="keyword">let</span> price: <span class="type">Int</span>
+    <span class="keyword">let</span> bedrooms: <span class="type">Int</span>
+    <span class="keyword">let</span> bathrooms: <span class="type">Int</span>
+    <span class="keyword">let</span> description: <span class="type">String</span>
+
+    <span class="keyword">private var</span> amenities: [<span class="type">String</span>] = []
+
+    <span class="keyword">func</span> getAmenities() -&gt; [<span class="type">String</span>] {
+        <span class="keyword">return</span> amenities
+    }
+}
+</code></pre><h4>Step 2: Implementing Dynamic Coding Keys</h4><p>To support dynamic decoding, we will introduce a new <code>DynamicKey</code> struct that conforms to the CodingKey protocol. This struct enables us to handle the variable nature of the keys in the JSON data. Here's an example implementation:</p><pre><code><span class="keyword">struct</span> DynamicKey: <span class="type">CodingKey</span> {
+    <span class="keyword">var</span> stringValue: <span class="type">String</span>
+    <span class="keyword">var</span> intValue: <span class="type">Int</span>?
+
+    <span class="keyword">init</span>?(stringValue: <span class="type">String</span>) {
+        <span class="keyword">self</span>.<span class="property">stringValue</span> = stringValue
+    }
+
+    <span class="keyword">init</span>?(intValue: <span class="type">Int</span>) {
+        <span class="keyword">self</span>.<span class="property">stringValue</span> = <span class="string">"</span>\(intValue)<span class="string">"</span>
+        <span class="keyword">self</span>.<span class="property">intValue</span> = intValue
+    }
+}
+</code></pre><h4>Step 3: Updating the Decoding Process</h4><p>Next, we will update the decoding process to utilize dynamic coding keys instead of the default coding keys. This change ensures that our code can adapt to varying key names in the JSON data. Here's the updated decoding logic:</p><pre><code><span class="keyword">struct</span> Home: <span class="type">Codable</span> {
+    <span class="comment">// ...</span>
+
+    <span class="keyword">init</span>(from decoder: <span class="type">Decoder</span>) <span class="keyword">throws</span> {
+        <span class="keyword">let</span> container = <span class="keyword">try</span> decoder.<span class="call">container</span>(keyedBy: <span class="type">DynamicKey</span>.<span class="keyword">self</span>)
+
+        <span class="comment">// Handle decoding for each property</span>
+        <span class="keyword">if let</span> idKey = <span class="type">DynamicKey</span>(stringValue: <span class="string">"id"</span>), <span class="keyword">let</span> id = <span class="keyword">try</span> container.<span class="call">decodeIfPresent</span>(<span class="type">Int</span>.<span class="keyword">self</span>, forKey: idKey) {
+            <span class="keyword">self</span>.<span class="property">id</span> = id
+        } <span class="keyword">else</span> {
+            <span class="keyword">throw</span> <span class="type">DecodingError</span>.<span class="call">keyNotFound</span>(<span class="type">DynamicKey</span>(stringValue: <span class="string">"id"</span>)!, <span class="type">DecodingError</span>.<span class="type">Context</span>(codingPath: [], debugDescription: <span class="string">"Required property 'id' is missing"</span>))
+        }
+
+        <span class="comment">// Repeat the above decoding process for other properties
+
+        // Handling amenities decoding dynamically</span>
+        <span class="keyword">var</span> amenitiesArr: [<span class="type">String</span>] = []
+        <span class="keyword">for</span> key <span class="keyword">in</span> container.<span class="property">allKeys</span> {
+            <span class="keyword">if</span> key.<span class="property">stringValue</span>.<span class="call">hasPrefix</span>(<span class="string">"amenity"</span>), <span class="keyword">let</span> amenity = <span class="keyword">try</span> container.<span class="call">decodeIfPresent</span>(<span class="type">String</span>.<span class="keyword">self</span>, forKey: key) {
+                <span class="keyword">if</span> amenity.<span class="property">isEmpty</span> { <span class="keyword">continue</span> }
+                amenitiesArr.<span class="call">append</span>(amenity)
+            }
+        }
+        <span class="keyword">self</span>.<span class="property">amenities</span> = amenitiesArr
+    }
+
+    <span class="comment">// ...</span>
+}
+
+</code></pre><p>That means, after updating everything, you should see something very similar to this.</p><pre><code><span class="keyword">struct</span> DynamicKey: <span class="type">CodingKey</span> {
+    <span class="keyword">var</span> stringValue: <span class="type">String</span>
+    <span class="keyword">var</span> intValue: <span class="type">Int</span>?
+
+    <span class="keyword">init</span>?(stringValue: <span class="type">String</span>) {
+        <span class="keyword">self</span>.<span class="property">stringValue</span> = stringValue
+    }
+
+    <span class="keyword">init</span>?(intValue: <span class="type">Int</span>) {
+        <span class="keyword">self</span>.<span class="property">stringValue</span> = <span class="string">"</span>\(intValue)<span class="string">"</span>
+        <span class="keyword">self</span>.<span class="property">intValue</span> = intValue
+    }
+}
+
+<span class="keyword">struct</span> Home: <span class="type">Codable</span> {
+    <span class="keyword">let</span> id: <span class="type">Int</span>
+    <span class="keyword">let</span> address: <span class="type">String</span>
+    <span class="keyword">let</span> city: <span class="type">String</span>
+    <span class="keyword">let</span> state: <span class="type">String</span>
+    <span class="keyword">let</span> zip: <span class="type">String</span>
+    <span class="keyword">let</span> price: <span class="type">Int</span>
+    <span class="keyword">let</span> bedrooms: <span class="type">Int</span>
+    <span class="keyword">let</span> bathrooms: <span class="type">Int</span>
+    <span class="keyword">let</span> description: <span class="type">String</span>
+
+    <span class="keyword">private var</span> amenities: [<span class="type">String</span>] = []
+
+    <span class="keyword">init</span>(from decoder: <span class="type">Decoder</span>) <span class="keyword">throws</span> {
+        <span class="keyword">let</span> container = <span class="keyword">try</span> decoder.<span class="call">container</span>(keyedBy: <span class="type">DynamicKey</span>.<span class="keyword">self</span>)
+
+        <span class="keyword">if let</span> idKey = <span class="type">DynamicKey</span>(stringValue: <span class="string">"id"</span>), <span class="keyword">let</span> id = <span class="keyword">try</span> container.<span class="call">decodeIfPresent</span>(<span class="type">Int</span>.<span class="keyword">self</span>, forKey: idKey) {
+            <span class="keyword">self</span>.<span class="property">id</span> = id
+        } <span class="keyword">else</span> {
+            <span class="keyword">throw</span> <span class="type">DecodingError</span>.<span class="call">keyNotFound</span>(<span class="type">DynamicKey</span>(stringValue: <span class="string">"id"</span>)!, <span class="type">DecodingError</span>.<span class="type">Context</span>(codingPath: [], debugDescription: <span class="string">"Required property 'id' is missing"</span>))
+        }
+
+        <span class="keyword">if let</span> addressKey = <span class="type">DynamicKey</span>(stringValue: <span class="string">"address"</span>), <span class="keyword">let</span> address = <span class="keyword">try</span> container.<span class="call">decodeIfPresent</span>(<span class="type">String</span>.<span class="keyword">self</span>, forKey: addressKey) {
+            <span class="keyword">self</span>.<span class="property">address</span> = address
+        } <span class="keyword">else</span> {
+            <span class="keyword">throw</span> <span class="type">DecodingError</span>.<span class="call">keyNotFound</span>(<span class="type">DynamicKey</span>(stringValue: <span class="string">"address"</span>)!, <span class="type">DecodingError</span>.<span class="type">Context</span>(codingPath: [], debugDescription: <span class="string">"Required property 'address' is missing"</span>))
+        }
+
+        <span class="keyword">if let</span> cityKey = <span class="type">DynamicKey</span>(stringValue: <span class="string">"city"</span>), <span class="keyword">let</span> city = <span class="keyword">try</span> container.<span class="call">decodeIfPresent</span>(<span class="type">String</span>.<span class="keyword">self</span>, forKey: cityKey) {
+            <span class="keyword">self</span>.<span class="property">city</span> = city
+        } <span class="keyword">else</span> {
+            <span class="keyword">throw</span> <span class="type">DecodingError</span>.<span class="call">keyNotFound</span>(<span class="type">DynamicKey</span>(stringValue: <span class="string">"city"</span>)!, <span class="type">DecodingError</span>.<span class="type">Context</span>(codingPath: [], debugDescription: <span class="string">"Required property 'city' is missing"</span>))
+        }
+
+        <span class="keyword">if let</span> stateKey = <span class="type">DynamicKey</span>(stringValue: <span class="string">"state"</span>), <span class="keyword">let</span> state = <span class="keyword">try</span> container.<span class="call">decodeIfPresent</span>(<span class="type">String</span>.<span class="keyword">self</span>, forKey: stateKey) {
+            <span class="keyword">self</span>.<span class="property">state</span> = state
+        } <span class="keyword">else</span> {
+            <span class="keyword">throw</span> <span class="type">DecodingError</span>.<span class="call">keyNotFound</span>(<span class="type">DynamicKey</span>(stringValue: <span class="string">"state"</span>)!, <span class="type">DecodingError</span>.<span class="type">Context</span>(codingPath: [], debugDescription: <span class="string">"Required property 'state' is missing"</span>))
+        }
+
+        <span class="keyword">if let</span> zipKey = <span class="type">DynamicKey</span>(stringValue: <span class="string">"zip"</span>), <span class="keyword">let</span> zip = <span class="keyword">try</span> container.<span class="call">decodeIfPresent</span>(<span class="type">String</span>.<span class="keyword">self</span>, forKey: zipKey) {
+            <span class="keyword">self</span>.<span class="property">zip</span> = zip
+        } <span class="keyword">else</span> {
+            <span class="keyword">throw</span> <span class="type">DecodingError</span>.<span class="call">keyNotFound</span>(<span class="type">DynamicKey</span>(stringValue: <span class="string">"zip"</span>)!, <span class="type">DecodingError</span>.<span class="type">Context</span>(codingPath: [], debugDescription: <span class="string">"Required property 'zip' is missing"</span>))
+        }
+
+        <span class="keyword">if let</span> priceKey = <span class="type">DynamicKey</span>(stringValue: <span class="string">"price"</span>), <span class="keyword">let</span> price = <span class="keyword">try</span> container.<span class="call">decodeIfPresent</span>(<span class="type">Int</span>.<span class="keyword">self</span>, forKey: priceKey) {
+            <span class="keyword">self</span>.<span class="property">price</span> = price
+        } <span class="keyword">else</span> {
+            <span class="keyword">throw</span> <span class="type">DecodingError</span>.<span class="call">keyNotFound</span>(<span class="type">DynamicKey</span>(stringValue: <span class="string">"price"</span>)!, <span class="type">DecodingError</span>.<span class="type">Context</span>(codingPath: [], debugDescription: <span class="string">"Required property 'price' is missing"</span>))
+        }
+
+        <span class="keyword">if let</span> bedroomsKey = <span class="type">DynamicKey</span>(stringValue: <span class="string">"bedrooms"</span>), <span class="keyword">let</span> bedrooms = <span class="keyword">try</span> container.<span class="call">decodeIfPresent</span>(<span class="type">Int</span>.<span class="keyword">self</span>, forKey: bedroomsKey) {
+            <span class="keyword">self</span>.<span class="property">bedrooms</span> = bedrooms
+        } <span class="keyword">else</span> {
+            <span class="keyword">throw</span> <span class="type">DecodingError</span>.<span class="call">keyNotFound</span>(<span class="type">DynamicKey</span>(stringValue: <span class="string">"bedrooms"</span>)!, <span class="type">DecodingError</span>.<span class="type">Context</span>(codingPath: [], debugDescription: <span class="string">"Required property 'bedrooms' is missing"</span>))
+        }
+
+        <span class="keyword">if let</span> bathroomsKey = <span class="type">DynamicKey</span>(stringValue: <span class="string">"bathrooms"</span>), <span class="keyword">let</span> bathrooms = <span class="keyword">try</span> container.<span class="call">decodeIfPresent</span>(<span class="type">Int</span>.<span class="keyword">self</span>, forKey: bathroomsKey) {
+            <span class="keyword">self</span>.<span class="property">bathrooms</span> = bathrooms
+        } <span class="keyword">else</span> {
+            <span class="keyword">throw</span> <span class="type">DecodingError</span>.<span class="call">keyNotFound</span>(<span class="type">DynamicKey</span>(stringValue: <span class="string">"bathrooms"</span>)!, <span class="type">DecodingError</span>.<span class="type">Context</span>(codingPath: [], debugDescription: <span class="string">"Required property 'bathrooms' is missing"</span>))
+        }
+
+        <span class="keyword">if let</span> descriptionKey = <span class="type">DynamicKey</span>(stringValue: <span class="string">"description"</span>), <span class="keyword">let</span> description = <span class="keyword">try</span> container.<span class="call">decodeIfPresent</span>(<span class="type">String</span>.<span class="keyword">self</span>, forKey: descriptionKey) {
+            <span class="keyword">self</span>.<span class="property">description</span> = description
+        } <span class="keyword">else</span> {
+            <span class="keyword">throw</span> <span class="type">DecodingError</span>.<span class="call">keyNotFound</span>(<span class="type">DynamicKey</span>(stringValue: <span class="string">"bathrooms"</span>)!, <span class="type">DecodingError</span>.<span class="type">Context</span>(codingPath: [], debugDescription: <span class="string">"Required property 'bathrooms' is missing"</span>))
+        }
+
+        <span class="keyword">var</span> amenitiesArr: [<span class="type">String</span>] = []
+        <span class="keyword">for</span> key <span class="keyword">in</span> container.<span class="property">allKeys</span> {
+            <span class="keyword">if</span> key.<span class="property">stringValue</span>.<span class="call">hasPrefix</span>(<span class="string">"amenity"</span>), <span class="keyword">let</span> amenity = <span class="keyword">try</span> container.<span class="call">decodeIfPresent</span>(<span class="type">String</span>.<span class="keyword">self</span>, forKey: key) {
+                <span class="keyword">if</span> amenity.<span class="property">isEmpty</span> { <span class="keyword">continue</span> }
+                amenitiesArr.<span class="call">append</span>(amenity)
+            }
+        }
+        <span class="keyword">self</span>.<span class="property">amenities</span> = amenitiesArr
+    }
+
+    <span class="keyword">func</span> getAmenities() -&gt; [<span class="type">String</span>] {
+        <span class="keyword">return</span> amenities
+    }
+}
+</code></pre><p>With this updated decoding logic, we can successfully decode all the properties, including the dynamically named amenities.</p><p>By incorporating dynamic coding keys, we have improved the flexibility and adaptability of our codebase. The updated solution gracefully handles varying keys in the JSON data, allowing for the addition of new amenities without manual code modifications. This approach ensures a robust and future-proof implementation, enabling smooth integration with the evolving data structure.</p><p>One more thing to note here. You may be thinking that the JSON is formatted poorly and it should be updated to just have a list of amenities instead of listing them one-by-one. Honestly, you're right. However, you may not have the power to change this depending on where you work. So it's important that you understand how to handle whatever is thrown at you, just in case your recommendations go unnoticed.</p><h4>Final Solution</h4><p>This is already a great solution, but let's make it even better by improving the code readability and reducing redundancy.</p><p>Currently, each required property is individually decoded and checked for presence. We can simplify this process by creating a helper function that handles the decoding and error throwing for us.</p><p>We'll add a private function called <code>decodeRequiredWithKey</code> that takes the type of the property, the key name, and the decoding container. This function will attempt to decode the value for the given key and throw an error if the value is missing.</p><pre><code><span class="keyword">private func</span> decodeRequiredWithKey&lt;T: <span class="type">Decodable</span>&gt;(<span class="keyword">_</span> type: <span class="type">T</span>.<span class="type">Type</span>, key: <span class="type">String</span>, container: <span class="type">KeyedDecodingContainer</span>&lt;<span class="type">DynamicKey</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">T</span> {
+    <span class="keyword">guard let</span> dynamicKey = <span class="type">DynamicKey</span>(stringValue: key) <span class="keyword">else</span> {
+        <span class="keyword">throw</span> <span class="type">DynamicKeyError</span>.<span class="property">dynamicKeyNotFound</span>
+    }
+    
+    <span class="keyword">do</span> {
+        <span class="keyword">return try</span> container.<span class="call">decode</span>(type, forKey: dynamicKey)
+    } <span class="keyword">catch</span> <span class="type">DecodingError</span>.<span class="call">keyNotFound</span> {
+        <span class="keyword">throw</span> <span class="type">DecodingError</span>.<span class="call">keyNotFound</span>(dynamicKey, <span class="type">DecodingError</span>.<span class="type">Context</span>(codingPath: [], debugDescription: <span class="string">"Required property '</span>\(key)<span class="string">' is missing"</span>))
+    } <span class="keyword">catch</span> {
+        <span class="keyword">throw</span> <span class="type">DynamicKeyError</span>.<span class="property">valueNotFound</span>
+    }
+}
+</code></pre><p>Now, instead of individually decoding and checking each property, we can use the decodeRequiredWithKey function for each required property. This makes the code more concise and improves maintainability.</p><pre><code><span class="keyword">self</span>.<span class="property">id</span> = <span class="keyword">try</span> <span class="call">decodeRequiredWithKey</span>(<span class="type">Int</span>.<span class="keyword">self</span>, key: <span class="string">"id"</span>, container: container)
+<span class="keyword">self</span>.<span class="property">address</span> = <span class="keyword">try</span> <span class="call">decodeRequiredWithKey</span>(<span class="type">String</span>.<span class="keyword">self</span>, key: <span class="string">"address"</span>, container: container)
+<span class="keyword">self</span>.<span class="property">city</span> = <span class="keyword">try</span> <span class="call">decodeRequiredWithKey</span>(<span class="type">String</span>.<span class="keyword">self</span>, key: <span class="string">"city"</span>, container: container)
+<span class="keyword">self</span>.<span class="property">state</span> = <span class="keyword">try</span> <span class="call">decodeRequiredWithKey</span>(<span class="type">String</span>.<span class="keyword">self</span>, key: <span class="string">"state"</span>, container: container)
+<span class="keyword">self</span>.<span class="property">zip</span> = <span class="keyword">try</span> <span class="call">decodeRequiredWithKey</span>(<span class="type">String</span>.<span class="keyword">self</span>, key: <span class="string">"zip"</span>, container: container)
+<span class="keyword">self</span>.<span class="property">price</span> = <span class="keyword">try</span> <span class="call">decodeRequiredWithKey</span>(<span class="type">Int</span>.<span class="keyword">self</span>, key: <span class="string">"price"</span>, container: container)
+<span class="keyword">self</span>.<span class="property">bedrooms</span> = <span class="keyword">try</span> <span class="call">decodeRequiredWithKey</span>(<span class="type">Int</span>.<span class="keyword">self</span>, key: <span class="string">"bedrooms"</span>, container: container)
+<span class="keyword">self</span>.<span class="property">bathrooms</span> = <span class="keyword">try</span> <span class="call">decodeRequiredWithKey</span>(<span class="type">Int</span>.<span class="keyword">self</span>, key: <span class="string">"bathrooms"</span>, container: container)
+<span class="keyword">self</span>.<span class="property">description</span> = <span class="keyword">try</span> <span class="call">decodeRequiredWithKey</span>(<span class="type">String</span>.<span class="keyword">self</span>, key: <span class="string">"description"</span>, container: container)
+</code></pre><p>This means you'll neeed to set some default values for all properites of your code, but I still think it makes it cleaner. The final solution is:</p><pre><code><span class="keyword">struct</span> DynamicKey: <span class="type">CodingKey</span> {
+    <span class="keyword">var</span> stringValue: <span class="type">String</span>
+    <span class="keyword">var</span> intValue: <span class="type">Int</span>?
+
+    <span class="keyword">init</span>?(stringValue: <span class="type">String</span>) {
+        <span class="keyword">self</span>.<span class="property">stringValue</span> = stringValue
+    }
+
+    <span class="keyword">init</span>?(intValue: <span class="type">Int</span>) {
+        <span class="keyword">self</span>.<span class="property">stringValue</span> = <span class="string">"</span>\(intValue)<span class="string">"</span>
+        <span class="keyword">self</span>.<span class="property">intValue</span> = intValue
+    }
+}
+
+<span class="keyword">enum</span> DynamicKeyError: <span class="type">Error</span> {
+    <span class="keyword">case</span> dynamicKeyNotFound
+    <span class="keyword">case</span> valueNotFound
+}
+
+<span class="keyword">struct</span> Home: <span class="type">Codable</span> {
+    <span class="keyword">var</span> id: <span class="type">Int</span> = <span class="number">0</span>
+    <span class="keyword">var</span> address: <span class="type">String</span> = <span class="string">""</span>
+    <span class="keyword">var</span> city: <span class="type">String</span> = <span class="string">""</span>
+    <span class="keyword">var</span> state: <span class="type">String</span> = <span class="string">""</span>
+    <span class="keyword">var</span> zip: <span class="type">String</span> = <span class="string">""</span>
+    <span class="keyword">var</span> price: <span class="type">Int</span> = <span class="number">0</span>
+    <span class="keyword">var</span> bedrooms: <span class="type">Int</span> = <span class="number">0</span>
+    <span class="keyword">var</span> bathrooms: <span class="type">Int</span> = <span class="number">0</span>
+    <span class="keyword">var</span> description: <span class="type">String</span> = <span class="string">""</span>
+
+    <span class="keyword">private var</span> amenities: [<span class="type">String</span>] = []
+    
+    <span class="keyword">private func</span> decodeRequiredWithKey&lt;T: <span class="type">Decodable</span>&gt;(<span class="keyword">_</span> type: <span class="type">T</span>.<span class="type">Type</span>, key: <span class="type">String</span>, container: <span class="type">KeyedDecodingContainer</span>&lt;<span class="type">DynamicKey</span>&gt;) <span class="keyword">throws</span> -&gt; <span class="type">T</span> {
+        <span class="keyword">guard let</span> dynamicKey = <span class="type">DynamicKey</span>(stringValue: key) <span class="keyword">else</span> {
+            <span class="keyword">throw</span> <span class="type">DynamicKeyError</span>.<span class="property">dynamicKeyNotFound</span>
+        }
+        
+        <span class="keyword">do</span> {
+            <span class="keyword">return try</span> container.<span class="call">decode</span>(type, forKey: dynamicKey)
+        } <span class="keyword">catch</span> <span class="type">DecodingError</span>.<span class="call">keyNotFound</span> {
+            <span class="keyword">throw</span> <span class="type">DecodingError</span>.<span class="call">keyNotFound</span>(dynamicKey, <span class="type">DecodingError</span>.<span class="type">Context</span>(codingPath: [], debugDescription: <span class="string">"Required property '</span>\(key)<span class="string">' is missing"</span>))
+        } <span class="keyword">catch</span> {
+            <span class="keyword">throw</span> <span class="type">DynamicKeyError</span>.<span class="property">valueNotFound</span>
+        }
+    }
+
+    <span class="keyword">init</span>(from decoder: <span class="type">Decoder</span>) <span class="keyword">throws</span> {
+        <span class="keyword">let</span> container = <span class="keyword">try</span> decoder.<span class="call">container</span>(keyedBy: <span class="type">DynamicKey</span>.<span class="keyword">self</span>)
+        
+        <span class="keyword">self</span>.<span class="property">id</span> = <span class="keyword">try</span> <span class="call">decodeRequiredWithKey</span>(<span class="type">Int</span>.<span class="keyword">self</span>, key: <span class="string">"id"</span>, container: container)
+        <span class="keyword">self</span>.<span class="property">address</span> = <span class="keyword">try</span> <span class="call">decodeRequiredWithKey</span>(<span class="type">String</span>.<span class="keyword">self</span>, key: <span class="string">"address"</span>, container: container)
+        <span class="keyword">self</span>.<span class="property">city</span> = <span class="keyword">try</span> <span class="call">decodeRequiredWithKey</span>(<span class="type">String</span>.<span class="keyword">self</span>, key: <span class="string">"city"</span>, container: container)
+        <span class="keyword">self</span>.<span class="property">state</span> = <span class="keyword">try</span> <span class="call">decodeRequiredWithKey</span>(<span class="type">String</span>.<span class="keyword">self</span>, key: <span class="string">"state"</span>, container: container)
+        <span class="keyword">self</span>.<span class="property">zip</span> = <span class="keyword">try</span> <span class="call">decodeRequiredWithKey</span>(<span class="type">String</span>.<span class="keyword">self</span>, key: <span class="string">"zip"</span>, container: container)
+        <span class="keyword">self</span>.<span class="property">price</span> = <span class="keyword">try</span> <span class="call">decodeRequiredWithKey</span>(<span class="type">Int</span>.<span class="keyword">self</span>, key: <span class="string">"price"</span>, container: container)
+        <span class="keyword">self</span>.<span class="property">bedrooms</span> = <span class="keyword">try</span> <span class="call">decodeRequiredWithKey</span>(<span class="type">Int</span>.<span class="keyword">self</span>, key: <span class="string">"bedrooms"</span>, container: container)
+        <span class="keyword">self</span>.<span class="property">bathrooms</span> = <span class="keyword">try</span> <span class="call">decodeRequiredWithKey</span>(<span class="type">Int</span>.<span class="keyword">self</span>, key: <span class="string">"bathrooms"</span>, container: container)
+        <span class="keyword">self</span>.<span class="property">description</span> = <span class="keyword">try</span> <span class="call">decodeRequiredWithKey</span>(<span class="type">String</span>.<span class="keyword">self</span>, key: <span class="string">"description"</span>, container: container)
+        
+        <span class="keyword">var</span> amenitiesArr: [<span class="type">String</span>] = []
+        <span class="keyword">for</span> key <span class="keyword">in</span> container.<span class="property">allKeys</span> {
+            <span class="keyword">if</span> key.<span class="property">stringValue</span>.<span class="call">hasPrefix</span>(<span class="string">"amenity"</span>), <span class="keyword">let</span> amenity = <span class="keyword">try</span> container.<span class="call">decodeIfPresent</span>(<span class="type">String</span>.<span class="keyword">self</span>, forKey: key) {
+                <span class="keyword">if</span> amenity.<span class="property">isEmpty</span> { <span class="keyword">continue</span> }
+                amenitiesArr.<span class="call">append</span>(amenity)
+            }
+        }
+        <span class="keyword">self</span>.<span class="property">amenities</span> = amenitiesArr
+    }
+
+    <span class="keyword">func</span> getAmenities() -&gt; [<span class="type">String</span>] {
+        <span class="keyword">return</span> amenities
+    }
+}
+</code></pre><h3>Conclusion</h3><p>I hope all your decoding is clean and easy, but if not, I hope you're a bit more prepard on how to tackle whatever is thrown your way. If you'd like to find the source code for this project you can do so <a href="https://github.com/thomaskellough/iOS-Tutorials-SwiftUI">here</a>.</p></article></div><div class="footer-social"><div>© 2023 The Swift Protocol</div><div>Generated using <a href="https://github.com/johnsundell/publish">Publish</a>. Written in Swift</div><div><a href="https://www.linkedin.com/in/thomas-kellough/">LinkedIn</a> | <a href="https://github.com/thomaskellough">Github</a> | <a href="mailto:theswiftprotocol@gmail.com">Email</a></div></div></body></html>
