@@ -1,7 +1,7 @@
 version: "Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)"
 options: "fb9cd4ef129de57d8cb09725ead5df3a12c53f8cb6ab545e4e5dd168cf30c89e"
-build_start_time: [1685393060, 120637893]
-build_end_time: [1685393060, 400890827]
+build_start_time: [1685667734, 768731117]
+build_end_time: [1685667734, 821058034]
 inputs:
   "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/API/Markdown.swift": [1684695898, 207185268]
   "/Users/tkellough/TK/thomaskellough.github.io/.build/checkouts/ink/Sources/Ink/API/MarkdownParser.swift": [1684695898, 207376956]

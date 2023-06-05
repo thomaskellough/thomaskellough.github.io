@@ -1,7 +1,7 @@
 version: "Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)"
 options: "ae54e7fb531d02d3ecff44f8889a278e035e1118d649cdf34321167e379b3afb"
-build_start_time: [1685393061, 191548824]
-build_end_time: [1685393061, 254132986]
+build_start_time: [1685667735, 406977176]
+build_end_time: [1685667735, 461910009]
 inputs:
   "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+About.swift": [1684695734, 980985879]
   "/Users/tkellough/TK/thomaskellough.github.io/Sources/SwiftBlog/HtmlPages/Factory+Home.swift": [1684695734, 981154203]

@@ -1,0 +1,67 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"/><script async src="https://www.googletagmanager.com/gtag/js?id=UA-175451977-1"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-175451977-1');</script><meta name="og:site_name" content="The Swift Protocol"/><link rel="canonical" href="www.thomaskellough/thomaskellough.github.io"/><meta name="twitter:url" content="www.thomaskellough/thomaskellough.github.io"/><meta name="og:url" content="www.thomaskellough/thomaskellough.github.io"/><title>Swift Skill Building | The Swift Protocol</title><meta name="twitter:title" content="Swift Skill Building | The Swift Protocol"/><meta name="og:title" content="Swift Skill Building | The Swift Protocol"/><meta name="description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:description" content="Swift Skill Building With Thomas Kellough"/><meta name="og:description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="http://www.theswiftprotocol.com/images/social.png"/><meta name="og:image" content="http://www.theswiftprotocol.com/images/social.png"/><link rel="stylesheet" href="/styles.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to The Swift Protocol"/></head><body><header><div class="nav-logo"><a href="/"><img src="/Images/blog-logo.png"/></a><nav class="nav-bar"><p>Swift Skill Building With Thomas Kellough</p><ul><li><h3><a href="/home">Home</a></h3></li><li><h3><a href="/posts">Posts</a></h3></li><li><h3><a href="/tags">Tags</a></h3></li></ul></nav></div></header><div class="wrapper"><article><h1>Longest Substring Without Repeating Characters</h1><div class="post-tags" markdown="1">
+    <a class="post-category post-category-leetcodemedium" href="/tags/leetcodemedium">Leetcode Medium</a>
+</div><h3>Problem</h3><p><a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/">Majority Element</a> is a medium-tagged leetcode problem. It's problem statement is:</p><div class="problem-container">Given a string s, find the length of the longest substring without repeating characters.
+</div><h3>Thought Process</h3><p>When approaching this problem, it's important to clarify what we mean by "repeating characters." In this context, it refers to any characters that have appeared previously in the substring, regardless of their order. It's essential to understand this distinction to ensure we solve the problem correctly.</p><p>Now, let's consider our approach:</p><ol><li>Sets: Sets are an excellent choice for storing unique information without considering the order. Adding and removing elements from a set can be done in constant time O(1), making them advantageous over arrays.</li><li>Sliding Window: The sliding window technique is a powerful approach for solving substring problems efficiently. It allows us to track and adjust the substring's boundaries dynamically, focusing only on the relevant substring rather than checking every possible substring.</li></ol><p>By combining sets and the sliding window technique, we can optimize our solution for this problem and achieve an efficient and elegant solution.</p><h3>Solution</h3><h4>What we are given</h4><pre><code><span class="keyword">func</span> lengthOfLongestSubstring(<span class="keyword">_</span> s: <span class="type">String</span>) -&gt; <span class="type">Int</span> {
+    
+}
+</code></pre><h4>First steps and edge cases</h4><p>I like to focus on edge cases first. We notice the <code>String</code> is not optional, so no nil checks are needed. However, we could have an empty string or a string with one character in it. This means we need at least two characters before we even perform logic. We can handle our edge cases like so:</p><pre><code><span class="keyword">guard</span> s.<span class="property">count</span> &gt; <span class="number">1</span> <span class="keyword">else</span> { <span class="keyword">return</span> s.<span class="property">count</span> }
+</code></pre><p>Next, we can set up the necessary variables. We'll need a leftPointer and a rightPointer to track the boundaries of the sliding window. We'll also initialize maxLength to 0 to keep track of the maximum length of the substring. Lastly, we can convert the string into an array to make it easier to work with:</p><pre><code><span class="keyword">let</span> arr = <span class="type">Array</span>(s)
+
+<span class="keyword">var</span> leftPointer = <span class="number">0</span>
+<span class="keyword">var</span> rightPointer = <span class="number">0</span>
+
+<span class="keyword">var</span> maxLength = <span class="number">0</span>
+<span class="keyword">var</span> uniqueCharacters = <span class="type">Set</span>&lt;<span class="type">Character</span>&gt;()
+</code></pre><p>Now, let's move on to the main logic. Since we're using the sliding window technique, we'll iterate over the array once, stopping when the rightPointer reaches the end of the array:</p><pre><code><span class="keyword">while</span> rightPointer &lt; arr.<span class="call">count</span> {
+
+}
+</code></pre><p>Inside the loop, we'll perform a check. We'll determine if the character at the current rightPointer index exists in the uniqueCharacters set. Depending on the result, we'll take different actions. We'll continue building the logic inside the if and else blocks in the next steps:</p><pre><code><span class="keyword">while</span> rightPointer &lt; arr.<span class="call">count</span> {
+  <span class="keyword">if</span> uniqueCharacters.<span class="call">contains</span>(arr[rightPointer]) {
+  
+  } <span class="keyword">else</span> {
+  
+  }
+}
+</code></pre><p>Now, let's discuss what happens inside the loop. First, we check if the character at the current rightPointer index is already present in the uniqueCharacters set. If it is, we have encountered a duplicate character.</p><p>In that case, we remove the character at the leftPointer index from the uniqueCharacters set, as it is no longer part of the current substring. We increment the leftPointer to move the sliding window to the right, excluding the duplicate character. This ensures that the leftPointer will never be greater than the rightPointer.</p><pre><code><span class="keyword">while</span> rightPointer &lt; arr.<span class="call">count</span> {
+  <span class="keyword">if</span> uniqueCharacters.<span class="call">contains</span>(arr[rightPointer]) {
+    uniqueCharacters.<span class="call">remove</span>(arr[leftPointer])
+    leftPointer += <span class="number">1</span>
+  } <span class="keyword">else</span> {
+  
+  }
+}
+</code></pre><p>If the character at the current rightPointer index is not present in the uniqueCharacters set, it is a new character that we haven't encountered before in the current substring.</p><p>In this case, we insert the character into the uniqueCharacters set, indicating that it is part of the current substring. We increment the rightPointer to expand the sliding window to the right and include the new character. We also update the maxLength by calculating the difference between the rightPointer and leftPointer indices and taking the maximum value.</p><pre><code><span class="keyword">while</span> rightPointer &lt; arr.<span class="call">count</span> {
+  <span class="keyword">if</span> uniqueCharacters.<span class="call">contains</span>(arr[rightPointer]) {
+    uniqueCharacters.<span class="call">remove</span>(arr[leftPointer])
+    leftPointer += <span class="number">1</span>
+  } <span class="keyword">else</span> {
+    uniqueCharacters.<span class="call">insert</span>(arr[rightPointer])
+    rightPointer += <span class="number">1</span>
+    maxLength = <span class="call">max</span>(maxLength, rightPointer - leftPointer)
+  }
+}
+</code></pre><p>Finally, after the loop ends, we have processed the entire string, and the maxLength variable holds the length of the longest substring without repeating characters. We return the maxLength as the result.</p><pre><code><span class="keyword">func</span> lengthOfLongestSubstring(<span class="keyword">_</span> s: <span class="type">String</span>) -&gt; <span class="type">Int</span> {
+    <span class="keyword">guard</span> s.<span class="property">count</span> &gt; <span class="number">1</span> <span class="keyword">else</span> { <span class="keyword">return</span> s.<span class="property">count</span> }
+
+    <span class="keyword">let</span> arr = <span class="type">Array</span>(s)
+
+    <span class="keyword">var</span> leftPointer = <span class="number">0</span>
+    <span class="keyword">var</span> rightPointer = <span class="number">0</span>
+
+    <span class="keyword">var</span> maxLength = <span class="number">0</span>
+    <span class="keyword">var</span> uniqueCharacters = <span class="type">Set</span>&lt;<span class="type">Character</span>&gt;()
+
+    <span class="keyword">while</span> rightPointer &lt; arr.<span class="call">count</span> {
+      <span class="keyword">if</span> uniqueCharacters.<span class="call">contains</span>(arr[rightPointer]) {
+        uniqueCharacters.<span class="call">remove</span>(arr[leftPointer])
+        leftPointer += <span class="number">1</span>
+      } <span class="keyword">else</span> {
+        uniqueCharacters.<span class="call">insert</span>(arr[rightPointer])
+        rightPointer += <span class="number">1</span>
+        maxLength = <span class="call">max</span>(maxLength, rightPointer - leftPointer)
+      }
+    }
+
+    <span class="keyword">return</span> maxLength
+}
+</code></pre><p>This completes our solution to find the length of the longest substring without repeating characters using the sliding window approach. Since we have to loop through the string once, we have a time complexity of O(n). We also have a set that can, worst case, have the same number of elements as our string. This means we also have a space complexity of O(n).</p></article></div><div class="footer-social"><div>© 2023 The Swift Protocol</div><div>Generated using <a href="https://github.com/johnsundell/publish">Publish</a>. Written in Swift</div><div><a href="https://www.linkedin.com/in/thomas-kellough/">LinkedIn</a> | <a href="https://github.com/thomaskellough">Github</a> | <a href="mailto:theswiftprotocol@gmail.com">Email</a></div></div></body></html>

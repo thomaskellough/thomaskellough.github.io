@@ -1,0 +1,48 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"/><script async src="https://www.googletagmanager.com/gtag/js?id=UA-175451977-1"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-175451977-1');</script><meta name="og:site_name" content="The Swift Protocol"/><link rel="canonical" href="www.thomaskellough/thomaskellough.github.io"/><meta name="twitter:url" content="www.thomaskellough/thomaskellough.github.io"/><meta name="og:url" content="www.thomaskellough/thomaskellough.github.io"/><title>Swift Skill Building | The Swift Protocol</title><meta name="twitter:title" content="Swift Skill Building | The Swift Protocol"/><meta name="og:title" content="Swift Skill Building | The Swift Protocol"/><meta name="description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:description" content="Swift Skill Building With Thomas Kellough"/><meta name="og:description" content="Swift Skill Building With Thomas Kellough"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="http://www.theswiftprotocol.com/images/social.png"/><meta name="og:image" content="http://www.theswiftprotocol.com/images/social.png"/><link rel="stylesheet" href="/styles.css" type="text/css"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><link rel="shortcut icon" href="/images/favicon.png" type="image/png"/><link rel="alternate" href="/feed.rss" type="application/rss+xml" title="Subscribe to The Swift Protocol"/></head><body><header><div class="nav-logo"><a href="/"><img src="/Images/blog-logo.png"/></a><nav class="nav-bar"><p>Swift Skill Building With Thomas Kellough</p><ul><li><h3><a href="/home">Home</a></h3></li><li><h3><a href="/posts">Posts</a></h3></li><li><h3><a href="/tags">Tags</a></h3></li></ul></nav></div></header><div class="wrapper"><article><h1>Merge Two Sorted Lists</h1><div class="post-tags" markdown="1">
+    <a class="post-category post-category-leetcodeeasy" href="/tags/leetcodeeasy">Leetcode Easy</a>
+</div><h3>Problem</h3><p><a href="https://leetcode.com/problems/merge-two-sorted-lists/">Merge Two Sorted Lists</a> is an easy-tagged leetcode problem. It's problem statement is:</p><div class="problem-container">You are given the heads of two sorted linked lists list1 and list2.
+
+Merge the two lists in a one sorted list. The list should be made by splicing together the nodes of the first two lists.
+
+Return the head of the merged linked list.
+</div><h3>Understanding the Problem</h3><p>The problem requires us to merge two sorted linked lists into a single sorted list. To tackle this problem, we need to be familiar with linked lists and recursion. While some may consider this problem to be easy, it can be a bit challenging if you are not comfortable with these concepts. In this tutorial, I'll show you how to use recursion to solve this problem effectively.</p><h3>Solution</h3><p>Let's start by examining the provided code:</p><pre><code><span class="comment">/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public var val: Int
+ *     public var next: ListNode?
+ *     public init() { self.val = 0; self.next = nil; }
+ *     public init(_ val: Int) { self.val = val; self.next = nil; }
+ *     public init(_ val: Int, _ next: ListNode?) { self.val = val; self.next = next; }
+ * }
+ */</span>
+<span class="keyword">class</span> Solution {
+    <span class="keyword">func</span> mergeTwoLists(<span class="keyword">_</span> list1: <span class="type">ListNode</span>?, <span class="keyword">_</span> list2: <span class="type">ListNode</span>?) -&gt; <span class="type">ListNode</span>? {
+        
+    }
+}
+</code></pre><p>The first thing to look at is what our linked list is. It has a value and a next node. This is a singly-linked list since we do not have any access to the previous node. Second, the function <code>mergeTwoLists</code> takes in two optional lists as arguments and returns an optional linked <em>node</em>. The optionality is great here and we can use it to our advantage with recursion.</p><p>To begin, we should handle the edge cases upfront, especially since we plan to use recursion. Failing to handle these cases properly can lead to infinite loops. In this problem, the edge cases are quite simple: if either of the lists is nil, we return the other list. If both lists are not nil, we proceed with the rest of the code. To handle these cases cleanly, we can use guard let statements to unwrap the optionals:</p><pre><code><span class="keyword">guard let</span> listOne = list1 <span class="keyword">else</span> { <span class="keyword">return</span> list2 }
+<span class="keyword">guard let</span> listTwo = list2 <span class="keyword">else</span> { <span class="keyword">return</span> list1 }
+</code></pre><p>Now that we have ensured that both <code>listOne</code> and <code>listTwo</code> have values, we can compare the values of the current nodes and proceed accordingly. If the value of <code>listOne</code> is greater than the value of <code>listTwo</code>, we know that <code>listOne</code> should come after <code>listTwo</code> in the merged list. In this case, we update the next node of <code>listTwo</code> using recursion by calling mergeTwoLists with <code>listOne</code> and the next node of <code>listTwo</code>. Then, we return <code>listTwo</code>.</p><pre><code><span class="keyword">if</span> listOne.<span class="property">val</span> &gt; listTwo.<span class="property">val</span> {
+  listTwo.<span class="property">next</span> = <span class="call">mergeTwoLists</span>(listOne, listTwo.<span class="property">next</span>)
+  <span class="keyword">return</span> listTwo
+}
+</code></pre><p>On the other hand, if the value of <code>listOne</code> is less than or equal to the value of <code>listTwo</code>, we know that <code>listTwo</code> should come after <code>listOne</code> in the merged list. In this case, we update the next node of <code>listOne</code> using recursion by calling mergeTwoLists with the next node of <code>listOne</code> and <code>listTwo</code>. Then, we return <code>listOne</code>.</p><pre><code><span class="keyword">if</span> listOne.<span class="property">val</span> &gt; listTwo.<span class="property">val</span> {
+  listTwo.<span class="property">next</span> = <span class="call">mergeTwoLists</span>(listOne, listTwo.<span class="property">next</span>)
+  <span class="keyword">return</span> listTwo
+} <span class="keyword">else</span> {
+  listOne.<span class="property">next</span> = <span class="call">mergeTwoLists</span>(listOne.<span class="property">next</span>, listTwo)
+  <span class="keyword">return</span> listOne
+}
+</code></pre><p>Since we are always passing in the next node of either <code>listOne</code> or <code>listTwo</code>, we <em>will</em> eventually come to an end, thus breaking our recursion loop.</p><p>This brings our final completed solution to:</p><pre><code><span class="keyword">func</span> mergeTwoLists(<span class="keyword">_</span> list1: <span class="type">ListNode</span>?, <span class="keyword">_</span> list2: <span class="type">ListNode</span>?) -&gt; <span class="type">ListNode</span>? {
+    <span class="keyword">guard let</span> listOne = list1 <span class="keyword">else</span> { <span class="keyword">return</span> list2 }
+    <span class="keyword">guard let</span> listTwo = list2 <span class="keyword">else</span> { <span class="keyword">return</span> list1 }
+    
+    <span class="keyword">if</span> listOne.<span class="property">val</span> &gt; listTwo.<span class="property">val</span> {
+      listTwo.<span class="property">next</span> = <span class="call">mergeTwoLists</span>(listOne, listTwo.<span class="property">next</span>)
+      <span class="keyword">return</span> listTwo
+    } <span class="keyword">else</span> {
+      listOne.<span class="property">next</span> = <span class="call">mergeTwoLists</span>(listOne.<span class="property">next</span>, listTwo)
+      <span class="keyword">return</span> listOne
+    }
+}
+</code></pre><p>With this recursive approach, we can successfully merge the two sorted linked lists and obtain the head of the merged list.</p></article></div><div class="footer-social"><div>© 2023 The Swift Protocol</div><div>Generated using <a href="https://github.com/johnsundell/publish">Publish</a>. Written in Swift</div><div><a href="https://www.linkedin.com/in/thomas-kellough/">LinkedIn</a> | <a href="https://github.com/thomaskellough">Github</a> | <a href="mailto:theswiftprotocol@gmail.com">Email</a></div></div></body></html>

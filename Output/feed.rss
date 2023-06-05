@@ -1,4 +1,117 @@
-<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content"><channel><title>The Swift Protocol</title><description>Swift Skill Building With Thomas Kellough</description><link>www.thomaskellough/thomaskellough.github.io</link><language>en</language><lastBuildDate>Mon, 29 May 2023 19:34:51 -0500</lastBuildDate><pubDate>Mon, 29 May 2023 19:34:51 -0500</pubDate><ttl>250</ttl><atom:link href="www.thomaskellough/thomaskellough.github.io/feed.rss" rel="self" type="application/rss+xml"/><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/17-how-to-use-dynamic-coding-keys</guid><title>Learn how to use dynamic coding keys in your app</title><description>Use dyanmic coding keys in your app</description><link>www.thomaskellough/thomaskellough.github.io/posts/17-how-to-use-dynamic-coding-keys</link><pubDate>Mon, 29 May 2023 12:05:00 -0500</pubDate><content:encoded><![CDATA[<h1>Learn how to use dynamic coding keys in your app</h1><div class="post-tags" markdown="1">
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content"><channel><title>The Swift Protocol</title><description>Swift Skill Building With Thomas Kellough</description><link>www.thomaskellough/thomaskellough.github.io</link><language>en</language><lastBuildDate>Sun, 4 Jun 2023 20:12:22 -0500</lastBuildDate><pubDate>Sun, 4 Jun 2023 20:12:22 -0500</pubDate><ttl>250</ttl><atom:link href="www.thomaskellough/thomaskellough.github.io/feed.rss" rel="self" type="application/rss+xml"/><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/19-merge-two-sorted-lists</guid><title>Merge Two Sorted Lists</title><description>Merge Two Sorted Lists</description><link>www.thomaskellough/thomaskellough.github.io/posts/19-merge-two-sorted-lists</link><pubDate>Sun, 4 Jun 2023 14:30:00 -0500</pubDate><content:encoded><![CDATA[<h1>Merge Two Sorted Lists</h1><div class="post-tags" markdown="1">
+    <a class="post-category post-category-leetcodeeasy" href="www.thomaskellough/thomaskellough.github.io/tags/leetcodeeasy">Leetcode Easy</a>
+</div><h3>Problem</h3><p><a href="https://leetcode.com/problems/merge-two-sorted-lists/">Merge Two Sorted Lists</a> is an easy-tagged leetcode problem. It's problem statement is:</p><div class="problem-container">You are given the heads of two sorted linked lists list1 and list2.
+
+Merge the two lists in a one sorted list. The list should be made by splicing together the nodes of the first two lists.
+
+Return the head of the merged linked list.
+</div><h3>Understanding the Problem</h3><p>The problem requires us to merge two sorted linked lists into a single sorted list. To tackle this problem, we need to be familiar with linked lists and recursion. While some may consider this problem to be easy, it can be a bit challenging if you are not comfortable with these concepts. In this tutorial, I'll show you how to use recursion to solve this problem effectively.</p><h3>Solution</h3><p>Let's start by examining the provided code:</p><pre><code><span class="comment">/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public var val: Int
+ *     public var next: ListNode?
+ *     public init() { self.val = 0; self.next = nil; }
+ *     public init(_ val: Int) { self.val = val; self.next = nil; }
+ *     public init(_ val: Int, _ next: ListNode?) { self.val = val; self.next = next; }
+ * }
+ */</span>
+<span class="keyword">class</span> Solution {
+    <span class="keyword">func</span> mergeTwoLists(<span class="keyword">_</span> list1: <span class="type">ListNode</span>?, <span class="keyword">_</span> list2: <span class="type">ListNode</span>?) -&gt; <span class="type">ListNode</span>? {
+        
+    }
+}
+</code></pre><p>The first thing to look at is what our linked list is. It has a value and a next node. This is a singly-linked list since we do not have any access to the previous node. Second, the function <code>mergeTwoLists</code> takes in two optional lists as arguments and returns an optional linked <em>node</em>. The optionality is great here and we can use it to our advantage with recursion.</p><p>To begin, we should handle the edge cases upfront, especially since we plan to use recursion. Failing to handle these cases properly can lead to infinite loops. In this problem, the edge cases are quite simple: if either of the lists is nil, we return the other list. If both lists are not nil, we proceed with the rest of the code. To handle these cases cleanly, we can use guard let statements to unwrap the optionals:</p><pre><code><span class="keyword">guard let</span> listOne = list1 <span class="keyword">else</span> { <span class="keyword">return</span> list2 }
+<span class="keyword">guard let</span> listTwo = list2 <span class="keyword">else</span> { <span class="keyword">return</span> list1 }
+</code></pre><p>Now that we have ensured that both <code>listOne</code> and <code>listTwo</code> have values, we can compare the values of the current nodes and proceed accordingly. If the value of <code>listOne</code> is greater than the value of <code>listTwo</code>, we know that <code>listOne</code> should come after <code>listTwo</code> in the merged list. In this case, we update the next node of <code>listTwo</code> using recursion by calling mergeTwoLists with <code>listOne</code> and the next node of <code>listTwo</code>. Then, we return <code>listTwo</code>.</p><pre><code><span class="keyword">if</span> listOne.<span class="property">val</span> &gt; listTwo.<span class="property">val</span> {
+  listTwo.<span class="property">next</span> = <span class="call">mergeTwoLists</span>(listOne, listTwo.<span class="property">next</span>)
+  <span class="keyword">return</span> listTwo
+}
+</code></pre><p>On the other hand, if the value of <code>listOne</code> is less than or equal to the value of <code>listTwo</code>, we know that <code>listTwo</code> should come after <code>listOne</code> in the merged list. In this case, we update the next node of <code>listOne</code> using recursion by calling mergeTwoLists with the next node of <code>listOne</code> and <code>listTwo</code>. Then, we return <code>listOne</code>.</p><pre><code><span class="keyword">if</span> listOne.<span class="property">val</span> &gt; listTwo.<span class="property">val</span> {
+  listTwo.<span class="property">next</span> = <span class="call">mergeTwoLists</span>(listOne, listTwo.<span class="property">next</span>)
+  <span class="keyword">return</span> listTwo
+} <span class="keyword">else</span> {
+  listOne.<span class="property">next</span> = <span class="call">mergeTwoLists</span>(listOne.<span class="property">next</span>, listTwo)
+  <span class="keyword">return</span> listOne
+}
+</code></pre><p>Since we are always passing in the next node of either <code>listOne</code> or <code>listTwo</code>, we <em>will</em> eventually come to an end, thus breaking our recursion loop.</p><p>This brings our final completed solution to:</p><pre><code><span class="keyword">func</span> mergeTwoLists(<span class="keyword">_</span> list1: <span class="type">ListNode</span>?, <span class="keyword">_</span> list2: <span class="type">ListNode</span>?) -&gt; <span class="type">ListNode</span>? {
+    <span class="keyword">guard let</span> listOne = list1 <span class="keyword">else</span> { <span class="keyword">return</span> list2 }
+    <span class="keyword">guard let</span> listTwo = list2 <span class="keyword">else</span> { <span class="keyword">return</span> list1 }
+    
+    <span class="keyword">if</span> listOne.<span class="property">val</span> &gt; listTwo.<span class="property">val</span> {
+      listTwo.<span class="property">next</span> = <span class="call">mergeTwoLists</span>(listOne, listTwo.<span class="property">next</span>)
+      <span class="keyword">return</span> listTwo
+    } <span class="keyword">else</span> {
+      listOne.<span class="property">next</span> = <span class="call">mergeTwoLists</span>(listOne.<span class="property">next</span>, listTwo)
+      <span class="keyword">return</span> listOne
+    }
+}
+</code></pre><p>With this recursive approach, we can successfully merge the two sorted linked lists and obtain the head of the merged list.</p>]]></content:encoded></item><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/18-leetcode-longest-substring-without-repeating-characters</guid><title>Longest Substring Without Repeating Characters</title><description>Longest Substring Without Repeating Characters.</description><link>www.thomaskellough/thomaskellough.github.io/posts/18-leetcode-longest-substring-without-repeating-characters</link><pubDate>Thu, 1 Jun 2023 14:30:00 -0500</pubDate><content:encoded><![CDATA[<h1>Longest Substring Without Repeating Characters</h1><div class="post-tags" markdown="1">
+    <a class="post-category post-category-leetcodemedium" href="www.thomaskellough/thomaskellough.github.io/tags/leetcodemedium">Leetcode Medium</a>
+</div><h3>Problem</h3><p><a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/">Majority Element</a> is a medium-tagged leetcode problem. It's problem statement is:</p><div class="problem-container">Given a string s, find the length of the longest substring without repeating characters.
+</div><h3>Thought Process</h3><p>When approaching this problem, it's important to clarify what we mean by "repeating characters." In this context, it refers to any characters that have appeared previously in the substring, regardless of their order. It's essential to understand this distinction to ensure we solve the problem correctly.</p><p>Now, let's consider our approach:</p><ol><li>Sets: Sets are an excellent choice for storing unique information without considering the order. Adding and removing elements from a set can be done in constant time O(1), making them advantageous over arrays.</li><li>Sliding Window: The sliding window technique is a powerful approach for solving substring problems efficiently. It allows us to track and adjust the substring's boundaries dynamically, focusing only on the relevant substring rather than checking every possible substring.</li></ol><p>By combining sets and the sliding window technique, we can optimize our solution for this problem and achieve an efficient and elegant solution.</p><h3>Solution</h3><h4>What we are given</h4><pre><code><span class="keyword">func</span> lengthOfLongestSubstring(<span class="keyword">_</span> s: <span class="type">String</span>) -&gt; <span class="type">Int</span> {
+    
+}
+</code></pre><h4>First steps and edge cases</h4><p>I like to focus on edge cases first. We notice the <code>String</code> is not optional, so no nil checks are needed. However, we could have an empty string or a string with one character in it. This means we need at least two characters before we even perform logic. We can handle our edge cases like so:</p><pre><code><span class="keyword">guard</span> s.<span class="property">count</span> &gt; <span class="number">1</span> <span class="keyword">else</span> { <span class="keyword">return</span> s.<span class="property">count</span> }
+</code></pre><p>Next, we can set up the necessary variables. We'll need a leftPointer and a rightPointer to track the boundaries of the sliding window. We'll also initialize maxLength to 0 to keep track of the maximum length of the substring. Lastly, we can convert the string into an array to make it easier to work with:</p><pre><code><span class="keyword">let</span> arr = <span class="type">Array</span>(s)
+
+<span class="keyword">var</span> leftPointer = <span class="number">0</span>
+<span class="keyword">var</span> rightPointer = <span class="number">0</span>
+
+<span class="keyword">var</span> maxLength = <span class="number">0</span>
+<span class="keyword">var</span> uniqueCharacters = <span class="type">Set</span>&lt;<span class="type">Character</span>&gt;()
+</code></pre><p>Now, let's move on to the main logic. Since we're using the sliding window technique, we'll iterate over the array once, stopping when the rightPointer reaches the end of the array:</p><pre><code><span class="keyword">while</span> rightPointer &lt; arr.<span class="call">count</span> {
+
+}
+</code></pre><p>Inside the loop, we'll perform a check. We'll determine if the character at the current rightPointer index exists in the uniqueCharacters set. Depending on the result, we'll take different actions. We'll continue building the logic inside the if and else blocks in the next steps:</p><pre><code><span class="keyword">while</span> rightPointer &lt; arr.<span class="call">count</span> {
+  <span class="keyword">if</span> uniqueCharacters.<span class="call">contains</span>(arr[rightPointer]) {
+  
+  } <span class="keyword">else</span> {
+  
+  }
+}
+</code></pre><p>Now, let's discuss what happens inside the loop. First, we check if the character at the current rightPointer index is already present in the uniqueCharacters set. If it is, we have encountered a duplicate character.</p><p>In that case, we remove the character at the leftPointer index from the uniqueCharacters set, as it is no longer part of the current substring. We increment the leftPointer to move the sliding window to the right, excluding the duplicate character. This ensures that the leftPointer will never be greater than the rightPointer.</p><pre><code><span class="keyword">while</span> rightPointer &lt; arr.<span class="call">count</span> {
+  <span class="keyword">if</span> uniqueCharacters.<span class="call">contains</span>(arr[rightPointer]) {
+    uniqueCharacters.<span class="call">remove</span>(arr[leftPointer])
+    leftPointer += <span class="number">1</span>
+  } <span class="keyword">else</span> {
+  
+  }
+}
+</code></pre><p>If the character at the current rightPointer index is not present in the uniqueCharacters set, it is a new character that we haven't encountered before in the current substring.</p><p>In this case, we insert the character into the uniqueCharacters set, indicating that it is part of the current substring. We increment the rightPointer to expand the sliding window to the right and include the new character. We also update the maxLength by calculating the difference between the rightPointer and leftPointer indices and taking the maximum value.</p><pre><code><span class="keyword">while</span> rightPointer &lt; arr.<span class="call">count</span> {
+  <span class="keyword">if</span> uniqueCharacters.<span class="call">contains</span>(arr[rightPointer]) {
+    uniqueCharacters.<span class="call">remove</span>(arr[leftPointer])
+    leftPointer += <span class="number">1</span>
+  } <span class="keyword">else</span> {
+    uniqueCharacters.<span class="call">insert</span>(arr[rightPointer])
+    rightPointer += <span class="number">1</span>
+    maxLength = <span class="call">max</span>(maxLength, rightPointer - leftPointer)
+  }
+}
+</code></pre><p>Finally, after the loop ends, we have processed the entire string, and the maxLength variable holds the length of the longest substring without repeating characters. We return the maxLength as the result.</p><pre><code><span class="keyword">func</span> lengthOfLongestSubstring(<span class="keyword">_</span> s: <span class="type">String</span>) -&gt; <span class="type">Int</span> {
+    <span class="keyword">guard</span> s.<span class="property">count</span> &gt; <span class="number">1</span> <span class="keyword">else</span> { <span class="keyword">return</span> s.<span class="property">count</span> }
+
+    <span class="keyword">let</span> arr = <span class="type">Array</span>(s)
+
+    <span class="keyword">var</span> leftPointer = <span class="number">0</span>
+    <span class="keyword">var</span> rightPointer = <span class="number">0</span>
+
+    <span class="keyword">var</span> maxLength = <span class="number">0</span>
+    <span class="keyword">var</span> uniqueCharacters = <span class="type">Set</span>&lt;<span class="type">Character</span>&gt;()
+
+    <span class="keyword">while</span> rightPointer &lt; arr.<span class="call">count</span> {
+      <span class="keyword">if</span> uniqueCharacters.<span class="call">contains</span>(arr[rightPointer]) {
+        uniqueCharacters.<span class="call">remove</span>(arr[leftPointer])
+        leftPointer += <span class="number">1</span>
+      } <span class="keyword">else</span> {
+        uniqueCharacters.<span class="call">insert</span>(arr[rightPointer])
+        rightPointer += <span class="number">1</span>
+        maxLength = <span class="call">max</span>(maxLength, rightPointer - leftPointer)
+      }
+    }
+
+    <span class="keyword">return</span> maxLength
+}
+</code></pre><p>This completes our solution to find the length of the longest substring without repeating characters using the sliding window approach. Since we have to loop through the string once, we have a time complexity of O(n). We also have a set that can, worst case, have the same number of elements as our string. This means we also have a space complexity of O(n).</p>]]></content:encoded></item><item><guid isPermaLink="true">www.thomaskellough/thomaskellough.github.io/posts/17-how-to-use-dynamic-coding-keys</guid><title>Learn how to use dynamic coding keys in your app</title><description>Use dyanmic coding keys in your app</description><link>www.thomaskellough/thomaskellough.github.io/posts/17-how-to-use-dynamic-coding-keys</link><pubDate>Mon, 29 May 2023 12:05:00 -0500</pubDate><content:encoded><![CDATA[<h1>Learn how to use dynamic coding keys in your app</h1><div class="post-tags" markdown="1">
     <a class="post-category post-category-feature" href="www.thomaskellough/thomaskellough.github.io/tags/feature">Feature</a>
     <a class="post-category post-category-swiftui" href="www.thomaskellough/thomaskellough.github.io/tags/swiftui">SwiftUI</a>
     <a class="post-category post-category-codable" href="www.thomaskellough/thomaskellough.github.io/tags/appicon">Codable</a>
